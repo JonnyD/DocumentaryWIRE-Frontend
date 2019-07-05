@@ -20,7 +20,7 @@ export class DataService {
   update(resource) {
     return this.http.put(this.url + '/' + resource.id, JSON.stringify({
       
-    })));
+    }));
   }
 
   delete(id: number) {
