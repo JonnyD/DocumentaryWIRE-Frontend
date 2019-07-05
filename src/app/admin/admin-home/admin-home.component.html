@@ -1,1 +1,19 @@
 <p>admin-home works!</p>
+
+<router-outlet></router-outlet>
+
+<a [routerLink]="['/admin/home']" routerLinkActive="active">
+    Home
+  </a>
+<a [routerLink]="['/admin/documentaries']" routerLinkActive="active">
+    Documentaries
+</a>
+<a [routerLink]="['/admin/comments']" routerLinkActive="active">
+    Comments
+</a>
+<a [routerLink]="['/admin/users']" routerLinkActive="active">
+    Users
+</a>
+<a [routerLink]="['/admin/activity']" routerLinkActive="active">
+    Activity
+</a>
