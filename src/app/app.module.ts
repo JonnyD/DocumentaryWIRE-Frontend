@@ -12,6 +12,7 @@ import { AdminCommentsComponent } from './admin/admin-comments/admin-comments.co
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AdminDocumentariesComponent,
     AdminCommentsComponent,
     AdminUsersComponent,
-    AdminActivityComponent
+    AdminActivityComponent,
+    AdminDocumentaryDetailComponent
   ],
   imports: [
     BrowserModule,

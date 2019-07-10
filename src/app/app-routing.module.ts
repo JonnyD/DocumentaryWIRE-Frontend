@@ -1,3 +1,4 @@
+import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminCommentsComponent } from './admin/admin-comments/admin-comments.component';
@@ -10,6 +11,7 @@ const routes: Routes = [
   {path: 'admin', component: AdminHomeComponent,
     children: [
       { path: 'documentaries', component: AdminDocumentariesComponent },
+      { path: 'documentaries/:slug', component: AdminDocumentaryDetailComponent },
       { path: 'comments', component: AdminCommentsComponent },
       { path: 'users', component: AdminUsersComponent },
       { path: 'activity', component: AdminActivityComponent },

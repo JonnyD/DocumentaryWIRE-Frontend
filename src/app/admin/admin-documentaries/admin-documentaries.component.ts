@@ -1,6 +1,7 @@
 import { DocumentaryService } from './../../services/documentary.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Documentary } from './../../models/documentary.model';
 
 @Component({
   selector: 'app-admin-documentaries',
@@ -9,7 +10,7 @@ import { HttpParams } from '@angular/common/http';
 })
 export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private documentariesSubscription;
-  public documentaries: Array<any>;
+  public documentaries: Array<Documentary>;
   config: any;
 
   constructor(private service: DocumentaryService) { }
@@ -23,17 +24,17 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     params = params.append('page', +page);
 
     this.documentariesSubscription = this.service.getAll(params)
-    .subscribe(
-        result => {
-          this.config = {
-            itemsPerPage: 12,
-            currentPage: page,
-            totalItems: result['count_results']
-          };
-          this.documentaries = result['items'];
-          console.log(result);
-        }
-    );
+      .subscribe(
+          result => {
+            this.config = {
+              itemsPerPage: 12,
+              currentPage: page,
+              totalItems: result['count_results']
+            };
+            this.documentaries = result['items'];
+            console.log(result);
+          }
+      );
   }
 
   pageChanged(event) {

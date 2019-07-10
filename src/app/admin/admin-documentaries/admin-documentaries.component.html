@@ -23,7 +23,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let documentary of documentaries | paginate: config">
-        <td>{{ documentary.slug }}</td>
+        <td>
+            <a [routerLink]="['/admin/documentaries', documentary.slug]">
+              {{ documentary.slug }}
+          </a>
+        </td>
         <td>{{ documentary.title }}</td>
         <td>{{ documentary.storyline }}</td>
         <td>{{ documentary.summary }}</td>
@@ -34,7 +38,7 @@
         <td>{{ documentary.short_url }}</td>
         <td>{{ documentary.poster }}</td>
         <td>{{ documentary.wide_image }}</td>
-        <td>{{ documentary.vide_source }}</td>
+        <td>{{ documentary.video_source }}</td>
         <td>{{ documentary.video_id }}</td>
         <td>{{ documentary.featured }}</td>
         <td>{{ documentary.created_at }}</td>
