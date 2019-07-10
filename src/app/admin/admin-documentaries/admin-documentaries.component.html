@@ -1,0 +1,44 @@
+<p>admin-documentaries works!</p>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">slug</th>
+        <th scope="col">Title</th>
+        <th scope="col">Story Line</th>
+        <th scope="col">Summary</th>
+        <th scope="col">Year</th>
+        <th scope="col">Length</th>
+        <th scope="col">Status</th>
+        <th scope="col">Views</th>
+        <th scope="col">Short Url</th>
+        <th scope="col">Poster</th>
+        <th scope="col">Wide Image</th>
+        <th scope="col">Video Source</th>
+        <th scope="col">Video ID</th>
+        <th scope="col">featured</th>
+        <th scope="col">Created At</th>
+        <th scope="col">Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let documentary of documentaries">
+        <td>{{ documentary.slug }}</td>
+        <td>{{ documentary.title }}</td>
+        <td>{{ documentary.storyline }}</td>
+        <td>{{ documentary.summary }}</td>
+        <td>{{ documentary.year }}</td>
+        <td>{{ documentary.length }}</td>
+        <td>{{ documentary.status }}</td>
+        <td>{{ documentary.views }}</td>
+        <td>{{ documentary.short_url }}</td>
+        <td>{{ documentary.poster }}</td>
+        <td>{{ documentary.wide_image }}</td>
+        <td>{{ documentary.vide_source }}</td>
+        <td>{{ documentary.video_id }}</td>
+        <td>{{ documentary.featured }}</td>
+        <td>{{ documentary.created_at }}</td>
+        <td>{{ documentary.updated_at }}</td>
+      </tr>
+    </tbody>
+  </table>
