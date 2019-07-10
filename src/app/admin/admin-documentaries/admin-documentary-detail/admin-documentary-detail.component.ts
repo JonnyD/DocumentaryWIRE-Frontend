@@ -2,7 +2,6 @@ import { DocumentaryService } from './../../../services/documentary.service';
 import { Documentary } from './../../../models/documentary.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
 @Component({
