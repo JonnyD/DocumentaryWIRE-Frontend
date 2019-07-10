@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminCommentsComponent } from './admin/admin-comments/admin-comments.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AdminActivityComponent } from './admin/admin-activity/admin-activity.co
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule,
   ],
   providers: [
     DocumentaryService
