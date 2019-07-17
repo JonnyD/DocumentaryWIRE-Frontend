@@ -1,5 +1,6 @@
 export class Documentary {
     id: number;
+    title: string;
     slug: string;
     storyline: string;
     summary: string;

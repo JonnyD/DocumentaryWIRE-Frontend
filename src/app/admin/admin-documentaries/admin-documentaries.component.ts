@@ -9,8 +9,9 @@ import { Documentary } from './../../models/documentary.model';
   styleUrls: ['./admin-documentaries.component.css']
 })
 export class AdminDocumentariesComponent implements OnInit, OnDestroy {
+  
   private documentariesSubscription;
-  public documentaries: Array<Documentary>;
+  public documentaries: Array<any>;
   config: any;
 
   constructor(private service: DocumentaryService) { }
@@ -21,7 +22,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
   fetchDocumentaries(page:number = 1) {
     let params = new HttpParams();
-    params = params.append('page', +page);
+    params = params.append('page', page.toString());
 
     this.documentariesSubscription = this.service.getAll(params)
       .subscribe(
@@ -46,5 +47,4 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.documentariesSubscription.unsubscribe();
   }
-
 }

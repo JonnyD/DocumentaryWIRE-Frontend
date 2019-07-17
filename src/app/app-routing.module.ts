@@ -1,3 +1,4 @@
+import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
@@ -6,15 +7,25 @@ import { AdminDocumentariesComponent } from './admin/admin-documentaries/admin-d
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { DocumentaryResolverService } from './services/documentary-resolver.service';
 
 const routes: Routes = [
   {path: 'admin', component: AdminHomeComponent,
     children: [
-      { path: 'documentaries', component: AdminDocumentariesComponent },
-      { path: 'documentaries/:slug', component: AdminDocumentaryDetailComponent },
-      { path: 'comments', component: AdminCommentsComponent },
-      { path: 'users', component: AdminUsersComponent },
-      { path: 'activity', component: AdminActivityComponent },
+      { 
+        path: 'documentaries', 
+        component: AdminDocumentariesComponent 
+      },
+      { 
+        path: 'documentaries/:slug', 
+        component: AdminDocumentaryDetailComponent,
+        resolve: [DocumentaryResolverService]
+      },
+      { 
+        path: 'documentaries/:slug/edit', 
+        component: AdminDocumentaryEditComponent,
+        resolve: [DocumentaryResolverService]
+      },
     ]
   }
   

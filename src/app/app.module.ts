@@ -1,6 +1,6 @@
+import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
@@ -11,8 +11,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { AdminCommentsComponent } from './admin/admin-comments/admin-comments.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
-import {NgxPaginationModule} from 'ngx-pagination';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { DocumentaryResolverService } from './services/documentary-resolver.service';
 
 @NgModule({
   declarations: [
@@ -23,16 +26,21 @@ import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/adm
     AdminCommentsComponent,
     AdminUsersComponent,
     AdminActivityComponent,
-    AdminDocumentaryDetailComponent
+    AdminDocumentaryDetailComponent,
+    AdminDocumentaryEditComponent,
   ],
   imports: [
     BrowserModule,
+		FormsModule,
     AppRoutingModule,
     HttpClientModule,
     NgxPaginationModule,
+    ReactiveFormsModule,
+    AngularEditorModule 
   ],
   providers: [
-    DocumentaryService
+    DocumentaryService,
+    DocumentaryResolverService
   ],
   bootstrap: [AppComponent]
 })

@@ -9,14 +9,12 @@ import { catchError } from 'rxjs/operators';
 export class DataService {
   constructor(private url: string, private http: HttpClient) { }
 
-  get(resource) {
-    console.log(resource);
-    console.log(this.url + '/' + resource.slug + "?access_token=NTdlNTgxM2I2ZjYyODU4OWEyNDM5MmMwNGRlOTM3MTdlMjUyMjI4OTkyNTFhZWUyMjA5ZmQ1MTJlYzFkNjIwYQ");
-    return this.http.get(this.url + '/' + resource.slug + "?access_token=NTdlNTgxM2I2ZjYyODU4OWEyNDM5MmMwNGRlOTM3MTdlMjUyMjI4OTkyNTFhZWUyMjA5ZmQ1MTJlYzFkNjIwYQ");
+  get(slug) {
+    return this.http.get(this.url + '/' + slug + "?access_token=N2ZjNTA3NGM2MDE4NTQwMjc2NDYyZmQwNGFiOWJiNzAxYjNmZTBhY2FjNzExYWZkYjMwMGI0MDM4ZmMzNzkxMA");
   }
 
   getAll(params:HttpParams) {
-    return this.http.get<Object[]>(this.url + "?access_token=NTdlNTgxM2I2ZjYyODU4OWEyNDM5MmMwNGRlOTM3MTdlMjUyMjI4OTkyNTFhZWUyMjA5ZmQ1MTJlYzFkNjIwYQ", 
+    return this.http.get<Object[]>(this.url + "?access_token=N2ZjNTA3NGM2MDE4NTQwMjc2NDYyZmQwNGFiOWJiNzAxYjNmZTBhY2FjNzExYWZkYjMwMGI0MDM4ZmMzNzkxMA", 
     {
       params: params
     });

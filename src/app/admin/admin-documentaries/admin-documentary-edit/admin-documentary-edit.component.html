@@ -1,0 +1,101 @@
+<div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form [formGroup]="editDocumentaryForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input
+                    type="text"
+                    id="title"
+                    formControlName="title"
+                    class="form-control">
+                    <span
+                    *ngIf="!editDocumentaryForm.get('title').valid && editDocumentaryForm.get('title').touched"
+                    class="help-block">
+                    <span *ngIf="editDocumentaryForm.get('title').errors['required']">This field is required!</span>
+
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="slug">Slug</label>
+                    <input
+                    type="text"
+                    id="slug"
+                    formControlName="slug"
+                    class="form-control">
+                    <span
+                    *ngIf="!editDocumentaryForm.get('slug').valid && editDocumentaryForm.get('slug').touched"
+                    class="help-block">Please enter a valid slug!</span>
+                </div>
+                <div class="form-group">
+                    <label for="storyline">Storyline</label>
+                    <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
+                    <span
+                    *ngIf="!editDocumentaryForm.get('storyline').valid && editDocumentaryForm.get('storyline').touched"
+                    class="help-block">Please enter a valid storyline!</span>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Summary</label>
+                        <textarea
+                        type="text"
+                        id="summary"
+                        formControlName="summary"
+                        class="form-control"></textarea>
+                    <span
+                    *ngIf="!editDocumentaryForm.get('summary').valid && editDocumentaryForm.get('summary').touched"
+                    class="help-block">Please enter a valid summary!</span>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year</label>
+                    <input
+                    type="text"
+                    id="year"
+                    formControlName="year"
+                    class="form-control">
+                    <span
+                    *ngIf="!editDocumentaryForm.get('year').valid && editDocumentaryForm.get('year').touched"
+                    class="help-block">Please enter a valid year!</span>
+                </div>
+                <div class="form-group">
+                    <label for="length">Length (in minutes)</label>
+                    <input
+                    type="text"
+                    id="length"
+                    formControlName="length"
+                    class="form-control">
+                    <span
+                    *ngIf="!editDocumentaryForm.get('length').valid && editDocumentaryForm.get('length').touched"
+                    class="help-block">Please enter a valid year!</span>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <input
+                    type="text"
+                    id="status"
+                    formControlName="status"
+                    class="form-control">
+                    <span
+                    *ngIf="!editDocumentaryForm.get('status').valid && editDocumentaryForm.get('status').touched"
+                    class="help-block">Please enter a valid status!</span>
+                </div>
+                <div class="form-group">
+                    <label for="year">Short URL</label>
+                    <input
+                    type="text"
+                    id="short_url"
+                    formControlName="short_url"
+                    class="form-control">
+                    <span
+                    *ngIf="!editDocumentaryForm.get('short_url').valid && editDocumentaryForm.get('short_url').touched"
+                    class="help-block">Please enter a valid year!</span>
+                </div>
+                <input type="file" (change)="onFileChange($event)" />
+              <span
+                *ngIf="!editDocumentaryForm.valid && editDocumentaryForm.touched"
+                class="help-block">Please enter valid data!</span>
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      
