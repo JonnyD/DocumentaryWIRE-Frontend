@@ -31,8 +31,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-      this.documentary = data[0];
+    this.route.data.subscribe(result => {
+      this.documentary = <Documentary> result[0];
       this.initForm();
     })
   }

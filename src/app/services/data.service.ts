@@ -10,11 +10,11 @@ export class DataService {
   constructor(private url: string, private http: HttpClient) { }
 
   get(slug) {
-    return this.http.get(this.url + '/' + slug + "?access_token=N2ZjNTA3NGM2MDE4NTQwMjc2NDYyZmQwNGFiOWJiNzAxYjNmZTBhY2FjNzExYWZkYjMwMGI0MDM4ZmMzNzkxMA");
+    return this.http.get(this.url + '/' + slug + "?access_token=ZjM2OWZhNWZmZmM5MDMwNTA0ZGEwN2RmM2Y5N2Q3NmJkNDFjOWUwMTIxOGFkMjU0YmNjY2Q4ZmRhMjFkZDk2MQ");
   }
 
   getAll(params:HttpParams) {
-    return this.http.get<Object[]>(this.url + "?access_token=N2ZjNTA3NGM2MDE4NTQwMjc2NDYyZmQwNGFiOWJiNzAxYjNmZTBhY2FjNzExYWZkYjMwMGI0MDM4ZmMzNzkxMA", 
+    return this.http.get<Object[]>(this.url + "?access_token=ZjM2OWZhNWZmZmM5MDMwNTA0ZGEwN2RmM2Y5N2Q3NmJkNDFjOWUwMTIxOGFkMjU0YmNjY2Q4ZmRhMjFkZDk2MQ", 
     {
       params: params
     });

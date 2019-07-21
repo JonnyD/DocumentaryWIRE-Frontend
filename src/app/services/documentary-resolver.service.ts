@@ -9,11 +9,12 @@ import {
 import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class DocumentaryResolverService implements Resolve<Observable> {
+export class DocumentaryResolverService implements Resolve<Observable<any>> {
   constructor(private documentaryService: DocumentaryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let slug = route.params['slug'];
-    return this.documentaryService.get(slug);
+    let documentary = this.documentaryService.get(slug);
+    return documentary;
   }
 }

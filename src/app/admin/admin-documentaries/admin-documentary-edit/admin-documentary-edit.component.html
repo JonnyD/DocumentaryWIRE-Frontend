@@ -69,11 +69,15 @@
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <input
-                    type="text"
-                    id="status"
-                    formControlName="status"
-                    class="form-control">
+                    <select 
+                      [(ngModel)]="documentary.status"
+                      formControlName="status"
+                      class="form-control"
+                      id="status">
+                        <option disabled>Choose Status</option>
+                        <option [value]="pending" [selected]="documentary.status == 'pending'">Pending</option>
+                        <option [value]="publish" [selected]="documentary.status == 'publish'">Published</option>
+                      </select>
                     <span
                     *ngIf="!editDocumentaryForm.get('status').valid && editDocumentaryForm.get('status').touched"
                     class="help-block">Please enter a valid status!</span>
@@ -87,7 +91,7 @@
                     class="form-control">
                     <span
                     *ngIf="!editDocumentaryForm.get('short_url').valid && editDocumentaryForm.get('short_url').touched"
-                    class="help-block">Please enter a valid year!</span>
+                    class="help-block">Please enter a valid short url!</span>
                 </div>
                 <input type="file" (change)="onFileChange($event)" />
               <span

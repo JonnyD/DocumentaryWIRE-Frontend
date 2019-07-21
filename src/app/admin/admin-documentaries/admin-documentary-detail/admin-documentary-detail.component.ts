@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./admin-documentary-detail.component.css']
 })
 export class AdminDocumentaryDetailComponent implements OnInit, OnDestroy {
-  documentary: any;
+  documentary: Documentary;
   slug: string;
   documentarySubscription: Subscription;
 
@@ -20,8 +20,8 @@ export class AdminDocumentaryDetailComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
-    this.route.data.subscribe(data => {
-        this.documentary = data[0];
+    this.route.data.subscribe(result => {
+        this.documentary = <Documentary> result[0];
     })
   }
 
