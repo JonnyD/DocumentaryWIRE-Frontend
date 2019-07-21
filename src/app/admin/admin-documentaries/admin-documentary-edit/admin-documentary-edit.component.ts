@@ -13,6 +13,7 @@ import { AngularEditorConfig } from '@kolkov/angular-editor';
 export class AdminDocumentaryEditComponent implements OnInit {
   documentary: Documentary;
   editDocumentaryForm: FormGroup;
+  imgURL: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,8 +46,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
-    let short_url = this.documentary.short_url;
-    let poster = this.documentary.poster;
+    let posterfile = this.documentary.posterFile;
+    this.imgURL = posterfile;
 
     this.editDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
@@ -56,8 +57,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
-      'short_url': new FormControl(short_url, [Validators.required]),
-      'poster': new FormControl(poster, [Validators.required])
+      'posterFile': new FormControl(posterfile, [Validators.required])
     });
 
     this.editDocumentaryForm.statusChanges.subscribe(
@@ -74,16 +74,19 @@ export class AdminDocumentaryEditComponent implements OnInit {
   
     reader.onload = () => {
       this.editDocumentaryForm.patchValue({
-        poster: reader.result
+        posterFile: reader.result
       });
       
       // need to run CD since file load runs outside of zone
       this.cd.markForCheck();
+
+      this.imgURL = reader.result; 
     };
   }
   }
 
   onSubmit() {
-    console.log(this.editDocumentaryForm);
+    this.documentaryService.patch(this.editDocumentaryForm.value);
+    console.log(this.editDocumentaryForm.value);
   }
 }

@@ -9,12 +9,12 @@ import { catchError } from 'rxjs/operators';
 export class DataService {
   constructor(private url: string, private http: HttpClient) { }
 
-  get(slug) {
-    return this.http.get(this.url + '/' + slug + "?access_token=ZjM2OWZhNWZmZmM5MDMwNTA0ZGEwN2RmM2Y5N2Q3NmJkNDFjOWUwMTIxOGFkMjU0YmNjY2Q4ZmRhMjFkZDk2MQ");
+  get(idOrSlug) {
+    return this.http.get(this.url + '/' + idOrSlug + "?access_token=YzNhNGY5ZTM4MGEzYWE5MGJiNDc2YWU5YjY3ZGE1OTdmYjIxZmViMDI5OGYxMGZjYTE1NjJhYmQwMTVlMGFjNA");
   }
 
   getAll(params:HttpParams) {
-    return this.http.get<Object[]>(this.url + "?access_token=ZjM2OWZhNWZmZmM5MDMwNTA0ZGEwN2RmM2Y5N2Q3NmJkNDFjOWUwMTIxOGFkMjU0YmNjY2Q4ZmRhMjFkZDk2MQ", 
+    return this.http.get<Object[]>(this.url + "?access_token=YzNhNGY5ZTM4MGEzYWE5MGJiNDc2YWU5YjY3ZGE1OTdmYjIxZmViMDI5OGYxMGZjYTE1NjJhYmQwMTVlMGFjNA", 
     {
       params: params
     });
@@ -25,9 +25,18 @@ export class DataService {
   }
 
   update(resource) {
-    return this.http.put(this.url + '/' + resource.id, JSON.stringify({
+    return this.http.put(this.url + '/' + resource.id + "?access_token=YzNhNGY5ZTM4MGEzYWE5MGJiNDc2YWU5YjY3ZGE1OTdmYjIxZmViMDI5OGYxMGZjYTE1NjJhYmQwMTVlMGFjNA", JSON.stringify({
       
     }));
+  }
+
+  patch(resource) {
+    console.log(resource);
+    return this.http.patch(this.url + '/' + resource.slug + "?access_token=YzNhNGY5ZTM4MGEzYWE5MGJiNDc2YWU5YjY3ZGE1OTdmYjIxZmViMDI5OGYxMGZjYTE1NjJhYmQwMTVlMGFjNA", JSON.stringify({
+      resource
+    })).subscribe(result => {
+      console.log(result);
+    });
   }
 
   delete(id: number) {

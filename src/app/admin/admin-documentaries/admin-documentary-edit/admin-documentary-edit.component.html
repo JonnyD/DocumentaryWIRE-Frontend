@@ -83,17 +83,10 @@
                     class="help-block">Please enter a valid status!</span>
                 </div>
                 <div class="form-group">
-                    <label for="year">Short URL</label>
-                    <input
-                    type="text"
-                    id="short_url"
-                    formControlName="short_url"
-                    class="form-control">
-                    <span
-                    *ngIf="!editDocumentaryForm.get('short_url').valid && editDocumentaryForm.get('short_url').touched"
-                    class="help-block">Please enter a valid short url!</span>
+                  <label for="poster-file">Poster</label>
+                  <input id="poster-file" type="file" (change)="onFileChange($event)" />
+                  <img [src]="imgURL" height="200" *ngIf="imgURL">
                 </div>
-                <input type="file" (change)="onFileChange($event)" />
               <span
                 *ngIf="!editDocumentaryForm.valid && editDocumentaryForm.touched"
                 class="help-block">Please enter valid data!</span>
