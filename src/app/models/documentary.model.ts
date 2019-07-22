@@ -1,5 +1,3 @@
-import { Poster } from './poster.module';
-
 export class Documentary {
     id: number;
     title: string;
@@ -17,5 +15,5 @@ export class Documentary {
     featured: boolean;
     created_at: string;
     updated_at: string;
-    posterFile: string;
+    poster: string;
 }

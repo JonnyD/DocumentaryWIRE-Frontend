@@ -46,8 +46,9 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
-    let posterfile = this.documentary.posterFile;
-    this.imgURL = posterfile;
+    console.log(this.documentary.poster);
+    let poster = 'http://localhost:8000/'+ this.documentary.poster;
+    this.imgURL = poster;
 
     this.editDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
@@ -57,7 +58,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
-      'posterFile': new FormControl(posterfile, [Validators.required])
+      'poster': new FormControl(poster, [Validators.required])
     });
 
     this.editDocumentaryForm.statusChanges.subscribe(
@@ -65,7 +66,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     );
   }
 
-  onFileChange(event) {
+  onPosterChange(event) {
     let reader = new FileReader();
  
   if(event.target.files && event.target.files.length) {
@@ -74,7 +75,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
   
     reader.onload = () => {
       this.editDocumentaryForm.patchValue({
-        posterFile: reader.result
+        poster: reader.result
       });
       
       // need to run CD since file load runs outside of zone
