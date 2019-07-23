@@ -47,11 +47,17 @@
                 </div>
                 <div class="form-group">
                     <label for="year">Year</label>
-                    <input
-                    type="text"
-                    id="year"
-                    formControlName="year"
-                    class="form-control">
+                    <select 
+                      formControlName="year"
+                      class="form-control"
+                      id="year">
+                        <option disabled>Choose Year</option>
+                        <option *ngFor="let yearItem of years" 
+                          [value]="yearItem" 
+                          [selected]="documentary.year == yearItem">
+                          {{ yearItem }}
+                        </option>
+                      </select>
                     <span
                     *ngIf="!editDocumentaryForm.get('year').valid && editDocumentaryForm.get('year').touched"
                     class="help-block">Please enter a valid year!</span>

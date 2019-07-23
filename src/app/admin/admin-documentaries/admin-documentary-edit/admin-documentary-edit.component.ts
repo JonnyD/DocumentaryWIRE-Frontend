@@ -4,6 +4,7 @@ import { Params, ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-admin-documentary-edit',
@@ -16,6 +17,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
   imgURL: any;
   wideImgURL: any;
   statuses: any;
+  years: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,19 +38,46 @@ export class AdminDocumentaryEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(result => {
-      this.statuses = [
-        {
-          value: 'pending',
-          name: 'Pending'
-        },
-        {
-          value: 'publish',
-          name: 'Published'
-        }
-      ];
+      this.initStatuses();
+      this.initYears();
+      console.log(this.years);
       this.documentary = <Documentary> result[0];
       this.initForm();
     })
+  }
+
+  initStatuses() {
+    this.statuses = [
+      {
+        value: 'pending',
+        name: 'Pending'
+      },
+      {
+        value: 'publish',
+        name: 'Published'
+      }
+    ];
+  }
+
+  initYears() {
+    let currentYear = moment(new Date()).format('YYYY');
+
+    let years = [];
+    years.push(currentYear);
+
+    let counter = 1;
+    for (let i = +currentYear; i > 0; i--) {
+      if (counter === 100) {
+        break;
+      }
+
+      let year = i - 1;
+      years.push(year);
+
+      counter++;
+    }
+
+    this.years = years;
   }
   
   initForm() {
