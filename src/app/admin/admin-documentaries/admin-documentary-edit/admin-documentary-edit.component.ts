@@ -1,3 +1,5 @@
+import { HttpParams } from '@angular/common/http';
+import { VideoSourceService } from './../../../services/video-source.service';
 import { Documentary } from './../../../models/documentary.model';
 import { DocumentaryService } from './../../../services/documentary.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
@@ -12,19 +14,20 @@ import * as moment from 'moment';
   styleUrls: ['./admin-documentary-edit.component.css']
 })
 export class AdminDocumentaryEditComponent implements OnInit {
-  documentary: Documentary;
   editDocumentaryForm: FormGroup;
+  documentary: Documentary;
   imgURL: any;
   wideImgURL: any;
   statuses: any;
   years: any;
+  videoSources: any;
 
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
+    private videoSourceService: VideoSourceService,
     private router: Router,
-    private cd: ChangeDetectorRef) {
-    }
+    private cd: ChangeDetectorRef) {}
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -40,8 +43,9 @@ export class AdminDocumentaryEditComponent implements OnInit {
     this.route.data.subscribe(result => {
       this.initStatuses();
       this.initYears();
-      console.log(this.years);
+      this.initVideoSources();
       this.documentary = <Documentary> result[0];
+      console.log(this.documentary);
       this.initForm();
     })
   }
@@ -79,12 +83,23 @@ export class AdminDocumentaryEditComponent implements OnInit {
 
     this.years = years;
   }
+
+  initVideoSources() {
+    let params: HttpParams;
+    this.videoSourceService.getAll(params)
+      .subscribe(result => {
+        this.videoSources = result;
+        console.log(this.videoSources);
+      });
+  }
   
   initForm() {
     let title = this.documentary.title;
     let slug = this.documentary.slug;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
+    let videoSource = this.documentary.video_source;
+    console.log(videoSource);
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
@@ -99,6 +114,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'slug': new FormControl(slug, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
+      'video_source': new FormControl(videoSource, [Validators.required]),
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),

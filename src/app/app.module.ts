@@ -1,4 +1,4 @@
-import { PosterService } from './services/poster.service';
+import { VideoSourceService } from './services/video-source.service';
 import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -41,6 +41,7 @@ import { DocumentaryResolverService } from './services/documentary-resolver.serv
   ],
   providers: [
     DocumentaryService,
+    VideoSourceService,
     DocumentaryResolverService
   ],
   bootstrap: [AppComponent]
