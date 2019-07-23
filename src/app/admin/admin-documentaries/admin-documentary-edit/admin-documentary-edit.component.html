@@ -75,8 +75,11 @@
                       class="form-control"
                       id="status">
                         <option disabled>Choose Status</option>
-                        <option [value]="pending" [selected]="documentary.status == 'pending'">Pending</option>
-                        <option [value]="publish" [selected]="documentary.status == 'publish'">Published</option>
+                        <option *ngFor="let statusItem of statuses" 
+                          [value]="statusItem.value" 
+                          [selected]="documentary.status == statusItem.value">
+                          {{ statusItem.name }}
+                        </option>
                       </select>
                     <span
                     *ngIf="!editDocumentaryForm.get('status').valid && editDocumentaryForm.get('status').touched"

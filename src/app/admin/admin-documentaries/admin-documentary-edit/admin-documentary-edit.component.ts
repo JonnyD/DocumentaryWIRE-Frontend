@@ -15,12 +15,14 @@ export class AdminDocumentaryEditComponent implements OnInit {
   editDocumentaryForm: FormGroup;
   imgURL: any;
   wideImgURL: any;
+  statuses: any;
 
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
     private router: Router,
-    private cd: ChangeDetectorRef) {}
+    private cd: ChangeDetectorRef) {
+    }
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -34,6 +36,16 @@ export class AdminDocumentaryEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(result => {
+      this.statuses = [
+        {
+          value: 'pending',
+          name: 'Pending'
+        },
+        {
+          value: 'publish',
+          name: 'Published'
+        }
+      ];
       this.documentary = <Documentary> result[0];
       this.initForm();
     })
