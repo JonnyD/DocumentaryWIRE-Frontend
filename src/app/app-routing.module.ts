@@ -1,3 +1,4 @@
+import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-video-sources.component';
 import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
@@ -25,6 +26,10 @@ const routes: Routes = [
         path: 'documentaries/:slug/edit', 
         component: AdminDocumentaryEditComponent,
         resolve: [DocumentaryResolverService]
+      },
+      { 
+        path: 'video-sources', 
+        component: AdminVideoSourcesComponent
       },
     ]
   }

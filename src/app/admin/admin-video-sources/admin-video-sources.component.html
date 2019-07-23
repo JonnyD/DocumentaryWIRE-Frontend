@@ -1,1 +1,20 @@
-<p>admin-video-sources works!</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Enabled</th>
+        <th scope="col">Is Embed Allowed</th>
+        <th scope="col">Embed Code</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let videoSource of videoSources">
+        <td>{{ videoSource.id }}</td>
+        <td>{{ videoSource.name }}</td>
+        <td>{{ videoSource.enabled }}</td>
+        <td>{{ videoSource.embed }}</td>
+        <td>{{ videoSource.embed_code }}</td>
+      </tr>
+    </tbody>
+  </table>
