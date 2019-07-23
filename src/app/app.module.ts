@@ -17,6 +17,7 @@ import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/adm
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
+import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-video-sources.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { DocumentaryResolverService } from './services/documentary-resolver.serv
     AdminActivityComponent,
     AdminDocumentaryDetailComponent,
     AdminDocumentaryEditComponent,
+    AdminVideoSourcesComponent,
   ],
   imports: [
     BrowserModule,
