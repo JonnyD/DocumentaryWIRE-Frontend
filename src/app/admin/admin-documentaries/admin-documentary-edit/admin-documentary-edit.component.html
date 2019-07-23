@@ -87,6 +87,11 @@
                   <input id="poster-file" type="file" (change)="onPosterChange($event)" />
                   <img [src]="imgURL" height="200" *ngIf="imgURL">
                 </div>
+                <div class="form-group">
+                  <label for="wide-image-file">Wide Image</label>
+                  <input id="wide-image-file" type="file" (change)="onWideImageChange($event)" />
+                  <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
+                </div>
               <span
                 *ngIf="!editDocumentaryForm.valid && editDocumentaryForm.touched"
                 class="help-block">Please enter valid data!</span>

@@ -14,6 +14,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
   documentary: Documentary;
   editDocumentaryForm: FormGroup;
   imgURL: any;
+  wideImgURL: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -46,9 +47,11 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
-    console.log(this.documentary.poster);
-    let poster = 'http://localhost:8000/'+ this.documentary.poster;
+    let poster = 'http://localhost:8000/' + this.documentary.poster;
     this.imgURL = poster;
+    let wideImage = 'http://localhost:8000/' + this.documentary.wide_image;
+    console.log(wideImage);
+    this.wideImgURL = wideImage;
 
     this.editDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
@@ -58,7 +61,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
-      'poster': new FormControl(poster, [Validators.required])
+      'poster': new FormControl(poster, [Validators.required]),
+      'wide_image': new FormControl(wideImage, [Validators.required])
     });
 
     this.editDocumentaryForm.statusChanges.subscribe(
@@ -82,6 +86,26 @@ export class AdminDocumentaryEditComponent implements OnInit {
       this.cd.markForCheck();
 
       this.imgURL = reader.result; 
+    };
+  }
+  }
+
+  onWideImageChange(event) {
+    let reader = new FileReader();
+ 
+  if(event.target.files && event.target.files.length) {
+    const [file] = event.target.files;
+    reader.readAsDataURL(file);
+  
+    reader.onload = () => {
+      this.editDocumentaryForm.patchValue({
+        wide_image: reader.result
+      });
+      
+      // need to run CD since file load runs outside of zone
+      this.cd.markForCheck();
+
+      this.wideImgURL = reader.result; 
     };
   }
   }
