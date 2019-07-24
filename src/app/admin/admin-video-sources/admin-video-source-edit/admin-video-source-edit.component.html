@@ -1,0 +1,74 @@
+<div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form [formGroup]="editVideoSourceForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input
+                    type="text"
+                    id="name"
+                    formControlName="name"
+                    class="form-control">
+                    <span
+                    *ngIf="!editVideoSourceForm.get('name').valid && editVideoSourceForm.get('name').touched"
+                    class="help-block">
+                    <span *ngIf="editVideoSourceForm.get('name').errors['required']">This field is required!</span>
+
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select 
+                        [(ngModel)]="videoSource.status"
+                        formControlName="status"
+                        class="form-control"
+                        id="status">
+                        <option disabled>Choose Enabled / Disabled</option>
+                        <option *ngFor="let status of statusOptions" 
+                            [value]="enabled" 
+                            [selected]="videoSource.status == status">
+                            {{ status }}
+                        </option>
+                        </select>
+                    <span
+                    *ngIf="!editVideoSourceForm.get('status').valid && editVideoSourceForm.get('status').touched"
+                    class="help-block">Please enter a valid status!</span>
+                </div>
+                <div class="form-group">
+                    <label for="embedAllowed">Embed Allowed</label>
+                    <select 
+                        [(ngModel)]="videoSource.embedAllowed"
+                        formControlName="embedAllowed"
+                        class="form-control"
+                        id="embedAllowed">
+                        <option disabled>Choose Embed Allowed</option>
+                        <option *ngFor="let embedAllowed of embedAllowedOptions" 
+                            [value]="embedAllowed" 
+                            [selected]="videoSource.embedAllowed == embedAllowed">
+                            {{ embedAllowed }}
+                        </option>
+                        </select>
+                    <span
+                    *ngIf="!editVideoSourceForm.get('embedAllowed').valid && editVideoSourceForm.get('embedAllowed').touched"
+                    class="help-block">Please enter a valid embed allowed!</span>
+                </div>
+                <div class="form-group">
+                    <label for="embeCode">Embed Code</label>
+                        <textarea
+                        type="text"
+                        id="embedCode"
+                        formControlName="embedCode"
+                        class="form-control"></textarea>
+                    <span
+                    *ngIf="!editVideoSourceForm.get('embedCode').valid && editVideoSourceForm.get('embedCode').touched"
+                    class="help-block">Please enter a valid embed code!</span>
+                </div>
+              <span
+                *ngIf="!editVideoSourceForm.valid && editVideoSourceForm.touched"
+                class="help-block">Please enter valid data!</span>
+              <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      

@@ -1,5 +1,7 @@
 export class VideoSource {
     id: number;
     name: string;
-    embed: string;
+    embedAllowed: string;
+    embedCode: string;
+    status: string;
 }

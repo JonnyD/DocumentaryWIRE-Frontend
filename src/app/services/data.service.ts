@@ -10,11 +10,11 @@ export class DataService {
   constructor(private url: string, private http: HttpClient) { }
 
   get(idOrSlug) {
-    return this.http.get(this.url + '/' + idOrSlug + "?access_token=Y2RiYTcyOWQ2ZGM2YWFiNjI3NmEzY2JjMzQxYmI1YTkyZGMyODY5MWQ0M2I1MDI5OTdmOWEwOGIzMmM5M2IwYw");
+    return this.http.get(this.url + '/' + idOrSlug + "?access_token=OWVhODZiMWMyZDVmOGViYzY0NWZmMWMyODM4OWMwNDI3Mjc1ZmYxZTRmZmQ2ZjM2ZDFjN2M3MDZlNWFkY2M1ZQ");
   }
 
   getAll(params:HttpParams) {
-    return this.http.get<Object[]>(this.url + "?access_token=Y2RiYTcyOWQ2ZGM2YWFiNjI3NmEzY2JjMzQxYmI1YTkyZGMyODY5MWQ0M2I1MDI5OTdmOWEwOGIzMmM5M2IwYw", 
+    return this.http.get<Object[]>(this.url + "?access_token=OWVhODZiMWMyZDVmOGViYzY0NWZmMWMyODM4OWMwNDI3Mjc1ZmYxZTRmZmQ2ZjM2ZDFjN2M3MDZlNWFkY2M1ZQ", 
     {
       params: params
     });
@@ -25,18 +25,16 @@ export class DataService {
   }
 
   update(resource) {
-    return this.http.put(this.url + '/' + resource.id + "?access_token=Y2RiYTcyOWQ2ZGM2YWFiNjI3NmEzY2JjMzQxYmI1YTkyZGMyODY5MWQ0M2I1MDI5OTdmOWEwOGIzMmM5M2IwYw", JSON.stringify({
+    return this.http.put(this.url + '/' + resource.id + "?access_token=OWVhODZiMWMyZDVmOGViYzY0NWZmMWMyODM4OWMwNDI3Mjc1ZmYxZTRmZmQ2ZjM2ZDFjN2M3MDZlNWFkY2M1ZQ", JSON.stringify({
       
     }));
   }
 
   patch(resource) {
     console.log(resource);
-    return this.http.patch(this.url + '/' + resource.slug + "?access_token=Y2RiYTcyOWQ2ZGM2YWFiNjI3NmEzY2JjMzQxYmI1YTkyZGMyODY5MWQ0M2I1MDI5OTdmOWEwOGIzMmM5M2IwYw", JSON.stringify({
+    return this.http.patch(this.url + '/' + resource.id + "?access_token=OWVhODZiMWMyZDVmOGViYzY0NWZmMWMyODM4OWMwNDI3Mjc1ZmYxZTRmZmQ2ZjM2ZDFjN2M3MDZlNWFkY2M1ZQ", JSON.stringify({
       resource
-    })).subscribe(result => {
-      console.log(result);
-    });
+    }));
   }
 
   delete(id: number) {
