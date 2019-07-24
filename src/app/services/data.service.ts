@@ -37,6 +37,13 @@ export class DataService {
     }));
   }
 
+  patchBySlug(resource) {
+    console.log(resource);
+    return this.http.patch(this.url + '/' + resource.slug + "?access_token=OWVhODZiMWMyZDVmOGViYzY0NWZmMWMyODM4OWMwNDI3Mjc1ZmYxZTRmZmQ2ZjM2ZDFjN2M3MDZlNWFkY2M1ZQ", JSON.stringify({
+      resource
+    }));
+  }
+
   delete(id: number) {
     return this.http.delete(this.url + '/' + id);
   }
