@@ -9,10 +9,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './admin-documentary-detail.component.html',
   styleUrls: ['./admin-documentary-detail.component.css']
 })
-export class AdminDocumentaryDetailComponent implements OnInit, OnDestroy {
+export class AdminDocumentaryDetailComponent implements OnInit {
   documentary: Documentary;
   slug: string;
-  documentarySubscription: Subscription;
 
   constructor(
     private documentaryService: DocumentaryService,
@@ -24,8 +23,4 @@ export class AdminDocumentaryDetailComponent implements OnInit, OnDestroy {
         this.documentary = <Documentary> result[0];
     })
   }
-
-    ngOnDestroy() {
-      this.documentarySubscription.unsubscribe();
-    }
 }
