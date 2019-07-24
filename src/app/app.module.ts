@@ -19,6 +19,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
 import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-video-sources.component';
 import { AdminVideoSourceEditComponent } from './admin/admin-video-sources/admin-video-source-edit/admin-video-source-edit.component';
+import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/admin-video-source-detail/admin-video-source-detail.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { AdminVideoSourceEditComponent } from './admin/admin-video-sources/admin
     AdminDocumentaryEditComponent,
     AdminVideoSourcesComponent,
     AdminVideoSourceEditComponent,
+    AdminVideoSourceDetailComponent,
   ],
   imports: [
     BrowserModule,

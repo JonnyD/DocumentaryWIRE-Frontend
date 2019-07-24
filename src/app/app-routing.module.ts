@@ -1,3 +1,4 @@
+import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/admin-video-source-detail/admin-video-source-detail.component';
 import { VideoSourceResolverService } from './services/video-source-resolver.service';
 import { AdminVideoSourceEditComponent } from './admin/admin-video-sources/admin-video-source-edit/admin-video-source-edit.component';
 import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-video-sources.component';
@@ -32,6 +33,11 @@ const routes: Routes = [
       { 
         path: 'video-sources', 
         component: AdminVideoSourcesComponent
+      },
+      { 
+        path: 'video-sources/:id', 
+        component: AdminVideoSourceDetailComponent,
+        resolve: [VideoSourceResolverService]
       },
       { 
         path: 'video-sources/:id/edit', 

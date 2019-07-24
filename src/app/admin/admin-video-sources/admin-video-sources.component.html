@@ -3,18 +3,20 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Name</th>
-        <th scope="col">Enabled</th>
-        <th scope="col">Is Embed Allowed</th>
+        <th scope="col">Status</th>
+        <th scope="col">Embed Allowed</th>
         <th scope="col">Embed Code</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let videoSource of videoSources">
-        <td>{{ videoSource.id }}</td>
+        <a [routerLink]="['/admin/video-sources', videoSource.id]">
+          {{ videoSource.id }}
+      </a>
         <td>{{ videoSource.name }}</td>
-        <td>{{ videoSource.enabled }}</td>
-        <td>{{ videoSource.embed }}</td>
-        <td>{{ videoSource.embed_code }}</td>
+        <td>{{ videoSource.status }}</td>
+        <td>{{ videoSource.embedAllowed }}</td>
+        <td>{{ videoSource.embedCode }}</td>
       </tr>
     </tbody>
   </table>
