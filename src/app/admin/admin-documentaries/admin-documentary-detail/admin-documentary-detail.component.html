@@ -17,6 +17,10 @@
             <td>{{ documentary.summary }}</td>
         </tr>
         <tr>
+            <td>Category</td>
+            <td>{{ documentary.category.name }}</td>
+        </tr>
+        <tr>
             <td>Year</td>
             <td>{{ documentary.year }}</td>
         </tr>
@@ -34,7 +38,7 @@
         </tr>
         <tr>
             <td>Short Url</td>
-            <td>{{ documentary.short_url }}</td>
+            <td>{{ documentary.shortUrl }}</td>
         </tr>
         <tr>
             <td>Poster</td>
@@ -42,15 +46,15 @@
         </tr>
         <tr>
             <td>Wide Image</td>
-            <td>{{ documentary.wide_image }}</td>
+            <td>{{ documentary.wideImage }}</td>
         </tr>
         <tr>
             <td>Video Souce</td>
-            <td>{{ documentary.video_source }}</td>
+            <td>{{ documentary.videoSource.name }}</td>
         </tr>
         <tr>
             <td>Video ID</td>
-            <td>{{ documentary.video_id }}</td>
+            <td>{{ documentary.videoId }}</td>
         </tr>
         <tr>
             <td>Featured</td>
@@ -58,11 +62,11 @@
         </tr>
         <tr>
             <td>Created At</td>
-            <td>{{ documentary.created_at }}</td>
+            <td>{{ documentary.createdAt }}</td>
         </tr>
         <tr>
             <td>Updated At</td>
-            <td>{{ documentary.updated_at }}</td>
+            <td>{{ documentary.updatedAt }}</td>
         </tr>
     </tbody>
 </table>
