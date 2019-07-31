@@ -1,31 +1,35 @@
+import { catchError } from 'rxjs/operators';
+import { CategoryService } from './../../../services/category.service';
 import { HttpParams } from '@angular/common/http';
-import { VideoSourceService } from './../../../services/video-source.service';
-import { Documentary } from './../../../models/documentary.model';
-import { DocumentaryService } from './../../../services/documentary.service';
-import { Params, ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { VideoSourceService } from './../../../services/video-source.service';
+import { DocumentaryService } from './../../../services/documentary.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Documentary } from './../../../models/documentary.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-admin-documentary-edit',
-  templateUrl: './admin-documentary-edit.component.html',
-  styleUrls: ['./admin-documentary-edit.component.css']
+  selector: 'app-admin-documentaries-add',
+  templateUrl: './admin-documentaries-add.component.html',
+  styleUrls: ['./admin-documentaries-add.component.css']
 })
-export class AdminDocumentaryEditComponent implements OnInit {
-  editDocumentaryForm: FormGroup;
+export class AdminDocumentariesAddComponent implements OnInit {
+  addDocumentaryForm: FormGroup;
   documentary: Documentary;
   posterImgURL: any;
   wideImgURL: any;
   statuses: any;
   years: any;
   videoSources: any;
+  categories: any;
 
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
     private videoSourceService: VideoSourceService,
+    private categoryService: CategoryService,
     private router: Router,
     private cd: ChangeDetectorRef) {}
 
@@ -40,14 +44,13 @@ export class AdminDocumentaryEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.route.data.subscribe(result => {
-      this.initStatuses();
-      this.initYears();
-      this.initVideoSources();
-      this.documentary = <Documentary> result[0];
-      console.log(this.documentary);
-      this.initForm();
-    })
+    this.documentary = new Documentary();
+
+    this.initStatuses();
+    this.initYears();
+    this.initVideoSources();
+    this.initCategories();
+    this.initForm();
   }
 
   initStatuses() {
@@ -89,32 +92,41 @@ export class AdminDocumentaryEditComponent implements OnInit {
     this.videoSourceService.getAll(params)
       .subscribe(result => {
         this.videoSources = result;
-        console.log(this.videoSources);
+      });
+  }
+
+  initCategories() {
+    let params: HttpParams;
+    this.categoryService.getAll(params)
+      .subscribe(result => {
+        this.categories = result;
       });
   }
   
   initForm() {
     let title = this.documentary.title;
     let slug = this.documentary.slug;
+    let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let videoSource = this.documentary.videoSource;
-    console.log(videoSource);
+    let videoId = this.documentary.videoId;
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
-    let poster = 'http://localhost:8000/' + this.documentary.poster;
+    let poster = this.documentary.poster;
     this.posterImgURL = poster;
-    let wideImage = 'http://localhost:8000/' + this.documentary.wideImage;
-    console.log(wideImage);
+    let wideImage = this.documentary.wideImage;
     this.wideImgURL = wideImage;
 
-    this.editDocumentaryForm = new FormGroup({
+    this.addDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
       'slug': new FormControl(slug, [Validators.required]),
+      'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'video_source': new FormControl(videoSource, [Validators.required]),
+      'videoSource': new FormControl(videoSource, [Validators.required]),
+      'videoId': new FormControl(videoId, [Validators.required]),
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
@@ -122,7 +134,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'wideImage': new FormControl(wideImage, [Validators.required])
     });
 
-    this.editDocumentaryForm.statusChanges.subscribe(
+    this.addDocumentaryForm.statusChanges.subscribe(
       (status) => console.log(status)
     );
   }
@@ -135,7 +147,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     reader.readAsDataURL(file);
   
     reader.onload = () => {
-      this.editDocumentaryForm.patchValue({
+      this.addDocumentaryForm.patchValue({
         poster: reader.result
       });
       
@@ -155,7 +167,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     reader.readAsDataURL(file);
   
     reader.onload = () => {
-      this.editDocumentaryForm.patchValue({
+      this.addDocumentaryForm.patchValue({
         wideImage: reader.result
       });
       
@@ -168,11 +180,12 @@ export class AdminDocumentaryEditComponent implements OnInit {
   }
 
   onSubmit() {
-    let documentaryId = this.documentary.id;
-    let formValue = this.editDocumentaryForm.value;
-    formValue.id = documentaryId;
-    this.documentaryService.patchBySlug(formValue).subscribe(result => {
-      this.router.navigate(["/admin/documentaries", this.documentary.slug]);
+    let formValue = this.addDocumentaryForm.value;
+    this.documentaryService.create(formValue).subscribe(result => {
+      console.log(result);
+    },
+    (error) => {
+      console.log(error);
     });
   }
 }

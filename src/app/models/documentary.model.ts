@@ -1,19 +1,21 @@
+import { VideoSource } from './video-source.model';
 export class Documentary {
     id: number;
     title: string;
     slug: string;
+    category: number;
     storyline: string;
     summary: string;
     year: number;
     length: number;
     status: string;
     views: number;
-    short_url: string;
-    wide_image: string;
-    video_source: string;
-    video_id: string;
+    shortUrl: string;
+    wideImage: string;
+    videoSource: string;
+    videoId: string;
     featured: boolean;
-    created_at: string;
-    updated_at: string;
+    createdAt: string;
+    updatedAt: string;
     poster: string;
 }

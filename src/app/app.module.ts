@@ -20,6 +20,7 @@ import { DocumentaryResolverService } from './services/documentary-resolver.serv
 import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-video-sources.component';
 import { AdminVideoSourceEditComponent } from './admin/admin-video-sources/admin-video-source-edit/admin-video-source-edit.component';
 import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/admin-video-source-detail/admin-video-source-detail.component';
+import { AdminDocumentariesAddComponent } from './admin/admin-documentaries/admin-documentaries-add/admin-documentaries-add.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/adm
     AdminVideoSourcesComponent,
     AdminVideoSourceEditComponent,
     AdminVideoSourceDetailComponent,
+    AdminDocumentariesAddComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,158 @@
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form [formGroup]="addDocumentaryForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="title">Title</label>
+                <input
+                type="text"
+                id="title"
+                formControlName="title"
+                class="form-control">
+                <span
+                *ngIf="!addDocumentaryForm.get('title').valid && addDocumentaryForm.get('title').touched"
+                class="help-block">
+                <span *ngIf="addDocumentaryForm.get('title').errors['required']">This field is required!</span>
+
+                </span>
+            </div>
+            <div class="form-group">
+                <label for="slug">Slug</label>
+                <input
+                type="text"
+                id="slug"
+                formControlName="slug"
+                class="form-control">
+                <span
+                *ngIf="!addDocumentaryForm.get('slug').valid && addDocumentaryForm.get('slug').touched"
+                class="help-block">Please enter a valid slug!</span>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select 
+                  formControlName="category"
+                  class="form-control"
+                  id="category">
+                    <option disabled>Choose Category</option>
+                    <option *ngFor="let categoryItem of categories" 
+                      [value]="categoryItem.id" 
+                      [selected]="documentary.category == categoryItem.id">
+                      {{ categoryItem.name }}
+                    </option>
+                  </select>
+                <span
+                *ngIf="!addDocumentaryForm.get('category').valid && addDocumentaryForm.get('category').touched"
+                class="help-block">Please enter a valid category!</span>
+            </div>
+            <div class="form-group">
+                <label for="storyline">Storyline</label>
+                <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
+                <span
+                *ngIf="!addDocumentaryForm.get('storyline').valid && addDocumentaryForm.get('storyline').touched"
+                class="help-block">Please enter a valid storyline!</span>
+            </div>
+            <div class="form-group">
+                <label for="summary">Summary</label>
+                    <textarea
+                    type="text"
+                    id="summary"
+                    formControlName="summary"
+                    class="form-control"></textarea>
+                <span
+                *ngIf="!addDocumentaryForm.get('summary').valid && addDocumentaryForm.get('summary').touched"
+                class="help-block">Please enter a valid summary!</span>
+            </div>
+            <div class="form-group">
+                <label for="videoSource">Video Source</label>
+                <select 
+                  [(ngModel)]="documentary.videoSource"
+                  formControlName="videoSource"
+                  class="form-control"
+                  id="videoSource">
+                    <option disabled>Choose Video Source</option>
+                    <option *ngFor="let videoSourceItem of videoSources" 
+                      [value]="videoSourceItem.id" 
+                      [selected]="documentary.videoSource == videoSourceItem.name">
+                      {{ videoSourceItem.name }}
+                    </option>
+                  </select>
+                <span
+                *ngIf="!addDocumentaryForm.get('videoSource').valid && addDocumentaryForm.get('videoSource').touched"
+                class="help-block">Please enter a valid video source!</span>
+            </div>
+            <div class="form-group">
+                <label for="videoId">Video ID</label>
+                <input
+                    type="text"
+                    id="videoId"
+                    formControlName="videoId"
+                    class="form-control">
+                <span
+                *ngIf="!addDocumentaryForm.get('videoId').valid && addDocumentaryForm.get('videoId').touched"
+                class="help-block">Please enter a valid video id!</span>
+            </div>
+            <div class="form-group">
+                <label for="year">Year</label>
+                <select 
+                  formControlName="year"
+                  class="form-control"
+                  id="year">
+                    <option disabled>Choose Year</option>
+                    <option *ngFor="let yearItem of years" 
+                      [value]="yearItem" 
+                      [selected]="documentary.year == yearItem">
+                      {{ yearItem }}
+                    </option>
+                  </select>
+                <span
+                *ngIf="!addDocumentaryForm.get('year').valid && addDocumentaryForm.get('year').touched"
+                class="help-block">Please enter a valid year!</span>
+            </div>
+            <div class="form-group">
+                <label for="length">Length (in minutes)</label>
+                <input
+                type="text"
+                id="length"
+                formControlName="length"
+                class="form-control">
+                <span
+                *ngIf="!addDocumentaryForm.get('length').valid && addDocumentaryForm.get('length').touched"
+                class="help-block">Please enter a valid length!</span>
+            </div>
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select 
+                  [(ngModel)]="documentary.status"
+                  formControlName="status"
+                  class="form-control"
+                  id="status">
+                    <option disabled>Choose Status</option>
+                    <option *ngFor="let statusItem of statuses" 
+                      [value]="statusItem.value" 
+                      [selected]="documentary.status == statusItem.value">
+                      {{ statusItem.name }}
+                    </option>
+                  </select>
+                <span
+                *ngIf="!addDocumentaryForm.get('status').valid && addDocumentaryForm.get('status').touched"
+                class="help-block">Please enter a valid status!</span>
+            </div>
+            <div class="form-group">
+              <label for="poster">Poster</label>
+              <input id="poster" type="file" (change)="onPosterChange($event)" />
+              <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
+            </div>
+            <div class="form-group">
+              <label for="wideImage">Wide Image</label>
+              <input id="wideImage" type="file" (change)="onWideImageChange($event)" />
+              <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
+            </div>
+          <span
+            *ngIf="!addDocumentaryForm.valid"
+            class="help-block">Please enter valid data!</span>
+          <button class="btn btn-primary" [disabled]="!addDocumentaryForm.valid" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
