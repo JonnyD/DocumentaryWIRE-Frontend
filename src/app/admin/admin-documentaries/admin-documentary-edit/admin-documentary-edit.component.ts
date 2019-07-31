@@ -1,3 +1,4 @@
+import { CategoryService } from './../../../services/category.service';
 import { HttpParams } from '@angular/common/http';
 import { VideoSourceService } from './../../../services/video-source.service';
 import { Documentary } from './../../../models/documentary.model';
@@ -21,11 +22,13 @@ export class AdminDocumentaryEditComponent implements OnInit {
   statuses: any;
   years: any;
   videoSources: any;
+  categories: any;
 
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
     private videoSourceService: VideoSourceService,
+    private categoryService: CategoryService,
     private router: Router,
     private cd: ChangeDetectorRef) {}
 
@@ -44,6 +47,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       this.initStatuses();
       this.initYears();
       this.initVideoSources();
+      this.initCategories();
       this.documentary = <Documentary> result[0];
       console.log(this.documentary);
       this.initForm();
@@ -89,32 +93,43 @@ export class AdminDocumentaryEditComponent implements OnInit {
     this.videoSourceService.getAll(params)
       .subscribe(result => {
         this.videoSources = result;
-        console.log(this.videoSources);
+      });
+  }
+  
+  initCategories() {
+    let params: HttpParams;
+    this.categoryService.getAll(params)
+      .subscribe(result => {
+        this.categories = result;
+        console.log(result);
       });
   }
   
   initForm() {
     let title = this.documentary.title;
     let slug = this.documentary.slug;
+    let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let videoSource = this.documentary.videoSource;
-    console.log(videoSource);
+    //console.log(videoSource);
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
     let poster = 'http://localhost:8000/' + this.documentary.poster;
     this.posterImgURL = poster;
     let wideImage = 'http://localhost:8000/' + this.documentary.wideImage;
-    console.log(wideImage);
+    //console.log(wideImage);
     this.wideImgURL = wideImage;
+    console.log(this.wideImgURL);
 
     this.editDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
       'slug': new FormControl(slug, [Validators.required]),
+      'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'video_source': new FormControl(videoSource, [Validators.required]),
+      'videoSource': new FormControl(videoSource, [Validators.required]),
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),

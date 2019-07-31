@@ -12,7 +12,7 @@ export class Documentary {
     views: number;
     shortUrl: string;
     wideImage: string;
-    videoSource: string;
+    videoSource: VideoSource;
     videoId: string;
     featured: boolean;
     createdAt: string;
