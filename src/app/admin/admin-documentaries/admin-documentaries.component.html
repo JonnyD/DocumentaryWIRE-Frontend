@@ -7,6 +7,7 @@
         <th scope="col">Title</th>
         <th scope="col">Story Line</th>
         <th scope="col">Summary</th>
+        <th scope="col">Category</th>
         <th scope="col">Year</th>
         <th scope="col">Length</th>
         <th scope="col">Status</th>
@@ -31,18 +32,19 @@
         <td>{{ documentary.title }}</td>
         <td>{{ documentary.storyline }}</td>
         <td>{{ documentary.summary }}</td>
+        <td>{{ documentary.category.name }}</td>
         <td>{{ documentary.year }}</td>
         <td>{{ documentary.length }}</td>
         <td>{{ documentary.status }}</td>
         <td>{{ documentary.views }}</td>
-        <td>{{ documentary.short_url }}</td>
+        <td>{{ documentary.shortUrl }}</td>
         <td>{{ documentary.poster }}</td>
-        <td>{{ documentary.wide_image }}</td>
-        <td>{{ documentary.video_source }}</td>
-        <td>{{ documentary.video_id }}</td>
+        <td>{{ documentary.wideImage }}</td>
+        <td>{{ documentary.videoSource.name }}</td>
+        <td>{{ documentary.videoId }}</td>
         <td>{{ documentary.featured }}</td>
-        <td>{{ documentary.created_at }}</td>
-        <td>{{ documentary.updated_at }}</td>
+        <td>{{ documentary.createdAt }}</td>
+        <td>{{ documentary.updatedAt }}</td>
       </tr>
     </tbody>
   </table>
