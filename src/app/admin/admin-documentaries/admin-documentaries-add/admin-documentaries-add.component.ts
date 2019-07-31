@@ -115,9 +115,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
     let length = this.documentary.length;
     let status = this.documentary.status;
     let poster = this.documentary.poster;
-    this.posterImgURL = poster;
     let wideImage = this.documentary.wideImage;
-    this.wideImgURL = wideImage;
 
     this.addDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
@@ -181,6 +179,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
 
   onSubmit() {
     let formValue = this.addDocumentaryForm.value;
+    console.log(formValue);
     this.documentaryService.create(formValue).subscribe(result => {
       console.log(result);
       this.router.navigate(["/admin/documentaries",  result.slug]);

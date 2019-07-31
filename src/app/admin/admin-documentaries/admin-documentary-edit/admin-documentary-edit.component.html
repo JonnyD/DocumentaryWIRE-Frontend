@@ -82,6 +82,17 @@
                     class="help-block">Please enter a valid video source!</span>
                 </div>
                 <div class="form-group">
+                  <label for="videoId">Video ID</label>
+                  <input
+                      type="text"
+                      id="videoId"
+                      formControlName="videoId"
+                      class="form-control">
+                  <span
+                  *ngIf="!editDocumentaryForm.get('videoId').valid && editDocumentaryForm.get('videoId').touched"
+                  class="help-block">Please enter a valid video id!</span>
+              </div>
+                <div class="form-group">
                     <label for="year">Year</label>
                     <select 
                       formControlName="year"

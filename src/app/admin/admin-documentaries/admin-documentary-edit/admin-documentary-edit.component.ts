@@ -112,6 +112,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let videoSource = this.documentary.videoSource;
+    let videoId = this.documentary.videoId;
     //console.log(videoSource);
     let year = this.documentary.year;
     let length = this.documentary.length;
@@ -130,6 +131,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
       'videoSource': new FormControl(videoSource, [Validators.required]),
+      'videoId': new FormControl(videoId, [Validators.required]),
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
@@ -186,8 +188,9 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let documentaryId = this.documentary.id;
     let formValue = this.editDocumentaryForm.value;
     formValue.id = documentaryId;
-    this.documentaryService.patchBySlug(formValue).subscribe(result => {
-      this.router.navigate(["/admin/documentaries", this.documentary.slug]);
+    this.documentaryService.patch(formValue).subscribe(result => {
+      console.log(result);
+     // this.router.navigate(["/admin/documentaries", this.documentary.slug]);
     });
   }
 }
