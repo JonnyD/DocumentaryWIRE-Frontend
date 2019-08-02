@@ -1,3 +1,4 @@
+import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
@@ -8,6 +9,6 @@ import { Injectable } from '@angular/core';
 export class CategoryService extends DataService {
 
   constructor(http: HttpClient) {
-    super('http://localhost:8000/api/v1/category', http);
+    super(`${environment.apiUrl}/category`, http);
    }
 }
