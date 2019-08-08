@@ -1,4 +1,5 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { AuthenticationService } from './authentication.service';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -7,41 +8,41 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class DataService {
-  constructor(private url: string, private http: HttpClient) { }
+  constructor(
+    private url: string, 
+    private http: HttpClient) { }
 
   get(idOrSlug) {
-    return this.http.get(this.url + '/' + idOrSlug + "?access_token=ZWJkNDkxZDU4ZGZlZTMxN2MwZTEyNGYxYzIwYjYxOWJhYmMyZjQxN2I5ZjdkNDVjYjJkNjVjYjQ0YWFmNTAzNQ");
+    let url = this.url + '/' + idOrSlug;
+    return this.http.get(url);
   }
 
   getAll(params:HttpParams) {
-    return this.http.get<Object[]>(this.url + "?access_token=ZWJkNDkxZDU4ZGZlZTMxN2MwZTEyNGYxYzIwYjYxOWJhYmMyZjQxN2I5ZjdkNDVjYjJkNjVjYjQ0YWFmNTAzNQ", 
+    return this.http.get<Object[]>(this.url, 
     {
       params: params
     });
   }
 
-  create(resource) {
-    console.log("url: " + this.url);
-    console.log(resource);
-    return this.http.post(this.url  + "?access_token=ZWJkNDkxZDU4ZGZlZTMxN2MwZTEyNGYxYzIwYjYxOWJhYmMyZjQxN2I5ZjdkNDVjYjJkNjVjYjQ0YWFmNTAzNQ", JSON.stringify(resource));
+  create(resource, params: HttpParams) {
+    return this.http.post(this.url, JSON.stringify(resource), {params});
   }
 
-  update(resource) {
-    return this.http.put(this.url + '/' + resource.id + "?access_token=ZWJkNDkxZDU4ZGZlZTMxN2MwZTEyNGYxYzIwYjYxOWJhYmMyZjQxN2I5ZjdkNDVjYjJkNjVjYjQ0YWFmNTAzNQ", JSON.stringify({
-      
-    }));
+  update(resource, params: HttpParams) {
+    return this.http.put(this.url + '/' + resource.id, JSON.stringify({
+      resource
+    }), {params});
   }
 
   patch(resource) {
-    console.log(resource);
-    return this.http.patch(this.url + '/' + resource.id + "?access_token=ZWJkNDkxZDU4ZGZlZTMxN2MwZTEyNGYxYzIwYjYxOWJhYmMyZjQxN2I5ZjdkNDVjYjJkNjVjYjQ0YWFmNTAzNQ", JSON.stringify({
+    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({
       resource
     }));
   }
 
   patchBySlug(resource) {
     console.log(resource);
-    return this.http.patch(this.url + '/' + resource.slug + "?access_token=ZWJkNDkxZDU4ZGZlZTMxN2MwZTEyNGYxYzIwYjYxOWJhYmMyZjQxN2I5ZjdkNDVjYjJkNjVjYjQ0YWFmNTAzNQ", JSON.stringify({
+    return this.http.patch(this.url + '/' + resource.slug, JSON.stringify({
       resource
     }));
   }

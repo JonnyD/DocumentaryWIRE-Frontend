@@ -14,7 +14,7 @@ export class DocumentaryResolverService implements Resolve<Observable<any>> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let slug = route.params['slug'];
-    let documentary = this.documentaryService.get(slug);
+    let documentary = this.documentaryService.getDocumentaryBySlug(slug);
     return documentary;
   }
 }

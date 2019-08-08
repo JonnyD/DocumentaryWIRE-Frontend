@@ -19,7 +19,7 @@ export class AdminVideoSourceDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(result => {
-      this.videoSource = result[0];
+      this.videoSource = <VideoSource> result[0];
     })
   }
 }

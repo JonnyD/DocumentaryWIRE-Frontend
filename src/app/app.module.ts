@@ -1,3 +1,4 @@
+import { AuthenticationService } from './services/authentication.service';
 import { VideoSourceService } from './services/video-source.service';
 import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -8,7 +9,7 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { AdminDocumentariesComponent } from './admin/admin-documentaries/admin-documentaries.component';
 import { DocumentaryService } from './services/documentary.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AdminCommentsComponent } from './admin/admin-comments/admin-comments.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
@@ -21,6 +22,9 @@ import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-vi
 import { AdminVideoSourceEditComponent } from './admin/admin-video-sources/admin-video-source-edit/admin-video-source-edit.component';
 import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/admin-video-source-detail/admin-video-source-detail.component';
 import { AdminDocumentariesAddComponent } from './admin/admin-documentaries/admin-documentaries-add/admin-documentaries-add.component';
+import { LoginComponent } from './public/login/login.component';
+import { OauthInterceptor } from './helpers/oauth.interceptor';
+import { LogoutComponent } from './public/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +41,8 @@ import { AdminDocumentariesAddComponent } from './admin/admin-documentaries/admi
     AdminVideoSourceEditComponent,
     AdminVideoSourceDetailComponent,
     AdminDocumentariesAddComponent,
+    LoginComponent,
+    LogoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +56,8 @@ import { AdminDocumentariesAddComponent } from './admin/admin-documentaries/admi
   providers: [
     DocumentaryService,
     VideoSourceService,
-    DocumentaryResolverService
+    DocumentaryResolverService,
+    AuthenticationService,
   ],
   bootstrap: [AppComponent]
 })

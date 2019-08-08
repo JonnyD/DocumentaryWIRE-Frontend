@@ -1,3 +1,5 @@
+import { LogoutComponent } from './public/logout/logout.component';
+import { LoginComponent } from './public/login/login.component';
 import { AdminDocumentariesAddComponent } from './admin/admin-documentaries/admin-documentaries-add/admin-documentaries-add.component';
 import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/admin-video-source-detail/admin-video-source-detail.component';
 import { VideoSourceResolverService } from './services/video-source-resolver.service';
@@ -15,7 +17,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
 
 const routes: Routes = [
-  {path: 'admin', component: AdminHomeComponent,
+  { path: 'login', component: LoginComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: 'admin', component: AdminHomeComponent,
     children: [
       { 
         path: 'documentaries', 

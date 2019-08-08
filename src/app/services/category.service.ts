@@ -1,3 +1,4 @@
+import { AuthenticationService } from './authentication.service';
 import { environment } from './../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from './data.service';
@@ -8,7 +9,14 @@ import { Injectable } from '@angular/core';
 })
 export class CategoryService extends DataService {
 
-  constructor(http: HttpClient) {
-    super(`${environment.apiUrl}/category`, http);
+  private authenticationService: AuthenticationService;
+
+  constructor(http: HttpClient, authenticationService: AuthenticationService) {
+    super(`${environment.apiUrl}/api/v1/category`, http);
+    this.authenticationService = authenticationService;
+   }
+
+   getCategoryById(id: number) {
+     return this.get(id);
    }
 }
