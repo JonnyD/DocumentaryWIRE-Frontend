@@ -1,3 +1,4 @@
+import { AdminGuard } from './admin/admin-guard.service';
 import { LogoutComponent } from './public/logout/logout.component';
 import { LoginComponent } from './public/login/login.component';
 import { AdminDocumentariesAddComponent } from './admin/admin-documentaries/admin-documentaries-add/admin-documentaries-add.component';
@@ -19,7 +20,7 @@ import { DocumentaryResolverService } from './services/documentary-resolver.serv
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
-  { path: 'admin', component: AdminHomeComponent,
+  { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,
     children: [
       { 
         path: 'documentaries', 

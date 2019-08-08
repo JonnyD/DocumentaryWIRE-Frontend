@@ -1,3 +1,4 @@
+import { AdminGuard } from './admin/admin-guard.service';
 import { AuthenticationService } from './services/authentication.service';
 import { VideoSourceService } from './services/video-source.service';
 import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
@@ -58,6 +59,7 @@ import { LogoutComponent } from './public/logout/logout.component';
     VideoSourceService,
     DocumentaryResolverService,
     AuthenticationService,
+    AdminGuard
   ],
   bootstrap: [AppComponent]
 })

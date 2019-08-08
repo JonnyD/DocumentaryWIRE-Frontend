@@ -19,6 +19,10 @@ export class AuthenticationService {
         return this.currentTokenSubject.value;
     }
 
+    isAuthenticated() {
+        return this.currentTokenSubject.value.access_token != null;
+    }
+
     login(username: string, password: string) {
         var grantType = `${environment.grantType}`;
         var clientId = `${environment.clientId}`;
