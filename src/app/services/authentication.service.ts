@@ -20,7 +20,8 @@ export class AuthenticationService {
     }
 
     isAuthenticated() {
-        return this.currentTokenSubject.value.access_token != null;
+        return this.currentTokenValue != null 
+            && this.currentTokenSubject.value.access_token != null;
     }
 
     login(username: string, password: string) {

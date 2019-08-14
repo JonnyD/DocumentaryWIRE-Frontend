@@ -1,5 +1,5 @@
 import { AuthenticationService } from './authentication.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -17,6 +17,30 @@ export class VideoSourceService extends DataService {
    }
 
    getVideoSourceById(id: number) {
-     return this.get(id);
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+     let accessToken = this.authenticationService.currentTokenValue.access_token;
+     options = {
+       headers: new HttpHeaders()
+         .append('access_token', accessToken),
+     }
+    }
+
+     return this.get(id, options);
    }
+
+   getAllVideoSources() {
+     let options = {};
+
+     if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      options = {
+        headers: new HttpHeaders()
+          .append('access_token', accessToken),
+      }
+     }
+    
+     return this.getAll(options);
+    }
 }

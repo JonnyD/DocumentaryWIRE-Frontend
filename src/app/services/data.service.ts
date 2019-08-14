@@ -12,16 +12,13 @@ export class DataService {
     private url: string, 
     private http: HttpClient) { }
 
-  get(idOrSlug) {
+  get(idOrSlug, options) {
     let url = this.url + '/' + idOrSlug;
-    return this.http.get(url);
+    return this.http.get(url, options);
   }
 
-  getAll(params:HttpParams) {
-    return this.http.get<Object[]>(this.url, 
-    {
-      params: params
-    });
+  getAll(options) {
+    return this.http.get<Object[]>(this.url, options);
   }
 
   create(resource, params: HttpParams) {

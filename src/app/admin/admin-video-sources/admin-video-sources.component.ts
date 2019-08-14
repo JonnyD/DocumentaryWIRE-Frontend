@@ -19,10 +19,10 @@ export class AdminVideoSourcesComponent implements OnInit {
   }
 
   fetchVideoSources() {
-    let params: HttpParams;
-
-    this.videoSourcesService.getAll(params)
+    this.videoSourcesService.getAllVideoSources()
       .subscribe(result => {
+        console.log("hi");
+        console.log(result);
         this.videoSources = <VideoSource[]> result;
       })
   }
