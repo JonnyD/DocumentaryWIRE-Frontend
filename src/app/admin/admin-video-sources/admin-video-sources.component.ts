@@ -9,7 +9,7 @@ import { VideoSource } from 'src/app/models/video-source.model';
   styleUrls: ['./admin-video-sources.component.css']
 })
 export class AdminVideoSourcesComponent implements OnInit {
-  videoSources: VideoSource[];
+  videoSources;
 
   constructor(
     private videoSourcesService: VideoSourceService) { }
@@ -22,7 +22,7 @@ export class AdminVideoSourcesComponent implements OnInit {
     this.videoSourcesService.getAllVideoSources()
       .subscribe(result => {
         console.log(result);
-        this.videoSources = <VideoSource[]> result;
+        this.videoSources = result;
       })
   }
 }
