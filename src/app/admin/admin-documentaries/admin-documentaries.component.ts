@@ -19,7 +19,6 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   config: any;
   private page;
   private videoSource;
-  private params: HttpParams;
 
   constructor(
     private service: DocumentaryService,
@@ -44,7 +43,6 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       page = 1;
     }
     params = params.append('page', page.toString());
-    //console.log(params);
     
     this.location.go(this.router.url.split("?")[0], params.toString());
 
