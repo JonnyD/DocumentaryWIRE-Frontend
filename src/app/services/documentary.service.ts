@@ -1,6 +1,7 @@
+import { HeaderAccessTokenService } from './../helpers/header-access-token.service';
 import { Documentary } from './../models/documentary.model';
 import { AuthenticationService } from './authentication.service';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
@@ -9,39 +10,66 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DocumentaryService extends DataService {
-  authenticationService: AuthenticationService;
+  private authenticationService: AuthenticationService;
 
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
-    let url = `${environment.apiUrl}/api/v1/documentary`;
-    super(url, http);
+    super(`${environment.apiUrl}/api/v1/documentary`, http);
     this.authenticationService = authenticationService;
    }
 
    getDocumentaryBySlug(slug: string) {
-     return super.get(slug);
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
+    }
+
+     return this.get(slug, options);
    }
 
-   getAllDocumentaries(params: HttpParams) {
-    return super.getAll(params);
+   getAllDocumentaries() {
+     let options = {};
+
+      if (this.authenticationService.isAuthenticated()) {
+          let accessToken = this.authenticationService.currentTokenValue.access_token;
+          options = {
+            params: new HttpParams()
+              .append('access_token', accessToken)
+          }
+      }
+
+      return this.getAll(options);
    }
 
    createDocumentary(documentary: Documentary) {
-     let currentTokenValue = this.authenticationService.currentTokenValue;
-     let accessToken = currentTokenValue.access_token;
-     if (accessToken) {
-      let httpParams: HttpParams;
-      httpParams.set('access_token', accessToken);
-      return super.create(documentary, httpParams);
-     }
+      let options;
+
+      if (this.authenticationService.isAuthenticated()) {
+          let accessToken = this.authenticationService.currentTokenValue.access_token;
+          options = {
+            params: new HttpParams()
+              .append('access_token', accessToken)
+          }
+      }
+
+      return this.create(documentary, options);
    }
 
    updateDocumentary(documentary: Documentary) {
-    let currentTokenValue = this.authenticationService.currentTokenValue;
-    let accessToken = currentTokenValue.access_token;
-    if (accessToken) {
-     let httpParams: HttpParams;
-     httpParams.set('access_token', accessToken);
-     return super.update(documentary, httpParams);
+    let options;
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
     }
+    
+     return this.update(documentary, options);
    }
 }

@@ -1,3 +1,4 @@
+import { HeaderAccessTokenService } from './../helpers/header-access-token.service';
 import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { DataService } from './data.service';
@@ -20,27 +21,25 @@ export class VideoSourceService extends DataService {
     let options = {};
 
     if (this.authenticationService.isAuthenticated()) {
-     let accessToken = this.authenticationService.currentTokenValue.access_token;
-     options = {
-       headers: new HttpHeaders()
-         .append('access_token', accessToken),
-     }
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
     }
-
-     return this.get(id, options);
+    return this.get(id, options);
    }
 
    getAllVideoSources() {
-     let options = {};
+    let options = {};
 
-     if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      options = {
-        headers: new HttpHeaders()
-          .append('access_token', accessToken),
-      }
-     }
-    
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
+    }
      return this.getAll(options);
     }
 }

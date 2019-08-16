@@ -1,6 +1,6 @@
 import { AuthenticationService } from './authentication.service';
 import { environment } from './../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { DataService } from './data.service';
 import { Injectable } from '@angular/core';
 
@@ -17,6 +17,16 @@ export class CategoryService extends DataService {
    }
 
    getCategoryById(id: number) {
-     return this.get(id);
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
+    }
+
+     return this.get(id, options);
    }
 }
