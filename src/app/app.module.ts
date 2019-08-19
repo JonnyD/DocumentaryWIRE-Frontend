@@ -27,6 +27,7 @@ import { LoginComponent } from './public/login/login.component';
 import { OauthInterceptor } from './helpers/oauth.interceptor';
 import { LogoutComponent } from './public/logout/logout.component';
 import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
+import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-category-detail/admin-category-detail.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { AdminCategoriesComponent } from './admin/admin-categories/admin-categor
     LoginComponent,
     LogoutComponent,
     AdminCategoriesComponent,
+    AdminCategoryDetailComponent,
   ],
   imports: [
     BrowserModule,

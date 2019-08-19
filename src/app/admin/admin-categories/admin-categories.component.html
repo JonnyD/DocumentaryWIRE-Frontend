@@ -1,1 +1,18 @@
-<p>admin-categories works!</p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Slug</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <a [routerLink]="['/admin/categories', category.id]">
+          {{ category.id }}
+      </a>
+        <td>{{ category.name }}</td>
+        <td>{{ category.slug }}</td>
+      </tr>
+    </tbody>
+  </table>

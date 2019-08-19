@@ -1,3 +1,4 @@
+import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { AdminGuard } from './admin/admin-guard.service';
 import { LogoutComponent } from './public/logout/logout.component';
 import { LoginComponent } from './public/login/login.component';
@@ -39,6 +40,10 @@ const routes: Routes = [
         path: 'documentaries/:slug/edit', 
         component: AdminDocumentaryEditComponent,
         resolve: [DocumentaryResolverService]
+      },
+      { 
+        path: 'categories', 
+        component: AdminCategoriesComponent 
       },
       { 
         path: 'video-sources', 
