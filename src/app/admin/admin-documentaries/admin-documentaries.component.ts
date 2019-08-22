@@ -1,3 +1,4 @@
+import { Status } from './../../models/status.model';
 import { CategoryService } from './../../services/category.service';
 import { VideoSourceService } from './../../services/video-source.service';
 import { VideoSource } from './../../models/video-source.model';
@@ -23,12 +24,18 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   public documentaries: Array<Documentary>;
   public videoSources: Array<VideoSource>;
   public categories: Array<Category>;
+  public statuses: Array<Status> = [
+    { id: 'pending', name: 'Pending' },
+    { id: 'publish', name: 'Published' }
+  ];
   config: any;
   private page;
   private videoSource;
   private previousVideoSource;
   private previousCategory;
   private category;
+  private status;
+  private previousStatus;
 
   constructor(
     private service: DocumentaryService,
@@ -67,6 +74,14 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       }
       this.previousCategory = this.category;
     }
+    if (this.status) {
+      params = params.append('status', this.status.toString());
+      if (this.status != this.previousStatus) {
+        this.page = 1;
+      }
+      this.previousStatus = this.status;
+    }
+    
     params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
@@ -113,6 +128,11 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
   onCategoriesSelected(value: string) {
     this.category = value;
+    this.fetchDocumentaries();
+  }
+
+  onStatusSelected(value: string) {
+    this.status = value;
     this.fetchDocumentaries();
   }
 

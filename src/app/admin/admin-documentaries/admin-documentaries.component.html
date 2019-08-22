@@ -16,6 +16,14 @@
    [value]="category.id">{{category.name}}</option>
 </select>
 
+<select class='select-option' [(ngModel)]="status"
+    #statusSelect
+    (change)='onStatusSelected(statusSelect.value)'>
+   <option class='option' 
+   *ngFor='let status of statuses' 
+   [value]="status.id">{{status.name}}</option>
+</select>
+
 <table class="table table-striped">
     <thead>
       <tr>
