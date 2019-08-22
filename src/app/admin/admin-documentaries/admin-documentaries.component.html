@@ -1,11 +1,19 @@
 <p>admin-documentaries works!</p>
 
 <select class='select-option' [(ngModel)]="videoSource"
-    #mySelect
-    (change)='onVideoSourceSelected(mySelect.value)'>
+    #videoSourceSelect
+    (change)='onVideoSourceSelected(videoSourceSelect.value)'>
    <option class='option' 
    *ngFor='let videoSource of videoSources' 
    [value]="videoSource.id">{{videoSource.name}}</option>
+</select>
+
+<select class='select-option' [(ngModel)]="category"
+    #categorySelect
+    (change)='onCategoriesSelected(categorySelect.value)'>
+   <option class='option' 
+   *ngFor='let category of categories' 
+   [value]="category.id">{{category.name}}</option>
 </select>
 
 <table class="table table-striped">

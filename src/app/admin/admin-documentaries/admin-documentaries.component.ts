@@ -1,3 +1,4 @@
+import { CategoryService } from './../../services/category.service';
 import { VideoSourceService } from './../../services/video-source.service';
 import { VideoSource } from './../../models/video-source.model';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,6 +7,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Documentary } from './../../models/documentary.model';
 import { Location } from "@angular/common";
+import { Category } from 'src/app/models/category.model';
 
 @Component({
   selector: 'app-admin-documentaries',
@@ -17,16 +19,21 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private documentariesSubscription;
   private queryParamsSubscription;
   private videoSourcesSubscription;
+  private categoriesSubscription;
   public documentaries: Array<Documentary>;
   public videoSources: Array<VideoSource>;
+  public categories: Array<Category>;
   config: any;
   private page;
   private videoSource;
   private previousVideoSource;
+  private previousCategory;
+  private category;
 
   constructor(
     private service: DocumentaryService,
     private videoSourceService: VideoSourceService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router) { }
@@ -37,7 +44,9 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.page = +params['page'] || 1;
         this.videoSource = +params['videoSource'] || null;
+        this.category = +params['category'] || null;
         this.fetchVideoSources();
+        this.fetchCategories();
         this.fetchDocumentaries();
       })
   }
@@ -50,6 +59,13 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
         this.page = 1;
       }
       this.previousVideoSource = this.videoSource;
+    }
+    if (this.category) {
+      params = params.append('category', this.category.toString());
+      if (this.category != this.previousCategory) {
+        this.page = 1;
+      }
+      this.previousCategory = this.category;
     }
     params = params.append('page', this.page.toString());
     
@@ -76,6 +92,13 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       });
   }
 
+  fetchCategories() {
+    this.categoriesSubscription = this.categoryService.getAllCategories()
+      .subscribe(result => { 
+        this.categories = <any> result;
+      });
+  }
+
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;
@@ -85,6 +108,11 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
   onVideoSourceSelected(value: string) {
     this.videoSource = value;
+    this.fetchDocumentaries();
+  }
+
+  onCategoriesSelected(value: string) {
+    this.category = value;
     this.fetchDocumentaries();
   }
 
