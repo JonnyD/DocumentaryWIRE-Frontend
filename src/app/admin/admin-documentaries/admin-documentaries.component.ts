@@ -1,3 +1,4 @@
+import { VideoSourceService } from './../../services/video-source.service';
 import { VideoSource } from './../../models/video-source.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentaryService } from './../../services/documentary.service';
@@ -15,13 +16,17 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   
   private documentariesSubscription;
   private queryParamsSubscription;
+  private videoSourcesSubscription;
   public documentaries: Array<Documentary>;
+  public videoSources: Array<VideoSource>;
   config: any;
   private page;
   private videoSource;
+  private previousVideoSource;
 
   constructor(
     private service: DocumentaryService,
+    private videoSourceService: VideoSourceService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router) { }
@@ -32,17 +37,21 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.page = +params['page'] || 1;
         this.videoSource = +params['videoSource'] || null;
-        this.fetchDocumentaries(this.page, this.videoSource);
+        this.fetchVideoSources();
+        this.fetchDocumentaries();
       })
   }
 
-  fetchDocumentaries(page:number = 1, videoSource:number = null) {
+  fetchDocumentaries() {
     let params = new HttpParams();
-    if (videoSource) {
-      params = params.append('videoSource', videoSource.toString());
-      page = 1;
+    if (this.videoSource) {
+      params = params.append('videoSource', this.videoSource.toString());
+      if (this.videoSource != this.previousVideoSource) {
+        this.page = 1;
+      }
+      this.previousVideoSource = this.videoSource;
     }
-    params = params.append('page', page.toString());
+    params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
 
@@ -51,7 +60,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
           result => {
             this.config = {
               itemsPerPage: 12,
-              currentPage: page,
+              currentPage: this.page,
               totalItems: result['count_results']
             };
             this.documentaries = result['items'];
@@ -60,14 +69,28 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       );
   }
 
+  fetchVideoSources() {
+    this.videoSourcesSubscription = this.videoSourceService.getAllVideoSources()
+      .subscribe(result => {
+        this.videoSources = <any> result;
+      });
+  }
+
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;
-    this.fetchDocumentaries(event);
+    this.page = event;
+    this.fetchDocumentaries();
+  }
+
+  onVideoSourceSelected(value: string) {
+    this.videoSource = value;
+    this.fetchDocumentaries();
   }
 
   ngOnDestroy() {
     this.documentariesSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
+    this.videoSourcesSubscription.unsubscribe();
   }
 }

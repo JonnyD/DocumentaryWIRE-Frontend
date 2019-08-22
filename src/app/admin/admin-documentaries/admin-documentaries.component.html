@@ -1,5 +1,13 @@
 <p>admin-documentaries works!</p>
 
+<select class='select-option' [(ngModel)]="videoSource"
+    #mySelect
+    (change)='onVideoSourceSelected(mySelect.value)'>
+   <option class='option' 
+   *ngFor='let videoSource of videoSources' 
+   [value]="videoSource.id">{{videoSource.name}}</option>
+</select>
+
 <table class="table table-striped">
     <thead>
       <tr>

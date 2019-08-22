@@ -48,7 +48,7 @@ export class DocumentaryService extends DataService {
    }
 
    createDocumentary(documentary: Documentary) {
-      let options;
+      let options = {};
 
       if (this.authenticationService.isAuthenticated()) {
           let accessToken = this.authenticationService.currentTokenValue.access_token;

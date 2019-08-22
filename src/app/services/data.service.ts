@@ -21,14 +21,14 @@ export class DataService {
     return this.http.get<Object[]>(this.url, options);
   }
 
-  create(resource, params: HttpParams) {
-    return this.http.post(this.url, JSON.stringify(resource), {params});
+  create(resource, options) {
+    return this.http.post(this.url, JSON.stringify(resource), options);
   }
 
-  update(resource, params: HttpParams) {
+  update(resource, options) {
     return this.http.put(this.url + '/' + resource.id, JSON.stringify({
       resource
-    }), {params});
+    }), options);
   }
 
   patch(resource) {
