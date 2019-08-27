@@ -31,10 +31,11 @@ export class DataService {
     }), options);
   }
 
-  patch(resource) {
-    return this.http.patch(this.url + '/' + resource.id, JSON.stringify({
+  patch(id, resource, options) {
+    console.log(resource);
+    return this.http.patch(this.url + '/' + Number(id), JSON.stringify({
       resource
-    }));
+    }), options);
   }
 
   patchBySlug(resource) {

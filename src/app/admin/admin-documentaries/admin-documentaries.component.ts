@@ -104,7 +104,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       }
       this.previousFeatured = this.featured;
     }
-
+    
     params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
@@ -168,5 +168,6 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     this.documentariesSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
     this.videoSourcesSubscription.unsubscribe();
+    this.categoriesSubscription.unsubscribe();
   }
 }

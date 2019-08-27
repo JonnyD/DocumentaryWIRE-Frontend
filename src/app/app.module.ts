@@ -28,6 +28,8 @@ import { OauthInterceptor } from './helpers/oauth.interceptor';
 import { LogoutComponent } from './public/logout/logout.component';
 import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-category-detail/admin-category-detail.component';
+import { AdminCommentDetailComponent } from './admin/admin-comments/admin-comment-detail/admin-comment-detail.component';
+import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-edit/admin-comment-edit.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-cat
     LogoutComponent,
     AdminCategoriesComponent,
     AdminCategoryDetailComponent,
+    AdminCommentDetailComponent,
+    AdminCommentEditComponent,
   ],
   imports: [
     BrowserModule,

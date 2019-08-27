@@ -1,3 +1,6 @@
+import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-edit/admin-comment-edit.component';
+import { CommentResolverService } from './services/comment-resolver.service';
+import { AdminCommentDetailComponent } from './admin/admin-comments/admin-comment-detail/admin-comment-detail.component';
 import { AdminCategoriesComponent } from './admin/admin-categories/admin-categories.component';
 import { AdminGuard } from './admin/admin-guard.service';
 import { LogoutComponent } from './public/logout/logout.component';
@@ -58,6 +61,20 @@ const routes: Routes = [
         path: 'video-sources/:id/edit', 
         component: AdminVideoSourceEditComponent,
         resolve: [VideoSourceResolverService]
+      },
+      { 
+        path: 'comments', 
+        component: AdminCommentsComponent 
+      },
+      { 
+        path: 'comments/:id', 
+        component: AdminCommentDetailComponent,
+        resolve: [CommentResolverService]
+      },
+      { 
+        path: 'comments/:id/edit', 
+        component: AdminCommentEditComponent,
+        resolve: [CommentResolverService]
       },
     ]
   }

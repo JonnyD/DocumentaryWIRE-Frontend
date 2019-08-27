@@ -20,7 +20,6 @@ export class AdminDocumentaryDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(result => {
-      console.log(result);
         this.documentary = <Documentary> result[0];
     })
   }
