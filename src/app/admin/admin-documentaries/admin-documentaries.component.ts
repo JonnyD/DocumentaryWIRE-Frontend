@@ -28,6 +28,10 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     { id: 'pending', name: 'Pending' },
     { id: 'publish', name: 'Published' }
   ];
+  public featuredOptions = [
+    { id: true },
+    { id: false }
+  ];
   config: any;
   private page;
   private videoSource;
@@ -36,6 +40,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private category;
   private status;
   private previousStatus;
+  private featured;
+  private previousFeatured;
 
   constructor(
     private service: DocumentaryService,
@@ -50,8 +56,10 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       .queryParams
       .subscribe(params => {
         this.page = +params['page'] || 1;
-        this.videoSource = +params['videoSource'] || null;
-        this.category = +params['category'] || null;
+        this.videoSource = +params['videoSource'] || 'all';
+        this.category = +params['category'] || 'all';
+        this.status = params['status'] || 'all';
+        this.featured = params['featured'] || 'all';
         this.fetchVideoSources();
         this.fetchCategories();
         this.fetchDocumentaries();
@@ -61,27 +69,42 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   fetchDocumentaries() {
     let params = new HttpParams();
     if (this.videoSource) {
-      params = params.append('videoSource', this.videoSource.toString());
-      if (this.videoSource != this.previousVideoSource) {
-        this.page = 1;
-      }
+      if (this.videoSource != 'all') {
+        params = params.append('videoSource', this.videoSource.toString());
+        if (this.videoSource != this.previousVideoSource) {
+          this.page = 1;
+        }
+     }
       this.previousVideoSource = this.videoSource;
     }
     if (this.category) {
-      params = params.append('category', this.category.toString());
-      if (this.category != this.previousCategory) {
-        this.page = 1;
+      if (this.category != 'all') {
+        params = params.append('category', this.category.toString());
+        if (this.category != this.previousCategory) {
+          this.page = 1;
+        }
       }
       this.previousCategory = this.category;
     }
     if (this.status) {
-      params = params.append('status', this.status.toString());
-      if (this.status != this.previousStatus) {
-        this.page = 1;
+      if (this.status != 'all') {
+        params = params.append('status', this.status.toString());
+        if (this.status != this.previousStatus) {
+          this.page = 1;
+        }
       }
       this.previousStatus = this.status;
     }
-    
+    if (this.featured) {
+      if (this.featured != 'all') {
+        params = params.append('featured', this.featured.toString());
+        if (this.featured != this.previousFeatured) {
+          this.page = 1;
+        }
+      }
+      this.previousFeatured = this.featured;
+    }
+
     params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
@@ -133,6 +156,11 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
   onStatusSelected(value: string) {
     this.status = value;
+    this.fetchDocumentaries();
+  }
+
+  onFeaturedSelected(value: string) {
+    this.featured = value;
     this.fetchDocumentaries();
   }
 
