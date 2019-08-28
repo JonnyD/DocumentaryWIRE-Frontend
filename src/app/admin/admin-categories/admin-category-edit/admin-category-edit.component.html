@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form [formGroup]="editCategoryForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                type="text"
+                id="name"
+                formControlName="name"
+                class="form-control">
+                <span
+                *ngIf="!editCategoryForm.get('name').valid && editCategoryForm.get('name').touched"
+                class="help-block">
+                <span *ngIf="editCategoryForm.get('name').errors['required']">This field is required!</span>
+                </span>
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Slug</label>
+                <input
+                type="text"
+                id="slug"
+                formControlName="slug"
+                class="form-control">
+                <span
+                *ngIf="!editCategoryForm.get('slug').valid && editCategoryForm.get('slug').touched"
+                class="help-block">
+                <span *ngIf="editCategoryForm.get('slug').errors['required']">This field is required!</span>
+                </span>
+            </div>
+            
+          <span
+            *ngIf="!editCategoryForm.valid && editCategoryForm.touched"
+            class="help-block">Please enter valid data!</span>
+          <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  

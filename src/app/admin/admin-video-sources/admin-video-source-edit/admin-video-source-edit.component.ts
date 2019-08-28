@@ -59,8 +59,7 @@ export class AdminVideoSourceEditComponent implements OnInit {
   onSubmit() {
     let videoSourceId = this.videoSource.id;
     let formValue = this.editVideoSourceForm.value;
-    formValue.id = videoSourceId;
-    this.videoSourceService.patch(formValue)
+    this.videoSourceService.editVideoSource(videoSourceId, formValue)
       .subscribe(result => {
         this.router.navigate(["admin/video-sources", videoSourceId]);
       });

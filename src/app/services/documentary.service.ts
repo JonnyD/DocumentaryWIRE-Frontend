@@ -61,7 +61,7 @@ export class DocumentaryService extends DataService {
       return this.create(documentary, options);
    }
 
-   updateDocumentary(documentary: Documentary) {
+   editDocumentary(id, documentary: Documentary) {
     let options;
 
     if (this.authenticationService.isAuthenticated()) {
@@ -72,6 +72,6 @@ export class DocumentaryService extends DataService {
         }
     }
     
-     return this.update(documentary, options);
+     return this.patch(id, documentary, options);
    }
 }

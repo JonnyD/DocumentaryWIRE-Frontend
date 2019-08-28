@@ -30,6 +30,7 @@ import { AdminCategoriesComponent } from './admin/admin-categories/admin-categor
 import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-category-detail/admin-category-detail.component';
 import { AdminCommentDetailComponent } from './admin/admin-comments/admin-comment-detail/admin-comment-detail.component';
 import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-edit/admin-comment-edit.component';
+import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-
     AdminCategoryDetailComponent,
     AdminCommentDetailComponent,
     AdminCommentEditComponent,
+    AdminCategoryEditComponent,
   ],
   imports: [
     BrowserModule,

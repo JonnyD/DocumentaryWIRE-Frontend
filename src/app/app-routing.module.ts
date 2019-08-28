@@ -1,3 +1,6 @@
+import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
+import { CategoryResolverService } from './services/category-resolver.service';
+import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-category-detail/admin-category-detail.component';
 import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-edit/admin-comment-edit.component';
 import { CommentResolverService } from './services/comment-resolver.service';
 import { AdminCommentDetailComponent } from './admin/admin-comments/admin-comment-detail/admin-comment-detail.component';
@@ -47,6 +50,16 @@ const routes: Routes = [
       { 
         path: 'categories', 
         component: AdminCategoriesComponent 
+      },
+      { 
+        path: 'categories/:id', 
+        component: AdminCategoryDetailComponent,
+        resolve: [CategoryResolverService]
+      },
+      { 
+        path: 'categories/:id/edit', 
+        component: AdminCategoryEditComponent,
+        resolve: [CategoryResolverService]
       },
       { 
         path: 'video-sources', 
