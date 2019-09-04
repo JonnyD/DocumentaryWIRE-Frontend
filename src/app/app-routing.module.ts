@@ -1,3 +1,4 @@
+import { HomeComponent } from './home/home.component';
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
 import { CategoryResolverService } from './services/category-resolver.service';
 import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-category-detail/admin-category-detail.component';
@@ -25,6 +26,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
 
 const routes: Routes = [
+  { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,
