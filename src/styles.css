@@ -9,7 +9,7 @@ body {
 
 .cat-list {
     float: left;
-    width: 30%;
+    width: 50%;
     margin-top: 4px;
 }
 
@@ -32,4 +32,19 @@ ul {
 
 li {
     list-style: none;
+}
+
+.carousel-inner .carousel-item-right.active,
+.carousel-inner .carousel-item-next {
+  transform: translateX(33.33%);
+}
+
+.carousel-inner .carousel-item-left.active, 
+.carousel-inner .carousel-item-prev {
+  transform: translateX(-33.33%)
+}
+
+.carousel-inner .carousel-item-right,
+.carousel-inner .carousel-item-left{ 
+  transform: translateX(0);
 }

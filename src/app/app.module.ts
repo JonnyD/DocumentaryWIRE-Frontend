@@ -32,6 +32,9 @@ import { AdminCommentDetailComponent } from './admin/admin-comments/admin-commen
 import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-edit/admin-comment-edit.component';
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
 import { HomeComponent } from './home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -64,7 +67,10 @@ import { HomeComponent } from './home/home.component';
     HttpClientModule,
     NgxPaginationModule,
     ReactiveFormsModule,
-    AngularEditorModule 
+    AngularEditorModule,
+    BrowserAnimationsModule,
+    NgbModule,
+    CarouselModule
   ],
   providers: [
     DocumentaryService,
