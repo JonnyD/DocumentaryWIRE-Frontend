@@ -47,6 +47,51 @@ export class DocumentaryService extends DataService {
       return this.getAll(options);
    }
 
+   getRecentlyUpdatedDocumentaries(params: HttpParams) {
+     params = params.append('sort', 'updatedAt-desc');
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
+    }
+    
+    return this.getAll(options);
+   }
+
+   getRecentlyAddedDocumentaries(params: HttpParams) {
+    params = params.append('sort', 'createdAt-desc');
+
+   if (this.authenticationService.isAuthenticated()) {
+       let accessToken = this.authenticationService.currentTokenValue.access_token;
+       params = params.append('access_token', accessToken)
+   }
+
+   let options = {
+     params: params
+   }
+   
+   return this.getAll(options);
+  }
+
+  getNewDocumentaries(params: HttpParams) {
+   params = params.append('sort', 'year-desc');
+
+  if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+  }
+
+  let options = {
+    params: params
+  }
+  
+  return this.getAll(options);
+ }
+
    createDocumentary(documentary: Documentary) {
       let options = {};
 

@@ -1,0 +1,70 @@
+<br />
+
+<a [routerLink]="['/admin/users', user.id]">  
+<button class="btn btn-primary" type="submit">Edit</button>
+</a>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td>{{ user.id }}</td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>{{ user.name }}</td>
+        </tr>
+        <tr>
+            <td>Username</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Username Canonical</td>
+            <td>{{ user.usernameCanonical }}</td>
+        </tr>
+        <tr>
+            <td>Enabled</td>
+            <td>{{ user.enabled }}</td>
+        </tr>
+        <tr>
+            <td>Password</td>
+            <td>{{ user.password }}</td>
+        </tr>
+        <tr>
+            <td>Last Login</td>
+            <td>{{ user.lastLogin }}</td>
+        </tr>
+        <tr>
+            <td>Confirmation Token</td>
+            <td>{{ user.confirmationToken }}</td>
+        </tr>
+        <tr>
+            <td>Password Requested At</td>
+            <td>{{ user.passwordRequestedAt }}</td>
+        </tr>
+        <tr>
+            <td>Roles</td>
+            <td>{{ user.roles }}</td>
+        </tr>
+        <tr>
+            <td>Avatar</td>
+            <td>{{ user.avatar }}</td>
+        </tr>
+        <tr>
+            <td>Reset Key</td>
+            <td>{{ user.resetKey }}</td>
+        </tr>
+        <tr>
+            <td>Activated At</td>
+            <td>{{ user.activatedAt }}</td>
+        </tr>
+        <tr>
+            <td>Created AT</td>
+            <td>{{ user.createdAt }}</td>
+        </tr>
+        <tr>
+            <td>Updated At</td>
+            <td>{{ user.updatedAt }}</td>
+        </tr>
+    </tbody>
+</table>

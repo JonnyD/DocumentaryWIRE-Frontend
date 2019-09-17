@@ -1,3 +1,4 @@
+import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
 import { HomeComponent } from './home/home.component';
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
 import { CategoryResolverService } from './services/category-resolver.service';
@@ -24,6 +25,7 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
+import { UserResolverService } from './services/user-resolver.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -90,6 +92,15 @@ const routes: Routes = [
         path: 'comments/:id/edit', 
         component: AdminCommentEditComponent,
         resolve: [CommentResolverService]
+      },
+      { 
+        path: 'users', 
+        component: AdminUsersComponent 
+      },
+      { 
+        path: 'users/:id', 
+        component: AdminUserDetailComponent,
+        resolve: [UserResolverService]
       },
     ]
   }

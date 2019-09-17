@@ -21,50 +21,163 @@ $('.carousel').carousel()
                     </div>
                   </div>
 
-          <div class="card" style="margin-top: 40px">
-                <div class="card-header">
-                  Recently Updated
-                </div>
-                <div class="card-body">
-                    <div>Some tags before</div>
-                    <div class="gallery owl-carousel">
-                            <owl-carousel-o [options]="customOptions">
- 
-                                    <ng-container *ngFor="let slide of images">
-                                      <ng-template carouselSlide [id]="slide.id">
-                                        <img [src]="slide.src" [alt]="slide.alt" [title]="slide.title">
-                                      </ng-template>
-                                    </ng-container>
-                                 
-                                  </owl-carousel-o>
-                    </div>
-                    
-                    <div>Some tags after</div>
-                             
-                </div>
-              </div>
-
               <div class="card" style="margin-top: 40px">
                     <div class="card-header">
-                      Recently Added
+                      Recently Added <span class="float-sm"><img width="25" height="25" src="https://cdn2.iconfinder.com/data/icons/New-Social-Media-Icon-Set-V11/512/rss-feeds.png"/></span>
                     </div>
                     <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                        
+        <div class="grid-large">
+                <div class="nag">
+                        <div *ngFor="let documentary of recentlyAdded; let i=index">
+                            <div *ngIf="i < 6">
+                            <div id="post-{{ documentary.id }}" class="item">
+                       
+                           <div class="thumb">
+                               <a class="clip-link" data-id="{{ documentary.id }}"
+                                  href="">
+                       
+                                       <span class="clip">
+                                           <img [src]=getSantizeUrl(documentary.poster)  width="100" height="100"
+                                                alt="Watch {{ documentary.title }}" title="Watch {{ documentary.title }} Documentary"/>
+                                           <span class="vertical-align">
+                                           </span>
+                                       </span>
+                       
+                                   <span class="overlay"></span>
+                               </a>
+                           </div>
+                           <div class="data">
+                               <h2 class="entry-title">
+                                   <a href=""
+                                      rel="bookmark" title="Watch {{ documentary.title }}">{{ documentary.title }}</a>
+                               </h2>
+                       
+                               <div class="stats">
+                                   <div class="views">
+                                       <i class="count">{{ documentary.views }}</i>
+                                   </div>
+                                   <div class="comments">
+                                       <i class="count">{{ documentary.commentCount }}</i>
+                                   </div>
+                                   <div class="dp-post-likes likes" [attr.data-did]="documentary.id">
+                                       <i class="count">{{ documentary.views }}</i>
+                                   </div>
+                                </div>
+                           </div>
+                       </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
                     </div>
                   </div>
 
                   <div class="card" style="margin-top: 40px">
                         <div class="card-header">
-                          New Releases
+                          Recently Updated
                         </div>
                         <div class="card-body">
-                          <h5 class="card-title">Special title treatment</h5>
-                          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                          <a href="#" class="btn btn-primary">Go somewhere</a>
+                            
+            <div class="grid-mini">
+                    <div class="nag">
+                            <div *ngFor="let documentary of recentlyUpdated; let i=index">
+                                <div *ngIf="i < 8">
+                                <div id="post-{{ documentary.id }}" class="item">
+                           
+                               <div class="thumb">
+                                   <a class="clip-link" data-id="{{ documentary.id }}"
+                                      href="">
+                           
+                                           <span class="clip">
+                                               <img [src]=getSantizeUrl(documentary.poster)  width="100" height="100"
+                                                    alt="Watch {{ documentary.title }}" title="Watch {{ documentary.title }} Documentary"/>
+                                               <span class="vertical-align">
+                                               </span>
+                                           </span>
+                           
+                                       <span class="overlay"></span>
+                                   </a>
+                               </div>
+                               <div class="data">
+                                   <h2 class="entry-title">
+                                       <a href=""
+                                          rel="bookmark" title="Watch {{ documentary.title }}">{{ documentary.title }}</a>
+                                   </h2>
+                           
+                                   <div class="stats">
+                                       <div class="views">
+                                           <i class="count">{{ documentary.views }}</i>
+                                       </div>
+                                       <div class="comments">
+                                           <i class="count">{{ documentary.commentCount }}</i>
+                                       </div>
+                                       <div class="dp-post-likes likes" [attr.data-did]="documentary.id">
+                                           <i class="count">{{ documentary.views }}</i>
+                                       </div>
+                                    </div>
+                               </div>
+                           </div>
+                        </div>
+                        </div>
+                        </div>
+                        </div>
                         </div>
                       </div>
+
+                      <div class="card" style="margin-top: 40px">
+                            <div class="card-header">
+                              New Documentaries
+                            </div>
+                            <div class="card-body">
+                                
+                <div class="grid-mini">
+                        <div class="nag">
+                                <div *ngFor="let documentary of newDocumentaries; let i=index">
+                                    <div *ngIf="i < 8">
+                                    <div id="post-{{ documentary.id }}" class="item">
+                               
+                                   <div class="thumb">
+                                       <a class="clip-link" data-id="{{ documentary.id }}"
+                                          href="">
+                               
+                                               <span class="clip">
+                                                   <img [src]=getSantizeUrl(documentary.poster)  width="100" height="100"
+                                                        alt="Watch {{ documentary.title }}" title="Watch {{ documentary.title }} Documentary"/>
+                                                   <span class="vertical-align">
+                                                   </span>
+                                               </span>
+                               
+                                           <span class="overlay"></span>
+                                       </a>
+                                   </div>
+                                   <div class="data">
+                                       <h2 class="entry-title">
+                                           <a href=""
+                                              rel="bookmark" title="Watch {{ documentary.title }}">{{ documentary.title }}</a>
+                                       </h2>
+                               
+                                       <div class="stats">
+                                           <div class="views">
+                                               <i class="count">{{ documentary.views }}</i>
+                                           </div>
+                                           <div class="comments">
+                                               <i class="count">{{ documentary.commentCount }}</i>
+                                           </div>
+                                           <div class="dp-post-likes likes" [attr.data-did]="documentary.id">
+                                               <i class="count">{{ documentary.views }}</i>
+                                           </div>
+                                        </div>
+                                   </div>
+                               </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                          </div>
+                      
+                  
       </div>
       <div class="col-md-4">
         <div class="card">

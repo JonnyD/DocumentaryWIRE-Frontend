@@ -1,4 +1,8 @@
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { UserService } from './../../services/user.service';
 import { Component, OnInit } from '@angular/core';
+import { Location } from "@angular/common";
 
 @Component({
   selector: 'app-admin-users',
@@ -6,10 +10,55 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-users.component.css']
 })
 export class AdminUsersComponent implements OnInit {
+  public users;
 
-  constructor() { }
+  config: any;
+  private page;
+
+  private queryParamsSubscription;
+  private getAllUsersSubscription;
+
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private router: Router) { }
 
   ngOnInit() {
+    this.queryParamsSubscription = this.route
+    .queryParams
+    .subscribe(params => {
+      this.page = +params['page'] || 1;
+      this.fetchUsers();
+    })
   }
 
+  fetchUsers() {
+    let params = new HttpParams();
+
+    params = params.append('page', this.page.toString());
+    
+    this.location.go(this.router.url.split("?")[0], params.toString());
+
+    this.getAllUsersSubscription = this.userService.getAllUsers()
+      .subscribe(result => {
+        this.config = {
+          itemsPerPage: 12,
+          currentPage: this.page,
+          totalItems: result['count_results']
+        };
+        this.users = result['items'];
+      })
+  }
+
+  pageChanged(event) {
+    this.config.currentPage = event;
+    this.page = event;
+    this.fetchUsers();
+  }
+
+  ngOnDestroy() {
+    this.queryParamsSubscription.unsubscribe();
+    this.getAllUsersSubscription.unsubscribe();
+  }
 }
