@@ -125,8 +125,6 @@ export class DocumentaryService extends DataService {
 
     let counter = 0;
     for (let i in documentaries) {
-      console.log((+i + 1));
-      console.log((+i + 1) == amountTotal);
         if (+i == amountTotal) {
           break;
         }

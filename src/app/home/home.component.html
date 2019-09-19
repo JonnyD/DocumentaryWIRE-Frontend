@@ -27,7 +27,12 @@ $('.carousel').carousel()
                   <h2>Recently Added</h2>
                 <div class="card-deck" *ngFor="let cardDeck of recentlyAdded | keyvalue">
                     <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
-                        <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                        <ng-template #popContent>{{ documentary.summary }}</ng-template>
+                        <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
+                            <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
+                                <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                            </a>
+                        
                         <div class="card-body">
                         <h5 class="card-title">{{ documentary.title }}</h5>
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -41,7 +46,11 @@ $('.carousel').carousel()
                     <h2>Recently Updated</h2>
                     <div class="card-deck" *ngFor="let cardDeck of recentlyUpdated | keyvalue">
                             <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
+                                <ng-template #popContent>{{ documentary.summary }}</ng-template>
+                        <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
+                            <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
                                 <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                            </a>
                                 <div class="card-body">
                                 <h5 class="card-title">{{ documentary.title }}</h5>
                                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -53,7 +62,11 @@ $('.carousel').carousel()
                         <h2>New Documentaries</h2>
                         <div class="card-deck" *ngFor="let cardDeck of newDocumentaries | keyvalue">
                                 <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
-                                    <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                                        <ng-template #popContent>{{ documentary.summary }}</ng-template>
+                                        <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
+                                            <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
+                                                <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                                            </a>
                                     <div class="card-body">
                                     <h5 class="card-title">{{ documentary.title }}</h5>
                                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
@@ -220,6 +233,26 @@ $('.carousel').carousel()
                         </li>
                     </ul>
                     <div style="clear: both"></div>
+
+                    <div style="margin-top: 40px"></div>
+                    <h3>Duration</h3>
+                      <ul class="cat-list">
+                              <li>
+                                  <a href=""
+                                     rel="bookmark" title="Watch Short Documentaries">< 4 minutes</a>
+                              </li>
+                              <li>
+                                  <a href=""
+                                     rel="bookmark" title="Watch Long Documentaries">> 20 minutes</a>
+                              </li>
+                          </ul>
+                          <ul class="cat-list">
+                              <li>
+                                  <a href=""
+                                     rel="bookmark" title="Watch Medium Length Documentaries">< 20 minutes</a>
+                              </li>
+                          </ul>
+                          <div style="clear: both"></div>
           
               <div class="card" style="margin-top: 40px">
                     <div class="card-header">
