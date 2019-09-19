@@ -43,19 +43,34 @@ export class UserService extends DataService {
 
      return this.getAll(options);
     }
-
-    editVideoSource(id, videoSource) {
-      let params = new HttpParams();
     
-      if (this.authenticationService.isAuthenticated()) {
-          let accessToken = this.authenticationService.currentTokenValue.access_token;
-          params = params.append('access_token', accessToken)
-      }
+    getNewestUsers(params: HttpParams) {
+        params = params.append('sort', 'createdAt-desc');
 
-      let options = {
-          params: params
-      }
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            params = params.append('access_token', accessToken)
+        }
 
-      return this.patch(id, videoSource, options);
+        let options = {
+            params: params
+        }
+        
+        return this.getAll(options);
+    }
+    
+    getActiveUsers(params: HttpParams) {
+        params = params.append('sort', 'lastLogin-desc');
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            params = params.append('access_token', accessToken)
+        }
+
+        let options = {
+            params: params
+        }
+        
+        return this.getAll(options);
     }
 }

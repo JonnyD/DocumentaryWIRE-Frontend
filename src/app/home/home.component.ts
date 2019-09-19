@@ -1,3 +1,4 @@
+import { UserService } from './../services/user.service';
 import { HttpParams } from '@angular/common/http';
 import { DocumentaryService } from './../services/documentary.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -13,13 +14,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   public recentlyAdded;
   public recentlyUpdated;
   public newDocumentaries;
+  public newestUsers;
+  public activeUsers;
 
   private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
   private newDocumentariesSubscription;
+  private newestUsersSubscription;
+  private activeUsersSubscription;
 
   constructor(
     private documentaryService: DocumentaryService,
+    private userService: UserService,
     private sanitizer: DomSanitizer
   ) { }
 
@@ -27,6 +33,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchRecentlyAddedDocumentaries();
     this.fetchRecentlyUpdatedDocumentaries();
     this.fetchNewDocumentaries();
+    this.fetchNewestUsers();
+    this.fetchActiveUsers();
+  
   }
 
   fetchRecentlyAddedDocumentaries() {
@@ -34,8 +43,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
       .subscribe(result => {
-        this.recentlyAdded = result['items'];
-        console.log(result);
+        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 3, 6);
+        this.recentlyAdded = cardDecks;
       });
   }
 
@@ -44,8 +53,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyUpdatedDocumentaries(params)
       .subscribe(result => {
-        this.recentlyUpdated = result['items'];
-        console.log(result);
+        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
+        this.recentlyUpdated = cardDecks;
       });
   }
 
@@ -54,8 +63,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.newDocumentariesSubscription = this.documentaryService.getNewDocumentaries(params)
       .subscribe(result => {
-        this.newDocumentaries = result['items'];
-        console.log(result);
+        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
+        this.newDocumentaries = cardDecks;
+      });
+  }
+
+  fetchNewestUsers() {
+    let params = new HttpParams();
+
+    this.newestUsersSubscription = this.userService.getNewestUsers(params)
+      .subscribe(result => {
+        this.newestUsers = result['items'];
+      });
+  }
+
+  fetchActiveUsers() {
+    let params = new HttpParams();
+
+    this.activeUsersSubscription = this.userService.getActiveUsers(params)
+      .subscribe(result => {
+        this.activeUsers = result['items'];
       });
   }
 
@@ -63,6 +90,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.recentlyAddedSubscription.unsubscribe();
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
+    this.newestUsersSubscription.unsubscribe();
+    this.activeUsersSubscription.unsubscribe();
   }
 
   public getSantizeUrl(url : string) {

@@ -119,4 +119,34 @@ export class DocumentaryService extends DataService {
     
      return this.patch(id, documentary, options);
    }
+
+   convertArrayOfDocumentariesToMap(documentaries, amountPerRow, amountTotal) {
+    let cardDecks = new Map();
+
+    let counter = 0;
+    for (let i in documentaries) {
+      console.log((+i + 1));
+      console.log((+i + 1) == amountTotal);
+        if (+i == amountTotal) {
+          break;
+        }
+
+        let documentary = documentaries[i];
+
+        let cardDeck = cardDecks.get(counter);
+
+        if (cardDeck === undefined || !cardDeck) {
+          cardDeck = new Set();
+        } 
+
+        cardDeck.add(documentary);
+        cardDecks.set(counter, cardDeck);
+
+        if (+i != 0 && (+i + 1) % amountPerRow === 0) {
+          counter++;
+        }
+    }
+
+    return cardDecks;
+   }
 }

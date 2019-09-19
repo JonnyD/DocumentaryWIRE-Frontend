@@ -12,6 +12,8 @@ $('.carousel').carousel()
                     </div>
                   </div>
             
+          <div style="margin-top: 40px"></div>
+                  <h3>Featured</h3>
             <div class="card mb-3">
                     <img class="card-img-top"  src="/assets/sunset.jpg" alt="Card image cap">
                     <div class="card-body">
@@ -21,169 +23,49 @@ $('.carousel').carousel()
                     </div>
                   </div>
 
-              <div class="card" style="margin-top: 40px">
-                    <div class="card-header">
-                      Recently Added <span class="float-sm"><img width="25" height="25" src="https://cdn2.iconfinder.com/data/icons/New-Social-Media-Icon-Set-V11/512/rss-feeds.png"/></span>
-                    </div>
-                    <div class="card-body">
-                        
-        <div class="grid-large">
-                <div class="nag">
-                        <div *ngFor="let documentary of recentlyAdded; let i=index">
-                            <div *ngIf="i < 6">
-                            <div id="post-{{ documentary.id }}" class="item">
-                       
-                           <div class="thumb">
-                               <a class="clip-link" data-id="{{ documentary.id }}"
-                                  href="">
-                       
-                                       <span class="clip">
-                                           <img [src]=getSantizeUrl(documentary.poster)  width="100" height="100"
-                                                alt="Watch {{ documentary.title }}" title="Watch {{ documentary.title }} Documentary"/>
-                                           <span class="vertical-align">
-                                           </span>
-                                       </span>
-                       
-                                   <span class="overlay"></span>
-                               </a>
-                           </div>
-                           <div class="data">
-                               <h2 class="entry-title">
-                                   <a href=""
-                                      rel="bookmark" title="Watch {{ documentary.title }}">{{ documentary.title }}</a>
-                               </h2>
-                       
-                               <div class="stats">
-                                   <div class="views">
-                                       <i class="count">{{ documentary.views }}</i>
-                                   </div>
-                                   <div class="comments">
-                                       <i class="count">{{ documentary.commentCount }}</i>
-                                   </div>
-                                   <div class="dp-post-likes likes" [attr.data-did]="documentary.id">
-                                       <i class="count">{{ documentary.views }}</i>
-                                   </div>
-                                </div>
-                           </div>
-                       </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                    </div>
-                  </div>
-
-                  <div class="card" style="margin-top: 40px">
-                        <div class="card-header">
-                          Recently Updated
-                        </div>
+                  <div style="margin-top: 40px"></div>
+                  <h2>Recently Added</h2>
+                <div class="card-deck" *ngFor="let cardDeck of recentlyAdded | keyvalue">
+                    <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
+                        <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
                         <div class="card-body">
-                            
-            <div class="grid-mini">
-                    <div class="nag">
-                            <div *ngFor="let documentary of recentlyUpdated; let i=index">
-                                <div *ngIf="i < 8">
-                                <div id="post-{{ documentary.id }}" class="item">
-                           
-                               <div class="thumb">
-                                   <a class="clip-link" data-id="{{ documentary.id }}"
-                                      href="">
-                           
-                                           <span class="clip">
-                                               <img [src]=getSantizeUrl(documentary.poster)  width="100" height="100"
-                                                    alt="Watch {{ documentary.title }}" title="Watch {{ documentary.title }} Documentary"/>
-                                               <span class="vertical-align">
-                                               </span>
-                                           </span>
-                           
-                                       <span class="overlay"></span>
-                                   </a>
-                               </div>
-                               <div class="data">
-                                   <h2 class="entry-title">
-                                       <a href=""
-                                          rel="bookmark" title="Watch {{ documentary.title }}">{{ documentary.title }}</a>
-                                   </h2>
-                           
-                                   <div class="stats">
-                                       <div class="views">
-                                           <i class="count">{{ documentary.views }}</i>
-                                       </div>
-                                       <div class="comments">
-                                           <i class="count">{{ documentary.commentCount }}</i>
-                                       </div>
-                                       <div class="dp-post-likes likes" [attr.data-did]="documentary.id">
-                                           <i class="count">{{ documentary.views }}</i>
-                                       </div>
-                                    </div>
-                               </div>
-                           </div>
+                        <h5 class="card-title">{{ documentary.title }}</h5>
+                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
-                        </div>
-                        </div>
-                        </div>
-                        </div>
-                      </div>
+                    </div>
+                </div>
 
-                      <div class="card" style="margin-top: 40px">
-                            <div class="card-header">
-                              New Documentaries
+                    <div style="clear:both"></div>
+                  
+                    <div style="margin-top: 40px"></div>
+                    <h2>Recently Updated</h2>
+                    <div class="card-deck" *ngFor="let cardDeck of recentlyUpdated | keyvalue">
+                            <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
+                                <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                                <div class="card-body">
+                                <h5 class="card-title">{{ documentary.title }}</h5>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                
-                <div class="grid-mini">
-                        <div class="nag">
-                                <div *ngFor="let documentary of newDocumentaries; let i=index">
-                                    <div *ngIf="i < 8">
-                                    <div id="post-{{ documentary.id }}" class="item">
-                               
-                                   <div class="thumb">
-                                       <a class="clip-link" data-id="{{ documentary.id }}"
-                                          href="">
-                               
-                                               <span class="clip">
-                                                   <img [src]=getSantizeUrl(documentary.poster)  width="100" height="100"
-                                                        alt="Watch {{ documentary.title }}" title="Watch {{ documentary.title }} Documentary"/>
-                                                   <span class="vertical-align">
-                                                   </span>
-                                               </span>
-                               
-                                           <span class="overlay"></span>
-                                       </a>
-                                   </div>
-                                   <div class="data">
-                                       <h2 class="entry-title">
-                                           <a href=""
-                                              rel="bookmark" title="Watch {{ documentary.title }}">{{ documentary.title }}</a>
-                                       </h2>
-                               
-                                       <div class="stats">
-                                           <div class="views">
-                                               <i class="count">{{ documentary.views }}</i>
-                                           </div>
-                                           <div class="comments">
-                                               <i class="count">{{ documentary.commentCount }}</i>
-                                           </div>
-                                           <div class="dp-post-likes likes" [attr.data-did]="documentary.id">
-                                               <i class="count">{{ documentary.views }}</i>
-                                           </div>
-                                        </div>
-                                   </div>
-                               </div>
+                        </div>
+                        <div style="clear:both"></div>
+                        <div style="margin-top: 40px"></div>
+                        <h2>New Documentaries</h2>
+                        <div class="card-deck" *ngFor="let cardDeck of newDocumentaries | keyvalue">
+                                <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
+                                    <img src="/assets/addicted-to-plastic.jpg" class="card-img-top" alt="...">
+                                    <div class="card-body">
+                                    <h5 class="card-title">{{ documentary.title }}</h5>
+                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    </div>
+                                </div>
                             </div>
-                            </div>
-                            </div>
-                            </div>
-                            </div>
-                          </div>
                       
                   
       </div>
       <div class="col-md-4">
+          <h3>Subscribe / Follow</h3>
         <div class="card">
-            <div class="card-header">
-              Subscribe / Follow
-            </div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
                     <p class="card-text">
@@ -198,18 +80,16 @@ $('.carousel').carousel()
                             <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px"/>
                             <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px"/>
                             <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px"/>
-                            <img src="/assets/linkedin.png" width="40" height="40" style="margin-right: 5px"/>
                             <img src="/assets/gab.png" width="40" height="40" />
                     </p>
                 </div>
                 </li>
             </ul>
           </div>
-
-          <div class="card" style="margin-top: 40px">
-                <div class="card-header">
-                 
-                        <div class="card-title">Members</div>
+          <div style="margin-top: 40px"></div>
+          <h3>Members</h3>
+          <div class="card">
+                <div class="card-header" style="background-color: #ffffff">
                   <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
                     <li class="nav-item">
                       <a class="nav-link active" href="#newest" role="tab" aria-controls="newest" aria-selected="true">Newest</a>
@@ -220,30 +100,21 @@ $('.carousel').carousel()
                   </ul>
                 </div>
                 <div class="card-body">
-                  <h4 class="card-title">Bologna</h4>
-                  <h6 class="card-subtitle mb-2">Emilia-Romagna Region, Italy</h6>
-                  
-                   <div class="tab-content mt-3">
-                    <div class="tab-pane active" id="description" role="tabpanel">
-                      <p class="card-text">It is the seventh most populous city in Italy, at the heart of a metropolitan area of about one million people. </p>
-                      <a href="#" class="card-link text-danger">Read more</a>
+                    <div class="avatar-block" style="margin-left: 15px">
+                        <div class="item-avatar" *ngFor="let user of newestUsers">
+                            <a href=""
+                                title="{{ user.username }}" rel="nofollow">
+                                <img src="{{ user.avatar }}" class="rounded-circle"
+                                        style="float:left; margin:3px"
+                                        width="60" height="60" alt="Profile picture of {{ user.username }}" />
+                            </a>
+                        </div>
                     </div>
-                     
-                    <div class="tab-pane" id="history" role="tabpanel" aria-labelledby="history-tab">  
-                      <p class="card-text">First settled around 1000 BCE and then founded as the Etruscan Felsina about 500 BCE, it was occupied by the Boii in the 4th century BCE and became a Roman colony and municipium with the name of Bononia in 196 BCE. </p>
-                      <a href="#" class="card-link text-danger">Read more</a>
-                    </div>
-                     
-                  </div>
-                  <img src="assets/connectfb.png" />
                 </div>
               </div>
-
-          <div class="card" style="margin-top: 40px">
-                <div class="card-header">
-                  Categories
-                </div>
-                </div>
+            
+          <div style="margin-top: 40px"></div>
+              <h3>Categories</h3>
                 <ul class="cat-list">
                         <li>
                             <a href=""
