@@ -1,3 +1,4 @@
+import { DurationService } from './../../services/duration.service';
 import { CategoryService } from './../../services/category.service';
 import { YearService } from './../../services/year.service';
 import { ActivityService } from './../../services/activity.service';
@@ -22,6 +23,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public activity;
   public years;
   public categories;
+  public duration;
 
   private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
@@ -38,7 +40,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private activityService: ActivityService,
     private yearService: YearService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private durationService: DurationService
   ) { }
 
   ngOnInit() {
@@ -49,6 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchActiveUsers();
     this.fetchCategories();
     this.fetchYears();
+    this.fetchDuration();
     this.fetchActivity();
   }
 
@@ -116,8 +120,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.categoriesSubscription = this.categoryService.getAllCategories()
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
-        console.log(this.categories);
       })
+  }
+
+  fetchDuration() {
+    let duration = this.durationService.getAllDurations();
+    this.duration = this.durationService.getColumnsForDuration(duration);
   }
 
   fetchYears() {

@@ -1,3 +1,4 @@
+import { DurationService } from './services/duration.service';
 import { YearService } from './services/year.service';
 import { HomeComponent } from './public/home/home.component';
 import { AdminGuard } from './admin/admin-guard.service';
@@ -83,6 +84,7 @@ import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admi
     DocumentaryResolverService,
     AuthenticationService,
     YearService,
+    DurationService,
     AdminGuard
   ],
   bootstrap: [AppComponent]

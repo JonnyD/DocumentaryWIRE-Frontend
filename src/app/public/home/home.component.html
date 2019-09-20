@@ -152,22 +152,12 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                     <div style="clear: both"></div>
 
                     <h2>Duration</h2>
-                      <ul class="cat-list">
-                              <li>
-                                  <a href=""
-                                     rel="bookmark" title="Watch Short Documentaries">< 4 minutes</a>
-                              </li>
-                              <li>
-                                  <a href=""
-                                     rel="bookmark" title="Watch Long Documentaries">> 20 minutes</a>
-                              </li>
-                          </ul>
-                          <ul class="cat-list">
-                              <li>
-                                  <a href=""
-                                     rel="bookmark" title="Watch Medium Length Documentaries">< 20 minutes</a>
-                              </li>
-                          </ul>
+                    <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                        <li *ngFor="let durationObject of columnPosition.value">
+                            <a href=""
+                               rel="bookmark" title="Watch {{ durationObject.title }} Documentaries">{{ durationObject.display }}</a>
+                        </li>
+                      </ul>
                           <div style="clear: both"></div>
 
                           <h2>Years</h2>
