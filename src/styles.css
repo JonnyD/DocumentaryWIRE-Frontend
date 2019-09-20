@@ -9,6 +9,10 @@ body {
     }
 }
 
+.popover {
+    width: 600px;
+}
+
 h1,h4 {
     margin-top:0;
     margin-bottom:5px;

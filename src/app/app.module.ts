@@ -1,3 +1,4 @@
+import { HomeComponent } from './public/home/home.component';
 import { AdminGuard } from './admin/admin-guard.service';
 import { AuthenticationService } from './services/authentication.service';
 import { VideoSourceService } from './services/video-source.service';
@@ -31,7 +32,6 @@ import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-cat
 import { AdminCommentDetailComponent } from './admin/admin-comments/admin-comment-detail/admin-comment-detail.component';
 import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-edit/admin-comment-edit.component';
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
-import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
@@ -62,7 +62,7 @@ import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admi
     AdminCategoryEditComponent,
     HomeComponent,
     AdminUserDetailComponent,
-    AdminUserEditComponent,
+    AdminUserEditComponent
   ],
   imports: [
     BrowserModule,

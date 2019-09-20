@@ -1,5 +1,5 @@
+import { HomeComponent } from './public/home/home.component';
 import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
-import { HomeComponent } from './home/home.component';
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
 import { CategoryResolverService } from './services/category-resolver.service';
 import { AdminCategoryDetailComponent } from './admin/admin-categories/admin-category-detail/admin-category-detail.component';
