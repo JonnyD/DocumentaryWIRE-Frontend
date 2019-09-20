@@ -143,110 +143,12 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
               <div style="clear: both"></div>
               <div style="margin-top: 30px"></div>
               <h2>Categories</h2>
-                <ul class="cat-list">
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch 911 Documentaries">911</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Art and Artists Documentaries">Art and Artists</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Biography Documentaries">Biography</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Comedy Documentaries">Comedy</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Conspiracy Documentaries">Conspiracy</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Documentaries on Drugs">Drugs</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Economics Documentaries">Economics</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Environment Documentaries">Environment</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Health Documentaries">Health</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch History Documentaries">History</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Law Documentaries">Law</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Media Documentaries">Media</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Military and War Documentaries">Military and War</a>
-                        </li>
-                    </ul>
-                    <ul class="cat-list">
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Mystery Documentaries">Mystery</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Nature Documentaries">Nature</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Performing Arts Documentaries">Performing Arts</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Philospohy Documentaries">Philosophy</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Politics Documentaries">Politics</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Psychology Documentaries">Psychology</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Religion Documentaries">Religion</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Science Documentaries">Science</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Sexuality Documentaries">Sexuality</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Society Documentaries">Society</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Sports Documentaries">Sports</a>
-                        </li>
-                        <li>
-                            <a href=""
-                               rel="bookmark" title="Watch Technology Documentaries">Technology</a>
-                        </li>
-                    </ul>
+              <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
+                <li *ngFor="let categoryObject of columnPosition.value">
+                    <a href=""
+                       rel="bookmark" title="Watch {{ categoryObject.name}} Documentaries">{{ categoryObject.name }}</a>
+                </li>
+              </ul>
                     <div style="clear: both"></div>
 
                     <h2>Duration</h2>
@@ -266,6 +168,15 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                      rel="bookmark" title="Watch Medium Length Documentaries">< 20 minutes</a>
                               </li>
                           </ul>
+                          <div style="clear: both"></div>
+
+                          <h2>Years</h2>
+                            <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
+                              <li *ngFor="let yearObject of columnPosition.value">
+                                  <a href=""
+                                     rel="bookmark" title="Watch Short Documentaries">{{ yearObject.year }}</a>
+                              </li>
+                            </ul>
                           <div style="clear: both"></div>
           
                           <h2>Activity</h2>

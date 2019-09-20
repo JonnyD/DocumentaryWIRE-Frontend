@@ -1,3 +1,5 @@
+import { CategoryService } from './../../services/category.service';
+import { YearService } from './../../services/year.service';
 import { ActivityService } from './../../services/activity.service';
 import { UserService } from './../../services/user.service';
 import { DocumentaryService } from './../../services/documentary.service';
@@ -18,6 +20,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newestUsers;
   public activeUsers;
   public activity;
+  public years;
+  public categories;
 
   private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
@@ -25,12 +29,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   private newestUsersSubscription;
   private activeUsersSubscription;
   private activitySubscription;
+  private yearsSubscription;
+  private categoriesSubscription;
 
   constructor(
     private documentaryService: DocumentaryService,
     private userService: UserService,
     private sanitizer: DomSanitizer,
-    private activityService: ActivityService
+    private activityService: ActivityService,
+    private yearService: YearService,
+    private categoryService: CategoryService
   ) { }
 
   ngOnInit() {
@@ -39,6 +47,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchNewDocumentaries();
     this.fetchNewestUsers();
     this.fetchActiveUsers();
+    this.fetchCategories();
+    this.fetchYears();
     this.fetchActivity();
   }
 
@@ -102,6 +112,21 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
+  fetchCategories() {
+    this.categoriesSubscription = this.categoryService.getAllCategories()
+      .subscribe(result => {
+        this.categories = this.categoryService.getColumnsForCategories(result);
+        console.log(this.categories);
+      })
+  }
+
+  fetchYears() {
+    this.yearsSubscription = this.yearService.getAllYears()
+      .subscribe(result => {
+        this.years = this.yearService.getColumnsForYears(result);
+      })
+  }
+
   ngOnDestroy() {
     this.recentlyAddedSubscription.unsubscribe();
     this.recentlyUpdatedSubscription.unsubscribe();
@@ -109,6 +134,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.newestUsersSubscription.unsubscribe();
     this.activeUsersSubscription.unsubscribe();
     this.activitySubscription.unsubscribe();
+    this.categoriesSubscription.unsubscribe();
+    this.yearsSubscription.unsubscribe();
   }
 
   public getSantizeUrl(url : string) {

@@ -58,4 +58,33 @@ export class CategoryService extends DataService {
 
     return this.patch(id, resource, options);
    }
+
+   getColumnsForCategories(categories) {
+    let categoriesCount = 0;
+    for (var key in categories) {
+      categoriesCount++;
+    }
+
+    let half = Math.floor(categoriesCount / 2);
+    let remainder = categoriesCount % half;
+
+    let categoriesLeftColumnLength = half + remainder;
+    let categoriesRightColumnLength = half;
+
+    let categoriesLeftColumn = new Set();
+    for (let i = 0; i < categoriesLeftColumnLength; i++) {
+      categoriesLeftColumn.add(categories[i]);
+    }
+
+    let categoriesRighttColumn = new Set();
+    for (let i = categoriesLeftColumnLength; i < (categoriesLeftColumnLength + categoriesRightColumnLength); i++) {
+      categoriesRighttColumn.add(categories[i]);
+    }
+
+    let categoriesColumns = new Map();
+    categoriesColumns.set('left', categoriesLeftColumn);
+    categoriesColumns.set('right', categoriesRighttColumn);
+
+    return categoriesColumns;
+   }
 }
