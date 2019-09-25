@@ -40,6 +40,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
 import { BrowseComponent } from './public/browse/browse.component';
+import { CategoriesComponent } from './public/categories/categories.component';
+import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { BrowseComponent } from './public/browse/browse.component';
     HomeComponent,
     AdminUserDetailComponent,
     AdminUserEditComponent,
-    BrowseComponent
+    BrowseComponent,
+    CategoriesComponent,
+    CategoryShowComponent
   ],
   imports: [
     BrowserModule,

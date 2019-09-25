@@ -1,24 +1,25 @@
-import { DurationService } from './../../services/duration.service';
-import { CategoryService } from './../../services/category.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DocumentaryService } from './../../services/documentary.service';
+import { YearService } from './../../../services/year.service';
+import { DurationService } from './../../../services/duration.service';
+import { DocumentaryService } from './../../../services/documentary.service';
 import { HttpParams } from '@angular/common/http';
+import { Category } from './../../../models/category.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CategoryService } from './../../../services/category.service';
 import { Component, OnInit } from '@angular/core';
 import { Location } from "@angular/common";
-import { YearService } from 'src/app/services/year.service';
 
 @Component({
-  selector: 'app-browse',
-  templateUrl: './browse.component.html',
-  styleUrls: ['./browse.component.css']
+  selector: 'app-category-show',
+  templateUrl: './category-show.component.html',
+  styleUrls: ['./category-show.component.css']
 })
-export class BrowseComponent implements OnInit {
+export class CategoryShowComponent implements OnInit {
+  public category;
   public documentaries;
 
   private documentariesSubscription;
   private queryParamsSubscription;
   private categoriesSubscription;
-  private durationSubscription;
   private yearsSubscription;
 
   config: any;
@@ -26,37 +27,32 @@ export class BrowseComponent implements OnInit {
   private categories;
   private duration;
   private years;
-
+  
   constructor(
-    private documentaryService: DocumentaryService,
     private categoryService: CategoryService,
+    private documentaryService: DocumentaryService,
     private durationService: DurationService,
     private yearService: YearService,
     private route: ActivatedRoute,
-    private location: Location,
-    private router: Router) { }
+    private router: Router,
+    private location: Location) { }
 
   ngOnInit() {
-    this.queryParamsSubscription = this.route
-      .queryParams
-      .subscribe(params => {
-        this.page = +params['page'] || 1;
-        this.fetchDocumentaries();
-        this.fetchCategories();
-        this.fetchYears();
-        this.fetchDuration();
-      })
-  }
-
-  ngOnDestroy() {
-    this.documentariesSubscription.unsubscribe();
-    this.queryParamsSubscription.unsubscribe();
-    this.categoriesSubscription.unsubscribe();
-    this.yearsSubscription.unsubscribe();
+    this.route.data.subscribe(result => {
+      this.category = <Category> result[0];
+      this.queryParamsSubscription = this.route
+        .queryParams
+        .subscribe(params => {
+          this.page = +params['page'] || 1;
+          this.fetchDocumentaries();
+          this.fetchCategories();
+          this.fetchDuration();
+          this.fetchYears();
+      });
+    });
   }
 
   fetchDocumentaries() {
-    console.log("page:" + this.page);
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
@@ -64,6 +60,7 @@ export class BrowseComponent implements OnInit {
   
     let amountPerPage = 6;
     params = params.append('amountPerPage', amountPerPage.toString());
+    params = params.append('category', this.category.slug);
 
     this.documentariesSubscription = this.documentaryService.getAllDocumentaries(params)
       .subscribe(result => {
@@ -101,5 +98,12 @@ export class BrowseComponent implements OnInit {
     this.config.currentPage = event;
     this.page = event;
     this.fetchDocumentaries();
+  }
+
+  ngOnDestroy() {
+    this.queryParamsSubscription.unsubscribe();
+    this.documentariesSubscription.unsubscribe();
+    this.categoriesSubscription.unsubscribe();
+    this.yearsSubscription.unsubscribe();
   }
 }

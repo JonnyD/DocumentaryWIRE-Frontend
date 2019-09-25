@@ -14,8 +14,9 @@ export class CategoryResolverService implements Resolve<Observable<any>> {
   constructor(private categoryService: CategoryService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let id = route.params['id'];
-    let category = this.categoryService.getCategoryById(id);
+    let slug = route.params['slug'];
+    let category = this.categoryService.getCategoryBySlug(slug);
+    console.log(category);
     return category;
   }
 }

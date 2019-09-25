@@ -1,3 +1,4 @@
+import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
 import { BrowseComponent } from './public/browse/browse.component';
 import { HomeComponent } from './public/home/home.component';
 import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
@@ -31,6 +32,11 @@ import { UserResolverService } from './services/user-resolver.service';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'browse', component: BrowseComponent },
+  { 
+    path: 'category/:slug', 
+    component: CategoryShowComponent,
+    resolve: [CategoryResolverService] 
+  },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,
