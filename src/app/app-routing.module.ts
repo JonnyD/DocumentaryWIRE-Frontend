@@ -1,3 +1,4 @@
+import { BrowseComponent } from './public/browse/browse.component';
 import { HomeComponent } from './public/home/home.component';
 import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
@@ -29,6 +30,7 @@ import { UserResolverService } from './services/user-resolver.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
+  { path: 'browse', component: BrowseComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,

@@ -39,6 +39,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
+import { BrowseComponent } from './public/browse/browse.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admi
     AdminCategoryEditComponent,
     HomeComponent,
     AdminUserDetailComponent,
-    AdminUserEditComponent
+    AdminUserEditComponent,
+    BrowseComponent
   ],
   imports: [
     BrowserModule,
