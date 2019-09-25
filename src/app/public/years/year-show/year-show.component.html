@@ -1,7 +1,7 @@
 <div class="container" >
         <div class="row">
             <div class="col-md-8" style="margin-top: 20px">
-                <h2>Watch {{ category.name }} Documentaries</h2>
+                <h2>Watch documentaries released in {{ year }}</h2>
                 <div class="card mb-1" style="margin-top: 20px" *ngFor="let documentary of documentaries | paginate: config">
                     <div class="row no-gutters">
                         <div class="col-md-3">

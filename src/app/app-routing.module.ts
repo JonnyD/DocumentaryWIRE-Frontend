@@ -1,3 +1,5 @@
+import { YearResolverService } from './services/year-resolver.service';
+import { YearShowComponent } from './public/years/year-show/year-show.component';
 import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
 import { BrowseComponent } from './public/browse/browse.component';
 import { HomeComponent } from './public/home/home.component';
@@ -36,6 +38,11 @@ const routes: Routes = [
     path: 'category/:slug', 
     component: CategoryShowComponent,
     resolve: [CategoryResolverService] 
+  },
+  { 
+    path: 'year/:id', 
+    component: YearShowComponent,
+    resolve: [YearResolverService] 
   },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },

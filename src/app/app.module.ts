@@ -42,6 +42,7 @@ import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admi
 import { BrowseComponent } from './public/browse/browse.component';
 import { CategoriesComponent } from './public/categories/categories.component';
 import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
+import { YearShowComponent } from './public/years/year-show/year-show.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { CategoryShowComponent } from './public/categories/category-show/categor
     AdminUserEditComponent,
     BrowseComponent,
     CategoriesComponent,
-    CategoryShowComponent
+    CategoryShowComponent,
+    YearShowComponent
   ],
   imports: [
     BrowserModule,

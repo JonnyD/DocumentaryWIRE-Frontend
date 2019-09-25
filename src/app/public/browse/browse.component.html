@@ -68,8 +68,7 @@
                           <h2>Years</h2>
                             <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
                               <li *ngFor="let yearObject of columnPosition.value">
-                                  <a href=""
-                                     rel="bookmark" title="Watch Short Documentaries">{{ yearObject.year }}</a>
+                                    <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}" [routerLink]="['/year', yearObject.year ]" routerLinkActive="active">{{ yearObject.year }}</a>
                               </li>
                             </ul>
         </div>
