@@ -38,7 +38,7 @@ h1,h4 {
 }
 
 .recent-activity {
-    height: 700px;
+    height: 1000px;
     overflow-y: scroll;
     border: 1px solid #DDD;
     padding-left: 0;

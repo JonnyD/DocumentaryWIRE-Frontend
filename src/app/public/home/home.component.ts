@@ -107,12 +107,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   fetchActivity() {
     this.activitySubscription = this.activityService.getActivityForWidget()
       .subscribe(result => {
+        console.log(result);
         let arr = [];
         for (var key in result) {
           arr.push(result[key])
         }
 
-        this.activity = arr;
+        this.activity = arr.reverse();
+        console.log(this.activity);
       });
   }
 

@@ -170,12 +170,105 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                           <div style="clear: both"></div>
           
                           <h2>Activity</h2>
-                          <div class="card">
-                                <ul class="list-group list-group-flush">
+                          <div class="card recent-activity">
+                                <ul class="list-group list-group-flush ">
                                     <li class="list-group-item" *ngFor="let activityItem of activity">
-                                        <p class="card-text">
-                                            {{ activityItem.type }}
-                                        </p>
+                                        <span class="card-text" *ngIf="activityItem.type == 'joined'">
+                                            <span class="acitvity-item">
+                                            <span class="activity-image">
+                                                <a href="">
+                            
+                                                    <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
+                                                         class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' /></a>
+                                                </span>
+                                                <div class="data">
+                                                    <span class="author">
+                                                        <a href="">
+                                                            {{ activityItem.parent.user.name }}</a>
+                                                            <span *ngIf="activityItem.child">
+                                                                and {{ activityItem.child.length }} more people 
+                                                            </span>
+                                                            joined
+                                                    </span>
+                                                        <span class="excerpt" *ngIf="activityItem.child">
+                                                            <img *ngFor="let child of activityItem.child" class="tiny-image rounded-circle" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
+                                                                    height='30' width='30' />
+                                                        </span>
+                                                    </div>
+                                                </span>
+                                                </span>
+                                                <span class="card-text" *ngIf="activityItem.type == 'comment'">
+                                                <span class="acitvity-item">
+                                                    <div class="activity-image">
+                                                            <a href="">
+                                                                <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
+                                                                        class='avatar avatar-48 photo avatar-default' height='48' width='48' /></a>
+                                                            </div>
+                                                            <div class="data">
+                                                            <span class="author">
+                                                                <a href="">
+                                                                    {{ activityItem.parent.user.name }}</a> commented on
+                                                                <a href="">
+                                                                    {{ activityItem.parent.data.documentaryTitle }}</a>
+                                                            </span>
+                                                                <p class="excerpt">
+                                                                    {{ activityItem.parent.data.comment | slice:0:100 }}...
+                                                                </p>
+                                                            </div>
+                                                    </span>
+                                                    </span>
+
+                                                    <span class="card-text" *ngIf="activityItem.type == 'added'">
+                                                            <span class="acitvity-item">
+                                                            <span class="activity-image">
+                                                                <a href="">
+                                            
+                                                                    <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
+                                                                         class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' /></a>
+                                                                </span>
+                                                                <div class="data">
+                                                                    <span class="author">
+                                                                        <a href="">
+                                                                            {{ activityItem.parent.user.name }}</a> added a new documentary
+                                                                            <span *ngIf="activityItem.child">
+                                                                                plus {{ activityItem.child.length }} more
+                                                                            </span>
+                                                                    </span>
+                                                                        <img class="image" width="50" height="70"
+                                                                            src="{{ activityItem.parent.data.documentaryThumbail }}" />
+                                                                        <span class="excerpt" *ngIf="activityItem.child">
+                                                                            <img *ngFor="let child of activityItem.child" class="tiny-image rounded-circle" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
+                                                                                    height='30' width='30' />
+                                                                        </span>
+                                                                    </div>
+                                                                </span>
+                                                                </span>
+
+                                                                <span class="card-text" *ngIf="activityItem.type == 'like'">
+                                                                        <span class="acitvity-item">
+                                                                        <span class="activity-image">
+                                                                            <a href="">
+                                                        
+                                                                                <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
+                                                                                     class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' /></a>
+                                                                            </span>
+                                                                            <div class="data">
+                                                                                <span class="author">
+                                                                                    <a href="">
+                                                                                        {{ activityItem.parent.user.name }}</a> liked
+                                                                                        <span *ngIf="activityItem.child">
+                                                                                            and {{ activityItem.child.length }} more documentaries
+                                                                                        </span>
+                                                                                </span>
+                                                                                    <img class="image" width="50" height="70"
+                                                                                        src="{{ activityItem.parent.data.documentaryThumbail }}" />
+                                                                                    <span class="excerpt" *ngIf="activityItem.child">
+                                                                                        <img *ngFor="let child of activityItem.child" class="tiny-image" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
+                                                                                                height='30' width='30' />
+                                                                                    </span>
+                                                                                </div>
+                                                                            </span>
+                                                                            </span>
                                     </li>
                                 </ul>
                               </div>
@@ -183,17 +276,3 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
       </div>
 </div>
 </div>
-
-<script>
-window.mySwipe = new Swipe(document.getElementById('slider'), {
-  startSlide: 0,
-  speed: 400,
-  auto: 3000,
-  draggable: false,
-  continuous: true,
-  disableScroll: false,
-  stopPropagation: false,
-  callback: function(index, elem, dir) {},
-  transitionEnd: function(index, elem) {}
-});
-</script>
