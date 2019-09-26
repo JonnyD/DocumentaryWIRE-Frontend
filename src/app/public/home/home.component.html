@@ -63,7 +63,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                 <ng-template #popContent>{{ documentary.summary }}</ng-template>
                         <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
                             <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
-                                <img [src]="getSantizeUrl(documentary.poster)" class="card-img-top" style="width: 100%; height: 280px" alt="...">
+                                <img [src]="getSantizeUrl(documentary.poster)" class="card-img-top" style="width: 100%; height: 160px" alt="...">
                             </a>
                                 <div class="card-body">
                                 <h5 class="card-title">{{ documentary.title }}</h5>
@@ -79,7 +79,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                         <ng-template #popContent>{{ documentary.summary }}</ng-template>
                                         <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
                                             <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
-                                                <img [src]="getSantizeUrl(documentary.poster)" class="card-img-top" style="width: 100%; height: 280px" alt="...">
+                                                <img [src]="getSantizeUrl(documentary.poster)" class="card-img-top" style="width: 100%; height: 160px" alt="...">
                                             </a>
                                     <div class="card-body">
                                     <h5 class="card-title">{{ documentary.title }}</h5>
@@ -153,8 +153,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                     <h2>Duration</h2>
                     <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
                         <li *ngFor="let durationObject of columnPosition.value">
-                            <a href=""
-                               rel="bookmark" title="Watch {{ durationObject.title }} Documentaries">{{ durationObject.display }}</a>
+                                <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}" [routerLink]="['/duration', durationObject.slug ]" routerLinkActive="active">{{ durationObject.display }}</a>
                         </li>
                       </ul>
                           <div style="clear: both"></div>

@@ -15,27 +15,39 @@ export class DurationService {
                 "length": 4,
                 "title": "Short",
                 "display": "< 4 minutes",
-                "greaterLessThanEquals": "lessThan"
+                "slug": "lessThan4Minutes"
             },
             {
                 "length": 20,
                 "title": "Medium Length",
                 "display": "< 20 minutes",
-                "greaterLessThanEquals": "lessThan"
+                "slug": "lessThan20Minutes"
             },
             {
                 "length": 20,
                 "title": "Long",
                 "display": "> 20 minutes",
-                "greaterLessThanEquals": "greaterThan"
+                "slug": "greaterThan20Minutes"
             },
             {
                 "length": 60,
                 "title": "Longer",
                 "display": "> 60 minutes",
-                "greaterLessThanEquals": "greaterThan"
+                "slug": "greaterThan60Minutes"
             }
         ]
+    }
+
+    getDurationBySlug(slug) {
+        var selectedDuration = {};
+
+        for(let duration of this.getAllDurations()) {
+            if (duration.slug === slug) {
+                selectedDuration = duration;
+            }
+        }
+
+        return selectedDuration;
     }
 
     getColumnsForDuration(duration) {

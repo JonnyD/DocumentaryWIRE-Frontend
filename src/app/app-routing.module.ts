@@ -1,3 +1,4 @@
+import { DurationResolverService } from './services/duration-resolver.service';
 import { YearResolverService } from './services/year-resolver.service';
 import { YearShowComponent } from './public/years/year-show/year-show.component';
 import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
@@ -30,6 +31,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
 import { UserResolverService } from './services/user-resolver.service';
+import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,6 +45,11 @@ const routes: Routes = [
     path: 'year/:id', 
     component: YearShowComponent,
     resolve: [YearResolverService] 
+  },
+  { 
+    path: 'duration/:slug', 
+    component: DurationShowComponent,
+    resolve: [DurationResolverService] 
   },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },

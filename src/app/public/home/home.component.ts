@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.recentlyUpdatedSubscription = this.documentaryService.getRecentlyUpdatedDocumentaries(params)
       .subscribe(result => {
-        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 3, 6);
+        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
         this.recentlyUpdated = cardDecks;
       });
   }
@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.newDocumentariesSubscription = this.documentaryService.getNewDocumentaries(params)
       .subscribe(result => {
-        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 3, 6);
+        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
         this.newDocumentaries = cardDecks;
       });
   }

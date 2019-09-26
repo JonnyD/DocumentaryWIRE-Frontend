@@ -55,13 +55,12 @@
     
                   <div style="clear: both"></div>
     
-                        <h2>Duration</h2>
-                        <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
-                            <li *ngFor="let durationObject of columnPosition.value">
-                                <a href=""
-                                   rel="bookmark" title="Watch {{ durationObject.title }} Documentaries">{{ durationObject.display }}</a>
-                            </li>
-                          </ul>
+                  <h2>Duration</h2>
+                  <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                      <li *ngFor="let durationObject of columnPosition.value">
+                              <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}" [routerLink]="['/duration', durationObject.slug ]" routerLinkActive="active">{{ durationObject.display }}</a>
+                      </li>
+                    </ul>
     
                           <div style="clear: both"></div>
     

@@ -1,7 +1,7 @@
 <div class="container" >
         <div class="row">
             <div class="col-md-8" style="margin-top: 20px">
-                <h2>Watch {{ category.name }} Documentaries</h2>
+                <h2>Watch {{ duration.display }} Documentaries</h2>
                 <div class="card mb-1" style="margin-top: 20px" *ngFor="let documentary of documentaries | paginate: config">
                     <div class="row no-gutters">
                         <div class="col-md-3">
@@ -56,7 +56,7 @@
                   <div style="clear: both"></div>
     
                   <h2>Duration</h2>
-                  <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                  <ul class="cat-list" *ngFor="let columnPosition of durationList | keyvalue">
                       <li *ngFor="let durationObject of columnPosition.value">
                               <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}" [routerLink]="['/duration', durationObject.slug ]" routerLinkActive="active">{{ durationObject.display }}</a>
                       </li>

@@ -43,6 +43,7 @@ import { BrowseComponent } from './public/browse/browse.component';
 import { CategoriesComponent } from './public/categories/categories.component';
 import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
 import { YearShowComponent } from './public/years/year-show/year-show.component';
+import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { YearShowComponent } from './public/years/year-show/year-show.component'
     BrowseComponent,
     CategoriesComponent,
     CategoryShowComponent,
-    YearShowComponent
+    YearShowComponent,
+    DurationShowComponent
   ],
   imports: [
     BrowserModule,
