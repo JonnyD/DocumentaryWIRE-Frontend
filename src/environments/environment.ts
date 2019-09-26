@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   apiUrl: 'http://localhost:8000',
   grantType: 'password',
-  clientId: '1_5w8zrdasdafr4tregd454cw0c0kswcgs0oks40s',
-  clientSecret: 'sdgggskokererg4232404gc4csdgfdsgf8s8ck5s'
+  clientId: '1_4p8axqv84hicc0o44kgogsk004wscc44cwcs0ockg488sccs48',
+  clientSecret: '2rf8v3s546m884ksk00gogow0wwscowk0sc0ggscwogssg08ww'
 };
 
 /*

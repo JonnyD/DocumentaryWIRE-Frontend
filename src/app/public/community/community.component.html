@@ -1,0 +1,101 @@
+<div class="container" >
+        <div class="row">
+            <div class="col-md-8" style="margin-top: 20px">
+                <h2>Community</h2>
+                <div class="card mb-1" style="margin-top: 20px" *ngFor="let communityItem of communityItems | paginate: config">
+                    <div class="row no-gutters">
+                        <div class="col-md-1">
+                                <img src="{{ communityItem.user.avatar }}" class="rounded-circle"
+                                style="float:left; margin:3px"
+                                width="60" height="60" alt="Profile picture of {{ communityItem.user.displayName }}" />
+                        </div>
+                        <div class="col-md-11">
+                        <div class="card-body">
+                            <div *ngIf="communityItem.type == 'joined'">
+                                    <a href="">{{ communityItem.user.displayName }}</a> has joined
+                            </div>
+                            <div *ngIf="communityItem.type == 'added'">
+                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary <a href="">{{ communityItem.data.documentaryTitle }}</a>
+                            </div>
+                            <div *ngIf="communityItem.type == 'like'">
+                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary <a href="">{{ communityItem.data.documentaryTitle }}</a> to their watch list
+                            </div>
+                            <div *ngIf="communityItem.type == 'comment'">
+                                    <a href="">{{ communityItem.user.displayName }}</a> has added a comment to <a href="">{{ communityItem.data.documentaryTitle }}</a> saying: {{ communityItem.data.comment }}
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-top: 20px; margin-bottom: 20px">
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                </div>
+            </div>
+            <div class="col-md-4" style="margin-top: 20px">
+                    <h2>Subscribe / Follow</h2>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p class="card-text">
+                                    <img src="/assets/email.png" width="50" height="50" style="float: left; margin-right: 10px"/>
+                                    <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" target="popupwindow" href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest documentaries sent straight to your inbox.</a>
+                                </p>
+                            </li>
+                            <li class="list-group-item">
+                                    <div class="text-center">
+                                <p class="card-text">
+                                        <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px"/>
+                                        <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px"/>
+                                        <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px"/>
+                                        <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px"/>
+                                        <img src="/assets/gab.png" width="40" height="40" />
+                                </p>
+                            </div>
+                            </li>
+                        </ul>
+                      </div>
+                      <div style="margin-top: 20px"></div>
+                      <h2>Newest Members</h2>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                    <div class="text-center">
+                                            <div class="avatar-block" style="margin-left: 15px">
+                                                    <div class="item-avatar" *ngFor="let user of newestUsers">
+                                                        <a href=""
+                                                            title="{{ user.username }}" rel="nofollow">
+                                                            <img src="{{ user.avatar }}" class="rounded-circle"
+                                                                    style="float:left; margin:3px"
+                                                                    width="60" height="60" alt="Profile picture of {{ user.name }}" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                            </div>
+                            </li>
+                        </ul>
+                      </div>
+                      <div style="margin-top: 20px"></div>
+                      <h2>Active Members</h2>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                    <div class="text-center">
+                                            <div class="avatar-block" style="margin-left: 15px">
+                                                    <div class="item-avatar" *ngFor="let user of activeUsers">
+                                                        <a href=""
+                                                            title="{{ user.username }}" rel="nofollow">
+                                                            <img src="{{ user.avatar }}" class="rounded-circle"
+                                                                    style="float:left; margin:3px"
+                                                                    width="60" height="60" alt="Profile picture of {{ user.name }}" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                            </div>
+                            </li>
+                        </ul>
+                      </div>
+                    
+                  
+            </div>
+        </div>
+    </div>

@@ -1,3 +1,4 @@
+import { CommunityComponent } from './public/community/community.component';
 import { DurationResolverService } from './services/duration-resolver.service';
 import { YearResolverService } from './services/year-resolver.service';
 import { YearShowComponent } from './public/years/year-show/year-show.component';
@@ -50,6 +51,10 @@ const routes: Routes = [
     path: 'duration/:slug', 
     component: DurationShowComponent,
     resolve: [DurationResolverService] 
+  },
+  { 
+    path: 'community', 
+    component: CommunityComponent
   },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },

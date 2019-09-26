@@ -44,6 +44,7 @@ import { CategoriesComponent } from './public/categories/categories.component';
 import { CategoryShowComponent } from './public/categories/category-show/category-show.component';
 import { YearShowComponent } from './public/years/year-show/year-show.component';
 import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
+import { CommunityComponent } from './public/community/community.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { DurationShowComponent } from './public/duration/duration-show/duration-
     CategoriesComponent,
     CategoryShowComponent,
     YearShowComponent,
-    DurationShowComponent
+    DurationShowComponent,
+    CommunityComponent
   ],
   imports: [
     BrowserModule,
