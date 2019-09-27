@@ -34,6 +34,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   private yearsSubscription;
   private categoriesSubscription;
 
+  isFetchingRecentlyAddedDocumentaries = false;
+  isFetchingRecentlyUpdatedDocumentaries = false;
+  isFetchingNewDocumentaries = false;
+  isFetchingNewestUsers = false;
+  isFetchingActiveUsers = false;
+  isFetchingCategories = false;
+  isFetchingYears = false;
+  isFetchingDuration = false;
+  isFetchingActivity = false;
+
   constructor(
     private documentaryService: DocumentaryService,
     private userService: UserService,
@@ -57,54 +67,76 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   fetchRecentlyAddedDocumentaries() {
+    this.isFetchingRecentlyAddedDocumentaries = true;
+
     let params = new HttpParams();
   
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
       .subscribe(result => {
         let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 3, 6);
         this.recentlyAdded = cardDecks;
+
+        this.isFetchingRecentlyAddedDocumentaries = false;
       });
   }
 
   fetchRecentlyUpdatedDocumentaries() {
+    this.isFetchingRecentlyUpdatedDocumentaries = true;
+
     let params = new HttpParams();
 
     this.recentlyUpdatedSubscription = this.documentaryService.getRecentlyUpdatedDocumentaries(params)
       .subscribe(result => {
         let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
         this.recentlyUpdated = cardDecks;
+        
+        this.isFetchingRecentlyUpdatedDocumentaries = false;
       });
   }
 
   fetchNewDocumentaries() {
+    this.isFetchingNewDocumentaries = true;
+
     let params = new HttpParams();
 
     this.newDocumentariesSubscription = this.documentaryService.getNewDocumentaries(params)
       .subscribe(result => {
         let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
         this.newDocumentaries = cardDecks;
+
+        this.isFetchingNewDocumentaries = false;
       });
   }
 
   fetchNewestUsers() {
+    this.isFetchingNewestUsers = true;
+
     let params = new HttpParams();
 
     this.newestUsersSubscription = this.userService.getNewestUsers(params)
       .subscribe(result => {
         this.newestUsers = result['items'];
+
+        this.isFetchingNewestUsers = false;
       });
   }
 
   fetchActiveUsers() {
+    this.isFetchingActiveUsers = true;
+
     let params = new HttpParams();
 
     this.activeUsersSubscription = this.userService.getActiveUsers(params)
       .subscribe(result => {
         this.activeUsers = result['items'];
+        
+        this.isFetchingActiveUsers = false;
       });
   }
 
   fetchActivity() {
+    this.isFetchingActivity = true;
+
     this.activitySubscription = this.activityService.getActivityForWidget()
       .subscribe(result => {
         console.log(result);
@@ -114,26 +146,39 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
 
         this.activity = arr.reverse();
-        console.log(this.activity);
+
+        this.isFetchingActivity = false;
       });
   }
 
   fetchCategories() {
+    this.isFetchingCategories = true;
+
     this.categoriesSubscription = this.categoryService.getAllCategories()
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
+        
+        this.isFetchingCategories = false;
       })
   }
 
   fetchDuration() {
+    this.isFetchingDuration = true;
+
     let duration = this.durationService.getAllDurations();
     this.duration = this.durationService.getColumnsForDuration(duration);
+
+    this.isFetchingDuration = false;
   }
 
   fetchYears() {
+    this.isFetchingYears = true;
+
     this.yearsSubscription = this.yearService.getAllYears()
       .subscribe(result => {
         this.years = this.yearService.getColumnsForYears(result);
+        
+        this.isFetchingYears = false;
       })
   }
 

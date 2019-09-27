@@ -37,7 +37,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                     </div>
                   </div>
 
-                  <div style="margin-top: 40px"></div>
+                  <div style="margin-top: 40px" *ngIf="!isFetchingRecentlyAddedDocumentaries">
                   <h2>Recently Added</h2>
                 <div class="card-deck" *ngFor="let cardDeck of recentlyAdded | keyvalue">
                     <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
@@ -53,10 +53,12 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                         </div>
                     </div>
                 </div>
+            </div>
+            <p *ngIf="isFetchingRecentlyAddedDocumentaries">Loading...</p>
 
                     <div style="clear:both"></div>
                   
-                    <div style="margin-top: 40px"></div>
+                    <div style="margin-top: 40px" *ngIf="!isFetchingRecentlyUpdatedDocumentaries">
                     <h2>Recently Updated</h2>
                     <div class="card-deck" *ngFor="let cardDeck of recentlyUpdated | keyvalue">
                             <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
@@ -71,8 +73,10 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <p *ngIf="isFetchingRecentlyUpdatedDocumentaries">Loading...</p>
                         <div style="clear:both"></div>
-                        <div style="margin-top: 40px"></div>
+                        <div style="margin-top: 40px" *ngIf="!isFetchingNewDocumentaries">
                         <h2>New Documentaries</h2>
                         <div class="card-deck" *ngFor="let cardDeck of newDocumentaries | keyvalue">
                                 <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
@@ -87,6 +91,8 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <p *ngIf="isFetchingNewDocumentaries">Loading...</p>
                       
                   
       </div>
@@ -113,7 +119,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                 </li>
             </ul>
           </div>
-          <div style="margin-top: 40px"></div>
+          <div style="margin-top: 40px" *ngIf="!isFetchingNewestUsers && !isFetchingActiveUsers">
           <h2>Members</h2>
           <div class="card">
                 <div class="card-header" style="background-color: #ffffff">
@@ -139,33 +145,47 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                     </div>
                 </div>
               </div>
+            </div>
+            <p *ngIf="isFetchingNewestUsers || isFetchingActiveUsers">Loading...</p>
             
               <div style="clear: both"></div>
-              <div style="margin-top: 30px"></div>
+              <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
               <h2>Categories</h2>
               <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
                 <li *ngFor="let categoryObject of columnPosition.value">
                         <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries" [routerLink]="['/category', categoryObject.slug ]" routerLinkActive="active">{{ categoryObject.name }}</a>
                 </li>
               </ul>
+            </div>
+            <p *ngIf="isFetchingCategories">Loading...</p>
                     <div style="clear: both"></div>
 
+                    <div *ngIf="!isFetchingDuration">
+                        
                     <h2>Duration</h2>
                     <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
                         <li *ngFor="let durationObject of columnPosition.value">
                                 <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}" [routerLink]="['/duration', durationObject.slug ]" routerLinkActive="active">{{ durationObject.display }}</a>
                         </li>
                       </ul>
+                    </div>
+                    
+                    <p *ngIf="isFetchingDuration">Loading...</p>
                           <div style="clear: both"></div>
 
+                          <div *ngIf="!isFetchingYears">
                           <h2>Years</h2>
                             <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
                               <li *ngFor="let yearObject of columnPosition.value">
                                     <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}" [routerLink]="['/year', yearObject.year ]" routerLinkActive="active">{{ yearObject.year }}</a>
                               </li>
                             </ul>
+                            </div>
+                            <p *ngIf="isFetchingYears">Loading...</p>
                           <div style="clear: both"></div>
           
+                          <div *ngIf="!isFetchingActivity">
+                              
                           <h2>Activity</h2>
                           <div class="card recent-activity">
                                 <ul class="list-group list-group-flush ">
@@ -269,6 +289,9 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                     </li>
                                 </ul>
                               </div>
+                          </div>
+                              
+                          <p *ngIf="isFetchingActivity">Loading...</p>
 
       </div>
 </div>

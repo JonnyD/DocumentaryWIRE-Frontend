@@ -27,6 +27,11 @@ export class DurationShowComponent implements OnInit {
   private years;
   private durationList;
 
+  isFetchingDocumentaries = false;
+  isFetchingCategories = false;
+  isFetchingDuration = false;
+  isFetchingYears = false;
+
   constructor(
     private categoryService: CategoryService,
     private documentaryService: DocumentaryService,
@@ -54,6 +59,8 @@ export class DurationShowComponent implements OnInit {
   }
 
   fetchDocumentaries() {
+    this.isFetchingDocumentaries = true;
+
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
@@ -71,25 +78,39 @@ export class DurationShowComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.documentaries = result['items'];
+
+        this.isFetchingDocumentaries = false;
       });
   }
 
   fetchCategories() {
+    this.isFetchingCategories = true;
+
     this.categoriesSubscription = this.categoryService.getAllCategories()
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
+
+        this.isFetchingCategories = false;
       })
   }
 
   fetchDuration() {
+    this.isFetchingDuration = true;
+
     let durationList = this.durationService.getAllDurations();
     this.durationList = this.durationService.getColumnsForDuration(durationList);
+
+    this.isFetchingDuration = false;
   }
 
   fetchYears() {
+    this.isFetchingYears = true;
+
     this.yearsSubscription = this.yearService.getAllYears()
       .subscribe(result => {
         this.years = this.yearService.getColumnsForYears(result);
+
+        this.isFetchingYears = false;
       })
   }
   

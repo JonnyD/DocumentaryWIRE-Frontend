@@ -27,6 +27,11 @@ export class BrowseComponent implements OnInit {
   private duration;
   private years;
 
+  isFetchingDocumentaries = false;
+  isFetchingCategories = false;
+  isFetchingYears = false;
+  isFetchingDuration = false;
+
   constructor(
     private documentaryService: DocumentaryService,
     private categoryService: CategoryService,
@@ -56,7 +61,8 @@ export class BrowseComponent implements OnInit {
   }
 
   fetchDocumentaries() {
-    console.log("page:" + this.page);
+    this.isFetchingDocumentaries = true;
+
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
@@ -73,26 +79,39 @@ export class BrowseComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.documentaries = result['items'];
-        console.log(result);
+
+        this.isFetchingDocumentaries = false;
       });
   }
 
   fetchCategories() {
+    this.isFetchingCategories = true;
+
     this.categoriesSubscription = this.categoryService.getAllCategories()
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
+
+        this.isFetchingCategories = false;
       })
   }
 
   fetchDuration() {
+    this.isFetchingDuration = true;
+
     let duration = this.durationService.getAllDurations();
     this.duration = this.durationService.getColumnsForDuration(duration);
+
+    this.isFetchingDuration = false;
   }
 
   fetchYears() {
+    this.isFetchingYears = true;
+
     this.yearsSubscription = this.yearService.getAllYears()
       .subscribe(result => {
         this.years = this.yearService.getColumnsForYears(result);
+
+        this.isFetchingYears = false;
       })
   }
   

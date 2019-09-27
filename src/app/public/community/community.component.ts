@@ -23,6 +23,10 @@ export class CommunityComponent implements OnInit {
   private newestUsers;
   private activeUsers;
 
+  isFetchingCommunityItems = false;
+  isFetchingNewestUsers = false;
+  isFetchingActiveUsers = false;
+
   constructor(
     private communityService: CommunityService,
     private userService: UserService,
@@ -42,6 +46,8 @@ export class CommunityComponent implements OnInit {
   }
 
   fetchCommunityItems() {
+    this.isFetchingCommunityItems = true;
+
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
@@ -58,24 +64,34 @@ export class CommunityComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.communityItems = result['items'];
+
+        this.isFetchingCommunityItems = false;
       });
   }
 
   fetchNewestUsers() {
+    this.isFetchingNewestUsers = true;
+
     let params = new HttpParams();
 
     this.newestUsersSubscription = this.userService.getNewestUsers(params)
       .subscribe(result => {
         this.newestUsers = result['items'];
+
+        this.isFetchingNewestUsers = false;
       });
   }
 
   fetchActiveUsers() {
+    this.isFetchingActiveUsers = true;
+
     let params = new HttpParams();
 
     this.activeUsersSubscription = this.userService.getActiveUsers(params)
       .subscribe(result => {
         this.activeUsers = result['items'];
+
+        this.isFetchingActiveUsers = false;
       });
   }
 

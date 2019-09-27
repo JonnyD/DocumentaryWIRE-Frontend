@@ -1,7 +1,8 @@
 <div class="container" >
         <div class="row">
             <div class="col-md-8" style="margin-top: 20px">
-                <h2>Community</h2>
+                <div *ngIf="!isFetchingCommunityItems">
+                <h2>Community - Page {{ page }}</h2>
                 <div class="card mb-1" style="margin-top: 20px" *ngFor="let communityItem of communityItems | paginate: config">
                     <div class="row no-gutters">
                         <div class="col-md-1">
@@ -30,6 +31,8 @@
                 <div style="margin-top: 20px; margin-bottom: 20px">
                         <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
                 </div>
+                </div>
+                <p *ngIf="isFetchingCommunityItems">Loading...</p>
             </div>
             <div class="col-md-4" style="margin-top: 20px">
                     <h2>Subscribe / Follow</h2>
@@ -54,7 +57,7 @@
                             </li>
                         </ul>
                       </div>
-                      <div style="margin-top: 20px"></div>
+                      <div style="margin-top: 20px" *ngIf="!isFetchingNewestUsers">
                       <h2>Newest Members</h2>
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -74,7 +77,10 @@
                             </li>
                         </ul>
                       </div>
-                      <div style="margin-top: 20px"></div>
+                    </div>
+                    
+                    <p *ngIf="isFetchingNewestUsers">Loading...</p>
+                      <div style="margin-top: 20px" *ngIf="!isFetchingActiveUsers">
                       <h2>Active Members</h2>
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -94,7 +100,8 @@
                             </li>
                         </ul>
                       </div>
-                    
+                    </div>
+                    <p *ngIf="isFetchingActiveUsers">Loading...</p>
                   
             </div>
         </div>
