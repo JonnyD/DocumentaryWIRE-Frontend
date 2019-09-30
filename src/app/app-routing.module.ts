@@ -1,3 +1,4 @@
+import { RegisterComponent } from './public/register/register.component';
 import { CommunityComponent } from './public/community/community.component';
 import { DurationResolverService } from './services/duration-resolver.service';
 import { YearResolverService } from './services/year-resolver.service';
@@ -58,6 +59,7 @@ const routes: Routes = [
   },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
+  { path: 'register', component: RegisterComponent },
   { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,
     children: [
       { 

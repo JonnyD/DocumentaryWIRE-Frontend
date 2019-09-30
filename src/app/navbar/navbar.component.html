@@ -11,7 +11,7 @@
 
     <div class="collapse navbar-collapse" id="navbarsExample07">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" [routerLink]="['']" routerLinkActive="active">Home</a>
         </li>
         <li class="nav-item">
@@ -32,8 +32,12 @@
       </ul>
       
       <li class="nav-item" style="margin-left: 10px">
-          <button style="margin-right: 10px" type="button" class="btn btn-outline-info">Login</button>
-          <button type="button" class="btn btn-info">Register</button>
+          <a [routerLink]="['/login']" routerLinkActive="active">
+            <button style="margin-right: 10px" type="button" class="btn btn-outline-info">Login</button>
+          </a>
+          <a [routerLink]="['/register']" routerLinkActive="active">
+            <button type="button" class="btn btn-info">Register</button>
+        </a>
       </li>
     </div>
   </div>

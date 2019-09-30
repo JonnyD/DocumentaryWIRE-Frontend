@@ -9,6 +9,10 @@ body {
     }
 }
 
+.navbar-active-background-color {
+    background-color: #000;
+}
+
 .popover {
     width: 600px;
 }
