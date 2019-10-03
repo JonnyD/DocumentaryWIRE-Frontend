@@ -6,30 +6,33 @@
                 <div class="card mb-1" style="margin-top: 20px" *ngFor="let communityItem of communityItems | paginate: config">
                     <div class="row no-gutters">
                         <div class="col-md-1">
+                                <a [routerLink]="['/user', communityItem.user.username]">
                                 <img src="{{ communityItem.user.avatar }}" class="rounded-circle"
                                 style="float:left; margin:3px"
                                 width="60" height="60" alt="Profile picture of {{ communityItem.user.displayName }}" />
+                                </a>
                         </div>
                         <div class="col-md-11">
                         <div class="card-body">
                             <div *ngIf="communityItem.type == 'joined'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has joined
+                                <a [routerLink]="['/user', communityItem.user.username]" routerLinkActive="active">
+                                    {{ communityItem.user.displayName }}</a> has joined
                             </div>
                             <div *ngIf="communityItem.type == 'added'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary 
+                                    <a [routerLink]="['/user', communityItem.user.username]" >{{ communityItem.user.displayName }}</a> has added a documentary 
                                     <a [routerLink]="['/', communityItem.data.documentarySlug]">
                                         {{ communityItem.data.documentaryTitle }}
                                     </a>
                             </div>
                             <div *ngIf="communityItem.type == 'like'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary 
+                                    <a [routerLink]="['/user', communityItem.user.username]" >{{ communityItem.user.displayName }}</a> has added a documentary 
                                     
                             <a [routerLink]="['/', communityItem.data.documentarySlug]">
                               {{ communityItem.data.documentaryTitle }}
                             </a> to their watch list
                             </div>
                             <div *ngIf="communityItem.type == 'comment'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has added a comment to 
+                                    <a [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.displayName }}</a> has added a comment to 
                                     <a [routerLink]="['/', communityItem.data.documentarySlug]">{{ communityItem.data.documentaryTitle }}</a> saying: {{ communityItem.data.comment }}
                             </div>
                         </div>
@@ -73,7 +76,7 @@
                                     <div class="text-center">
                                             <div class="avatar-block" style="margin-left: 15px">
                                                     <div class="item-avatar" *ngFor="let user of newestUsers">
-                                                        <a href=""
+                                                        <a [routerLink]="['/user', user.username]"
                                                             title="{{ user.username }}" rel="nofollow">
                                                             <img src="{{ user.avatar }}" class="rounded-circle"
                                                                     style="float:left; margin:3px"
@@ -96,7 +99,7 @@
                                     <div class="text-center">
                                             <div class="avatar-block" style="margin-left: 15px">
                                                     <div class="item-avatar" *ngFor="let user of activeUsers">
-                                                        <a href=""
+                                                        <a [routerLink]="['/user', user.username]"
                                                             title="{{ user.username }}" rel="nofollow">
                                                             <img src="{{ user.avatar }}" class="rounded-circle"
                                                                     style="float:left; margin:3px"

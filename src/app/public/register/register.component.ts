@@ -4,7 +4,6 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { fromEventPattern } from 'rxjs';
-import { ConsoleReporter } from 'jasmine';
 
 @Component({
   selector: 'app-register',

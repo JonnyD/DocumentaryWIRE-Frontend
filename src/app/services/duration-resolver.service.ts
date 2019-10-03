@@ -14,6 +14,6 @@ export class DurationResolverService implements Resolve<Observable<any>> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let durationSlug = route.params['slug'];
     let duration = this.durationService.getDurationBySlug(durationSlug);
-    return duration;
+    return <Observable<any>> duration;
   }
 }

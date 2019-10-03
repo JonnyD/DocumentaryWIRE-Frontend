@@ -49,6 +49,8 @@ import { CommunityComponent } from './public/community/community.component';
 import { RegisterComponent } from './public/register/register.component';
 import { UserShowComponent } from './public/user/user-show/user-show.component';
 import { DocumentaryShowComponent } from './public/documentary/documentary-show/documentary-show.component';
+import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
+import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,9 @@ import { DocumentaryShowComponent } from './public/documentary/documentary-show/
     CommunityComponent,
     RegisterComponent,
     UserShowComponent,
-    DocumentaryShowComponent
+    DocumentaryShowComponent,
+    UserActivityComponent,
+    UserWatchlistComponent
   ],
   imports: [
     BrowserModule,

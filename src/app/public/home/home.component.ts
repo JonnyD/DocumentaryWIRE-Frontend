@@ -137,7 +137,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   fetchActivity() {
     this.isFetchingActivity = true;
 
-    this.activitySubscription = this.activityService.getActivityForWidget()
+    this.activitySubscription = this.activityService.getActivity(new HttpParams)
       .subscribe(result => {
         console.log(result);
         let arr = [];

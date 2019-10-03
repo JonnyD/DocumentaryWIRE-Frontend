@@ -1,0 +1,58 @@
+
+<div class="container" >
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 20px">
+                    
+                    <div style="margin-bottom: 20px">
+                        <h1>{{ user.name }}</h1>
+                        {{ user.username }}
+                     </div>    
+                
+                <p *ngIf="isFetchingActivity">Loading...</p>
+                    <div *ngIf="!isFetchingActivity">
+                     <h5>Activity</h5> 
+                     <div class="card mb-1" style="margin-top: 20px;" *ngFor="let communityItem of activity | paginate: config">
+                           <div class="row no-gutters">
+                               <div class="col-md-1">
+                                       <a [routerLink]="['/user', communityItem.user.username]">
+                                       <img src="{{ communityItem.user.avatar }}" class="rounded-circle"
+                                       style="float:left; margin:3px"
+                                       width="60" height="60" alt="Profile picture of {{ communityItem.user.name }}" />
+                                       </a>
+                               </div>
+                               <div class="col-md-11">
+                               <div class="card-body">
+                                   <div *ngIf="communityItem.type == 'joined'">
+                                       <a [routerLink]="['/user', communityItem.user.username]" routerLinkActive="active">
+                                           {{ communityItem.user.displayName }}</a> has joined
+                                   </div>
+                                   <div *ngIf="communityItem.type == 'added'">
+                                           <a [routerLink]="['/user', communityItem.user.username]" >{{ communityItem.user.name }}</a> has added a documentary 
+                                           <a [routerLink]="['/', communityItem.data.documentarySlug]">
+                                               {{ communityItem.data.documentaryTitle }}
+                                           </a>
+                                   </div>
+                                   <div *ngIf="communityItem.type == 'like'">
+                                           <a [routerLink]="['/user', communityItem.user.username]" >{{ communityItem.user.name }}</a> has added a documentary 
+                                           
+                                   <a [routerLink]="['/', communityItem.data.documentarySlug]">
+                                     {{ communityItem.data.documentaryTitle }}
+                                   </a> to their watch list
+                                   </div>
+                                   <div *ngIf="communityItem.type == 'comment'">
+                                           <a [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a> has added a comment to 
+                                           <a [routerLink]="['/', communityItem.data.documentarySlug]">{{ communityItem.data.documentaryTitle }}</a> saying: {{ communityItem.data.comment }}
+                                   </div>
+                               </div>
+                               </div>
+                           </div>
+                       </div>         
+                       
+                       <div style="margin-top: 20px; margin-bottom: 20px">
+                            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                    </div>     
+                    </div>
+                    
+            </div>
+        </div>
+    </div>

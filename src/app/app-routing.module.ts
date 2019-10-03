@@ -1,3 +1,4 @@
+import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
 import { UserShowComponent } from './public/user/user-show/user-show.component';
 import { AdminUserResolverService } from './services/admin-user-resolver.service';
 import { RegisterComponent } from './public/register/register.component';
@@ -63,6 +64,11 @@ const routes: Routes = [
   { 
     path: 'user/:username', 
     component: UserShowComponent,
+    resolve: [UserResolverService]
+  },
+  { 
+    path: 'user/:username/activity', 
+    component: UserActivityComponent,
     resolve: [UserResolverService]
   },
   { path: 'login', component: LoginComponent },

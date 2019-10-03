@@ -16,15 +16,14 @@ export class ActivityService extends DataService {
     this.authenticationService = authenticationService;
    }
 
-   getActivityForWidget() {
-    let options = {};
-
+   getActivity(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
     }
 
      return this.getAll(options);
