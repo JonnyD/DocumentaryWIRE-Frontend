@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -21,7 +22,6 @@ export class LoginComponent implements OnInit {
     ) { 
         // redirect to home if already logged in
         if (this.authenticationService.isAuthenticated()) { 
-            window.location.reload();
             this.router.navigate(['/']);
         }
     }
@@ -54,19 +54,12 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    window.location.replace(this.returnUrl);
                 },
                 error => {
                     this.error = error;
                     this.loading = false;
                     console.log(this.error);
                 });
-    }
-
-    announce() {
-        let currentToken = <Token> JSON.parse(localStorage.getItem('currentToken'));
-          if (currentToken && currentToken.access_token) {
-              return this.authenticationService.announceLogin(currentToken); 
-          }      
     }
 }

@@ -30,7 +30,7 @@
             <button type="button" class="btn btn-success">+Add / Upload</button>
         </li>
       </ul>
-      {{ currentUser }}
+      
       <li *ngIf="!isAuthenticated"class="nav-item" style="margin-left: 10px">
           <a [routerLink]="['/login']" routerLinkActive="active">
             <button style="margin-right: 10px" type="button" class="btn btn-outline-info">Login</button>
