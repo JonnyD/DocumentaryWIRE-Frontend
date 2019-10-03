@@ -117,6 +117,7 @@ export class UserShowComponent implements OnInit {
 
     let pageSize = 5;
     params = params.append('amountPerPage', pageSize.toString());
+    params = params.append('user', this.user.username);
 
     this.watchlistSubscription = this.watchlistService.getAllWatchlists(params)
       .subscribe(result => {

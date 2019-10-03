@@ -138,7 +138,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                 <div class="card-body">
                     <div class="avatar-block" style="margin-left: 15px">
                         <div class="item-avatar" *ngFor="let user of newestUsers">
-                            <a href=""
+                            <a [routerLink]="['/user', user.username]"
                                 title="{{ user.username }}" rel="nofollow">
                                 <img src="{{ user.avatar }}" class="rounded-circle"
                                         style="float:left; margin:3px"
