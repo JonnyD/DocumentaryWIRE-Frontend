@@ -4,10 +4,16 @@
         <div class="col-md-12" style="margin-top: 20px">
            <p *ngIf="isFetchingUser">Loading...</p>
            <div *ngIf="!isFetchingUser" style="margin-bottom: 20px">
-               <h1><a [routerLink]="['/user', user.username]">{{ user.name }}</a></h1>
-               {{ user.username }}
-            </div>
+                <a [routerLink]="['/user', user.username]">
+                    <img src="{{ user.avatar }}" class="rounded-circle"
+                    style="float:left; margin-right: 10px"
+                    width="100" height="100" alt="Profile picture of {{ user.name }}" />
+                    </a>
 
+               <h1><a [routerLink]="['/user', user.username]">{{ user.name }}</a></h1>
+               @{{ user.username }}
+            </div>
+            <div style="clear:both"></div>
            <p *ngIf="isFetchingActivity">Loading...</p>
            <div *ngIf="!isFetchingActivity">
             <h5>Activity <a [routerLink]="['/user', user.username, 'activity']">(View All)</a></h5> 
