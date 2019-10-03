@@ -1,32 +1,33 @@
-import { ActivityService } from './../../../services/activity.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DocumentaryService } from './../../../services/documentary.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { Location } from "@angular/common";
 
 @Component({
-  selector: 'app-user-activity',
-  templateUrl: './user-activity.component.html',
-  styleUrls: ['./user-activity.component.css']
+  selector: 'app-user-added',
+  templateUrl: './user-added.component.html',
+  styleUrls: ['./user-added.component.css']
 })
-export class UserActivityComponent implements OnInit {
+export class UserAddedComponent implements OnInit {
   public user;
-  public activity;
+  public documentaries;
 
   config: any;
   private page;
 
-  public isFetchingActivity = true;
+  private isFetchingDocumentaries = true;
 
   private queryParamsSubscription;
-  private activitySubscription;
+  private documentariesSubscription;
 
   constructor(
-    private activityService: ActivityService,
+    private documentaryService: DocumentaryService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-  ) { }
+    private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.route.data.subscribe(result => {
@@ -36,34 +37,34 @@ export class UserActivityComponent implements OnInit {
       .queryParams
       .subscribe(params => {
           this.page = +params['page'] || 1;
-          this.fetchActivity();
-    });
+          this.fetchDocumentariesAdded();
+      });
     });
   }
 
-  fetchActivity() {
-    this.isFetchingActivity = true;
+  fetchDocumentariesAdded() {
+    this.isFetchingDocumentaries = true;
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
     this.location.go(this.router.url.split("?")[0], params.toString());
   
-    let amountPerPage = 6;
+    let amountPerPage = 5;
     params = params.append('amountPerPage', amountPerPage.toString());
     params = params.append('user', this.user.username);
 
-    this.activitySubscription = this.activityService.getActivity(params)
+    this.documentariesSubscription = this.documentaryService.getAllDocumentaries(params)
       .subscribe(result => {
         this.config = {
-          itemsPerPage: 6,
+          itemsPerPage: 5,
           currentPage: this.page,
           totalItems: result['count_results']
         };
 
-        this.activity = result['items'];
+        this.documentaries = result['items'];
 
-        this.isFetchingActivity = false;
+        this.isFetchingDocumentaries = false;
       })
 
   }
@@ -72,11 +73,15 @@ export class UserActivityComponent implements OnInit {
     console.log(event);
     this.config.currentPage = event;
     this.page = event;
-    this.fetchActivity();
+    this.fetchDocumentariesAdded();
+  }
+  
+  public getSantizeUrl(url : string) {
+    return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
-    this.activitySubscription.unsubscribe();
+    this.documentariesSubscription.unsubscribe();
   }
 }

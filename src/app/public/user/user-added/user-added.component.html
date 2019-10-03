@@ -1,0 +1,38 @@
+
+<div class="container" >
+    <div class="row">
+        <div class="col-md-12" style="margin-top: 20px">
+                
+                <div style="margin-bottom: 20px">
+                    <h1>{{ user.name }}</h1>
+                    {{ user.username }}
+                 </div>    
+
+<p *ngIf="isFetchingDocumentaries">Loading...</p>
+    <div *ngIf="!isFetchingDocumentaries">
+        <h5 style="margin-top: 20px">Documentaries Added</h5>
+        <div class="card-deck">
+            <div class="card" *ngFor="let documentary of documentaries | paginate: config">
+                <ng-template #popContent>{{ documentary.summary }}</ng-template>
+                <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
+                    <a class="pop" placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
+                        <img [src]="getSantizeUrl(documentary.poster)" class="card-img-top" style="width: 100%; height: 280px" alt="...">
+                    </a>
+                
+                <div class="card-body">
+                
+                <a [routerLink]="['/', documentary.slug]">
+                <h5 class="card-title">{{ documentary.title }}</h5>
+                </a>
+                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 20px; margin-bottom: 20px">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+        </div>    
+        </div>
+
+    </div>
+    </div>
+</div>

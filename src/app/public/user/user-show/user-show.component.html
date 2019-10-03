@@ -51,7 +51,7 @@
 
            <p *ngIf="isFetchingDocumentaries">Loading...</p>
            <div *ngIf="!isFetchingDocumentaries">
-              <h5 style=" margin-top: 20px">Documentaries Added</h5>
+              <h5 style="margin-top: 20px">Documentaries Added <a [routerLink]="['/user', user.username, 'added']">(View All)</a></h5>
               <div class="card-deck">
                   <div class="card" *ngFor="let documentary of documentaries">
                       <ng-template #popContent>{{ documentary.summary }}</ng-template>

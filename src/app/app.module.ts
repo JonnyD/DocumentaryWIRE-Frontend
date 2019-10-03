@@ -51,6 +51,7 @@ import { UserShowComponent } from './public/user/user-show/user-show.component';
 import { DocumentaryShowComponent } from './public/documentary/documentary-show/documentary-show.component';
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
+import { UserAddedComponent } from './public/user/user-added/user-added.component';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchl
     UserShowComponent,
     DocumentaryShowComponent,
     UserActivityComponent,
-    UserWatchlistComponent
+    UserWatchlistComponent,
+    UserAddedComponent
   ],
   imports: [
     BrowserModule,

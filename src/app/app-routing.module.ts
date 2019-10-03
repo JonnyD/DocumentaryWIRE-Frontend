@@ -38,6 +38,7 @@ import { DocumentaryResolverService } from './services/documentary-resolver.serv
 import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
 import { UserResolverService } from './services/user-resolver.service';
 import { DocumentaryShowComponent } from './public/documentary/documentary-show/documentary-show.component';
+import { UserAddedComponent } from './public/user/user-added/user-added.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -69,6 +70,11 @@ const routes: Routes = [
   { 
     path: 'user/:username/activity', 
     component: UserActivityComponent,
+    resolve: [UserResolverService]
+  },
+  { 
+    path: 'user/:username/added', 
+    component: UserAddedComponent,
     resolve: [UserResolverService]
   },
   { path: 'login', component: LoginComponent },
