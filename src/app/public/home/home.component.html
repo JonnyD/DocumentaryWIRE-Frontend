@@ -267,15 +267,14 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                                                 <span class="card-text" *ngIf="activityItem.type == 'like'">
                                                                         <span class="acitvity-item">
                                                                         <span class="activity-image">
-                                                                            <a href="">
-                                                        
-                                                                                <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
-                                                                                     class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' /></a>
+                                                                            <a href="">                                                                                <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
+                                                                                     class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' />
+                                                                                    </a>
                                                                             </span>
                                                                             <div class="data">
                                                                                 <span class="author">
                                                                                     <a href="">
-                                                                                        {{ activityItem.parent.user.name }}</a> added {{ activityItem.parent.data.documentaryTitle }} to their Watchlist
+                                                                                        {{ activityItem.parent.user.name }}</a> added <a [routerLink]="['/', activityItem.parent.data.documentarySlug]">{{ activityItem.parent.data.documentaryTitle }}</a> to their Watchlist
                                                                                         <span *ngIf="activityItem.child">
                                                                                             and {{ activityItem.child.length }} more documentaries
                                                                                         </span>
@@ -283,7 +282,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                                                                     <img class="image" width="50" height="70"
                                                                                         src="{{ activityItem.parent.data.documentaryThumbnail }}" />
                                                                                     <span class="excerpt" *ngIf="activityItem.child">
-                                                                                        <img *ngFor="let child of activityItem.child" class="tiny-image" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
+                                                                                        <img *ngFor="let child of activityItem.child" class="tiny-image" alt='{{ child.data.documentaryTitle }}' src='{{ child.data.documentaryThumbnail }}'
                                                                                                 height='30' width='30' />
                                                                                     </span>
                                                                                 </div>
