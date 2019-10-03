@@ -1,3 +1,4 @@
+import { WatchlistService } from './../../../services/watchlist.service';
 import { DocumentaryService } from './../../../services/documentary.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivityService } from './../../../services/activity.service';
@@ -17,6 +18,7 @@ export class UserShowComponent implements OnInit {
   public user;
   public activity;
   public documentaries;
+  public watchlists;
 
   config: any;
   private page;
@@ -29,11 +31,13 @@ export class UserShowComponent implements OnInit {
   private activitySubscription;
   private queryParamsSubscription;
   private documentarySubscription;
+  private watchlistSubscription;
 
   constructor(
     private userService: UserService,
     private activityService: ActivityService,
     private documentaryService: DocumentaryService,
+    private watchlistService: WatchlistService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
@@ -54,6 +58,7 @@ export class UserShowComponent implements OnInit {
             this.page = +params['page'] || 1;
             this.fetchActivity();
             this.fetchDocumentaries();
+            this.fetchWatchlists();
       });
     });
   }
@@ -104,7 +109,7 @@ export class UserShowComponent implements OnInit {
       })
   }
 
-  fetchWatchlisted() {
+  fetchWatchlists() {
     this.isFetchingWatchlisted = true;
 
     let params = new HttpParams();
@@ -113,18 +118,16 @@ export class UserShowComponent implements OnInit {
     let pageSize = 5;
     params = params.append('amountPerPage', pageSize.toString());
 
-    this.documentarySubscription = this.documentaryService.getAllDocumentaries(params)
+    this.watchlistSubscription = this.watchlistService.getAllWatchlists(params)
       .subscribe(result => {
         this.config = {
           itemsPerPage: pageSize,
           currentPage: this.page,
           totalItems: result['count_results']
         };
-        this.documentaries = result['items'];
-
-        console.log(this.documentaries);
+        this.watchlists = result['items'];
         
-        this.isFetchingDocumentaries = false;
+        this.isFetchingWatchlisted = false;
       })
   }
 
@@ -132,6 +135,7 @@ export class UserShowComponent implements OnInit {
     this.documentarySubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
     this.activitySubscription.unsubscribe();
+    this.watchlistSubscription.unsubscribe();
   }
   
   public getSantizeUrl(url : string) {

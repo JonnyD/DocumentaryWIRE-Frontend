@@ -1,4 +1,3 @@
-import { HeaderAccessTokenService } from './../helpers/header-access-token.service';
 import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { DataService } from './data.service';
@@ -8,25 +7,25 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class VideoSourceService extends DataService {
+export class WatchlistService extends DataService {
 
   private authenticationService: AuthenticationService;
 
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
-    super(`${environment.apiUrl}/api/v1/video-source`, http);
+    super(`${environment.apiUrl}/api/v1/watchlist`, http);
     this.authenticationService = authenticationService;
    }
 
-   getAllWatchlists() {
-    let options = {};
-
+   getAllWatchlists(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
+
+    let options = {
+      params: params
+    }
+
      return this.getAll(options);
     }
 }

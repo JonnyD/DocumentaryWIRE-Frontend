@@ -1,1 +1,38 @@
-<p>user-watchlist works!</p>
+
+<div class="container" >
+        <div class="row">
+            <div class="col-md-12" style="margin-top: 20px">
+                    
+                    <div style="margin-bottom: 20px">
+                        <h1><a [routerLink]="['/user', user.username]">{{ user.name }}</a></h1>
+                        {{ user.username }}
+                     </div>    
+    
+    <p *ngIf="isFetchingWatchlists">Loading...</p>
+        <div *ngIf="!isFetchingWatchlists">
+            <h5 style="margin-top: 20px">Added to Watchlist</h5>
+            <div class="card-deck">
+                <div class="card" *ngFor="let watchlist of watchlists | paginate: config">
+                    <ng-template #popContent>{{ watchlist.documentary.summary }}</ng-template>
+                    <ng-template #popTitle><b>{{ watchlist.documentary.title }}</b></ng-template>
+                        <a class="pop" placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
+                            <img [src]="getSantizeUrl(watchlist.documentary.poster)" class="card-img-top" style="width: 100%; height: 280px" alt="...">
+                        </a>
+                    
+                    <div class="card-body">
+                    
+                    <a [routerLink]="['/', watchlist.documentary.slug]">
+                    <h5 class="card-title">{{ watchlist.documentary.title }}</h5>
+                    </a>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; margin-bottom: 20px">
+                    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+            </div>    
+            </div>
+    
+        </div>
+        </div>
+    </div>

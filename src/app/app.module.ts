@@ -1,3 +1,4 @@
+import { WatchlistService } from './services/watchlist.service';
 import { UserService } from './services/user.service';
 import { DurationService } from './services/duration.service';
 import { YearService } from './services/year.service';
@@ -111,6 +112,7 @@ import { UserAddedComponent } from './public/user/user-added/user-added.componen
     YearService,
     DurationService,
     UserService,
+    WatchlistService,
     AdminGuard
   ],
   bootstrap: [AppComponent]

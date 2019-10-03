@@ -1,3 +1,4 @@
+import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
 import { UserShowComponent } from './public/user/user-show/user-show.component';
 import { AdminUserResolverService } from './services/admin-user-resolver.service';
@@ -75,6 +76,11 @@ const routes: Routes = [
   { 
     path: 'user/:username/added', 
     component: UserAddedComponent,
+    resolve: [UserResolverService]
+  },
+  { 
+    path: 'user/:username/watchlist', 
+    component: UserWatchlistComponent,
     resolve: [UserResolverService]
   },
   { path: 'login', component: LoginComponent },
