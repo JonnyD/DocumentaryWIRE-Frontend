@@ -1,3 +1,4 @@
+import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
 import { UserShowComponent } from './public/user/user-show/user-show.component';
@@ -158,6 +159,10 @@ const routes: Routes = [
         resolve: [AdminUserResolverService]
       },
     ]
+  },
+  { 
+    path: 'add', 
+    component: DocumentaryAddComponent
   },
   { 
     path: ':slug', 
