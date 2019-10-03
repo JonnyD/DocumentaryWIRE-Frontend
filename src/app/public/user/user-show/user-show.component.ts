@@ -87,6 +87,7 @@ export class UserShowComponent implements OnInit {
 
     let pageSize = 5;
     params = params.append('amountPerPage', pageSize.toString());
+    params = params.append('addedBy', this.user.username);
 
     this.documentarySubscription = this.documentaryService.getAllDocumentaries(params)
       .subscribe(result => {

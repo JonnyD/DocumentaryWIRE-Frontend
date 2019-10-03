@@ -24,7 +24,7 @@
                                <div class="card-body">
                                    <div *ngIf="communityItem.type == 'joined'">
                                        <a [routerLink]="['/user', communityItem.user.username]" routerLinkActive="active">
-                                           {{ communityItem.user.displayName }}</a> has joined
+                                           {{ communityItem.user.name }}</a> has joined
                                    </div>
                                    <div *ngIf="communityItem.type == 'added'">
                                            <a [routerLink]="['/user', communityItem.user.username]" >{{ communityItem.user.name }}</a> has added a documentary 
