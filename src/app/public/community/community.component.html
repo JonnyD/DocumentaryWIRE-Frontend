@@ -16,13 +16,21 @@
                                     <a href="">{{ communityItem.user.displayName }}</a> has joined
                             </div>
                             <div *ngIf="communityItem.type == 'added'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary <a href="">{{ communityItem.data.documentaryTitle }}</a>
+                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary 
+                                    <a [routerLink]="['/', communityItem.data.documentarySlug]">
+                                        {{ communityItem.data.documentaryTitle }}
+                                    </a>
                             </div>
                             <div *ngIf="communityItem.type == 'like'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary <a href="">{{ communityItem.data.documentaryTitle }}</a> to their watch list
+                                    <a href="">{{ communityItem.user.displayName }}</a> has added a documentary 
+                                    
+                            <a [routerLink]="['/', communityItem.data.documentarySlug]">
+                              {{ communityItem.data.documentaryTitle }}
+                            </a> to their watch list
                             </div>
                             <div *ngIf="communityItem.type == 'comment'">
-                                    <a href="">{{ communityItem.user.displayName }}</a> has added a comment to <a href="">{{ communityItem.data.documentaryTitle }}</a> saying: {{ communityItem.data.comment }}
+                                    <a href="">{{ communityItem.user.displayName }}</a> has added a comment to 
+                                    <a [routerLink]="['/', communityItem.data.documentarySlug]">{{ communityItem.data.documentaryTitle }}</a> saying: {{ communityItem.data.comment }}
                             </div>
                         </div>
                         </div>

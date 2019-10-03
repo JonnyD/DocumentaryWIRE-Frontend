@@ -9,10 +9,6 @@ body {
     }
 }
 
-.navbar-active-background-color {
-    background-color: #000;
-}
-
 .popover {
     width: 600px;
 }
@@ -42,7 +38,7 @@ h1,h4 {
 }
 
 .recent-activity {
-    height: 1000px;
+    height: 750px;
     overflow-y: scroll;
     border: 1px solid #DDD;
     padding-left: 0;

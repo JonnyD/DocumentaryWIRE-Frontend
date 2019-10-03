@@ -36,6 +36,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
 import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
 import { UserResolverService } from './services/user-resolver.service';
+import { DocumentaryShowComponent } from './public/documentary/documentary-show/documentary-show.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -139,7 +140,12 @@ const routes: Routes = [
         resolve: [AdminUserResolverService]
       },
     ]
-  }
+  },
+  { 
+    path: ':slug', 
+    component: DocumentaryShowComponent,
+    resolve: [DocumentaryResolverService]
+  },
   
 ];
 

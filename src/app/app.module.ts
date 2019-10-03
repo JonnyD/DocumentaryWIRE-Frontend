@@ -48,6 +48,7 @@ import { DurationShowComponent } from './public/duration/duration-show/duration-
 import { CommunityComponent } from './public/community/community.component';
 import { RegisterComponent } from './public/register/register.component';
 import { UserShowComponent } from './public/user/user-show/user-show.component';
+import { DocumentaryShowComponent } from './public/documentary/documentary-show/documentary-show.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +82,8 @@ import { UserShowComponent } from './public/user/user-show/user-show.component';
     DurationShowComponent,
     CommunityComponent,
     RegisterComponent,
-    UserShowComponent
+    UserShowComponent,
+    DocumentaryShowComponent
   ],
   imports: [
     BrowserModule,

@@ -48,7 +48,10 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                             </a>
                         
                         <div class="card-body">
-                        <h5 class="card-title">{{ documentary.title }}</h5>
+                        
+                        <a [routerLink]="['/documentary', documentary.slug]">
+                          <h5 class="card-title">{{ documentary.title }}</h5>
+                        </a>
                         <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
@@ -56,7 +59,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
             </div>
             <p *ngIf="isFetchingRecentlyAddedDocumentaries">Loading...</p>
 
-                    <div style="clear:both"></div>
+                    <!--<div style="clear:both"></div>
                   
                     <div style="margin-top: 40px" *ngIf="!isFetchingRecentlyUpdatedDocumentaries">
                     <h2>Recently Updated</h2>
@@ -93,7 +96,7 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                             </div>
                         </div>
                         <p *ngIf="isFetchingNewDocumentaries">Loading...</p>
-                      
+                    -->
                   
       </div>
       <div class="col-md-4">
