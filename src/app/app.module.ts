@@ -1,3 +1,4 @@
+import { UserService } from './services/user.service';
 import { DurationService } from './services/duration.service';
 import { YearService } from './services/year.service';
 import { HomeComponent } from './public/home/home.component';
@@ -46,6 +47,7 @@ import { YearShowComponent } from './public/years/year-show/year-show.component'
 import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
 import { CommunityComponent } from './public/community/community.component';
 import { RegisterComponent } from './public/register/register.component';
+import { UserShowComponent } from './public/user/user-show/user-show.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { RegisterComponent } from './public/register/register.component';
     YearShowComponent,
     DurationShowComponent,
     CommunityComponent,
-    RegisterComponent
+    RegisterComponent,
+    UserShowComponent
   ],
   imports: [
     BrowserModule,
@@ -99,6 +102,7 @@ import { RegisterComponent } from './public/register/register.component';
     AuthenticationService,
     YearService,
     DurationService,
+    UserService,
     AdminGuard
   ],
   bootstrap: [AppComponent]

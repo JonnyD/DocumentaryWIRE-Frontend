@@ -1,3 +1,5 @@
+import { UserShowComponent } from './public/user/user-show/user-show.component';
+import { AdminUserResolverService } from './services/admin-user-resolver.service';
 import { RegisterComponent } from './public/register/register.component';
 import { CommunityComponent } from './public/community/community.component';
 import { DurationResolverService } from './services/duration-resolver.service';
@@ -32,8 +34,8 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocumentaryResolverService } from './services/documentary-resolver.service';
-import { UserResolverService } from './services/user-resolver.service';
 import { DurationShowComponent } from './public/duration/duration-show/duration-show.component';
+import { UserResolverService } from './services/user-resolver.service';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -56,6 +58,11 @@ const routes: Routes = [
   { 
     path: 'community', 
     component: CommunityComponent
+  },
+  { 
+    path: 'user/:username', 
+    component: UserShowComponent,
+    resolve: [UserResolverService]
   },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
@@ -129,7 +136,7 @@ const routes: Routes = [
       { 
         path: 'users/:id', 
         component: AdminUserDetailComponent,
-        resolve: [UserResolverService]
+        resolve: [AdminUserResolverService]
       },
     ]
   }

@@ -10,13 +10,31 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class UserService extends DataService {
-
+ 
   private authenticationService: AuthenticationService;
 
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/user`, http);
     this.authenticationService = authenticationService;
    }
+
+   getMe() {
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
+    }
+    
+    return this.get('me', options);
+   }
+
+
+
+
 
    getUserById(id: number) {
     let options = {};
@@ -29,6 +47,20 @@ export class UserService extends DataService {
         }
     }
     return this.get(id, options);
+   }
+
+   getUserByUsername(username: string) {
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
+    }
+
+    return this.get(username, options);
    }
 
    getAllUsers() {

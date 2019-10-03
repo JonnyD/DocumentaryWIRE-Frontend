@@ -12,7 +12,13 @@ export class DataService {
     private url: string, 
     private http: HttpClient) { }
 
+  setUrl(url: string) {
+    this.url = url;
+  }
+
   get(idOrSlug, options) {
+    console.log(this.url);
+    console.log(idOrSlug);
     let url = this.url + '/' + idOrSlug;
     return this.http.get(url, options);
   }

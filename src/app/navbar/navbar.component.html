@@ -31,14 +31,24 @@
         </li>
       </ul>
       
-      <li class="nav-item" style="margin-left: 10px">
+      <li *ngIf="!isAuthenticated"class="nav-item" style="margin-left: 10px">
           <a [routerLink]="['/login']" routerLinkActive="active">
             <button style="margin-right: 10px" type="button" class="btn btn-outline-info">Login</button>
           </a>
           <a [routerLink]="['/register']" routerLinkActive="active">
             <button type="button" class="btn btn-info">Register</button>
-        </a>
+          </a>
       </li>
+      <div *ngIf="isAuthenticated" ngbDropdown class="d-inline-block">
+          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Welcome, {{ me.name }}</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem>Action - 1</button>
+            <button ngbDropdownItem>Another Action</button>
+            <a [routerLink]="['/logout']" routerLinkActive="active">
+              <button ngbDropdownItem>Logout</button>
+            </a>
+          </div>
+        </div>
     </div>
   </div>
 </nav>

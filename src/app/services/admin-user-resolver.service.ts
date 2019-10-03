@@ -8,14 +8,12 @@ import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 
 @Injectable({ providedIn: 'root' })
-export class UserResolverService implements Resolve<Observable<any>> {
+export class AdminUserResolverService implements Resolve<Observable<any>> {
   constructor(private userService: UserService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    let username = route.params['username'];
-    console.log(username);
-    let user = this.userService.getUserByUsername(username);
-    console.log(user);
+    let id = route.params['id'];
+    let user = this.userService.getUserById(id);
     return user;
   }
 }
