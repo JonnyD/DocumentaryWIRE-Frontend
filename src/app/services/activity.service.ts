@@ -15,8 +15,23 @@ export class ActivityService extends DataService {
     super(`${environment.apiUrl}/api/v1/activity`, http);
     this.authenticationService = authenticationService;
    }
+   
+   getAllActivities(params: HttpParams) {
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+    }
 
-   getActivity(params: HttpParams) {
+    let options = {
+      params: params
+    }
+
+    return this.getAll(options);
+ }
+
+   getActivityForRecentWidget(params: HttpParams) {
+     params = params.append("show", "widget");
+
     if (this.authenticationService.isAuthenticated()) {
       let accessToken = this.authenticationService.currentTokenValue.access_token;
       params = params.append('access_token', accessToken)

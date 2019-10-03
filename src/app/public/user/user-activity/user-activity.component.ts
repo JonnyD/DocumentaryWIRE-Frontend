@@ -53,7 +53,7 @@ export class UserActivityComponent implements OnInit {
     params = params.append('amountPerPage', amountPerPage.toString());
     params = params.append('user', this.user.username);
 
-    this.activitySubscription = this.activityService.getActivity(params)
+    this.activitySubscription = this.activityService.getAllActivities(params)
       .subscribe(result => {
         this.config = {
           itemsPerPage: 6,

@@ -275,13 +275,13 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                                                                             <div class="data">
                                                                                 <span class="author">
                                                                                     <a href="">
-                                                                                        {{ activityItem.parent.user.name }}</a> added to Watch List
+                                                                                        {{ activityItem.parent.user.name }}</a> added {{ activityItem.parent.data.documentaryTitle }} to their Watchlist
                                                                                         <span *ngIf="activityItem.child">
                                                                                             and {{ activityItem.child.length }} more documentaries
                                                                                         </span>
                                                                                 </span>
                                                                                     <img class="image" width="50" height="70"
-                                                                                        src="{{ activityItem.parent.data.documentaryThumbail }}" />
+                                                                                        src="{{ activityItem.parent.data.documentaryThumbnail }}" />
                                                                                     <span class="excerpt" *ngIf="activityItem.child">
                                                                                         <img *ngFor="let child of activityItem.child" class="tiny-image" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
                                                                                                 height='30' width='30' />

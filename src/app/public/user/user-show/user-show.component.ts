@@ -70,7 +70,7 @@ export class UserShowComponent implements OnInit {
     params = params.append('page', this.page.toString());
     params = params.append('user', this.user.username);
 
-    this.activitySubscription = this.activityService.getActivity(params)
+    this.activitySubscription = this.activityService.getAllActivities(params)
       .subscribe(result => {
         this.config = {
           itemsPerPage: 6,
