@@ -65,7 +65,6 @@ export class UserActivityComponent implements OnInit {
 
         this.isFetchingActivity = false;
       })
-
   }
 
   pageChanged(event) {

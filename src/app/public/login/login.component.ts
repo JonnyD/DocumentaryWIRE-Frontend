@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { first } from 'rxjs/operators';
+import { Token } from '../../models/token.model';
 
 @Component({ templateUrl: 'login.component.html' })
 export class LoginComponent implements OnInit {
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
     ) { 
         // redirect to home if already logged in
         if (this.authenticationService.isAuthenticated()) { 
+            window.location.reload();
             this.router.navigate(['/']);
         }
     }
@@ -59,5 +61,12 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                     console.log(this.error);
                 });
+    }
+
+    announce() {
+        let currentToken = <Token> JSON.parse(localStorage.getItem('currentToken'));
+          if (currentToken && currentToken.access_token) {
+              return this.authenticationService.announceLogin(currentToken); 
+          }      
     }
 }

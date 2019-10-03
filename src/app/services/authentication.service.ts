@@ -1,13 +1,13 @@
 import { Token } from './../models/token.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
-    private currentTokenSubject: BehaviorSubject<Token>;
+    public currentTokenSubject: BehaviorSubject<Token>;
     public currentToken: Observable<Token>;
 
     constructor(private http: HttpClient) {
