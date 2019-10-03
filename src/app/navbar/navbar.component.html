@@ -40,14 +40,20 @@
           </a>
       </li>
       <div *ngIf="isAuthenticated" ngbDropdown class="d-inline-block">
-          <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Welcome, {{ me.name }}</button>
-          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-            <button ngbDropdownItem>Action - 1</button>
-            <button ngbDropdownItem>Another Action</button>
-            <a [routerLink]="['/logout']" routerLinkActive="active">
-              <button ngbDropdownItem>Logout</button>
-            </a>
-          </div>
+        <div *ngIf="hasMe">
+            <img style="margin-right: 10px" class="rounded-circle" width="35" height="35" src="{{ me.avatar }}" />
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+              {{ me.name }}</button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <a [routerLink]="['/user', me.username]" routerLinkActive="active">
+                <button ngbDropdownItem>My Profile</button>
+              </a>
+              <button ngbDropdownItem>Another Action</button>
+              <a [routerLink]="['/logout']" routerLinkActive="active">
+                <button ngbDropdownItem>Logout</button>
+              </a>
+            </div>
+        </div>
         </div>
     </div>
   </div>

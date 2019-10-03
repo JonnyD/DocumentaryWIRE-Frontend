@@ -11,6 +11,7 @@ export class NavbarComponent implements OnInit {
 
   isAuthenticated = false;
   me = {};
+  hasMe = false;
 
   meSubscription;
 
@@ -25,8 +26,12 @@ export class NavbarComponent implements OnInit {
       this.meSubscription = this.userService.getMe()
         .subscribe(result => {
           this.me = result;
+          this.hasMe = true;
         })
     }
   }
 
+  ngOnDestroy() {
+    this.meSubscription.unsubscribe();
+  }
 }
