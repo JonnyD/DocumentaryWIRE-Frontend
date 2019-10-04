@@ -1,3 +1,4 @@
+import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
@@ -82,6 +83,11 @@ const routes: Routes = [
   { 
     path: 'user/:username/watchlist', 
     component: UserWatchlistComponent,
+    resolve: [UserResolverService]
+  },
+  { 
+    path: 'user/:username/edit', 
+    component: UserEditComponent,
     resolve: [UserResolverService]
   },
   { path: 'login', component: LoginComponent },

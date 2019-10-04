@@ -10,8 +10,14 @@
                     width="100" height="100" alt="Profile picture of {{ user.name }}" />
                     </a>
 
-               <h1><a [routerLink]="['/user', user.username]">{{ user.name }}</a></h1>
-               @{{ user.username }}
+               <div style="float: left">
+                    <h1><a [routerLink]="['/user', user.username]">{{ user.name }}</a></h1>
+                    @{{ user.username }}
+               </div>
+
+               <div style="float: right" *ngIf="user.username === me.username">
+                    <a [routerLink]="['/user', user.username, 'edit']">Edit Profile</a>
+               </div>
             </div>
             <div style="clear:both"></div>
            <p *ngIf="isFetchingActivity">Loading...</p>

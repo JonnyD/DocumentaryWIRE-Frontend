@@ -54,6 +54,7 @@ import { UserActivityComponent } from './public/user/user-activity/user-activity
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserAddedComponent } from './public/user/user-added/user-added.component';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
+import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,8 @@ import { DocumentaryAddComponent } from './public/documentary/documentary-add/do
     UserActivityComponent,
     UserWatchlistComponent,
     UserAddedComponent,
-    DocumentaryAddComponent
+    DocumentaryAddComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

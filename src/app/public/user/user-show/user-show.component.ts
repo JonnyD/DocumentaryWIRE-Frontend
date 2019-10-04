@@ -16,6 +16,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class UserShowComponent implements OnInit {
 
   public user;
+  public me;
   public activity;
   public documentaries;
   public watchlists;
@@ -27,11 +28,13 @@ export class UserShowComponent implements OnInit {
   public isFetchingActivity = true;
   public isFetchingDocumentaries = true;
   public isFetchingWatchlisted = true;
+  public isFetchingMe = true;
 
   private activitySubscription;
   private queryParamsSubscription;
   private documentarySubscription;
   private watchlistSubscription;
+  private meSubscription;
 
   constructor(
     private userService: UserService,
@@ -56,11 +59,24 @@ export class UserShowComponent implements OnInit {
         .queryParams
         .subscribe(params => {
             this.page = +params['page'] || 1;
+            this.fetchMe();
             this.fetchActivity();
             this.fetchDocumentaries();
             this.fetchWatchlists();
       });
     });
+  }
+
+  fetchMe() {
+    this.isFetchingMe = true;
+
+    this.meSubscription = this.userService.getMe()
+      .subscribe(result => {
+        console.log(result);
+        this.me = result;
+
+        this.isFetchingMe = false;
+      })
   }
 
   fetchActivity() {
@@ -137,6 +153,7 @@ export class UserShowComponent implements OnInit {
     this.queryParamsSubscription.unsubscribe();
     this.activitySubscription.unsubscribe();
     this.watchlistSubscription.unsubscribe();
+    this.meSubscription.unsubscribe();
   }
   
   public getSantizeUrl(url : string) {
