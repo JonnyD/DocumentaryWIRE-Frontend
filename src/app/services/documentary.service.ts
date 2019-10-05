@@ -92,19 +92,41 @@ export class DocumentaryService extends DataService {
   return this.getAll(options);
  }
 
-   createDocumentary(documentary: Documentary) {
-      let options = {};
+   createAdminDocumentary(documentary: Documentary) {
+     let params = new HttpParams();
+
+      params = params.append('type', 'admin');
 
       if (this.authenticationService.isAuthenticated()) {
           let accessToken = this.authenticationService.currentTokenValue.access_token;
-          options = {
-            params: new HttpParams()
-              .append('access_token', accessToken)
-          }
+          params = params.append('access_token', accessToken)
+      }
+    
+      let options = {
+        params: params
       }
 
       return this.create(documentary, options);
    }
+
+   
+
+createUserDocumentary(resource) {
+  let params = new HttpParams();
+
+    params = params.append('type', 'user');
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+    }
+  
+    let options = {
+      params: params
+    }
+
+    return this.create(resource, options);
+}
 
    editDocumentary(id, documentary: Documentary) {
     let options;

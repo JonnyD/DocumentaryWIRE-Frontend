@@ -27,10 +27,12 @@
         </form>
       </li>
         <li class="nav-item" style="margin-left: 10px">
-            <button type="button" class="btn btn-success">+Add / Upload</button>
+            <a [routerLink]="['/add']" routerLinkActive="active">
+              <button type="button" class="btn btn-success">+Add / Upload</button>
+            </a>
         </li>
       </ul>
-      
+
       <li *ngIf="!isAuthenticated"class="nav-item" style="margin-left: 10px">
           <a [routerLink]="['/login']" routerLinkActive="active">
             <button style="margin-right: 10px" type="button" class="btn btn-outline-info">Login</button>
@@ -41,7 +43,7 @@
       </li>
       <div *ngIf="isAuthenticated" ngbDropdown class="d-inline-block">
         <div *ngIf="hasMe">
-            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+            <button class="btn btn-dark" id="dropdownBasic1" ngbDropdownToggle>
               {{ me.name }}</button> <img style="margin-left: 10px" class="rounded-circle" width="35" height="35" src="{{ me.avatar }}" />
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <a [routerLink]="['/user', me.username]" routerLinkActive="active">

@@ -1,3 +1,4 @@
+import { YearService } from 'src/app/services/year.service';
 import { catchError } from 'rxjs/operators';
 import { CategoryService } from './../../../services/category.service';
 import { HttpParams } from '@angular/common/http';
@@ -8,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Documentary } from './../../../models/documentary.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-admin-documentaries-add',
@@ -30,6 +30,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
     private documentaryService: DocumentaryService,
     private videoSourceService: VideoSourceService,
     private categoryService: CategoryService,
+    private yearService: YearService,
     private router: Router,
     private cd: ChangeDetectorRef) {}
 
@@ -67,24 +68,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
   }
 
   initYears() {
-    let currentYear = moment(new Date()).format('YYYY');
-
-    let years = [];
-    years.push(currentYear);
-
-    let counter = 1;
-    for (let i = +currentYear; i > 0; i--) {
-      if (counter === 100) {
-        break;
-      }
-
-      let year = i - 1;
-      years.push(year);
-
-      counter++;
-    }
-
-    this.years = years;
+    this.years = this.yearService.getAllYearsForForm();
   }
 
   initVideoSources() {
@@ -180,7 +164,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
   onSubmit() {
     let formValue = this.addDocumentaryForm.value;
     console.log(formValue);
-    this.documentaryService.createDocumentary(formValue).subscribe((result: any) => {
+    this.documentaryService.createAdminDocumentary(formValue).subscribe((result: any) => {
       console.log(result);
       this.router.navigate(["/admin/documentaries",  result.slug]);
     },
