@@ -19,6 +19,7 @@ export class AdminUserDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(result => {
+      console.log("hi");
       console.log(result);
       this.user = <User> result[0];
     })

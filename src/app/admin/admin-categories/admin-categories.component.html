@@ -8,8 +8,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let category of categories">
-        <a [routerLink]="['/admin/categories', category.id]">
-          {{ category.id }}
+        <a [routerLink]="['/admin/categories', category.slug]">
+          {{ category.slug }}
       </a>
         <td>{{ category.name }}</td>
         <td>{{ category.slug }}</td>

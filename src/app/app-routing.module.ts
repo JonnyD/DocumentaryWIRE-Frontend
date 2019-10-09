@@ -1,3 +1,4 @@
+import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
@@ -119,12 +120,12 @@ const routes: Routes = [
         component: AdminCategoriesComponent 
       },
       { 
-        path: 'categories/:id', 
+        path: 'categories/:slug', 
         component: AdminCategoryDetailComponent,
         resolve: [CategoryResolverService]
       },
       { 
-        path: 'categories/:id/edit', 
+        path: 'categories/:slug/edit', 
         component: AdminCategoryEditComponent,
         resolve: [CategoryResolverService]
       },
@@ -161,13 +162,22 @@ const routes: Routes = [
         component: AdminUsersComponent 
       },
       { 
-        path: 'users/:id', 
+        path: 'users/:username', 
         component: AdminUserDetailComponent,
-        resolve: [AdminUserResolverService]
+        resolve: [UserResolverService]
+      },
+      { 
+        path: 'users/:username/edit', 
+        component: AdminUserEditComponent,
+        resolve: [UserResolverService]
       },
       { 
         path: 'subscriptions', 
         component: AdminSubscriptionsComponent 
+      },
+      { 
+        path: 'activity', 
+        component: AdminActivityComponent 
       },
     ]
   },

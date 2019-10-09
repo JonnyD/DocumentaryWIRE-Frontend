@@ -32,10 +32,6 @@ export class UserService extends DataService {
     return this.get('me', options);
    }
 
-
-
-
-
    getUserById(id: number) {
     let options = {};
 
@@ -63,18 +59,17 @@ export class UserService extends DataService {
     return this.get(username, options);
    }
 
-   getAllUsers() {
-    let options = {};
-
-    if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
+   getAllUsers(params: HttpParams) {
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            params = params.append('access_token', accessToken)
         }
-    }
 
-     return this.getAll(options);
+        let options = {
+            params: params
+        }
+        
+        return this.getAll(options);
     }
     
     getNewestUsers(params: HttpParams) {

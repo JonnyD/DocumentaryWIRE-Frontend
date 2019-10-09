@@ -15,7 +15,7 @@
    <option class="option" value="all">All</option>
    <option class='option' 
    *ngFor='let category of categories' 
-   [value]="category.id">{{category.name}}</option>
+   [value]="category.slug">{{category.name}}</option>
 </select>
 
 <select class='select-option' [(ngModel)]="status"

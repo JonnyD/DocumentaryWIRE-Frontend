@@ -35,12 +35,12 @@ export class AdminUsersComponent implements OnInit {
 
   fetchUsers() {
     let params = new HttpParams();
-
+    params = params.append('sort', 'createdAt-desc');
     params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
 
-    this.getAllUsersSubscription = this.userService.getAllUsers()
+    this.getAllUsersSubscription = this.userService.getAllUsers(params)
       .subscribe(result => {
         this.config = {
           itemsPerPage: 12,
@@ -52,6 +52,7 @@ export class AdminUsersComponent implements OnInit {
   }
 
   pageChanged(event) {
+    console.log(event);
     this.config.currentPage = event;
     this.page = event;
     this.fetchUsers();

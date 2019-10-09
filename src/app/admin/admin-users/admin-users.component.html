@@ -22,7 +22,7 @@
     </thead>
     <tbody>
         <tr *ngFor="let user of users | paginate: config">
-        <td><a [routerLink]="['/admin/users', user.id]">
+        <td><a [routerLink]="['/admin/users', user.username]">
             {{ user.id }}
         </a>
         </td>

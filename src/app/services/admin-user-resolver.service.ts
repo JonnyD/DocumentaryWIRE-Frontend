@@ -13,7 +13,9 @@ export class AdminUserResolverService implements Resolve<Observable<any>> {
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     let id = route.params['id'];
+    console.log(id);
     let user = this.userService.getUserById(id);
+    console.log(user);
     return user;
   }
 }
