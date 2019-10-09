@@ -1,0 +1,24 @@
+
+<table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">User From</th>
+            <th scope="col">User To</th>
+            <th scope="col">Updated At</th>
+            <th scope="col">Created At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let subscription of subscriptions | paginate: config">
+            <td>{{ subscription.id }}</td>
+            <td>{{ subscription.userFrom.username }}</td>
+            <td>{{ subscription.userTo.username }}</td>
+            <td>{{ subscription.createdAt }}</td>
+            <td>{{ subscription.updatedAt }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+          <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+        </div>

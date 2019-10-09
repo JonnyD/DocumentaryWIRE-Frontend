@@ -1,3 +1,4 @@
+import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
@@ -163,6 +164,10 @@ const routes: Routes = [
         path: 'users/:id', 
         component: AdminUserDetailComponent,
         resolve: [AdminUserResolverService]
+      },
+      { 
+        path: 'subscriptions', 
+        component: AdminSubscriptionsComponent 
       },
     ]
   },

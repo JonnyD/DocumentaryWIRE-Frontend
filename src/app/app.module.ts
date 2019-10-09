@@ -1,3 +1,4 @@
+import { SubscriptionService } from './services/subscription.service';
 import { WatchlistService } from './services/watchlist.service';
 import { UserService } from './services/user.service';
 import { DurationService } from './services/duration.service';
@@ -55,6 +56,7 @@ import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchl
 import { UserAddedComponent } from './public/user/user-added/user-added.component';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
+import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,8 @@ import { UserEditComponent } from './public/user/user-edit/user-edit.component';
     UserWatchlistComponent,
     UserAddedComponent,
     DocumentaryAddComponent,
-    UserEditComponent
+    UserEditComponent,
+    AdminSubscriptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -117,6 +120,7 @@ import { UserEditComponent } from './public/user/user-edit/user-edit.component';
     DurationService,
     UserService,
     WatchlistService,
+    SubscriptionService,
     AdminGuard
   ],
   bootstrap: [AppComponent]
