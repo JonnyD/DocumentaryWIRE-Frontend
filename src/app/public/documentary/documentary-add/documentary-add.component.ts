@@ -13,9 +13,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IMDB } from 'src/app/models/imdb.model';
 import { OMDBService } from 'src/app/services/omdb.service';
-import { CommnentService } from 'src/app/services/comment.service';
 import { Location } from "@angular/common";
-import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-documentary-add',
@@ -312,7 +310,7 @@ export class DocumentaryAddComponent implements OnInit {
 
   openIMDBModal(content) {
     this.initIMDBFrom();
-
+    console.log(content);
     this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
@@ -416,6 +414,7 @@ export class DocumentaryAddComponent implements OnInit {
     } else {
       this.documentaryService.createUserDocumentary(formValue)
         .subscribe((result: any) => {
+          console.log(result);
       },
       (error) => {
         console.log(error);
