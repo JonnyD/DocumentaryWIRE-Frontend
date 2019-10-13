@@ -1,3 +1,4 @@
+import { YoutubeService } from './services/youtube.service';
 import { SubscriptionService } from './services/subscription.service';
 import { WatchlistService } from './services/watchlist.service';
 import { UserService } from './services/user.service';
@@ -57,6 +58,7 @@ import { UserAddedComponent } from './public/user/user-added/user-added.componen
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
+import { OMDBService } from './services/omdb.service';
 
 @NgModule({
   declarations: [
@@ -121,6 +123,8 @@ import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-s
     UserService,
     WatchlistService,
     SubscriptionService,
+    OMDBService,
+    YoutubeService,
     AdminGuard
   ],
   bootstrap: [AppComponent]

@@ -1,3 +1,4 @@
+import { YoutubeService } from './../../../services/youtube.service';
 import { UserService } from './../../../services/user.service';
 import { DocumentaryService } from './../../../services/documentary.service';
 import { YearService } from './../../../services/year.service';
@@ -14,6 +15,7 @@ import { IMDB } from 'src/app/models/imdb.model';
 import { OMDBService } from 'src/app/services/omdb.service';
 import { CommnentService } from 'src/app/services/comment.service';
 import { Location } from "@angular/common";
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-documentary-add',
@@ -54,6 +56,10 @@ export class DocumentaryAddComponent implements OnInit {
   public searchedDocumentariesFromIMDB;
   public searchedDocumentaryFromIMDB;
 
+  public searchedVideosFromYoutube;
+  public isFetchingVideosFromYoutube = true;
+  public showSearchedVideosFromYoutube = false;
+
   public isFetchingStandaloneDocumentaries = false;
   public isFetchingYears = false;
   public isFetchingVideoSources = false;
@@ -63,6 +69,7 @@ export class DocumentaryAddComponent implements OnInit {
 
   standaloneForm: FormGroup;
   imdbForm: FormGroup;
+  youtubeForm: FormGroup;
 
   config: any;
   page;
@@ -87,6 +94,7 @@ export class DocumentaryAddComponent implements OnInit {
     private documentaryService: DocumentaryService,
     private omdbService: OMDBService,
     private userService: UserService,
+    private youtubeService: YoutubeService,
     private router: Router,
     private location: Location,
     private cd: ChangeDetectorRef,
@@ -203,18 +211,8 @@ export class DocumentaryAddComponent implements OnInit {
       });
   }
 
-  isFetchingFormInputs() {
-    let isFetchingFormInputs = this.isFetchingYears || this.isFetchingVideoSources || this.isFetchingCategories;
-    if (!isFetchingFormInputs) {
-      this.showStandaloneForm = true;
-      this.toggleStandaloneForm();
-    }
-  }
-
   initStandaloneForm() {
     let title = this.documentary.title;
-    console.log("title");
-    console.log(title);
     let category = null;
     if (this.documentary.category) {
       category = this.documentary.category.id;
@@ -300,17 +298,39 @@ export class DocumentaryAddComponent implements OnInit {
     }
   }
 
+  initYoutubeForm() {
+    let title = this.standaloneForm.value.title;
+
+    this.youtubeForm = new FormGroup({
+      'title': new FormControl(title, [Validators.required])
+    });
+
+    if (title) {
+      this.searchYoutube();
+    }
+  }
+
   openIMDBModal(content) {
     this.initIMDBFrom();
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${reason}`;
     });
   }
 
-  view(imdbId) {
+  openYoutubeModal(content) {
+    this.initYoutubeForm();
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-youtube'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+  imdbView(imdbId) {
     this.isFetchingDocumentaryFromIMDB = true;
     this.showSearchedDocumentariesFromIMDB = false;
     this.showSearchedDocumentaryFromIMDB = true;
@@ -322,7 +342,7 @@ export class DocumentaryAddComponent implements OnInit {
       })
   }
 
-  select(selectedDocumentary) {
+  imdbSelect(selectedDocumentary) {
     this.modalService.dismissAll();
 
     this.documentary.title = selectedDocumentary.title;
@@ -339,14 +359,33 @@ export class DocumentaryAddComponent implements OnInit {
     this.initStandaloneForm();
   }
 
+  youtubeSelect(selectedVideo) {
+    this.modalService.dismissAll();
+
+    if (!this.documentary.title) {
+      this.documentary.title = selectedVideo.snippet.title;
+    }
+
+    if (!this.documentary.storyline) {
+      this.documentary.storyline = selectedVideo.snippet.description;
+    }
+
+    if (!this.documentary.wideImage) {
+      this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
+      this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
+    }
+
+    this.documentary.videoId = selectedVideo.id.videoId;
+
+    this.initStandaloneForm();
+  }
+
   searchOMDB() {
     this.isFetchingDocumentariesFromIMDB = true;
     this.showSearchedDocumentaryFromIMDB = false;
     this.showSearchedDocumentariesFromIMDB = true;
 
     let title = this.imdbForm.value.title;
-    console.log("title");
-    console.log(title);
     this.omdbService.getSearchedDocumentaries(title)
       .subscribe((result: any) => {
         this.searchedDocumentariesFromIMDB = result['Search'];
@@ -354,20 +393,29 @@ export class DocumentaryAddComponent implements OnInit {
       });
   }
 
+  searchYoutube() {
+    this.isFetchingVideosFromYoutube = true;
+    this.showSearchedVideosFromYoutube = true;
+
+    let title = this.youtubeForm.value.title;
+    this.youtubeService.getSearchedDocumentaries(title)
+      .subscribe((result: any) => {
+        this.searchedVideosFromYoutube = result['items'];
+        this.isFetchingVideosFromYoutube = false;
+      });
+  }
+
   onSubmit() {
     let formValue = this.standaloneForm.value;
     formValue.type = "standalone";
-    console.log(formValue);
 
     if (this.editMode) {
       this.documentaryService.update(formValue, {})
         .subscribe((result: any) => {
-          console.log(result);
         });
     } else {
       this.documentaryService.createUserDocumentary(formValue)
         .subscribe((result: any) => {
-          console.log(result);
       },
       (error) => {
         console.log(error);
