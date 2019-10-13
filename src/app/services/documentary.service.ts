@@ -47,6 +47,23 @@ export class DocumentaryService extends DataService {
       return this.getAll(options);
    }
 
+   getMyStandloneDocumentaries(params: HttpParams, username: string) {
+      params = params.append('addedBy', username);
+      params = params.append('type', 'standalone');
+      params = params.append('sort', 'createdAt-desc');
+
+      if (this.authenticationService.isAuthenticated()) {
+          let accessToken = this.authenticationService.currentTokenValue.access_token;
+          params = params.append('access_token', accessToken)
+      }
+
+      let options = {
+        params: params
+      }
+
+      return this.getAll(options);
+   }
+
    getRecentlyUpdatedDocumentaries(params: HttpParams) {
      params = params.append('sort', 'updatedAt-desc');
 
@@ -64,6 +81,7 @@ export class DocumentaryService extends DataService {
 
    getRecentlyAddedDocumentaries(params: HttpParams) {
     params = params.append('sort', 'createdAt-desc');
+    params = params.append('status', 'publish');
 
    if (this.authenticationService.isAuthenticated()) {
        let accessToken = this.authenticationService.currentTokenValue.access_token;
@@ -79,6 +97,7 @@ export class DocumentaryService extends DataService {
 
   getNewDocumentaries(params: HttpParams) {
    params = params.append('sort', 'year-desc');
+   params = params.append('status', 'publish');
 
   if (this.authenticationService.isAuthenticated()) {
       let accessToken = this.authenticationService.currentTokenValue.access_token;
@@ -108,8 +127,6 @@ export class DocumentaryService extends DataService {
 
       return this.create(documentary, options);
    }
-
-   
 
 createUserDocumentary(resource) {
   let params = new HttpParams();
@@ -154,7 +171,6 @@ createUserDocumentary(resource) {
         let documentary = documentaries[i];
 
         let cardDeck = cardDecks.get(counter);
-
         if (cardDeck === undefined || !cardDeck) {
           cardDeck = new Set();
         } 

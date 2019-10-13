@@ -1,9 +1,10 @@
 import { VideoSource } from './video-source.model';
+import { Category } from './category.model';
 export class Documentary {
     id: number;
     title: string;
     slug: string;
-    category: number;
+    category: Category;
     storyline: string;
     summary: string;
     year: number;
@@ -18,4 +19,5 @@ export class Documentary {
     createdAt: string;
     updatedAt: string;
     poster: string;
+    imdbId: string;
 }

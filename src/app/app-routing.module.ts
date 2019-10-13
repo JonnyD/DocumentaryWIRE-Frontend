@@ -190,7 +190,10 @@ const routes: Routes = [
     component: DocumentaryShowComponent,
     resolve: [DocumentaryResolverService]
   },
-  
+  { 
+    path: ':slug/edit', 
+    component: DocumentaryAddComponent
+  },  
 ];
 
 @NgModule({

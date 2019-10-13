@@ -36,4 +36,19 @@ export class OMDBService extends DataService {
     
     return this.get('search', options);
    }
+
+   getByImdbId(imdbId: string) {
+    let params = new HttpParams();
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+        params: params
+    }
+    
+    return this.get(imdbId, options);
+   }
 }

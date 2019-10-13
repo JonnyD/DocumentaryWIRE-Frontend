@@ -1,11 +1,35 @@
 <div class="container" >
     <div class="row">
-        <div class="col-md-12" style="margin-top: 20px">
+        <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
             <ngb-tabset>
                 <ngb-tab title="Standalone">
                     <ng-template ngbTabContent>
-                        <div style="margin-top: 20px">
-                            <button *ngIf="showAddTitleButton" type="button" class="btn btn-primary" (click)="toggleStandaloneForm()">Add Title</button>
+                        <div style="margin-top: 20px; margin-bottom: 20px">
+                            <button *ngIf="showAddTitleButton" type="button" class="btn btn-primary" (click)="toggleStandaloneForm()">Add Documentary</button>
+                        </div>
+                        <div style="margin-top: 20px" *ngIf="showStandaloneDocumentaries">
+                                <div>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                    <tr>
+                                                        <th scope="col">Title</th>
+                                                        <th scope="col">Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let myStandaloneDocumentary of myStandaloneDocumentaries | paginate: config">
+                                                        <td>
+                                                            <a [routerLink]="['/', myStandaloneDocumentary.slug, 'edit']">
+                                                                {{ myStandaloneDocumentary.title }}
+                                                            </a>
+                                                        </td>
+                                                        <td>{{ myStandaloneDocumentary.status }}</td>
+                                                    </tr>
+                                                </tbody>
+                                        </table>
+
+                                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                                    </div>
                         </div>
                         
                         <div *ngIf="showStandaloneForm">
@@ -18,67 +42,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="storyline">Description</label>
-                                    <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
-                                    <div *ngIf="submitted && f.storyline.errors" class="invalid-feedback">
-                                        <div *ngIf="f.storyline.errors.required">Description is required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="summary">Summary</label>
-                                    <textarea
-                                        type="text"
-                                        id="summary"
-                                        formControlName="summary"
-                                        class="form-control"
-                                        [ngClass]="{ 'is-invalid': submitted && f.summary.errors }"></textarea>
-                                    <div *ngIf="submitted && f.summary.errors" class="invalid-feedback">
-                                        <div *ngIf="f.summary.errors.required">Summary is required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="category">Category</label>
-                                    <select 
-                                        formControlName="category"
-                                        class="form-control"
-                                        id="category">
-                                        <option disabled>Choose Category</option>
-                                        <option *ngFor="let categoryItem of categories" 
-                                            [value]="categoryItem.id">
-                                            {{ categoryItem.name }}
-                                        </option>
-                                    </select>
-                                    <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
-                                        <div *ngIf="f.category.errors.required">Category is required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="year">Year</label>
-                                    <select 
-                                        formControlName="year"
-                                        class="form-control"
-                                        id="year">
-                                            <option disabled>Choose Year</option>
-                                            <option *ngFor="let yearItem of years" 
-                                            [value]="yearItem">
-                                            {{ yearItem }}
-                                            </option>
-                                    </select>
-                                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
-                                        <div *ngIf="f.year.errors.required">Year is required</div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="length">Duration (in minutes)</label>
-                                    <input type="text" formControlName="length" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.length.errors }" />
-                                    <div *ngIf="submitted && f.length.errors" class="invalid-feedback">
-                                        <div *ngIf="f.length.errors.required">Duration is required</div>
+                                    <label for="imdbId">IMDB ID</label>
+                                    <input type="text" formControlName="imdbId" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.imdbId.errors }" />
+                                    <button class="btn btn-secondary" (click)="openIMDBModal(content)">Search</button>
+                                    <div *ngIf="submitted && f.imdbId.errors" class="invalid-feedback">
+                                        <div *ngIf="f.imdbId.errors.required">IMDB is required</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="videoSource">Video Source</label>
-                                    <select 
-                                        [(ngModel)]="documentary.videoSource"
+                                    <span *ngIf="isFetchingVideoSources"><br />Loading...</span>
+                                    <select *ngIf="!isFetchingVideoSources"
                                         formControlName="videoSource"
                                         class="form-control"
                                         id="videoSource">
@@ -109,12 +83,146 @@
                                   <input id="wideImage" type="file" (change)="onWideImageChange($event)" />
                                   <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
                                 </div>
+                                <div class="form-group">
+                                    <label for="storyline">Description</label>
+                                    <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
+                                    <div *ngIf="submitted && f.storyline.errors" class="invalid-feedback">
+                                        <div *ngIf="f.storyline.errors.required">Description is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="summary">Summary</label>
+                                    <textarea
+                                        type="text"
+                                        id="summary"
+                                        formControlName="summary"
+                                        class="form-control"
+                                        [ngClass]="{ 'is-invalid': submitted && f.summary.errors }"></textarea>
+                                    <div *ngIf="submitted && f.summary.errors" class="invalid-feedback">
+                                        <div *ngIf="f.summary.errors.required">Summary is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="category">Category</label>
+                                    <span *ngIf="isFetchingCategories"><br />Loading...</span>
+                                    <select *ngIf="!isFetchingCategories"
+                                        formControlName="category"
+                                        class="form-control"
+                                        id="category">
+                                        <option disabled>Choose Category</option>
+                                        <option *ngFor="let categoryItem of categories" 
+                                            [value]="categoryItem.id">
+                                            {{ categoryItem.name }}
+                                        </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+                                        <div *ngIf="f.category.errors.required">Category is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="year">Year</label>
+                                    <span *ngIf="isFetchingYears"><br />Loading...</span>
+                                    <select *ngIf="!isFetchingYears"
+                                        formControlName="year"
+                                        class="form-control"
+                                        id="year">
+                                            <option disabled>Choose Year</option>
+                                            <option *ngFor="let yearItem of years" 
+                                            [value]="yearItem">
+                                            {{ yearItem }}
+                                            </option>
+                                    </select>
+                                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                                        <div *ngIf="f.year.errors.required">Year is required</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="length">Duration (in minutes)</label>
+                                    <input type="text" formControlName="length" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.length.errors }" />
+                                    <div *ngIf="submitted && f.length.errors" class="invalid-feedback">
+                                        <div *ngIf="f.length.errors.required">Duration is required</div>
+                                    </div>
+                                </div>
                                 <button [disabled]="loading" class="btn btn-primary">
                                     <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                                     Save
                                 </button>
                                 <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
                             </form>
+                            <ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Search IMDB</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="imdbForm" (ngSubmit)="searchOMDB()">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <div class="input-group">
+          <input id="title" class="form-control" formControlName="title">
+        </div>
+      </div>
+
+      <button [disabled]="loading" class="btn btn-secondary">
+        <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+        Search
+    </button>
+    </form>
+
+    <div style="margin-top: 20px">
+        <div *ngIf="isFetchingDocumentariesFromIMDB">Loading...</div>
+            <div class="card" *ngIf="showSearchedDocumentariesFromIMDB && !isFetchingDocumentariesFromIMDB">
+                  <ul class="list-group list-group-flush">
+                      <li class="list-group-item" *ngFor="let searchedDocumentary of searchedDocumentariesFromIMDB">
+                              <span class="acitvity-item">
+                              <span class="activity-image">
+                                  <a href="">
+              
+                                      <img alt='{{ searchedDocumentary.Title }}' src='{{ searchedDocumentary.Poster }}'
+                                           style="margin-right: 20px" height='200' width='160' /></a>
+                                  </span>
+                                  <div class="data">
+                                      <span class="author">
+                                            {{ searchedDocumentary.Title }} <br />
+                                      </span>
+                                          <span class="excerpt">
+                                              Type: {{ searchedDocumentary.Type }} <br />
+                                              Year: {{ searchedDocumentary.Year }} <br />
+                                              IMDB ID: {{ searchedDocumentary.imdbID }} <br />
+                                              <button type="button" class="btn btn-secondary" (click)="view(searchedDocumentary.imdbID)">View</button>
+                                          </span>
+                                      </div>
+                                  </span>
+
+
+                      </li>
+                  </ul>
+                </div>
+                <div *ngIf="isFetchingDocumentaryFromIMDB">Loading...</div>
+                <div class="card" *ngIf="showSearchedDocumentaryFromIMDB && !isFetchingDocumentaryFromIMDB">
+                    <img style="float: left" alt='{{ searchedDocumentary.title }}' src='{{ searchedDocumentary.poster }}'
+                    style="margin-right: 20px" height='200' width='160' />
+
+                    Title: {{ searchedDocumentary.title }} <br />
+                    Year: {{ searchedDocumentary.year }} <br />
+                    Duration: {{ searchedDocumentary.duration }} <br />
+                    IMDB ID: {{ searchedDocumentary.imdbId }} <br />
+                    IMDB Rating: {{ searchedDocumentary.imdbRating }} <br />
+                    IMDB Votes: {{ searchedDocumentary.imdbVotes }} <br />
+                    Plot: {{ searchedDocumentary.plot }} <br />
+                    <button type="button" class="btn btn-secondary" (click)="select(searchedDocumentary)">Select</button>
+                </div>
+            </div>
+                
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
                         </div>
                     </ng-template>
                 </ngb-tab>
