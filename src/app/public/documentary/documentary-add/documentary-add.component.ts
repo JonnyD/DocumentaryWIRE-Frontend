@@ -45,6 +45,8 @@ export class DocumentaryAddComponent implements OnInit {
   public standaloneFormLoaded = false;
   public showAddTitleButton = true;
 
+  public showPage = false;
+  public showTabs = false;
   public showSearchedDocumentariesFromIMDB = false;
   public showSearchedDocumentaryFromIMDB = false;
 
@@ -101,6 +103,8 @@ export class DocumentaryAddComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.showPage = false;
+
     this.documentary = new Documentary();
 
     this.queryParamsSubscription = this.route
@@ -118,6 +122,7 @@ export class DocumentaryAddComponent implements OnInit {
                 this.documentary = result;
 
                 this.toggleStandaloneForm();
+                this.showPage = true;
               });
           } else {
             this.meSubscription = this.userService.getMe().subscribe(me => {
@@ -125,6 +130,7 @@ export class DocumentaryAddComponent implements OnInit {
 
               if (!this.HasToggledStandaloneForm) {
                 this.fetchStandaloneDocumentaries();
+                this.showPage = true;
               }
             });
           }

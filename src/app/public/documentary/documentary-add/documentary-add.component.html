@@ -1,6 +1,9 @@
 <div class="container" >
     <div class="row">
-        <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
+        <div *ngIf="!showPage">
+            Loading...
+        </div>
+        <div *ngIf="showPage" class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
             <ngb-tabset>
                 <ngb-tab title="Standalone">
                     <ng-template ngbTabContent>
@@ -216,8 +219,6 @@
                     <button type="button" class="btn btn-secondary" (click)="imdbSelect(searchedDocumentaryFromIMDB)">Select</button>
                 </div>
             </div>
-                
-
   </div>
 </ng-template>
 
