@@ -58,7 +58,7 @@
                                     <select *ngIf="!isFetchingVideoSources"
                                         formControlName="videoSource"
                                         class="form-control"
-                                        id="videoSource">
+                                        id="videoSource" [ngClass]="{ 'is-invalid': submitted && f.videoSource.errors }">
                                         <option disabled>Choose Video Source</option>
                                         <option *ngFor="let videoSourceItem of videoSources" 
                                             [value]="videoSourceItem.id" >
@@ -79,17 +79,23 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="poster">Poster</label>
-                                    <input id="poster" type="file" (change)="onPosterChange($event)" />
+                                    <input id="poster" type="file" (change)="onPosterChange($event)" [ngClass]="{ 'is-invalid': submitted && f.poster.errors }"/>
                                     <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
+                                    <div *ngIf="submitted && f.storyline.errors" class="invalid-feedback">
+                                        <div *ngIf="f.storyline.errors.required">Poster is required</div>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                   <label for="wideImage">Wide Image</label>
-                                  <input id="wideImage" type="file" (change)="onWideImageChange($event)" />
+                                  <input id="wideImage" type="file" (change)="onWideImageChange($event)" [ngClass]="{ 'is-invalid': submitted && f.wideImage.errors }"/>
                                   <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
+                                  <div *ngIf="submitted && f.wideImage.errors" class="invalid-feedback">
+                                    <div *ngIf="f.wideImage.errors.required">Wide Image is required</div>
+                                </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="storyline">Description</label>
-                                    <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
+                                    <angular-editor formControlName="storyline" [config]="editorConfig" [ngClass]="{ 'is-invalid': submitted && f.storyline.errors }"></angular-editor>
                                     <div *ngIf="submitted && f.storyline.errors" class="invalid-feedback">
                                         <div *ngIf="f.storyline.errors.required">Description is required</div>
                                     </div>
@@ -112,7 +118,7 @@
                                     <select *ngIf="!isFetchingCategories"
                                         formControlName="category"
                                         class="form-control"
-                                        id="category">
+                                        id="category" [ngClass]="{ 'is-invalid': submitted && f.category.errors }">
                                         <option disabled>Choose Category</option>
                                         <option *ngFor="let categoryItem of categories" 
                                             [value]="categoryItem.id">
@@ -129,14 +135,14 @@
                                     <select *ngIf="!isFetchingYears"
                                         formControlName="year"
                                         class="form-control"
-                                        id="year">
+                                        id="year" [ngClass]="{ 'is-invalid': submitted && f.year.errors }">
                                             <option disabled>Choose Year</option>
                                             <option *ngFor="let yearItem of years" 
                                             [value]="yearItem">
                                             {{ yearItem }}
                                             </option>
                                     </select>
-                                    <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.year.errors" class="invalid-feedback">
                                         <div *ngIf="f.year.errors.required">Year is required</div>
                                     </div>
                                 </div>

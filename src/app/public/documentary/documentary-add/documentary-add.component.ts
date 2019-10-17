@@ -67,6 +67,10 @@ export class DocumentaryAddComponent implements OnInit {
   
   public HasToggledStandaloneForm = false;
 
+  public submitted = false;
+
+  public posterError = false;
+
   standaloneForm: FormGroup;
   imdbForm: FormGroup;
   youtubeForm: FormGroup;
@@ -247,9 +251,11 @@ export class DocumentaryAddComponent implements OnInit {
       'length': new FormControl(length, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
-      'imdbId': new FormControl(imdbId, [Validators.required])
+      'imdbId': new FormControl(imdbId)
     });
   }
+
+  get f() { return this.standaloneForm.controls; }
 
   onPosterChange(event) {
     let reader = new FileReader();
@@ -410,12 +416,26 @@ export class DocumentaryAddComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+
+    let values = this.standaloneForm.value;
+    console.log(values);
+
+    if (!values.poster) {
+      this.posterError = true;
+    }
+
+    if (this.standaloneForm.invalid) {
+      return;
+    }
+
     let formValue = this.standaloneForm.value;
     formValue.type = "standalone";
 
     if (this.editMode) {
-      this.documentaryService.update(formValue, {})
+      this.documentaryService.editDocumentary(this.documentary.id, formValue)
         .subscribe((result: any) => {
+          console.log(result);
         });
     } else {
       this.documentaryService.createUserDocumentary(formValue)

@@ -146,14 +146,15 @@ createUserDocumentary(resource) {
 }
 
    editDocumentary(id, documentary: Documentary) {
-    let options;
+    let params = new HttpParams();
 
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
+        params = params.append('access_token', accessToken);
+    }
+  
+    let options = {
+      params: params
     }
     
      return this.patch(id, documentary, options);
