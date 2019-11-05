@@ -64,6 +64,23 @@ export class DocumentaryService extends DataService {
       return this.getAll(options);
    }
 
+   getMyEpisodicDocumentaries(params: HttpParams, username: string) {
+      params = params.append('addedBy', username);
+      params = params.append('type', 'episodic');
+      params = params.append('sort', 'createdAt-desc');
+
+      if (this.authenticationService.isAuthenticated()) {
+          let accessToken = this.authenticationService.currentTokenValue.access_token;
+          params = params.append('access_token', accessToken)
+      }
+
+      let options = {
+        params: params
+      }
+
+      return this.getAll(options);
+   }
+
    getRecentlyUpdatedDocumentaries(params: HttpParams) {
      params = params.append('sort', 'updatedAt-desc');
 
@@ -128,10 +145,10 @@ export class DocumentaryService extends DataService {
       return this.create(documentary, options);
    }
 
-createUserDocumentary(resource) {
+createStandaloneDocumentary(resource) {
   let params = new HttpParams();
 
-    params = params.append('type', 'user');
+    params = params.append('type', 'standalone');
 
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
@@ -145,9 +162,45 @@ createUserDocumentary(resource) {
     return this.create(resource, options);
 }
 
-   editDocumentary(id, documentary: Documentary) {
+   editStandaloneDocumentary(id, documentary: Documentary) {
     let params = new HttpParams();
 
+    params = params.append('type', 'standalone');
+    
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken);
+    }
+  
+    let options = {
+      params: params
+    }
+    
+     return this.patch(id, documentary, options);
+   }
+
+   createEpisodicDocumentary(resource) {
+     let params = new HttpParams();
+   
+       params = params.append('type', 'episodic');
+   
+       if (this.authenticationService.isAuthenticated()) {
+           let accessToken = this.authenticationService.currentTokenValue.access_token;
+           params = params.append('access_token', accessToken)
+       }
+     
+       let options = {
+         params: params
+       }
+   
+       return this.create(resource, options);
+   }
+
+   editEpisodicDocumentary(id, documentary: Documentary) {
+    let params = new HttpParams();
+
+    params = params.append('type', 'episodic');
+    
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
         params = params.append('access_token', accessToken);

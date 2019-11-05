@@ -20,4 +20,5 @@ export class Documentary {
     updatedAt: string;
     poster: string;
     imdbId: string;
+    type: string;
 }

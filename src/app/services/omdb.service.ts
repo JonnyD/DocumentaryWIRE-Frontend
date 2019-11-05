@@ -20,10 +20,13 @@ export class OMDBService extends DataService {
     this.authenticationService = authenticationService;
    }
 
-   getSearchedDocumentaries(title: string) {
+   getSearchedDocumentaries(title: string, type: string) {
     let params = new HttpParams();
 
     params = params.append('title', title);
+    params = params.append('type', type);
+
+    console.log(params);
 
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
@@ -37,8 +40,10 @@ export class OMDBService extends DataService {
     return this.get('search', options);
    }
 
-   getByImdbId(imdbId: string) {
+   getByImdbId(imdbId: string, type: string) {
     let params = new HttpParams();
+
+    params = params.append('type', type);
 
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;

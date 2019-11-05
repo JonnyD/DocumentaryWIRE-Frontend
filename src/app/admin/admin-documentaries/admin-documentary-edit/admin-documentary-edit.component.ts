@@ -187,7 +187,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
   onSubmit() {
     let documentaryId = this.documentary.id;
     let formValue = this.editDocumentaryForm.value;
-    this.documentaryService.editDocumentary(documentaryId, formValue).subscribe(result => {
+    this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
       console.log(result);
      // this.router.navigate(["/admin/documentaries", this.documentary.slug]);
     });

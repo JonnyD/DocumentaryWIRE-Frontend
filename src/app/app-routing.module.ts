@@ -182,18 +182,22 @@ const routes: Routes = [
     ]
   },
   { 
+    path: 'add/:type', 
+    component: DocumentaryAddComponent
+  },  
+  { 
     path: 'add', 
     component: DocumentaryAddComponent
   },
   { 
+    path: 'add/:type/:slug/edit', 
+    component: DocumentaryAddComponent
+  },  
+  { 
     path: ':slug', 
     component: DocumentaryShowComponent,
     resolve: [DocumentaryResolverService]
-  },
-  { 
-    path: ':slug/edit', 
-    component: DocumentaryAddComponent
-  },  
+  }
 ];
 
 @NgModule({
