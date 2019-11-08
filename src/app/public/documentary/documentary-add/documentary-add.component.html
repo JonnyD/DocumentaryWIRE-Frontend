@@ -288,13 +288,13 @@
 
                                                 <div formArrayName="seasons">
                                                     <div *ngFor="let seas of episodicForm.get('seasons').controls; let i=index">
-                                                        <legend><h3>Season {{ getSeasonNumber(seas) }}: </h3></legend> <span><button (click)="deleteSeason(seas.value.number)">Delete Season</button></span>
+                                                        <legend><h3>Season {{ getSeasonNumber(seas) }}: </h3></legend> <span><button class="btn btn-secondary" (click)="deleteSeason(seas.value.number)">Delete Season</button></span>
                                                             <div [formGroupName]="i">
                                                             <input formControlName="number" type="hidden" value="{{ getSeasonNumber(seas) }}" />
                                                             <div formArrayName="episodes">
                                                                     <div *ngFor="let episode of seas.get('episodes').controls; let j=index">
                                                                         <legend><h4>Episode {{ getEpisodeNumber(episode) }}</h4></legend>
-                                                                        <span><button (click)="deleteEpisode(seas.value.number, episode.value.number)">Delete Episode</button></span>
+                                                                        <span><button class="btn btn-secondary" (click)="deleteEpisode(seas.controls.episodes, j)">Delete Episode</button></span>
                                                                         <div [formGroupName]="j">
                                                                                 <input formControlName="number" type="hidden" value="{{ getEpisodeNumber(episode) }}" />
                                                                                 <div class="form-group">
@@ -369,14 +369,14 @@
                                     </div>
                                                                         </div>
                                                                 </div>
-                                                                <button (click)="addNewEpisode(seas.controls.episodes)">Add new Episode</button>
+                                                                <button class="btn btn-secondary" (click)="addNewEpisode(seas.controls.episodes)">Add new Episode</button>
                                                             </div>
                                                             
                                                             </div>
                                                     </div>
                                                 </div>
 
-                                                <button (click)="addNewSeason()">Add Season</button>
+                                                <button class="btn btn-secondary" (click)="addNewSeason()">Add Season</button>
 
                                                 
 

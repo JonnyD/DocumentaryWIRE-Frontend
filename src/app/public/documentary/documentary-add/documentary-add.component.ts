@@ -430,11 +430,22 @@ export class DocumentaryAddComponent implements OnInit {
     }
   }
 
-  deleteSeason(index) {
+  deleteSeason(number) {
     var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
     console.log("seasonsFormArray");
-    console.log(seasonsFormArray);
-    //seasonsFormArray.removeAt(index);
+    console.log(seasonsFormArray.value);
+    let index = 0;
+    seasonsFormArray.value.forEach(seasonArray => {
+      if (number == seasonArray.number) {
+        seasonsFormArray.removeAt(index);
+        return;
+      }
+      index++;
+    });
+  }
+
+  deleteEpisode(control, index) {
+    control.removeAt(index);
   }
 
   addNewEpisode(control, season = null, episode = null) {
@@ -481,12 +492,6 @@ export class DocumentaryAddComponent implements OnInit {
         'videoId': new FormControl(videoId, [Validators.required]),
         'poster': new FormControl(thumbnail, [Validators.required]),
       }));
-  }
-  
-  deleteEpisode(seasonIndex, episodeIndex) {
-    var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
-    var episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
-    episodesFormArray.removeAt(episodeIndex);
   }
 
   get fStandalone() { return this.standaloneForm.controls; }
