@@ -445,24 +445,25 @@ export class DocumentaryAddComponent implements OnInit {
     let imdbId;
     let videoId;
     let videoSource;
-    let poster;
+    let thumbnail;
 
     if (episode != null) {
       episodeNumber = episode.number;
       title = episode.title;
       imdbId = episode.imdbId;
-      poster = episode.thumbnail;
+      thumbnail = episode.thumbnail;
       summary = episode.summary;
-      storyline = episode.plot;
+      storyline = episode.storyline;
       year = episode.year;
       videoId = episode.videoId;
       videoSource = episode.videoSource;
+      length = episode.length;
 
       let seasonNumber = season.number;
       if (this.thumbnailImgURLDict[seasonNumber - 1] == undefined) {
         this.thumbnailImgURLDict[seasonNumber - 1] = {};
       }
-      this.thumbnailImgURLDict[seasonNumber - 1][episodeNumber - 1] = poster;
+      this.thumbnailImgURLDict[seasonNumber - 1][episodeNumber - 1] = thumbnail;
     }
 
     control.push(
@@ -476,7 +477,7 @@ export class DocumentaryAddComponent implements OnInit {
         'year': new FormControl(year, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required]),
         'videoId': new FormControl(videoId, [Validators.required]),
-        'poster': new FormControl(poster, [Validators.required]),
+        'poster': new FormControl(thumbnail, [Validators.required]),
       }));
   }
   
@@ -658,7 +659,7 @@ export class DocumentaryAddComponent implements OnInit {
   imdbSelect(selectedDocumentary) {
     console.log("selectedDocumentary");
     console.log(selectedDocumentary);
-    this.documentary.title = selectedDocumentary.Title;
+    this.documentary.title = selectedDocumentary.title;
 
     if (this.documentary.imdbId != selectedDocumentary.imdbId) {
       this.documentary.imdbId = selectedDocumentary.imdbId;
@@ -2366,7 +2367,7 @@ export class DocumentaryAddComponent implements OnInit {
       ]
   };
   
-  console.log("result");
+  console.log("result imdb select");
   console.log(result);
   let seasons = result['seasons'];
   this.initEpisodicForm(seasons);
