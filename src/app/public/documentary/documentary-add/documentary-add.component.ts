@@ -404,25 +404,26 @@ export class DocumentaryAddComponent implements OnInit {
   }
 
   addNewSeason(season = null) {
-    let number = season.number
-    if (number == null) {
-      number = this.seasonNumber;
+    if (season != null) {
+      this.seasonNumber = season.number;
     }
 
     let control = <FormArray>this.episodicForm.controls.seasons;
     control.push(
       this.fb.group({
-        'number': new FormControl(number, [Validators.required]),
+        'number': new FormControl(this.seasonNumber, [Validators.required]),
         'episodes': this.fb.array([], Validators.required)
       })
     );
 
-    let episodes = season.episodes;
-    if (season != null && episodes != null) {
-      episodes.forEach(episode => {
-        let episodesControl = control.at(number - 1).get('episodes');
-        this.addNewEpisode(episodesControl, season, episode);
-      })
+    if (season != null) {
+      let episodes = season.episodes;
+      if (season != null && episodes != null) {
+        episodes.forEach(episode => {
+          let episodesControl = control.at(this.seasonNumber - 1).get('episodes');
+          this.addNewEpisode(episodesControl, season, episode);
+        })
+      }
     }
 
     if (season == null) {
@@ -432,8 +433,7 @@ export class DocumentaryAddComponent implements OnInit {
 
   deleteSeason(number) {
     var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
-    console.log("seasonsFormArray");
-    console.log(seasonsFormArray.value);
+
     let index = 0;
     seasonsFormArray.value.forEach(seasonArray => {
       if (number == seasonArray.number) {
@@ -448,8 +448,13 @@ export class DocumentaryAddComponent implements OnInit {
     control.removeAt(index);
   }
 
-  addNewEpisode(control, season = null, episode = null) {
-    let episodeNumber;
+  addNewEpisode(control, season, episode = null) {
+    if (episode == null) {
+      let currentNumber = season.episodes.length;
+      currentNumber++;
+      this.episodeNumber = currentNumber;
+    }
+
     let title;
     let storyline;
     let summary;
@@ -461,7 +466,7 @@ export class DocumentaryAddComponent implements OnInit {
     let thumbnail;
 
     if (episode != null) {
-      episodeNumber = episode.number;
+      this.episodeNumber = episode.number;
       title = episode.title;
       imdbId = episode.imdbId;
       thumbnail = episode.thumbnail;
@@ -472,16 +477,15 @@ export class DocumentaryAddComponent implements OnInit {
       videoSource = episode.videoSource;
       length = episode.length;
 
-      let seasonNumber = season.number;
-      if (this.thumbnailImgURLDict[seasonNumber - 1] == undefined) {
-        this.thumbnailImgURLDict[seasonNumber - 1] = {};
+      if (this.thumbnailImgURLDict[season.number - 1] == undefined) {
+        this.thumbnailImgURLDict[season.number - 1] = {};
       }
-      this.thumbnailImgURLDict[seasonNumber - 1][episodeNumber - 1] = thumbnail;
+      this.thumbnailImgURLDict[season.number - 1][this.episodeNumber - 1] = thumbnail;
     }
 
     control.push(
       this.fb.group({
-        'number': new FormControl(episodeNumber, [Validators.required]),
+        'number': new FormControl(this.episodeNumber, [Validators.required]),
         'title': new FormControl(title, [Validators.required]),
         'imdbId': new FormControl(imdbId),
         'storyline': new FormControl(storyline, [Validators.required]),
