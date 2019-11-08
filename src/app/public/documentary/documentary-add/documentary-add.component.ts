@@ -412,7 +412,7 @@ export class DocumentaryAddComponent implements OnInit {
     let control = <FormArray>this.episodicForm.controls.seasons;
     control.push(
       this.fb.group({
-        'seasonNumber': new FormControl(number, [Validators.required]),
+        'number': new FormControl(number, [Validators.required]),
         'episodes': this.fb.array([], Validators.required)
       })
     );
@@ -432,7 +432,9 @@ export class DocumentaryAddComponent implements OnInit {
 
   deleteSeason(index) {
     var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
-    seasonsFormArray.removeAt(index);
+    console.log("seasonsFormArray");
+    console.log(seasonsFormArray);
+    //seasonsFormArray.removeAt(index);
   }
 
   addNewEpisode(control, season = null, episode = null) {
@@ -468,7 +470,7 @@ export class DocumentaryAddComponent implements OnInit {
 
     control.push(
       this.fb.group({
-        'episodeNumber': new FormControl(episodeNumber, [Validators.required]),
+        'number': new FormControl(episodeNumber, [Validators.required]),
         'title': new FormControl(title, [Validators.required]),
         'imdbId': new FormControl(imdbId),
         'storyline': new FormControl(storyline, [Validators.required]),
@@ -571,6 +573,14 @@ export class DocumentaryAddComponent implements OnInit {
         this.wideImgURL = reader.result; 
       };
     }
+  }
+
+  getEpisodeNumber(episode) {
+    return episode.value.number;
+  }
+
+  getSeasonNumber(season) {
+    return season.value.number;
   }
 
   initIMDBFrom() {
