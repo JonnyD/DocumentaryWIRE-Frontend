@@ -447,16 +447,16 @@
                                       </div>
                                       <div *ngIf="isFetchingDocumentaryFromIMDB">Loading...</div>
                                       <div class="card" *ngIf="showSearchedDocumentaryFromIMDB && !isFetchingDocumentaryFromIMDB">
-                                          <img style="float: left" alt='{{ searchedDocumentaryFromIMDB.Title }}' src='{{ searchedDocumentaryFromIMDB.Poster }}'
+                                          <img style="float: left" alt='{{ searchedDocumentaryFromIMDB.title }}' src='{{ searchedDocumentaryFromIMDB.poster }}'
                                           style="margin-right: 20px" height='200' width='160' />
                       
-                                          Title: {{ searchedDocumentaryFromIMDB.Title }} <br />
-                                          Year: {{ searchedDocumentaryFromIMDB.Year }} <br />
-                                          Duration: {{ searchedDocumentaryFromIMDB.Runtime }} <br />
-                                          IMDB ID: {{ searchedDocumentaryFromIMDB.imdbID }} <br />
+                                          Title: {{ searchedDocumentaryFromIMDB.title }} <br />
+                                          Year: {{ searchedDocumentaryFromIMDB.year }} <br />
+                                          Duration: {{ searchedDocumentaryFromIMDB.duration }} <br />
+                                          IMDB ID: {{ searchedDocumentaryFromIMDB.imdbId }} <br />
                                           IMDB Rating: {{ searchedDocumentaryFromIMDB.imdbRating }} <br />
                                           IMDB Votes: {{ searchedDocumentaryFromIMDB.imdbVotes }} <br />
-                                          Plot: {{ searchedDocumentaryFromIMDB.Plot }} <br />
+                                          Plot: {{ searchedDocumentaryFromIMDB.storyline }} <br />
                                           <button type="button" class="btn btn-secondary" (click)="imdbSelect(searchedDocumentaryFromIMDB)">Select</button>
                                       </div>
                                   </div>
