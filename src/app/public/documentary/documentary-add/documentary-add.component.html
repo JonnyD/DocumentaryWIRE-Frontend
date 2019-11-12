@@ -307,8 +307,8 @@
                                                                                     <button class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search</button>
                                                                                 </div>
                                                                                 <div class="form-group">
-                                                                                    <label for="poster">Thumbnail</label>
-                                                                                    <input id="poster" type="file" (change)="onThumbnailChange($event, i, j)" />
+                                                                                    <label for="thumbnail">Thumbnail</label>
+                                                                                    <input id="thumbnail" type="file" (change)="onThumbnailChange($event, i, j)" />
                                                                                     <img [src]="getThumbnailForSeasonAndEpsiode(i, j)" height="200">
                                                                                 </div>
                                                                                 <div class="form-group">
@@ -362,7 +362,7 @@
                                     <div class="form-group">
                                         <label for="videoId">Video ID</label>
                                         <input type="text" formControlName="videoId" class="form-control" [ngClass]="{ 'is-invalid': submitted && fStandalone.videoId.errors }" />
-                                        <button class="btn btn-secondary" (click)="openYoutubeModal(youtubeContent)">Search</button>
+                                        <button class="btn btn-secondary" (click)="openYoutubeModal(youtubeContent,  getSeasonNumber(seas), getEpisodeNumber(episode))">Search</button>
                                         <div *ngIf="submitted && fStandalone.videoId.errors" class="invalid-feedback">
                                             <div *ngIf="fStandalone.videoId.errors.required">Video ID is required</div>
                                         </div>

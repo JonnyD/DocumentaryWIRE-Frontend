@@ -91,6 +91,9 @@ export class DocumentaryAddComponent implements OnInit {
   public seasonNumber = 1;
   public episodeNumber = 1;
 
+  public youtubeSeasonNumber;
+  public youtubeEpisodeNumebr;
+
   standaloneForm: FormGroup;
   episodicForm: FormGroup;
   imdbForm: FormGroup;
@@ -494,7 +497,7 @@ export class DocumentaryAddComponent implements OnInit {
         'year': new FormControl(year, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required]),
         'videoId': new FormControl(videoId, [Validators.required]),
-        'poster': new FormControl(thumbnail, [Validators.required]),
+        'thumbnail': new FormControl(thumbnail, [Validators.required]),
       }));
   }
 
@@ -537,7 +540,7 @@ export class DocumentaryAddComponent implements OnInit {
       reader.onload = () => {
         var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
         var episodesFormArray = seasonsFormArray.at(seasonNumber).get("episodes") as FormArray;
-        episodesFormArray.at(episodeNumber)['controls']['poster'].patchValue(reader.result);
+        episodesFormArray.at(episodeNumber)['controls']['thumbnail'].patchValue(reader.result);
 
         if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
           this.thumbnailImgURLDict[seasonNumber] = {};
@@ -608,39 +611,6 @@ export class DocumentaryAddComponent implements OnInit {
     if (title) {
       this.searchOMDB();
     }
-  }
-
-  initYoutubeForm() {
-    let title = this.standaloneForm.value.title;
-
-    this.youtubeForm = new FormGroup({
-      'title': new FormControl(title, [Validators.required])
-    });
-
-    if (title) {
-      this.searchYoutube();
-    }
-  }
-
-  openIMDBModal(content) {
-    this.initIMDBFrom();
-    console.log("content");
-    console.log(content);
-    this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${reason}`;
-    });
-  }
-
-  openYoutubeModal(content) {
-    this.initYoutubeForm();
-
-    this.modalService.open(content, {ariaLabelledBy: 'modal-youtube'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${reason}`;
-    });
   }
 
   imdbView(imdbId) {
@@ -2394,27 +2364,6 @@ export class DocumentaryAddComponent implements OnInit {
     }
   }
 
-  youtubeSelect(selectedVideo) {
-    this.modalService.dismissAll();
-
-    if (!this.documentary.title) {
-      this.documentary.title = selectedVideo.snippet.title;
-    }
-
-    if (!this.documentary.storyline) {
-      this.documentary.storyline = selectedVideo.snippet.description;
-    }
-
-    if (!this.documentary.wideImage) {
-      this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
-      this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
-    }
-
-    this.documentary.videoId = selectedVideo.id.videoId;
-
-    this.initStandaloneForm();
-  }
-
   searchOMDB() {
     this.isFetchingDocumentariesFromIMDB = true;
     this.showSearchedDocumentaryFromIMDB = false;
@@ -2505,6 +2454,53 @@ export class DocumentaryAddComponent implements OnInit {
     this.isFetchingDocumentariesFromIMDB = false;
   }
 
+  openIMDBModal(content) {
+    this.initIMDBFrom();
+    console.log("content");
+    console.log(content);
+    this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+  openYoutubeModal(content, seasonNumber = null, episodeNumber = null) {
+    this.youtubeSeasonNumber = seasonNumber - 1;
+    if (episodeNumber > 0) {
+      this.youtubeEpisodeNumebr = episodeNumber - 1;
+    } else {
+      this.youtubeEpisodeNumebr = episodeNumber;
+    }
+    this.initYoutubeForm();
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-youtube'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+  
+  initYoutubeForm() {
+    let title = '';
+
+    if (this.type === 'standalone') {
+      title = this.standaloneForm.value.title;
+    } else if (this.type === 'episodic') {
+      var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
+      var episodesFormArray = seasonsFormArray.at(this.youtubeSeasonNumber).get("episodes") as FormArray;
+      title = episodesFormArray.at(this.youtubeEpisodeNumebr).value.title;
+    }
+
+    this.youtubeForm = new FormGroup({
+      'title': new FormControl(title, [Validators.required])
+    });
+
+    if (title) {
+      this.searchYoutube();
+    }
+  }
+
   searchYoutube() {
     this.isFetchingVideosFromYoutube = true;
     this.showSearchedVideosFromYoutube = true;
@@ -2515,6 +2511,62 @@ export class DocumentaryAddComponent implements OnInit {
         this.searchedVideosFromYoutube = result['items'];
         this.isFetchingVideosFromYoutube = false;
       });
+  }
+
+  youtubeSelect(selectedVideo) {
+    if (this.type === 'standalone') {
+      if (!this.documentary.title) {
+        this.documentary.title = selectedVideo.snippet.title;
+      }
+
+      if (!this.documentary.storyline) {
+        this.documentary.storyline = selectedVideo.snippet.description;
+      }
+
+      if (!this.documentary.wideImage) {
+        this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
+        this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
+      }
+
+      this.documentary.videoId = selectedVideo.id.videoId;
+
+      this.initStandaloneForm();
+    } else if (this.type === 'episodic') {
+      console.log("selectedVideo");
+      console.log(selectedVideo);
+      var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
+      var episodesFormArray = seasonsFormArray.at(this.youtubeSeasonNumber).get("episodes") as FormArray;
+      
+      let title = episodesFormArray.at(this.youtubeEpisodeNumebr).value.title;
+      console.log("episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail");
+      console.log(episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail);
+      let thumbnail = episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail;
+      let storyline = episodesFormArray.at(this.youtubeEpisodeNumebr).value.storyline;
+      let videoId = episodesFormArray.at(this.youtubeEpisodeNumebr).value.videoId;
+
+      if (!title) {
+        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['title']
+          .patchValue(selectedVideo.snippet.title);
+      }
+
+      if (!thumbnail) {
+        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['thumbnail']
+          .patchValue(selectedVideo.snippet.thumbnails.high.url);
+      }
+
+      if (!storyline) {
+        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['storyline']
+          .patchValue(selectedVideo.snippet.description);
+      }
+
+      if (!videoId) {
+        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['videoId']
+          .patchValue(selectedVideo.id.videoId);
+      }
+
+    }
+
+    this.modalService.dismissAll();
   }
 
   onStandaloneSubmit() {
