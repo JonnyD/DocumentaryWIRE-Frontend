@@ -1,3 +1,4 @@
+import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { YoutubeService } from './services/youtube.service';
 import { SubscriptionService } from './services/subscription.service';
 import { WatchlistService } from './services/watchlist.service';
@@ -99,7 +100,8 @@ import { OMDBService } from './services/omdb.service';
     UserAddedComponent,
     DocumentaryAddComponent,
     UserEditComponent,
-    AdminSubscriptionsComponent
+    AdminSubscriptionsComponent,
+    ChangeNameComponent
   ],
   imports: [
     BrowserModule,

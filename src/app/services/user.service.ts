@@ -109,4 +109,18 @@ export class UserService extends DataService {
   
         return this.create(user, options);
      }
+
+     updateUser(user: User) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+            params: new HttpParams()
+                .append('access_token', accessToken)
+            }
+        }
+
+         return this.update(user, options);
+     }
 }

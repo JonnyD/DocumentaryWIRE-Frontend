@@ -1,3 +1,5 @@
+import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
+import { AuthneticatedUserResolverService } from './services/authenticated-user-resolver.service';
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
@@ -68,6 +70,16 @@ const routes: Routes = [
     component: CommunityComponent
   },
   { 
+    path: 'user/edit', 
+    component: UserEditComponent,
+    resolve: [AuthneticatedUserResolverService]
+  },
+  { 
+    path: 'user/edit/change-name', 
+    component: ChangeNameComponent,
+    resolve: [AuthneticatedUserResolverService]
+  },
+  { 
     path: 'user/:username', 
     component: UserShowComponent,
     resolve: [UserResolverService]
@@ -85,11 +97,6 @@ const routes: Routes = [
   { 
     path: 'user/:username/watchlist', 
     component: UserWatchlistComponent,
-    resolve: [UserResolverService]
-  },
-  { 
-    path: 'user/:username/edit', 
-    component: UserEditComponent,
     resolve: [UserResolverService]
   },
   { path: 'login', component: LoginComponent },

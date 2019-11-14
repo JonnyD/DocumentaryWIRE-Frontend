@@ -32,12 +32,19 @@ export class DataService {
   }
 
   update(resource, options) {
+    console.log("resource put");
+    console.log(resource);
+    console.log("this url");
+    console.log(this.url + '/' + resource.id);
+    console.log("options");
+    console.log(options);
     return this.http.put(this.url + '/' + resource.id, JSON.stringify({
       resource
     }), options);
   }
 
   patch(id, resource, options) {
+    console.log("resource patch");
     console.log(resource);
     return this.http.patch(this.url + '/' + Number(id), JSON.stringify({
       resource
