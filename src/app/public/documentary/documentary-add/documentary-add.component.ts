@@ -754,14 +754,10 @@ export class DocumentaryAddComponent implements OnInit {
 
       this.initStandaloneForm();
     } else if (this.type === 'episodic') {
-      console.log("selectedVideo");
-      console.log(selectedVideo);
       var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
       var episodesFormArray = seasonsFormArray.at(this.youtubeSeasonNumber).get("episodes") as FormArray;
       
       let title = episodesFormArray.at(this.youtubeEpisodeNumebr).value.title;
-      console.log("episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail");
-      console.log(episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail);
       let thumbnail = episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail;
       let storyline = episodesFormArray.at(this.youtubeEpisodeNumebr).value.storyline;
       let videoId = episodesFormArray.at(this.youtubeEpisodeNumebr).value.videoId;
