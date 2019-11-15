@@ -1,0 +1,41 @@
+<div class="container" >
+        <div class="row">
+            <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
+                <span *ngFor="let flashMessage of flashMessages">
+                        <div class="alert alert-{{ flashMessage.class }}" role="alert">
+                            {{ flashMessage.message }}
+                        </div>
+                </span>
+                <form [formGroup]="changeUsernameForm" (ngSubmit)="onChangeUsernameSubmit()">
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': submitted && fChangeUsername.username.errors }" />
+                            <div *ngIf="submitted && fChangeUsername.username.errors" class="invalid-feedback">
+                                <div *ngIf="fChangeUsername.username.errors.required">Username is required</div>
+                            </div>
+                            <div *ngIf="isFetchingUsername">
+                                Loading...
+                            </div>
+                            <div *ngIf="!isFetchingUsername">
+                                <div *ngIf="isExistingUsername">
+                                    This is your username
+                                </div>
+                                <div *ngIf="!isExistingUsername">
+                                    <div *ngIf="usernameExists">
+                                        Username already exists
+                                    </div>
+                                    <div *ngIf="!usernameExists">
+                                        Username is available
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+                        <button [disabled]="loading || !changeUsernameForm.valid" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Save
+                        </button>
+                    </form>
+        </div>
+    </div>
+</div>

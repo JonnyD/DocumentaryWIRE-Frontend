@@ -60,6 +60,7 @@ import { DocumentaryAddComponent } from './public/documentary/documentary-add/do
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { OMDBService } from './services/omdb.service';
+import { ChangeUsernameComponent } from './public/user/user-edit/change-username/change-username.component';
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import { OMDBService } from './services/omdb.service';
     DocumentaryAddComponent,
     UserEditComponent,
     AdminSubscriptionsComponent,
-    ChangeNameComponent
+    ChangeNameComponent,
+    ChangeUsernameComponent
   ],
   imports: [
     BrowserModule,

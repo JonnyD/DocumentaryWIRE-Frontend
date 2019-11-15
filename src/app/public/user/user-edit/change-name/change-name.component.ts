@@ -57,7 +57,6 @@ export class ChangeNameComponent implements OnInit {
             "class": "success"
           }
         ];
-        //this.router.navigate(["/user/edit"]);
       },
       error => {
         console.log(error);

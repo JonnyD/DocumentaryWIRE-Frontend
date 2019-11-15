@@ -1,3 +1,4 @@
+import { ChangeUsernameComponent } from './public/user/user-edit/change-username/change-username.component';
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { AuthneticatedUserResolverService } from './services/authenticated-user-resolver.service';
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
@@ -77,6 +78,11 @@ const routes: Routes = [
   { 
     path: 'user/edit/change-name', 
     component: ChangeNameComponent,
+    resolve: [AuthneticatedUserResolverService]
+  },
+  { 
+    path: 'user/edit/change-username', 
+    component: ChangeUsernameComponent,
     resolve: [AuthneticatedUserResolverService]
   },
   { 

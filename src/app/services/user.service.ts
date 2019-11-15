@@ -18,6 +18,10 @@ export class UserService extends DataService {
     this.authenticationService = authenticationService;
    }
 
+    checkUsernameExists(username: string) {
+        return this.getUserByUsername(username);
+    }
+
    getMe() {
     let options = {};
 
