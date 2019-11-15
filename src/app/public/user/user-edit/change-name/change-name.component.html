@@ -1,7 +1,11 @@
 <div class="container" >
         <div class="row">
             <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
-
+                <span *ngFor="let flashMessage of flashMessages">
+                        <div class="alert alert-{{ flashMessage.class }}" role="alert">
+                            {{ flashMessage.message }}
+                        </div>
+                </span>
                 <form [formGroup]="changeNameForm" (ngSubmit)="onChangeNameSubmit()">
                         <div class="form-group">
                             <label for="name">Name</label>
@@ -11,7 +15,7 @@
                             </div>
                         </div>
                         <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
-                        <button [disabled]="loading" class="btn btn-primary">
+                        <button [disabled]="loading || !changeNameForm.valid" class="btn btn-primary">
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                             Save
                         </button>

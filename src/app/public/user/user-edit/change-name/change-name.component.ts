@@ -15,6 +15,7 @@ export class ChangeNameComponent implements OnInit {
   private changeNameForm: FormGroup;
   private submitted = false;
   private errors;
+  private flashMessages;
 
   constructor(
     private route: ActivatedRoute,
@@ -50,9 +51,22 @@ export class ChangeNameComponent implements OnInit {
     this.userService.updateUser(this.user)
       .subscribe(result => {
         console.log(result);
+        this.flashMessages = [
+          {
+            'message': "Success",
+            "class": "success"
+          }
+        ];
+        //this.router.navigate(["/user/edit"]);
       },
       error => {
         console.log(error);
+        this.flashMessages = [
+          {
+            'message': error,
+            "class": "danger"
+          }
+        ];
       }
       );
   }
