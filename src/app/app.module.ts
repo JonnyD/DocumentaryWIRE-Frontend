@@ -61,6 +61,10 @@ import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { OMDBService } from './services/omdb.service';
 import { ChangeUsernameComponent } from './public/user/user-edit/change-username/change-username.component';
+import { ChangePasswordComponent } from './public/user/user-edit/change-password/change-password.component';
+import { ForgotPasswordComponent } from './public/user/user-edit/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './public/user/user-edit/reset-password/reset-password.component';
+import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username/forgot-username.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +107,11 @@ import { ChangeUsernameComponent } from './public/user/user-edit/change-username
     UserEditComponent,
     AdminSubscriptionsComponent,
     ChangeNameComponent,
-    ChangeUsernameComponent
+    ChangeUsernameComponent,
+    ChangePasswordComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
+    ForgotUsernameComponent
   ],
   imports: [
     BrowserModule,

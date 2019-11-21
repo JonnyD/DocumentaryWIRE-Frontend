@@ -127,4 +127,36 @@ export class UserService extends DataService {
 
          return this.update(user, options);
      }
+
+     forgotPassword(username: string) {
+        let options = {};
+
+        let resource = {
+            "username": username
+        };
+
+        return this.post('/forgot-password', resource, options);
+     }
+
+     resetPassword(username: string, resetKey: string, password: string) {
+        let options = {};
+
+        let resource = {
+            "username": username,
+            "reset_key": resetKey,
+            "password": password
+        };
+
+        return this.post('/reset-password', resource, options);
+     }
+
+     forgotUsername(email: string) {
+        let options = {};
+
+        let resource = {
+            "email": email
+        };
+
+        return this.post('/forgot-username', resource, options);
+     }
 }

@@ -1,3 +1,7 @@
+import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username/forgot-username.component';
+import { ResetPasswordComponent } from './public/user/user-edit/reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './public/user/user-edit/forgot-password/forgot-password.component';
+import { ChangePasswordComponent } from './public/user/user-edit/change-password/change-password.component';
 import { ChangeUsernameComponent } from './public/user/user-edit/change-username/change-username.component';
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { AuthneticatedUserResolverService } from './services/authenticated-user-resolver.service';
@@ -84,6 +88,23 @@ const routes: Routes = [
     path: 'user/edit/change-username', 
     component: ChangeUsernameComponent,
     resolve: [AuthneticatedUserResolverService]
+  },
+  { 
+    path: 'user/edit/change-password', 
+    component: ChangePasswordComponent,
+    resolve: [AuthneticatedUserResolverService]
+  },
+  { 
+    path: 'user/edit/forgot-password', 
+    component: ForgotPasswordComponent
+  },
+  { 
+    path: 'user/edit/reset-password', 
+    component: ResetPasswordComponent
+  },
+  { 
+    path: 'user/edit/forgot-username', 
+    component: ForgotUsernameComponent
   },
   { 
     path: 'user/:username', 

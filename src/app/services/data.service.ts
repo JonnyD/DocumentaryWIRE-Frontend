@@ -61,4 +61,16 @@ export class DataService {
   delete(id: number) {
     return this.http.delete(this.url + '/' + id);
   }
+
+  post(urlSlug, resource, options) {
+    let url = this.url + urlSlug;
+    console.log(url);
+    console.log("resource");
+    console.log(resource);
+    console.log("stringify");
+    console.log(JSON.stringify(resource));
+    return this.http.post(url, JSON.stringify(
+      resource
+    ), options);
+  }
 }
