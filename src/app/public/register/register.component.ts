@@ -39,8 +39,8 @@ export class RegisterComponent implements OnInit {
     this.registerForm = new FormGroup({
       'username': new FormControl('', Validators.required),
       'name': new FormControl('', Validators.required),
-      'email': new FormControl('', Validators.required),
-      'password': new FormControl('', Validators.required),
+      'email': new FormControl('', [Validators.required, Validators.email]),
+      'password': new FormControl('', [Validators.required, Validators.minLength(6)]),
       'recaptchaReactive': new FormControl(null, Validators.required)
     });
   }
@@ -50,12 +50,13 @@ export class RegisterComponent implements OnInit {
   onSubmit() {
     let formValue = this.registerForm.value;
     console.log(formValue);
-    this.userService.createUser(formValue).subscribe((result: any) => {
-      console.log(result);
-      this.router.navigate(['']);
-    }),
-    (error) => {
-      console.log(error);
-    }
+    this.userService.createUser(formValue)
+      .subscribe((result: any) => {
+        console.log(result);
+        this.router.navigate(['']);
+      }),
+      (error) => {
+        console.log(error.error);
+      }
   }
 }
