@@ -31,8 +31,6 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
-
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'];
   }
 
   initForm() {
@@ -53,7 +51,7 @@ export class RegisterComponent implements OnInit {
     this.userService.createUser(formValue)
       .subscribe((result: any) => {
         console.log(result);
-        this.router.navigate(['']);
+        this.router.navigate(['/activate'], { queryParams: { email: formValue.email }});
       }),
       (error) => {
         console.log(error.error);

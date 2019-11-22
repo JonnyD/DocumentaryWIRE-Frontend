@@ -67,6 +67,7 @@ import { ChangePasswordComponent } from './public/user/user-edit/change-password
 import { ForgotPasswordComponent } from './public/user/user-edit/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './public/user/user-edit/reset-password/reset-password.component';
 import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username/forgot-username.component';
+import { ActivateComponent } from './public/register/activate/activate.component';
 
 @NgModule({
   declarations: [
@@ -113,7 +114,8 @@ import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username
     ChangePasswordComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    ForgotUsernameComponent
+    ForgotUsernameComponent,
+    ActivateComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { ActivateComponent } from './public/register/activate/activate.component';
 import { UserGuard } from './public/user-guard.service';
 import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username/forgot-username.component';
 import { ResetPasswordComponent } from './public/user/user-edit/reset-password/reset-password.component';
@@ -130,6 +131,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'activate', component: ActivateComponent },
   { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,
     children: [
       { 
