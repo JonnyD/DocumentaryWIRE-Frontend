@@ -4,7 +4,7 @@
             <div class="card-body">
                 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
                     <div class="form-group">
-                        <label for="name">Full Name</label>
+                        <label for="name">Name</label>
                         <input type="text" formControlName="name" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }" />
                         <div *ngIf="submitted && f.name.errors" class="invalid-feedback">
                             <div *ngIf="f.name.errors.required">Name is required</div>
@@ -31,7 +31,8 @@
                             <div *ngIf="f.password.errors.required">Password is required</div>
                         </div>
                     </div>
-                    <button [disabled]="loading" class="btn btn-primary">
+                    <re-captcha formControlName="recaptchaReactive"></re-captcha>
+                    <button [disabled]="loading || !registerForm.valid" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Register
                     </button>

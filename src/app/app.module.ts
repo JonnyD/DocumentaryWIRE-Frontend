@@ -1,3 +1,4 @@
+import { RecaptchaModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
 import { UserGuard } from './public/user-guard.service';
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { YoutubeService } from './services/youtube.service';
@@ -124,7 +125,10 @@ import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username
     AngularEditorModule,
     BrowserAnimationsModule,
     NgbModule,
-    CarouselModule
+    CarouselModule,
+    RecaptchaFormsModule,
+    RecaptchaModule,
+    RecaptchaModule.forRoot()
   ],
   providers: [
     DocumentaryService,
@@ -139,7 +143,13 @@ import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username
     OMDBService,
     YoutubeService,
     AdminGuard,
-    UserGuard
+    UserGuard,
+    {
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: '6Le-LMQUAAAAAIrbw_SOjzi8F3yxhxMEaYF_NCOd',
+      } as RecaptchaSettings,
+    }
   ],
   bootstrap: [AppComponent]
 })
