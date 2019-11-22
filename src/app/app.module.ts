@@ -1,3 +1,4 @@
+import { UserGuard } from './public/user-guard.service';
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { YoutubeService } from './services/youtube.service';
 import { SubscriptionService } from './services/subscription.service';
@@ -137,7 +138,8 @@ import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username
     SubscriptionService,
     OMDBService,
     YoutubeService,
-    AdminGuard
+    AdminGuard,
+    UserGuard
   ],
   bootstrap: [AppComponent]
 })
