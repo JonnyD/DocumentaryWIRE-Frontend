@@ -73,6 +73,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
       .subscribe(result => {
+        console.log("result");
+        console.log(result);
         let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 3, 12);
         this.recentlyAdded = cardDecks;
 

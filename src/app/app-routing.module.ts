@@ -1,3 +1,4 @@
+import { UserGuard } from './public/user-guard.service';
 import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username/forgot-username.component';
 import { ResetPasswordComponent } from './public/user/user-edit/reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './public/user/user-edit/forgot-password/forgot-password.component';
@@ -217,14 +218,17 @@ const routes: Routes = [
   },
   { 
     path: 'add/:type', 
+    canActivate: [UserGuard],
     component: DocumentaryAddComponent
   },  
   { 
     path: 'add', 
+    canActivate: [UserGuard],
     component: DocumentaryAddComponent
   },
   { 
     path: 'add/:type/:slug/edit', 
+    canActivate: [UserGuard],
     component: DocumentaryAddComponent
   },  
   { 

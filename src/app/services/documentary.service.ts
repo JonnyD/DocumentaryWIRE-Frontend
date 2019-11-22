@@ -100,11 +100,6 @@ export class DocumentaryService extends DataService {
     params = params.append('sort', 'createdAt-desc');
     params = params.append('status', 'publish');
 
-   if (this.authenticationService.isAuthenticated()) {
-       let accessToken = this.authenticationService.currentTokenValue.access_token;
-       params = params.append('access_token', accessToken)
-   }
-
    let options = {
      params: params
    }
