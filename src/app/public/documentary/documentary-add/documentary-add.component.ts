@@ -1,3 +1,4 @@
+import { AuthenticationService } from 'src/app/services/authentication.service';
 import { YoutubeService } from './../../../services/youtube.service';
 import { UserService } from './../../../services/user.service';
 import { DocumentaryService } from './../../../services/documentary.service';
@@ -33,7 +34,7 @@ export class DocumentaryAddComponent implements OnInit {
   public categories;
   public years;
   public videoSources;
-  public posterImgURL;
+  public posterImgURL;s
   public wideImgURL;
   public imdb: IMDB;
   public thumbnailImgURLDict = {};
@@ -93,7 +94,6 @@ export class DocumentaryAddComponent implements OnInit {
 
   public youtubeSeasonNumber;
   public youtubeEpisodeNumebr;
-
   standaloneForm: FormGroup;
   episodicForm: FormGroup;
   imdbForm: FormGroup;
@@ -124,6 +124,7 @@ export class DocumentaryAddComponent implements OnInit {
     private omdbService: OMDBService,
     private userService: UserService,
     private youtubeService: YoutubeService,
+    private authenticationService: AuthenticationService,
     private router: Router,
     private location: Location,
     private cd: ChangeDetectorRef,
@@ -136,12 +137,14 @@ export class DocumentaryAddComponent implements OnInit {
     this.start('standalone');
   }
 
-  start(type: string = null) {
-    if (type != null) {
-      this.type = type;
-    }
-
-    this.reset();
+    start(type: string = null) {
+      if (type != null) {
+        this.type = type;
+      }
+  
+      this.reset();
+    this.showEpisodicPage = false;
+    this.showStandalonePage = false;
 
     this.documentary = new Documentary();
 
@@ -151,11 +154,14 @@ export class DocumentaryAddComponent implements OnInit {
         this.page = +params['page'] || 1;
 
         this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
+          
           if (type == null) {
-            this.type = params['params']['type'];
+          this.type = params['params']['type'];
           }
           this.slug = params['params']['slug'];
           this.editMode = this.slug != null;
+          console.log("this.type");
+          console.log(this.type);
 
           this.activeIdString = this.type;
 
@@ -163,10 +169,8 @@ export class DocumentaryAddComponent implements OnInit {
             this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(this.slug)
               .subscribe((result:any) => {
                 this.documentary = result;
-                console.log(result);
-
+              
                 if (this.documentary.type === 'standalone') {
-                  console.log(this.documentary.type);
                   this.toggleStandaloneForm();
                   this.showStandalonePage = true;
                 } else if (this.documentary.type === 'episodic') {
@@ -179,14 +183,11 @@ export class DocumentaryAddComponent implements OnInit {
               this.me = me;
 
               if (this.type === 'standalone') {
-                console.log("fdjksjfk");
                 if (!this.hasToggledStandaloneForm) {
                   this.fetchStandaloneDocumentaries();
                   this.showStandalonePage = true;
-                  console.log("dfff");
                 }
               } else if (this.type === 'episodic') {
-                console.log('episodic');
                 if (!this.hasToggledEpisodicForm) {
                   this.fetchEpisodicDocumentaries();
                   this.showEpisodicPage = true;
@@ -215,7 +216,6 @@ export class DocumentaryAddComponent implements OnInit {
     console.log(event);
     this.start(event.nextId);
   }
-
   fetchStandaloneDocumentaries() {
     if (this.editMode) {
       this.showStandaloneDocumentaries = false;
@@ -237,8 +237,6 @@ export class DocumentaryAddComponent implements OnInit {
           currentPage: this.page,
           totalItems: result['count_results']
         };
-        console.log("result");
-        console.log(result);
         this.myStandaloneDocumentaries = result['items'];
 
         this.isFetchingStandaloneDocumentaries = false;
@@ -380,7 +378,13 @@ export class DocumentaryAddComponent implements OnInit {
     }
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
+    let videoSource = null;
+    if (this.documentary.videoSource) {
+      videoSource = this.documentary.videoSource.id
+    }
+    let videoId = this.documentary.videoId;
     let year = this.documentary.year;
+    let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
     let wideImage = this.documentary.wideImage;
@@ -405,6 +409,7 @@ export class DocumentaryAddComponent implements OnInit {
       });
     }
   }
+    
 
   addNewSeason(season = null) {
     if (season != null) {
@@ -513,14 +518,14 @@ export class DocumentaryAddComponent implements OnInit {
     
       reader.onload = () => {
         if (this.type == 'standalone') {
-          this.standaloneForm.patchValue({
-            poster: reader.result
-          });
-        } else {
-          this.episodicForm.patchValue({
-            poster: reader.result
-          })
-        }
+        this.standaloneForm.patchValue({
+          poster: reader.result
+        });
+      } else {
+        this.episodicForm.patchValue({
+          poster: reader.result
+        })
+      }
         
         this.cd.markForCheck();
 
@@ -570,14 +575,14 @@ export class DocumentaryAddComponent implements OnInit {
     
       reader.onload = () => {
         if (this.type == 'standalone') {
-          this.standaloneForm.patchValue({
-            wideImage: reader.result
-          });
-        } else {
-          this.episodicForm.patchValue({
-            wideImage: reader.result
-          });
-        }
+        this.standaloneForm.patchValue({
+          wideImage: reader.result
+        });
+      } else {
+        this.episodicForm.patchValue({
+          wideImage: reader.result
+        });
+      }
         
         // need to run CD since file load runs outside of zone
         this.cd.markForCheck();
@@ -594,7 +599,6 @@ export class DocumentaryAddComponent implements OnInit {
   getSeasonNumber(season) {
     return season.value.number;
   }
-
   initIMDBFrom() {
     let title = null;
 
@@ -612,7 +616,6 @@ export class DocumentaryAddComponent implements OnInit {
       this.searchOMDB();
     }
   }
-
   imdbView(imdbId) {
     console.log("imdbId");
     console.log(imdbId);
@@ -678,7 +681,6 @@ export class DocumentaryAddComponent implements OnInit {
 
   openIMDBModal(content) {
     this.initIMDBFrom();
-    console.log("content");
     console.log(content);
     this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -702,7 +704,7 @@ export class DocumentaryAddComponent implements OnInit {
       this.closeResult = `Dismissed ${reason}`;
     });
   }
-  
+
   initYoutubeForm() {
     let title = '';
 
@@ -737,61 +739,61 @@ export class DocumentaryAddComponent implements OnInit {
 
   youtubeSelect(selectedVideo) {
     if (this.type === 'standalone') {
-      if (!this.documentary.title) {
-        this.documentary.title = selectedVideo.snippet.title;
-      }
-
-      if (!this.documentary.storyline) {
-        this.documentary.storyline = selectedVideo.snippet.description;
-      }
-
-      if (!this.documentary.wideImage) {
-        this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
-        this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
-      }
-
-      this.documentary.videoId = selectedVideo.id.videoId;
-
-      this.initStandaloneForm();
-    } else if (this.type === 'episodic') {
-      var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
-      var episodesFormArray = seasonsFormArray.at(this.youtubeSeasonNumber).get("episodes") as FormArray;
-      
-      let title = episodesFormArray.at(this.youtubeEpisodeNumebr).value.title;
-      let thumbnail = episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail;
-      let storyline = episodesFormArray.at(this.youtubeEpisodeNumebr).value.storyline;
-      let videoId = episodesFormArray.at(this.youtubeEpisodeNumebr).value.videoId;
-
-      if (!title) {
-        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['title']
-          .patchValue(selectedVideo.snippet.title);
-      }
-
-      if (!thumbnail) {
-        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['thumbnail']
-          .patchValue(selectedVideo.snippet.thumbnails.high.url);
-      }
-
-      if (!storyline) {
-        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['storyline']
-          .patchValue(selectedVideo.snippet.description);
-      }
-
-      if (!videoId) {
-        episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['videoId']
-          .patchValue(selectedVideo.id.videoId);
-      }
-
+    if (!this.documentary.title) {
+      this.documentary.title = selectedVideo.snippet.title;
     }
 
-    this.modalService.dismissAll();
+    if (!this.documentary.storyline) {
+      this.documentary.storyline = selectedVideo.snippet.description;
+    }
+
+    if (!this.documentary.wideImage) {
+      this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
+      this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
+    }
+
+    this.documentary.videoId = selectedVideo.id.videoId;
+
+    this.initStandaloneForm();
+  } else if (this.type === 'episodic') {
+    var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
+    var episodesFormArray = seasonsFormArray.at(this.youtubeSeasonNumber).get("episodes") as FormArray;
+    
+    let title = episodesFormArray.at(this.youtubeEpisodeNumebr).value.title;
+    let thumbnail = episodesFormArray.at(this.youtubeEpisodeNumebr).value.thumbnail;
+    let storyline = episodesFormArray.at(this.youtubeEpisodeNumebr).value.storyline;
+    let videoId = episodesFormArray.at(this.youtubeEpisodeNumebr).value.videoId;
+
+    if (!title) {
+      episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['title']
+        .patchValue(selectedVideo.snippet.title);
+    }
+
+    if (!thumbnail) {
+      episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['thumbnail']
+        .patchValue(selectedVideo.snippet.thumbnails.high.url);
+    }
+
+    if (!storyline) {
+      episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['storyline']
+        .patchValue(selectedVideo.snippet.description);
+    }
+
+    if (!videoId) {
+      episodesFormArray.at(this.youtubeEpisodeNumebr)['controls']['videoId']
+        .patchValue(selectedVideo.id.videoId);
+    }
+
+  }
+
+  this.modalService.dismissAll();
   }
 
   onStandaloneSubmit() {
     if (!this.standaloneForm.valid) {
       return;
     }
-
+    
     this.submitted = true;
     this.errors = null;
 
@@ -819,8 +821,9 @@ export class DocumentaryAddComponent implements OnInit {
         console.log(error);
         this.errors = error.error;
       });
-    }
+    }   
   }
+  
 
   onEpisodicSubmit() {
     console.log(this.fEpisodic);
@@ -859,7 +862,6 @@ export class DocumentaryAddComponent implements OnInit {
       });
     }
   }
-  
   pageChanged(event) {
     console.log(event);
     this.standaloneConfig.currentPage = event;
@@ -886,5 +888,6 @@ export class DocumentaryAddComponent implements OnInit {
     if (this.getByImdbIdSubscription != null) {
       this.getByImdbIdSubscription.unsubscribe();
     }
+    this.meSubscription.unsubscribe();
   }
 }
