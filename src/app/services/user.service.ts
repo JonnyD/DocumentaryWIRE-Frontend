@@ -159,4 +159,16 @@ export class UserService extends DataService {
 
         return this.post('/forgot-username', resource, options);
      }
+
+     confirm(username: string, confirmationToken: string) {
+        let params = new HttpParams();
+        params = params.append('username', username);
+        params = params.append('confirmation_token', confirmationToken);
+
+        let options = {
+            params: params
+        }
+
+        return this.get('confirm', options);
+       }
 }

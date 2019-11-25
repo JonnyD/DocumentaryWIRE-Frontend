@@ -1,0 +1,9 @@
+<div class="col-md-6 offset-md-3 mt-5">
+        <div class="card">
+            <span *ngFor="let flashMessage of flashMessages">
+                    <div class="alert alert-{{ flashMessage.class }}" role="alert">
+                        {{ flashMessage.message }}
+                    </div>
+            </span>
+        </div>
+    </div>
