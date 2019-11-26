@@ -51,6 +51,8 @@ export class ConfirmComponent implements OnInit {
                 "class": "success"
               }
             ];
+
+            this.loading = false;
           },
           error => {
             console.log(error);
@@ -60,6 +62,8 @@ export class ConfirmComponent implements OnInit {
                 "class": "danger"
               }
             ];
+
+            this.loading = false;
           }
           );
     });
