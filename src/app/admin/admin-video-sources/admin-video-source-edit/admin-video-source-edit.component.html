@@ -25,7 +25,7 @@
                         id="status">
                         <option disabled>Choose Enabled / Disabled</option>
                         <option *ngFor="let status of statusOptions" 
-                            [value]="enabled" 
+                            [value]="status" 
                             [selected]="videoSource.status == status">
                             {{ status }}
                         </option>

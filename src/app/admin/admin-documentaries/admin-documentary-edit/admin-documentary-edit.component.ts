@@ -43,6 +43,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
   };
 
   ngOnInit() {
+    
+    console.log("Here2");
     this.route.data.subscribe(result => {
       this.initStatuses();
       this.initYears();

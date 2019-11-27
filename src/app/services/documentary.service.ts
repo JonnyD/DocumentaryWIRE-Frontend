@@ -30,7 +30,7 @@ export class DocumentaryService extends DataService {
             .append('access_token', accessToken)
         }
     }
-
+    
      return this.get(slug, options);
    }
 

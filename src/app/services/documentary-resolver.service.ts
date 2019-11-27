@@ -16,6 +16,8 @@ export class DocumentaryResolverService implements Resolve<Observable<any>> {
     console.log(route.params);
     let slug = route.params['slug'];
     let documentary = this.documentaryService.getDocumentaryBySlug(slug);
+    console.log("documentary");
+    console.log(documentary);
     return documentary;
   }
 }

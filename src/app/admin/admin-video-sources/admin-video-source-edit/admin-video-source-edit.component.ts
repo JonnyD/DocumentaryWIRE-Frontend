@@ -24,6 +24,8 @@ export class AdminVideoSourceEditComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(result => {
       this.videoSource = <VideoSource> result[0];
+      console.log("this.videoSource1");
+      console.log(this.videoSource);
       this.initEmbedAllowedOptions();
       this.initStatusOptions();
       this.initForm();
@@ -50,15 +52,12 @@ export class AdminVideoSourceEditComponent implements OnInit {
       'embedCode': new FormControl(embedCode),
       'status': new FormControl(status, [Validators.required])
     });
-
-    this.editVideoSourceForm.statusChanges.subscribe(
-      (status) => console.log(status)
-    );
   }
 
   onSubmit() {
     let videoSourceId = this.videoSource.id;
     let formValue = this.editVideoSourceForm.value;
+    
     this.videoSourceService.editVideoSource(videoSourceId, formValue)
       .subscribe(result => {
         this.router.navigate(["admin/video-sources", videoSourceId]);

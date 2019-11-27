@@ -41,13 +41,9 @@ export class ConfirmComponent implements OnInit {
           .subscribe(result => {
             console.log("result");
             console.log(result);
-            let message = "";
-            if (result.activated_at != null) {
-              message = "Confirmation Succssful";
-            }
             this.flashMessages = [
               {
-                'message': message,
+                'message': result,
                 "class": "success"
               }
             ];

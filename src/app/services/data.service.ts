@@ -17,9 +17,8 @@ export class DataService {
   }
 
   get(idOrSlug, options) {
-    console.log(this.url);
-    console.log(idOrSlug);
     let url = this.url + '/' + idOrSlug;
+    console.log(url);
     return this.http.get(url, options);
   }
 

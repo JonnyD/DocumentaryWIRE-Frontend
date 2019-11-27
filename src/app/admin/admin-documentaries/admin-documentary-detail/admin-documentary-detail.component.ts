@@ -19,6 +19,7 @@ export class AdminDocumentaryDetailComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    console.log("Here");
     this.route.data.subscribe(result => {
         this.documentary = <Documentary> result[0];
     })
