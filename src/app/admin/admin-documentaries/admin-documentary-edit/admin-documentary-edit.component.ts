@@ -23,6 +23,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
   years: any;
   videoSources: any;
   categories: any;
+  submitted = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -51,8 +52,9 @@ export class AdminDocumentaryEditComponent implements OnInit {
       this.initVideoSources();
       this.initCategories();
       this.documentary = <Documentary> result[0];
-      console.log(this.documentary);
       this.initForm();
+      console.log("this.documentary");
+      console.log(this.documentary);
     })
   }
 
@@ -119,9 +121,11 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let year = this.documentary.year;
     let length = this.documentary.length;
     let status = this.documentary.status;
-    let poster = 'http://localhost:8000/' + this.documentary.poster;
+    let poster = this.documentary.poster;
     this.posterImgURL = poster;
-    let wideImage = 'http://localhost:8000/' + this.documentary.wideImage;
+    console.log("this.posterImgURL");
+    console.log(this.posterImgURL);
+    let wideImage = this.documentary.wideImage;
     //console.log(wideImage);
     this.wideImgURL = wideImage;
     console.log(this.wideImgURL);
@@ -187,11 +191,18 @@ export class AdminDocumentaryEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
+
     let documentaryId = this.documentary.id;
     let formValue = this.editDocumentaryForm.value;
-    this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
-      console.log(result);
-     // this.router.navigate(["/admin/documentaries", this.documentary.slug]);
-    });
+    console.log("formValue");
+    console.log(formValue);
+    
+    if (this.editDocumentaryForm.valid) {
+      this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
+        console.log(result);
+       // this.router.navigate(["/admin/documentaries", this.documentary.slug]);
+      });
+    }
   }
 }

@@ -10,7 +10,7 @@
                     formControlName="title"
                     class="form-control">
                     <span
-                    *ngIf="!editDocumentaryForm.get('title').valid && editDocumentaryForm.get('title').touched"
+                    *ngIf="!editDocumentaryForm.get('title').valid && submitted"
                     class="help-block">
                     <span *ngIf="editDocumentaryForm.get('title').errors['required']">This field is required!</span>
 
@@ -24,7 +24,7 @@
                     formControlName="slug"
                     class="form-control">
                     <span
-                    *ngIf="!editDocumentaryForm.get('slug').valid && editDocumentaryForm.get('slug').touched"
+                    *ngIf="!editDocumentaryForm.get('slug').valid && submitted"
                     class="help-block">Please enter a valid slug!</span>
                 </div>
                 <div class="form-group">
@@ -42,14 +42,14 @@
                       </option>
                     </select>
                   <span
-                  *ngIf="!editDocumentaryForm.get('category').valid && editDocumentaryForm.get('category').touched"
+                  *ngIf="!editDocumentaryForm.get('category').valid && submitted"
                   class="help-block">Please enter a valid category!</span>
               </div>
                 <div class="form-group">
                     <label for="storyline">Storyline</label>
                     <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
                     <span
-                    *ngIf="!editDocumentaryForm.get('storyline').valid && editDocumentaryForm.get('storyline').touched"
+                    *ngIf="!editDocumentaryForm.get('storyline').valid && submitted"
                     class="help-block">Please enter a valid storyline!</span>
                 </div>
                 <div class="form-group">
@@ -60,7 +60,7 @@
                         formControlName="summary"
                         class="form-control"></textarea>
                     <span
-                    *ngIf="!editDocumentaryForm.get('summary').valid && editDocumentaryForm.get('summary').touched"
+                    *ngIf="!editDocumentaryForm.get('summary').valid && submitted"
                     class="help-block">Please enter a valid summary!</span>
                 </div>
                 <div class="form-group">
@@ -78,7 +78,7 @@
                         </option>
                       </select>
                     <span
-                    *ngIf="!editDocumentaryForm.get('videoSource').valid && editDocumentaryForm.get('videoSource').touched"
+                    *ngIf="!editDocumentaryForm.get('videoSource').valid && submitted"
                     class="help-block">Please enter a valid video source!</span>
                 </div>
                 <div class="form-group">
@@ -89,7 +89,7 @@
                       formControlName="videoId"
                       class="form-control">
                   <span
-                  *ngIf="!editDocumentaryForm.get('videoId').valid && editDocumentaryForm.get('videoId').touched"
+                  *ngIf="!editDocumentaryForm.get('videoId').valid && submitted"
                   class="help-block">Please enter a valid video id!</span>
               </div>
                 <div class="form-group">
@@ -106,7 +106,7 @@
                         </option>
                       </select>
                     <span
-                    *ngIf="!editDocumentaryForm.get('year').valid && editDocumentaryForm.get('year').touched"
+                    *ngIf="!editDocumentaryForm.get('year').valid && submitted"
                     class="help-block">Please enter a valid year!</span>
                 </div>
                 <div class="form-group">
@@ -117,7 +117,7 @@
                     formControlName="length"
                     class="form-control">
                     <span
-                    *ngIf="!editDocumentaryForm.get('length').valid && editDocumentaryForm.get('length').touched"
+                    *ngIf="!editDocumentaryForm.get('length').valid && submitted"
                     class="help-block">Please enter a valid year!</span>
                 </div>
                 <div class="form-group">
@@ -135,18 +135,24 @@
                         </option>
                       </select>
                     <span
-                    *ngIf="!editDocumentaryForm.get('status').valid && editDocumentaryForm.get('status').touched"
+                    *ngIf="!editDocumentaryForm.get('status').valid && submitted"
                     class="help-block">Please enter a valid status!</span>
                 </div>
                 <div class="form-group">
                   <label for="poster-file">Poster</label>
                   <input id="poster-file" type="file" (change)="onPosterChange($event)" />
-                  <img [src]="imgURL" height="200" *ngIf="imgURL">
+                  <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
+                  <span
+                    *ngIf="!editDocumentaryForm.get('poster').valid && submitted"
+                    class="help-block">Please add a poster!</span>
                 </div>
                 <div class="form-group">
                   <label for="wide-image-file">Wide Image</label>
                   <input id="wide-image-file" type="file" (change)="onWideImageChange($event)" />
                   <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
+                  <span
+                    *ngIf="!editDocumentaryForm.get('wideImage').valid && submitted"
+                    class="help-block">Please add a wide image!</span>
                 </div>
               <span
                 *ngIf="!editDocumentaryForm.valid && editDocumentaryForm.touched"
