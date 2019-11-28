@@ -37,24 +37,24 @@ export class DataService {
     console.log(this.url + '/' + resource.id);
     console.log("options");
     console.log(options);
-    return this.http.put(this.url + '/' + resource.id, JSON.stringify({
+    return this.http.put(this.url + '/' + resource.id, JSON.stringify(
       resource
-    }), options);
+    ), options);
   }
 
   patch(id, resource, options) {
     console.log("resource patch");
     console.log(resource);
-    return this.http.patch(this.url + '/' + Number(id), JSON.stringify({
+    return this.http.patch(this.url + '/' + Number(id), JSON.stringify(
       resource
-    }), options);
+    ), options);
   }
 
   patchBySlug(resource) {
     console.log(resource);
-    return this.http.patch(this.url + '/' + resource.slug, JSON.stringify({
+    return this.http.patch(this.url + '/' + resource.slug, JSON.stringify(
       resource
-    }));
+    ));
   }
 
   delete(id: number) {
