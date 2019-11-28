@@ -216,6 +216,7 @@ export class DocumentaryAddComponent implements OnInit {
     console.log(event);
     this.start(event.nextId);
   }
+  
   fetchStandaloneDocumentaries() {
     if (this.editMode) {
       this.showStandaloneDocumentaries = false;

@@ -1,5 +1,7 @@
+import { Standalone } from './standalone.model';
 import { VideoSource } from './video-source.model';
 import { Category } from './category.model';
+
 export class Documentary {
     id: number;
     title: string;
@@ -13,12 +15,11 @@ export class Documentary {
     views: number;
     shortUrl: string;
     wideImage: string;
-    videoSource: VideoSource;
-    videoId: string;
     featured: boolean;
     createdAt: string;
     updatedAt: string;
     poster: string;
     imdbId: string;
     type: string;
+    standalone: Standalone
 }

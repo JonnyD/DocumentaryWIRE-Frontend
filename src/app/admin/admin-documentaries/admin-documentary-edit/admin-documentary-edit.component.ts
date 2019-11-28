@@ -97,6 +97,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
     this.videoSourceService.getAll(params)
       .subscribe(result => {
         this.videoSources = result;
+        console.log("this.videoSources");
+        console.log(this.videoSources);
       });
   }
   
@@ -115,8 +117,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let videoSource = this.documentary.videoSource;
-    let videoId = this.documentary.videoId;
+    let videoSource = this.documentary.standalone.videoSource;
+    let videoId = this.documentary.standalone.videoId;
     //console.log(videoSource);
     let year = this.documentary.year;
     let length = this.documentary.length;
@@ -130,19 +132,24 @@ export class AdminDocumentaryEditComponent implements OnInit {
     this.wideImgURL = wideImage;
     console.log(this.wideImgURL);
 
+    console.log("this.documentary");
+    console.log(this.documentary);
+
     this.editDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
       'slug': new FormControl(slug, [Validators.required]),
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'videoSource': new FormControl(videoSource, [Validators.required]),
-      'videoId': new FormControl(videoId, [Validators.required]),
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
-      'wideImage': new FormControl(wideImage, [Validators.required])
+      'wideImage': new FormControl(wideImage, [Validators.required]),
+      'standalone': new FormGroup({
+        'videoId': new FormControl(videoId, [Validators.required]),
+        'videoSource': new FormControl(videoSource, [Validators.required])
+      }),
     });
 
     this.editDocumentaryForm.statusChanges.subscribe(
@@ -197,7 +204,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     let formValue = this.editDocumentaryForm.value;
     console.log("formValue");
     console.log(formValue);
-    
+
     if (this.editDocumentaryForm.valid) {
       this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
         console.log(result);

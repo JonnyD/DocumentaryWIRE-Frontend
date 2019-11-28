@@ -22,6 +22,8 @@ export class AdminDocumentaryDetailComponent implements OnInit {
     console.log("Here");
     this.route.data.subscribe(result => {
         this.documentary = <Documentary> result[0];
+        console.log("this.documentary");
+        console.log(this.documentary);
     })
   }
 }
