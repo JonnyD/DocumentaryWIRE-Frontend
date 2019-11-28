@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8000',
+  apiUrl: 'http://localhost:8001',
   grantType: 'password',
   clientId: '1_3ogpqt7kkmiogs4cg800wck08gsgcc484kggcs8kggg4gg88og',
   clientSecret: '4j8g6oljkjuosoowwkkwgow0kwo4gcsoogc88wckwcw4g84040'

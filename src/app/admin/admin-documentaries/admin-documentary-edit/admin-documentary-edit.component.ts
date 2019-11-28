@@ -202,6 +202,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
 
     let documentaryId = this.documentary.id;
     let formValue = this.editDocumentaryForm.value;
+
     console.log("formValue");
     console.log(formValue);
 
@@ -209,6 +210,8 @@ export class AdminDocumentaryEditComponent implements OnInit {
       this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
         console.log(result);
        // this.router.navigate(["/admin/documentaries", this.documentary.slug]);
+      }, error => {
+        console.log(error);
       });
     }
   }
