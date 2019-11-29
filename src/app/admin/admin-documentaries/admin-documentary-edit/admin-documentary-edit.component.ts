@@ -1,3 +1,4 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryService } from './../../../services/category.service';
 import { HttpParams } from '@angular/common/http';
 import { VideoSourceService } from './../../../services/video-source.service';
@@ -8,6 +9,7 @@ import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import * as moment from 'moment';
+import { OMDBService } from 'src/app/services/omdb.service';
 
 @Component({
   selector: 'app-admin-documentary-edit',
@@ -16,6 +18,7 @@ import * as moment from 'moment';
 })
 export class AdminDocumentaryEditComponent implements OnInit {
   editDocumentaryForm: FormGroup;
+  imdbForm: FormGroup;
   documentary: Documentary;
   posterImgURL: any;
   wideImgURL: any;
@@ -24,14 +27,24 @@ export class AdminDocumentaryEditComponent implements OnInit {
   videoSources: any;
   categories: any;
   submitted = false;
+  closeResult: string;
+  
+  public isFetchingDocumentariesFromIMDB = false;
+  public showSearchedDocumentaryFromIMDB = false;
+  public showSearchedDocumentariesFromIMDB = false;
+  public isFetchingDocumentaryFromIMDB = false;
+  public searchedDocumentariesFromIMDB;
+  public searchedDocumentaryFromIMDB;
 
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
     private videoSourceService: VideoSourceService,
     private categoryService: CategoryService,
+    private omdbService: OMDBService,
     private router: Router,
-    private cd: ChangeDetectorRef) {}
+    private cd: ChangeDetectorRef,
+    private modalService: NgbModal) {}
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -114,10 +127,13 @@ export class AdminDocumentaryEditComponent implements OnInit {
   initForm() {
     let title = this.documentary.title;
     let slug = this.documentary.slug;
-    let category = this.documentary.category;
+    let category = this.documentary.category.id;
+    console.log("category");
+    console.log(category);
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let videoSource = this.documentary.standalone.videoSource;
+    let imdbId = this.documentary.imdbId;
+    let videoSource = this.documentary.standalone.videoSource.id;
     let videoId = this.documentary.standalone.videoId;
     //console.log(videoSource);
     let year = this.documentary.year;
@@ -146,6 +162,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
       'status': new FormControl(status, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
+      'imdbId': new FormControl(imdbId),
       'standalone': new FormGroup({
         'videoId': new FormControl(videoId, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required])
@@ -195,6 +212,88 @@ export class AdminDocumentaryEditComponent implements OnInit {
       this.wideImgURL = reader.result; 
     };
   }
+  }
+
+  openIMDBModal(content) {
+    this.initIMDBFrom();
+    
+    this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+  initIMDBFrom() {
+    let title = this.documentary.title;
+
+    this.imdbForm = new FormGroup({
+      'title': new FormControl(title, [Validators.required])
+    });
+
+    if (title) {
+      this.searchOMDB();
+    }
+  }
+
+  searchOMDB() {
+    this.isFetchingDocumentariesFromIMDB = true;
+    this.showSearchedDocumentaryFromIMDB = false;
+    this.showSearchedDocumentariesFromIMDB = true;
+
+    let title = this.imdbForm.value.title;
+    let imdbType = 'movie';
+    
+    this.omdbService.getSearchedDocumentaries(title, imdbType)
+      .subscribe((result: any) => {
+        console.log(result);
+        this.searchedDocumentariesFromIMDB = result['Search'];
+        this.isFetchingDocumentariesFromIMDB = false;
+      });
+  }
+  
+  imdbView(imdbId) {
+    console.log("imdbId");
+    console.log(imdbId);
+    this.isFetchingDocumentaryFromIMDB = true;
+    this.showSearchedDocumentariesFromIMDB = false;
+    this.showSearchedDocumentaryFromIMDB = true;
+
+    this.omdbService.getByImdbId(imdbId, 'movie')
+      .subscribe((result: any) => {
+        this.searchedDocumentaryFromIMDB = result;
+        this.isFetchingDocumentaryFromIMDB = false;
+        console.log("searchedDocumentaryFromIMDB");
+        console.log(this.searchedDocumentaryFromIMDB);
+      })
+  }
+
+  imdbSelect(selectedDocumentary) {
+    console.log("selectedDocumentary");
+    console.log(selectedDocumentary);
+
+    if (this.documentary.imdbId != selectedDocumentary.imdbId) {
+      this.documentary.imdbId = selectedDocumentary.imdbId;
+      if (this.documentary.title == null) {
+        this.documentary.title = selectedDocumentary.title;
+      }
+      if (this.documentary.storyline == null) {
+        this.documentary.storyline = selectedDocumentary.storyline;
+      }
+      if (this.documentary.year == null) {
+        this.documentary.year = selectedDocumentary.year;
+      }
+      if (this.documentary.poster == null) {
+        this.documentary.poster = selectedDocumentary.poster;
+        this.posterImgURL = selectedDocumentary.poster;
+      }
+      if (this.documentary.category == null) {
+        this.documentary.category = selectedDocumentary.category;
+      }
+    }
+
+      this.initForm();
+      this.modalService.dismissAll();  
   }
 
   onSubmit() {

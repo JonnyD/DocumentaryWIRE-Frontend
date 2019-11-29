@@ -1,4 +1,6 @@
+import { VideoSource } from './video-source.model';
+
 export class Standalone {
     videoId: string;
-    videoSource: string;
+    videoSource: VideoSource;
 }

@@ -216,7 +216,7 @@ export class DocumentaryAddComponent implements OnInit {
     console.log(event);
     this.start(event.nextId);
   }
-  
+
   fetchStandaloneDocumentaries() {
     if (this.editMode) {
       this.showStandaloneDocumentaries = false;
@@ -344,8 +344,8 @@ export class DocumentaryAddComponent implements OnInit {
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let videoSource = null;
-    if (this.documentary.videoSource) {
-      videoSource = this.documentary.videoSource.id
+    if (this.documentary.standalone.videoSource) {
+      videoSource = this.documentary.standalone.videoSource.id
     }
     let videoId = this.documentary.videoId;
     let year = this.documentary.year;
@@ -600,6 +600,7 @@ export class DocumentaryAddComponent implements OnInit {
   getSeasonNumber(season) {
     return season.value.number;
   }
+
   initIMDBFrom() {
     let title = null;
 
@@ -617,6 +618,7 @@ export class DocumentaryAddComponent implements OnInit {
       this.searchOMDB();
     }
   }
+  
   imdbView(imdbId) {
     console.log("imdbId");
     console.log(imdbId);

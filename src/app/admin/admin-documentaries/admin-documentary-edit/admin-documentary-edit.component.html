@@ -37,8 +37,8 @@
                       <option disabled>Choose Category</option>
                       <option *ngFor="let categoryItem of categories" 
                         [value]="categoryItem.id" 
-                        [selected]="documentary.category.id == categoryItem.id">
-                        {{ categoryItem.name }}
+                        [selected]="category == categoryItem.id">
+                          {{ categoryItem.name }}
                       </option>
                     </select>
                   <span
@@ -75,7 +75,7 @@
                           <option disabled>Choose Video Source</option>
                           <option *ngFor="let videoSourceItem of videoSources" 
                             [value]="videoSourceItem.id" 
-                            [selected]="documentary.standalone.videoSource.id == videoSourceItem.id">
+                            [selected]="videoSource == videoSourceItem.id">
                             {{ videoSourceItem.name }}
                           </option>
                         </select>
@@ -143,6 +143,15 @@
                     class="help-block">Please enter a valid status!</span>
                 </div>
                 <div class="form-group">
+                    <label for="imdbId">IMDB ID</label>
+                    <input
+                    type="text"
+                    id="imdbId"
+                    formControlName="imdbId"
+                    class="form-control">
+                    <button class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search</button>
+                </div>
+                <div class="form-group">
                   <label for="poster-file">Poster</label>
                   <input id="poster-file" type="file" (change)="onPosterChange($event)" />
                   <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
@@ -164,6 +173,75 @@
               <button class="btn btn-primary" type="submit">Submit</button>
             </form>
           </div>
+
+          <ng-template #imdbContent let-modal>
+              <div class="modal-header">
+                <h4 class="modal-title" id="modal-omdb">Search IMDB</h4>
+                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form [formGroup]="imdbForm" (click)="searchOMDB()">
+                  <div class="form-group">
+                    <label for="title">Title</label>
+                    <div class="input-group">
+                      <input id="title" class="form-control" formControlName="title">
+                    </div>
+                  </div>
+            
+                  <button [disabled]="loading" class="btn btn-secondary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Search
+                </button>
+                </form>
+            
+                <div style="margin-top: 20px">
+                    <div *ngIf="isFetchingDocumentariesFromIMDB">Loading...</div>
+                        <div class="card" *ngIf="showSearchedDocumentariesFromIMDB && !isFetchingDocumentariesFromIMDB">
+                              <ul class="list-group list-group-flush">
+                                  <li class="list-group-item" *ngFor="let searchedDocumentary of searchedDocumentariesFromIMDB">
+                                          <span class="acitvity-item">
+                                          <span class="activity-image">
+                                              <a href="">
+                          
+                                                  <img alt='{{ searchedDocumentary.Title }}' src='{{ searchedDocumentary.Poster }}'
+                                                       style="margin-right: 20px" height='200' width='160' /></a>
+                                              </span>
+                                              <div class="data">
+                                                  <span class="author">
+                                                        {{ searchedDocumentary.Title }} <br />
+                                                  </span>
+                                                      <span class="excerpt">
+                                                          Type: {{ searchedDocumentary.Type }} <br />
+                                                          Year: {{ searchedDocumentary.Year }} <br />
+                                                          IMDB ID: {{ searchedDocumentary.imdbID }} <br />
+                                                          <button type="button" class="btn btn-secondary" (click)="imdbView(searchedDocumentary.imdbID)">View</button>
+                                                      </span>
+                                                  </div>
+                                              </span>
+            
+            
+                                  </li>
+                              </ul>
+                            </div>
+                            <div *ngIf="isFetchingDocumentaryFromIMDB">Loading...</div>
+                            <div class="card" *ngIf="showSearchedDocumentaryFromIMDB && !isFetchingDocumentaryFromIMDB">
+                                <img style="float: left" alt='{{ searchedDocumentaryFromIMDB.title }}' src='{{ searchedDocumentaryFromIMDB.poster }}'
+                                style="margin-right: 20px" height='200' width='160' />
+            
+                                Title: {{ searchedDocumentaryFromIMDB.title }} <br />
+                                Year: {{ searchedDocumentaryFromIMDB.year }} <br />
+                                Duration: {{ searchedDocumentaryFromIMDB.duration }} <br />
+                                IMDB ID: {{ searchedDocumentaryFromIMDB.imdbId }} <br />
+                                IMDB Rating: {{ searchedDocumentaryFromIMDB.imdbRating }} <br />
+                                IMDB Votes: {{ searchedDocumentaryFromIMDB.imdbVotes }} <br />
+                                Plot: {{ searchedDocumentaryFromIMDB.storyline }} <br />
+                                <button type="button" class="btn btn-secondary" (click)="imdbSelect(searchedDocumentaryFromIMDB)">Select</button>
+                            </div>
+                        </div>
+              </div>
+            </ng-template>
         </div>
       </div>
       
