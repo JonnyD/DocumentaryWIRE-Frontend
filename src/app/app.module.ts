@@ -1,3 +1,4 @@
+import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
 import { RecaptchaModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
 import { UserGuard } from './public/user-guard.service';
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
@@ -11,7 +12,6 @@ import { HomeComponent } from './public/home/home.component';
 import { AdminGuard } from './admin/admin-guard.service';
 import { AuthenticationService } from './services/authentication.service';
 import { VideoSourceService } from './services/video-source.service';
-import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -80,7 +80,7 @@ import { ConfirmComponent } from './public/register/confirm/confirm.component';
     AdminUsersComponent,
     AdminActivityComponent,
     AdminDocumentaryDetailComponent,
-    AdminDocumentaryEditComponent,
+    AdminStandaloneEditComponent,
     AdminVideoSourcesComponent,
     AdminVideoSourceEditComponent,
     AdminVideoSourceDetailComponent,

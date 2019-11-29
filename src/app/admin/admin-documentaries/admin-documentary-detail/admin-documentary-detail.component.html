@@ -1,3 +1,10 @@
+
+<span *ngIf="documentary.type == 'standalone'">
+        <a [routerLink]="['/admin/documentaries/standalone', documentary.slug, 'edit']">  
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </a>
+</span>
+
 <table class="table table-striped">
     <tbody>
         <tr>
@@ -15,6 +22,10 @@
         <tr>
             <td>Summary</td>
             <td>{{ documentary.summary }}</td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>{{ documentary.type }}</td>
         </tr>
         <tr>
             <td>Category</td>

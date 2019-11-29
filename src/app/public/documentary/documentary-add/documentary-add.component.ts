@@ -347,7 +347,7 @@ export class DocumentaryAddComponent implements OnInit {
     if (this.documentary.standalone.videoSource) {
       videoSource = this.documentary.standalone.videoSource.id
     }
-    let videoId = this.documentary.videoId;
+    let videoId = this.documentary.standalone.videoId;
     let year = this.documentary.year;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
@@ -380,10 +380,10 @@ export class DocumentaryAddComponent implements OnInit {
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let videoSource = null;
-    if (this.documentary.videoSource) {
-      videoSource = this.documentary.videoSource.id
+    if (this.documentary.standalone.videoSource) {
+      videoSource = this.documentary.standalone.videoSource.id
     }
-    let videoId = this.documentary.videoId;
+    let videoId = this.documentary.standalone.videoId;
     let year = this.documentary.year;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
@@ -755,7 +755,7 @@ export class DocumentaryAddComponent implements OnInit {
       this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
     }
 
-    this.documentary.videoId = selectedVideo.id.videoId;
+    this.documentary.standalone.videoId = selectedVideo.id.videoId;
 
     this.initStandaloneForm();
   } else if (this.type === 'episodic') {

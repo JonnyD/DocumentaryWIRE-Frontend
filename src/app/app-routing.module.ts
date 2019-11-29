@@ -1,3 +1,4 @@
+import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
 import { ConfirmComponent } from './public/register/confirm/confirm.component';
 import { ActivateComponent } from './public/register/activate/activate.component';
 import { UserGuard } from './public/user-guard.service';
@@ -40,7 +41,6 @@ import { AdminVideoSourceDetailComponent } from './admin/admin-video-sources/adm
 import { VideoSourceResolverService } from './services/video-source-resolver.service';
 import { AdminVideoSourceEditComponent } from './admin/admin-video-sources/admin-video-source-edit/admin-video-source-edit.component';
 import { AdminVideoSourcesComponent } from './admin/admin-video-sources/admin-video-sources.component';
-import { AdminDocumentaryEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-documentary-edit.component';
 import { AdminDocumentaryDetailComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail.component';
 import { AdminActivityComponent } from './admin/admin-activity/admin-activity.component';
 import { AdminUsersComponent } from './admin/admin-users/admin-users.component';
@@ -150,8 +150,8 @@ const routes: Routes = [
         resolve: [DocumentaryResolverService]
       },
       { 
-        path: 'documentaries/:slug/edit', 
-        component: AdminDocumentaryEditComponent,
+        path: 'documentaries/standalone/:slug/edit', 
+        component: AdminStandaloneEditComponent,
         resolve: [DocumentaryResolverService]
       },
       { 

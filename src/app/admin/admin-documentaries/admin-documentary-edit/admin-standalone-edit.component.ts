@@ -1,3 +1,4 @@
+import { YearService } from './../../../services/year.service';
 import { YoutubeService } from './../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryService } from './../../../services/category.service';
@@ -13,11 +14,11 @@ import * as moment from 'moment';
 import { OMDBService } from 'src/app/services/omdb.service';
 
 @Component({
-  selector: 'app-admin-documentary-edit',
-  templateUrl: './admin-documentary-edit.component.html',
-  styleUrls: ['./admin-documentary-edit.component.css']
+  selector: 'app-admin-standalone-edit',
+  templateUrl: './admin-standalone-edit.component.html',
+  styleUrls: ['./admin-standalone-edit.component.css']
 })
-export class AdminDocumentaryEditComponent implements OnInit {
+export class AdminStandaloneEditComponent implements OnInit {
   editDocumentaryForm: FormGroup;
   imdbForm: FormGroup;
   youtubeForm: FormGroup;
@@ -49,6 +50,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     private categoryService: CategoryService,
     private omdbService: OMDBService,
     private youtubeService: YoutubeService,
+    private yearService: YearService,
     private router: Router,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal) {}
@@ -92,24 +94,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
   }
 
   initYears() {
-    let currentYear = moment(new Date()).format('YYYY');
-
-    let years = [];
-    years.push(currentYear);
-
-    let counter = 1;
-    for (let i = +currentYear; i > 0; i--) {
-      if (counter === 100) {
-        break;
-      }
-
-      let year = i - 1;
-      years.push(year);
-
-      counter++;
-    }
-
-    this.years = years;
+    this.years = this.yearService.getAllYearsForForm();
   }
 
   initVideoSources() {
@@ -370,7 +355,7 @@ export class AdminDocumentaryEditComponent implements OnInit {
     if (this.editDocumentaryForm.valid) {
       this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
         console.log(result);
-       // this.router.navigate(["/admin/documentaries", this.documentary.slug]);
+        this.router.navigate(["/admin/documentaries", this.documentary.slug]);
       }, error => {
         console.log(error);
       });
