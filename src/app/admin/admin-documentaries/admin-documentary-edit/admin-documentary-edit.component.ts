@@ -1,3 +1,4 @@
+import { YoutubeService } from './../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryService } from './../../../services/category.service';
 import { HttpParams } from '@angular/common/http';
@@ -19,6 +20,7 @@ import { OMDBService } from 'src/app/services/omdb.service';
 export class AdminDocumentaryEditComponent implements OnInit {
   editDocumentaryForm: FormGroup;
   imdbForm: FormGroup;
+  youtubeForm: FormGroup;
   documentary: Documentary;
   posterImgURL: any;
   wideImgURL: any;
@@ -36,12 +38,17 @@ export class AdminDocumentaryEditComponent implements OnInit {
   public searchedDocumentariesFromIMDB;
   public searchedDocumentaryFromIMDB;
 
+  public searchedVideosFromYoutube;
+  public isFetchingVideosFromYoutube = true;
+  public showSearchedVideosFromYoutube = false;
+
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
     private videoSourceService: VideoSourceService,
     private categoryService: CategoryService,
     private omdbService: OMDBService,
+    private youtubeService: YoutubeService,
     private router: Router,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal) {}
@@ -294,6 +301,61 @@ export class AdminDocumentaryEditComponent implements OnInit {
 
       this.initForm();
       this.modalService.dismissAll();  
+  }
+
+  openYoutubeModal(content) {
+    this.initYoutubeForm();
+
+    this.modalService.open(content, {ariaLabelledBy: 'modal-youtube'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+  initYoutubeForm() {
+    let title = this.documentary.title;
+
+    this.youtubeForm = new FormGroup({
+      'title': new FormControl(title, [Validators.required])
+    });
+
+    if (title) {
+      this.searchYoutube();
+    }
+  }
+
+  searchYoutube() {
+    this.isFetchingVideosFromYoutube = true;
+    this.showSearchedVideosFromYoutube = true;
+
+    let title = this.youtubeForm.value.title;
+    this.youtubeService.getSearchedDocumentaries(title)
+      .subscribe((result: any) => {
+        this.searchedVideosFromYoutube = result['items'];
+        this.isFetchingVideosFromYoutube = false;
+      });
+  }
+
+  youtubeSelect(selectedVideo) {
+    if (!this.documentary.title) {
+      this.documentary.title = selectedVideo.snippet.title;
+    }
+
+    if (!this.documentary.storyline) {
+      this.documentary.storyline = selectedVideo.snippet.description;
+    }
+
+    if (!this.documentary.wideImage) {
+      this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
+      this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
+    }
+
+    this.documentary.standalone.videoId = selectedVideo.id.videoId;
+
+    this.initForm();
+
+    this.modalService.dismissAll();
   }
 
   onSubmit() {

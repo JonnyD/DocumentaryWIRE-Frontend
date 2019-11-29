@@ -91,6 +91,7 @@
                         id="videoId"
                         formControlName="videoId"
                         class="form-control">
+                    <button class="btn btn-secondary" (click)="openYoutubeModal(youtubeContent)">Search</button>
                     <span
                     *ngIf="!editDocumentaryForm.get('standalone.videoId').valid && submitted"
                     class="help-block">Please enter a valid video id!</span>
@@ -242,6 +243,60 @@
                         </div>
               </div>
             </ng-template>
+            <ng-template #youtubeContent let-modal>
+                <div class="modal-header">
+                  <h4 class="modal-title" id="modal-youtube">Search Youtube</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form [formGroup]="youtubeForm" (click)="searchYoutube()">
+                    <div class="form-group">
+                      <label for="title">Title</label>
+                      <div class="input-group">
+                        <input id="title" class="form-control" formControlName="title">
+                      </div>
+                    </div>
+              
+                    <button [disabled]="loading" class="btn btn-secondary">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Search
+                  </button>
+                  </form>
+              
+                  <div style="margin-top: 20px">
+                      <div *ngIf="isFetchingVideosFromYoutube">Loading...</div>
+                          <div class="card" *ngIf="showSearchedVideosFromYoutube && !isFetchingVideosFromYoutube">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item" *ngFor="let searchedVideo of searchedVideosFromYoutube">
+                                            <span class="acitvity-item">
+                                            <span class="activity-image">
+                                                <a href="">
+                            
+                                                    <img alt='{{ searchedVideo.snippet.title }}' src='{{ searchedVideo.snippet.thumbnails.high.url }}'
+                                                         style="margin-right: 20px" height='200' width='160' /></a>
+                                                </span>
+                                                <div class="data">
+                                                    <span class="author">
+                                                          {{ searchedVideo.snippet.title }} <br />
+                                                    </span>
+                                                        <span class="excerpt">
+                                                            {{ searchedVideo.snippet.description}}
+                                                            <button type="button" class="btn btn-secondary" (click)="youtubeSelect(searchedVideo)">Select</button>
+                                                        </span>
+                                                    </div>
+                                                </span>
+              
+              
+                                    </li>
+                                </ul>
+                              </div>
+                          </div>
+                              
+              
+                </div>
+              </ng-template>
         </div>
       </div>
       
