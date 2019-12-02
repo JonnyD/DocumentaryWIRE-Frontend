@@ -101,12 +101,12 @@ export class AdminStandaloneEditComponent implements OnInit {
 
         if (this.editMode) {
           this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(slug)
-          .subscribe((result:any) => {
-            this.documentary = result;
-            console.log("this.documentary");
-            console.log(this.documentary);
-            this.initForm();
-          });
+            .subscribe((result:any) => {
+              this.documentary = result;
+              console.log("this.documentary");
+              console.log(this.documentary);
+              this.initForm();
+            });
         }
 
     });
@@ -387,12 +387,23 @@ export class AdminStandaloneEditComponent implements OnInit {
     console.log(formValue);
 
     if (this.editDocumentaryForm.valid) {
-      this.documentaryService.editStandaloneDocumentary(documentaryId, formValue).subscribe(result => {
-        console.log(result);
-        this.router.navigate(["/admin/documentaries", this.documentary.slug]);
-      }, error => {
-        console.log(error);
-      });
+      if (this.editMode) {
+          this.documentaryService.editStandaloneDocumentary(documentaryId, formValue)
+          .subscribe(result => {
+            console.log(result);
+            this.router.navigate(["/admin/documentaries", this.documentary.slug]);
+        }, error => {
+            console.log(error);
+        });
+      } else {
+        this.documentaryService.createStandaloneDocumentary(formValue)
+          .subscribe(result => {
+            console.log("created result");
+            console.log(result);
+          }, error => {
+            console.log(error);
+          })
+      }
     }
   }
 
