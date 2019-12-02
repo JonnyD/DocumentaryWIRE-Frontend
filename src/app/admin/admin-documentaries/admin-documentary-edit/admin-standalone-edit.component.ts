@@ -1,3 +1,4 @@
+import { StatusService } from './../../../services/status.service';
 import { VideoSource } from './../../../models/video-source.model';
 import { Standalone } from './../../../models/standalone.model';
 import { YearService } from './../../../services/year.service';
@@ -60,6 +61,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     private omdbService: OMDBService,
     private youtubeService: YoutubeService,
     private yearService: YearService,
+    private statusService: StatusService,
     private router: Router,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal) {}
@@ -113,16 +115,7 @@ export class AdminStandaloneEditComponent implements OnInit {
   }
 
   initStatuses() {
-    this.statuses = [
-      {
-        value: 'pending',
-        name: 'Pending'
-      },
-      {
-        value: 'publish',
-        name: 'Published'
-      }
-    ];
+    this.statuses = this.statusService.getAllStatuses();
   }
 
   initYears() {
