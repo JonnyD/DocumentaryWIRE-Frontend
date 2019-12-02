@@ -150,9 +150,12 @@ const routes: Routes = [
         resolve: [DocumentaryResolverService]
       },
       { 
+        path: 'documentaries/standalone/add', 
+        component: AdminStandaloneEditComponent
+      },
+      { 
         path: 'documentaries/standalone/:slug/edit', 
-        component: AdminStandaloneEditComponent,
-        resolve: [DocumentaryResolverService]
+        component: AdminStandaloneEditComponent
       },
       { 
         path: 'categories', 

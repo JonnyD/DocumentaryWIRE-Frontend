@@ -1,3 +1,5 @@
+import { VideoSource } from './../../../models/video-source.model';
+import { Standalone } from './../../../models/standalone.model';
 import { YearService } from './../../../services/year.service';
 import { YoutubeService } from './../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -12,6 +14,7 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import * as moment from 'moment';
 import { OMDBService } from 'src/app/services/omdb.service';
+import { Category } from 'src/app/models/category.model';
 
 @Component({
   selector: 'app-admin-standalone-edit',
@@ -31,6 +34,8 @@ export class AdminStandaloneEditComponent implements OnInit {
   categories: any;
   submitted = false;
   closeResult: string;
+
+  private editMode = false;
   
   public isFetchingDocumentariesFromIMDB = false;
   public showSearchedDocumentaryFromIMDB = false;
@@ -42,6 +47,10 @@ export class AdminStandaloneEditComponent implements OnInit {
   public searchedVideosFromYoutube;
   public isFetchingVideosFromYoutube = true;
   public showSearchedVideosFromYoutube = false;
+
+  private queryParamsSubscription;
+  private routeParamsSubscription;
+  private documentaryBySlugSubscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -66,18 +75,41 @@ export class AdminStandaloneEditComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.documentary = new Documentary();
+    let category = new Category();
+    this.documentary.category = category;
+    let standalone = new Standalone();
+    let videoSource = new VideoSource();
+    standalone.videoSource = videoSource;
+    this.documentary.standalone = standalone;
+
+    this.initStatuses();
+    this.initYears();
+    this.initVideoSources();
+    this.initCategories();
+
+    this.initForm();
     
     console.log("Here2");
-    this.route.data.subscribe(result => {
-      this.initStatuses();
-      this.initYears();
-      this.initVideoSources();
-      this.initCategories();
-      this.documentary = <Documentary> result[0];
-      this.initForm();
-      console.log("this.documentary");
-      console.log(this.documentary);
-    })
+    this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
+        let slug = params['params']['slug'];
+        console.log("slug");
+        console.log(slug);
+        this.editMode = slug != null;
+        console.log("this.editMode");
+        console.log(this.editMode);
+
+        if (this.editMode) {
+          this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(slug)
+          .subscribe((result:any) => {
+            this.documentary = result;
+            console.log("this.documentary");
+            console.log(this.documentary);
+            this.initForm();
+          });
+        }
+
+    });
   }
 
   initStatuses() {
@@ -118,6 +150,8 @@ export class AdminStandaloneEditComponent implements OnInit {
   
   initForm() {
     let title = this.documentary.title;
+    console.log("title");
+    console.log(title);
     let slug = this.documentary.slug;
     let category = this.documentary.category.id;
     console.log("category");
@@ -360,5 +394,10 @@ export class AdminStandaloneEditComponent implements OnInit {
         console.log(error);
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.routeParamsSubscription.unsubscribe();
+    this.documentaryBySlugSubscription.unsubscribe();
   }
 }
