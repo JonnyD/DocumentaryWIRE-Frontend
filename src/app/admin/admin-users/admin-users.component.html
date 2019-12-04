@@ -33,15 +33,35 @@
         <td>{{ user.emailCanonical }}</td>
         <td>{{ user.enabled }}</td>
         <td>{{ user.password }}</td>
-        <td>{{ user.lastLogin }}</td>
+        <td>
+            <span *ngIf="user.lastLogin">
+                {{ user.lastLogin.date }}
+            </span>
+        </td>
         <td>{{ user.confirmationToken }}</td>
-        <td>{{ user.passwordRequestAt }}</td>
+        <td>
+            <span *ngIf="user.passwordRequestAt">
+                {{ user.passwordRequestAt }}
+            </span>
+        </td>
         <td>{{ user.roles }}</td>
         <td>{{ user.avatar }}</td>
         <td>{{ user.resetKey }}</td>
-        <td *ngIf="user.activatedAt">{{ user.activatedAt.date }}</td>
-        <td *ngIf="user.createdAt">{{ user.createdAt.date }}</td>
-        <td *ngIf="user.updatedAt">{{ user.updatedAt.date }}</td>
+        <td>
+            <span *ngIf="user.activatedAt">
+                {{ user.activatedAt.date }}
+            </span>
+        </td>
+        <td>
+            <span *ngIf="user.createdAt">
+                {{ user.createdAt.date }}
+            </span>
+        </td>
+        <td>
+            <span *ngIf="user.updatedAt">
+                {{ user.updatedAt.date }}
+            </span>
+        </td>
         </tr>
     </tbody>
 </table>

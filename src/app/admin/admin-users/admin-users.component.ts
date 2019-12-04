@@ -48,6 +48,7 @@ export class AdminUsersComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.users = result['items'];
+        console.log(this.users);
       })
   }
 
