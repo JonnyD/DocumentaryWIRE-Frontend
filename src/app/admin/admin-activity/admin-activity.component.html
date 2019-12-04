@@ -31,8 +31,16 @@
         <td>{{ activity.groupNumber }}</td>
         <td>{{ activity.auther }}</td>
         <td>{{ activity.email }}</td>
-        <td>{{ activity.createdAt }}</td>
-        <td>{{ activity.updatedAt }}</td>
+        <td>
+          <span *ngIf="activity.createdAt">
+              {{ activity.createdAt.date }}
+        </span>
+      </td>
+        <td>
+          <span *ngIf="activity.updatedAt">
+              {{ activity.updatedAt.date }}
+          </span>
+        </td>
       </tr>
     </tbody>
   </table>

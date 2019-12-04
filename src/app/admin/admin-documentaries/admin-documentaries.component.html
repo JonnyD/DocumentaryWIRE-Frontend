@@ -79,8 +79,12 @@
         <td>{{ documentary.standalone.videoSource.name }}</td>
         <td>{{ documentary.standalone.videoId }}</td>
         <td>{{ documentary.featured }}</td>
-        <td>{{ documentary.createdAt.date }}</td>
-        <td>{{ documentary.updatedAt.date }}</td>
+        <td><span *ngIf="documentary.createdAt">
+            {{ documentary.createdAt.date }}
+        </span></td>
+        <td><span *ngIf="documentary.updatedAt">
+            {{ documentary.updatedAt.date }}
+        </span></td>
       </tr>
     </tbody>
   </table>

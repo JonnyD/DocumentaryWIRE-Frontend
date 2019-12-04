@@ -39,9 +39,9 @@
         <td>{{ user.roles }}</td>
         <td>{{ user.avatar }}</td>
         <td>{{ user.resetKey }}</td>
-        <td>{{ user.activatedAt }}</td>
-        <td>{{ user.createdAt }}</td>
-        <td>{{ user.updatedAt }}</td>
+        <td *ngIf="user.activatedAt">{{ user.activatedAt.date }}</td>
+        <td *ngIf="user.createdAt">{{ user.createdAt.date }}</td>
+        <td *ngIf="user.updatedAt">{{ user.updatedAt.date }}</td>
         </tr>
     </tbody>
 </table>

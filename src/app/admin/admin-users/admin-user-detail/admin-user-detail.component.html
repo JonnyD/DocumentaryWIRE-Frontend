@@ -56,15 +56,15 @@
         </tr>
         <tr>
             <td>Activated At</td>
-            <td>{{ user.activatedAt }}</td>
+            <td *ngIf="user.activatedAt">{{ user.activatedAt.date }}</td>
         </tr>
         <tr>
             <td>Created AT</td>
-            <td>{{ user.createdAt }}</td>
+            <td>{{ user.createdAt.date }}</td>
         </tr>
         <tr>
             <td>Updated At</td>
-            <td>{{ user.updatedAt }}</td>
+            <td *ngIf="user.updatedAt">{{ user.updatedAt.date }}</td>
         </tr>
     </tbody>
 </table>
