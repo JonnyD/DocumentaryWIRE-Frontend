@@ -375,9 +375,10 @@ export class AdminStandaloneEditComponent implements OnInit {
 
     let documentaryId = this.documentary.id;
     let formValue = this.editDocumentaryForm.value;
-
+    
     console.log("formValue");
     console.log(formValue);
+
 
     if (this.editDocumentaryForm.valid) {
       if (this.editMode) {
@@ -402,6 +403,8 @@ export class AdminStandaloneEditComponent implements OnInit {
 
   ngOnDestroy() {
     this.routeParamsSubscription.unsubscribe();
-    this.documentaryBySlugSubscription.unsubscribe();
+    if (this.documentaryBySlugSubscription != null) {
+      this.documentaryBySlugSubscription.unsubscribe();
+    }
   }
 }

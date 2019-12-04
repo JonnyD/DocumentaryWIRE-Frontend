@@ -1,3 +1,4 @@
+import { StatusService } from './services/status.service';
 import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
 import { RecaptchaModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
 import { UserGuard } from './public/user-guard.service';
@@ -146,6 +147,7 @@ import { ConfirmComponent } from './public/register/confirm/confirm.component';
     SubscriptionService,
     OMDBService,
     YoutubeService,
+    StatusService,
     AdminGuard,
     UserGuard,
     {

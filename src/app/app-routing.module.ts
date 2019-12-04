@@ -134,20 +134,14 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'confirm', component: ConfirmComponent },
-  { path: 'admin', canActivate: [AdminGuard], component: AdminHomeComponent,
+  { 
+    path: 'admin', 
+    canActivate: [AdminGuard], 
+    component: AdminHomeComponent,
     children: [
       { 
         path: 'documentaries', 
         component: AdminDocumentariesComponent 
-      },
-      { 
-        path: 'documentaries/add', 
-        component: AdminDocumentariesAddComponent 
-      },
-      { 
-        path: 'documentaries/:slug', 
-        component: AdminDocumentaryDetailComponent,
-        resolve: [DocumentaryResolverService]
       },
       { 
         path: 'documentaries/standalone/add', 
@@ -156,6 +150,11 @@ const routes: Routes = [
       { 
         path: 'documentaries/standalone/:slug/edit', 
         component: AdminStandaloneEditComponent
+      },
+      { 
+        path: 'documentaries/:slug', 
+        component: AdminDocumentaryDetailComponent,
+        resolve: [DocumentaryResolverService]
       },
       { 
         path: 'categories', 
