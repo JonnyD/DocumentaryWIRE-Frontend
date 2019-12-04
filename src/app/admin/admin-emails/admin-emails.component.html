@@ -1,0 +1,35 @@
+<br />
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Email</th>
+        <th scope="col">Subscribed</th>
+        <th scope="col">Subscription Key</th>
+        <th scope="col">Created At</th>
+        <th scope="col">Updated At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let email of emails | paginate: config">
+        <td>{{ email.id }}</td>
+        <td>{{ email.email }}</td>
+        <td>{{ email.subscribed }}</td>
+        <td>{{ email.subscriptionKey }}</td>
+        <td>
+            <span *ngIf="email.createdAt">
+                {{ email.createdAt.date }}
+            </span>
+        </td>
+        <td>
+            <span *ngIf="email.updatedAt">
+                {{ email.updatedAt.date }}
+            </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div>
+      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>

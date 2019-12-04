@@ -1,3 +1,4 @@
+import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.component';
 import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
 import { ConfirmComponent } from './public/register/confirm/confirm.component';
 import { ActivateComponent } from './public/register/activate/activate.component';
@@ -219,6 +220,10 @@ const routes: Routes = [
       { 
         path: 'activity', 
         component: AdminActivityComponent 
+      },
+      { 
+        path: 'emails', 
+        component: AdminEmailsComponent 
       },
     ]
   },

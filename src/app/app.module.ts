@@ -70,6 +70,7 @@ import { ResetPasswordComponent } from './public/user/user-edit/reset-password/r
 import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username/forgot-username.component';
 import { ActivateComponent } from './public/register/activate/activate.component';
 import { ConfirmComponent } from './public/register/confirm/confirm.component';
+import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.component';
 
 @NgModule({
   declarations: [
@@ -118,7 +119,8 @@ import { ConfirmComponent } from './public/register/confirm/confirm.component';
     ResetPasswordComponent,
     ForgotUsernameComponent,
     ActivateComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    AdminEmailsComponent
   ],
   imports: [
     BrowserModule,
