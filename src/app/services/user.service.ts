@@ -171,4 +171,15 @@ export class UserService extends DataService {
 
         return this.get('confirm', options);
        }
+
+       resend(email: string) {
+        let params = new HttpParams();
+        params = params.append('email', email);
+
+        let options = {
+            params: params
+        }
+
+        return this.get('resend', options);
+       }
 }

@@ -71,6 +71,8 @@ import { ForgotUsernameComponent } from './public/user/user-edit/forgot-username
 import { ActivateComponent } from './public/register/activate/activate.component';
 import { ConfirmComponent } from './public/register/confirm/confirm.component';
 import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.component';
+import { ResendComponent } from './public/register/resend/resend.component';
+import { EmailNotConfirmedComponent } from './public/register/email-not-confirmed/email-not-confirmed.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +122,9 @@ import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.componen
     ForgotUsernameComponent,
     ActivateComponent,
     ConfirmComponent,
-    AdminEmailsComponent
+    AdminEmailsComponent,
+    ResendComponent,
+    EmailNotConfirmedComponent
   ],
   imports: [
     BrowserModule,

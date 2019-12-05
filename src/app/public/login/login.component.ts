@@ -1,3 +1,5 @@
+import { Me } from './../../models/me.model';
+import { UserService } from './../../services/user.service';
 import { Location } from '@angular/common';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +20,8 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private route: ActivatedRoute,
         private router: Router,
-        private authenticationService: AuthenticationService
+        private authenticationService: AuthenticationService,
+        private userService: UserService
     ) { 
         // redirect to home if already logged in
         if (this.authenticationService.isAuthenticated()) { 
@@ -54,7 +57,15 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    window.location.replace(this.returnUrl);
+                    this.userService.getMe()
+                        .subscribe(result => {
+                            if (!result.activatedAt) {
+                                console.log("result");
+                                console.log(result);
+                                this.authenticationService.logout();
+                                this.router.navigate(["/email-not-confirmed", result.email]);
+                            }
+                        });
                 },
                 error => {
                     this.error = error;

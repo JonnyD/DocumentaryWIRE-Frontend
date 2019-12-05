@@ -1,3 +1,5 @@
+import { ResendComponent } from './public/register/resend/resend.component';
+import { EmailNotConfirmedComponent } from './public/register/email-not-confirmed/email-not-confirmed.component';
 import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.component';
 import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
 import { ConfirmComponent } from './public/register/confirm/confirm.component';
@@ -135,6 +137,8 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'activate', component: ActivateComponent },
   { path: 'confirm', component: ConfirmComponent },
+  { path: 'email-not-confirmed/:email', component: EmailNotConfirmedComponent },
+  { path: 'resend/:email', component: ResendComponent },
   { 
     path: 'admin', 
     canActivate: [AdminGuard], 
