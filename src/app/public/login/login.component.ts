@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
         private userService: UserService
     ) { 
         // redirect to home if already logged in
-        if (this.authenticationService.isAuthenticated()) { 
+        if (this.authenticationService.isAuthenticated()) {
             this.router.navigate(['/']);
         }
     }
@@ -64,6 +64,8 @@ export class LoginComponent implements OnInit {
                                 console.log(result);
                                 this.authenticationService.logout();
                                 this.router.navigate(["/email-not-confirmed", result.email]);
+                            } else {
+                                window.location.replace(this.returnUrl);
                             }
                         });
                 },
