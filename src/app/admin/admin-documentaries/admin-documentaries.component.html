@@ -1,5 +1,6 @@
-<p>admin-documentaries works!</p>
+<br />
 
+Video Source:
 <select class='select-option' [(ngModel)]="videoSource"
     #videoSourceSelect
     (change)='onVideoSourceSelected(videoSourceSelect.value)'>
@@ -9,6 +10,7 @@
    [value]="videoSource.id">{{videoSource.name}}</option>
 </select>
 
+Category:
 <select class='select-option' [(ngModel)]="category"
     #categorySelect
     (change)='onCategoriesSelected(categorySelect.value)'>
@@ -18,6 +20,7 @@
    [value]="category.slug">{{category.name}}</option>
 </select>
 
+Status:
 <select class='select-option' [(ngModel)]="status"
     #statusSelect
     (change)='onStatusSelected(statusSelect.value)'>
@@ -27,6 +30,7 @@
    [value]="status.id">{{status.name}}</option>
 </select>
 
+Featured:
 <select class='select-option' [(ngModel)]="featured"
     #featuredSelect
     (change)='onFeaturedSelected(featuredSelect.value)'>
