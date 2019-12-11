@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class DocumentaryService extends DataService {
+
   private authenticationService: AuthenticationService;
 
   constructor(
@@ -30,7 +31,7 @@ export class DocumentaryService extends DataService {
             .append('access_token', accessToken)
         }
     }
-    
+
      return this.get(slug, options);
    }
 
@@ -143,8 +144,6 @@ export class DocumentaryService extends DataService {
 createStandaloneDocumentary(resource) {
   let params = new HttpParams();
 
-    params = params.append('type', 'standalone');
-
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
         params = params.append('access_token', accessToken)
@@ -154,7 +153,10 @@ createStandaloneDocumentary(resource) {
       params: params
     }
 
-    return this.create(resource, options);
+    let url = `${environment.apiUrl}/api/v1/documentary/standalone`;
+    console.log("url service");
+    console.log(url);
+    return this.create(resource, options, url);
 }
 
    editStandaloneDocumentary(id, documentary: Documentary) {

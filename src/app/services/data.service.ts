@@ -26,8 +26,13 @@ export class DataService {
     return this.http.get<Object[]>(this.url, options);
   }
 
-  create(resource, options) {
-    return this.http.post(this.url, JSON.stringify(resource), options);
+  create(resource, options, url?) {
+    if (!url) {
+      url = this.url;
+    }
+    console.log("url datas");
+    console.log(url);
+    return this.http.post(url, JSON.stringify(resource), options);
   }
 
   update(resource, options) {
