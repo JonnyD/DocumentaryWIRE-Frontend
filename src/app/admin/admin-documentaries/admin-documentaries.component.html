@@ -1,5 +1,29 @@
 <br />
 
+<span>
+    <a [routerLink]="['/admin/documentaries/standalone/add']">
+        <button class="btn btn-primary" type="submit">Add Standalone</button>
+    </a>
+</span>
+
+<span>
+    <a [routerLink]="['/admin/documentaries/series/add']">
+        <button class="btn btn-primary" type="submit">Add Episodic</button>
+    </a>
+</span>
+
+<br />
+
+Type:
+<select class='select-option' [(ngModel)]="type"
+    #typeSelect
+    (change)='onTypeSelected(typeSelect.value)'>
+   <option class="option" value="all">All</option>
+   <option class='option' 
+   *ngFor='let type of types' 
+   [value]="type.id">{{type.name}}</option>
+</select>
+
 Video Source:
 <select class='select-option' [(ngModel)]="videoSource"
     #videoSourceSelect
@@ -44,6 +68,7 @@ Featured:
     <thead>
       <tr>
         <th scope="col">slug</th>
+        <th scope="col">Type</th>
         <th scope="col">Title</th>
         <th scope="col">Story Line</th>
         <th scope="col">Summary</th>
@@ -69,6 +94,7 @@ Featured:
               {{ documentary.slug }}
           </a>
         </td>
+        <td>{{ documentary.type }}</td>
         <td>{{ documentary.title }}</td>
         <td>{{ documentary.storyline }}</td>
         <td>{{ documentary.summary }}</td>
@@ -80,8 +106,10 @@ Featured:
         <td>{{ documentary.shortUrl }}</td>
         <td>{{ documentary.poster }}</td>
         <td>{{ documentary.wideImage }}</td>
-        <td>{{ documentary.standalone.videoSource.name }}</td>
-        <td>{{ documentary.standalone.videoId }}</td>
+        <td>{{ documentary.videoSources }}</td>
+        <td><span *ngIf="documentary.standalone">
+            {{ documentary.standalone.videoId }}
+        </span></td>
         <td>{{ documentary.featured }}</td>
         <td><span *ngIf="documentary.createdAt">
             {{ documentary.createdAt.date }}

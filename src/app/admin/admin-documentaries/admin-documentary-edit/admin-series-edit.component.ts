@@ -1,29 +1,27 @@
-import { StatusService } from './../../../services/status.service';
-import { VideoSource } from './../../../models/video-source.model';
-import { Standalone } from './../../../models/standalone.model';
-import { YearService } from './../../../services/year.service';
-import { YoutubeService } from './../../../services/youtube.service';
+import { Episodic } from './../../../models/episodic.model';
+import { StatusService } from '../../../services/status.service';
+import { YearService } from '../../../services/year.service';
+import { YoutubeService } from '../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CategoryService } from './../../../services/category.service';
+import { CategoryService } from '../../../services/category.service';
 import { HttpParams } from '@angular/common/http';
-import { VideoSourceService } from './../../../services/video-source.service';
-import { Documentary } from './../../../models/documentary.model';
-import { DocumentaryService } from './../../../services/documentary.service';
+import { VideoSourceService } from '../../../services/video-source.service';
+import { Documentary } from '../../../models/documentary.model';
+import { DocumentaryService } from '../../../services/documentary.service';
 import { Params, ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
-import * as moment from 'moment';
 import { OMDBService } from 'src/app/services/omdb.service';
 import { Category } from 'src/app/models/category.model';
 
 @Component({
-  selector: 'app-admin-standalone-edit',
-  templateUrl: './admin-standalone-edit.component.html',
-  styleUrls: ['./admin-standalone-edit.component.css']
+  selector: 'app-admin-series-edit',
+  templateUrl: './admin-series-edit.component.html',
+  styleUrls: ['./admin-series-edit.component.css']
 })
-export class AdminStandaloneEditComponent implements OnInit {
-  editDocumentaryForm: FormGroup;
+export class AdminSeriesEditComponent implements OnInit {
+  episodicForm: FormGroup;
   imdbForm: FormGroup;
   youtubeForm: FormGroup;
   documentary: Documentary;
@@ -37,7 +35,7 @@ export class AdminStandaloneEditComponent implements OnInit {
   closeResult: string;
 
   private editMode = false;
-  
+
   public isFetchingDocumentariesFromIMDB = false;
   public showSearchedDocumentaryFromIMDB = false;
   public showSearchedDocumentariesFromIMDB = false;
@@ -53,6 +51,14 @@ export class AdminStandaloneEditComponent implements OnInit {
   private routeParamsSubscription;
   private documentaryBySlugSubscription;
 
+  public seasonNumber = 1;
+  public episodeNumber = 1;
+
+  public youtubeSeasonNumber;
+  public youtubeEpisodeNumebr;
+
+  public thumbnailImgURLDict = {};
+
   constructor(
     private route: ActivatedRoute,
     private documentaryService: DocumentaryService,
@@ -64,7 +70,8 @@ export class AdminStandaloneEditComponent implements OnInit {
     private statusService: StatusService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal,
+    private fb: FormBuilder) { }
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -80,10 +87,8 @@ export class AdminStandaloneEditComponent implements OnInit {
     this.documentary = new Documentary();
     let category = new Category();
     this.documentary.category = category;
-    let standalone = new Standalone();
-    let videoSource = new VideoSource();
-    standalone.videoSource = videoSource;
-    this.documentary.standalone = standalone;
+    let episodic = new Episodic();
+    this.documentary.episodic = episodic;
 
     this.initStatuses();
     this.initYears();
@@ -91,25 +96,25 @@ export class AdminStandaloneEditComponent implements OnInit {
     this.initCategories();
 
     this.initForm();
-    
+
     console.log("Here2");
     this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
-        let slug = params['params']['slug'];
-        console.log("slug");
-        console.log(slug);
-        this.editMode = slug != null;
-        console.log("this.editMode");
-        console.log(this.editMode);
+      let slug = params['params']['slug'];
+      console.log("slug");
+      console.log(slug);
+      this.editMode = slug != null;
+      console.log("this.editMode");
+      console.log(this.editMode);
 
-        if (this.editMode) {
-          this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(slug)
-            .subscribe((result:any) => {
-              this.documentary = result;
-              console.log("this.documentary");
-              console.log(this.documentary);
-              this.initForm();
-            });
-        }
+      if (this.editMode) {
+        this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(slug)
+          .subscribe((result: any) => {
+            this.documentary = result;
+            console.log("this.documentary");
+            console.log(this.documentary);
+            this.initForm();
+          });
+      }
 
     });
   }
@@ -131,7 +136,7 @@ export class AdminStandaloneEditComponent implements OnInit {
         console.log(this.videoSources);
       });
   }
-  
+
   initCategories() {
     let params: HttpParams;
     this.categoryService.getAll(params)
@@ -140,103 +145,226 @@ export class AdminStandaloneEditComponent implements OnInit {
         console.log(result);
       });
   }
-  
-  initForm() {
+
+  initForm(seasons = null) {
     let title = this.documentary.title;
-    console.log("title");
-    console.log(title);
-    let slug = this.documentary.slug;
-    let category = this.documentary.category.id;
-    console.log("category");
-    console.log(category);
+    let category = null;
+    if (this.documentary.category) {
+      category = this.documentary.category.id;
+    }
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let imdbId = this.documentary.imdbId;
-    let videoSource = this.documentary.standalone.videoSource.id;
-    let videoId = this.documentary.standalone.videoId;
-    //console.log(videoSource);
     let year = this.documentary.year;
     let length = this.documentary.length;
-    let status = this.documentary.status;
     let poster = this.documentary.poster;
-    this.posterImgURL = poster;
-    console.log("this.posterImgURL");
-    console.log(this.posterImgURL);
+    this.posterImgURL = this.documentary.poster;
     let wideImage = this.documentary.wideImage;
-    //console.log(wideImage);
-    this.wideImgURL = wideImage;
-    console.log(this.wideImgURL);
+    this.wideImgURL = this.documentary.wideImage;
+    let imdbId = this.documentary.imdbId;
 
-    console.log("this.documentary");
-    console.log(this.documentary);
-
-    this.editDocumentaryForm = new FormGroup({
+    this.episodicForm = this.fb.group({
       'title': new FormControl(title, [Validators.required]),
-      'slug': new FormControl(slug, [Validators.required]),
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
       'year': new FormControl(year, [Validators.required]),
-      'length': new FormControl(length, [Validators.required]),
-      'status': new FormControl(status, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
-      'wideImage': new FormControl(wideImage, [Validators.required]),
+      'wideImage': new FormControl(wideImage),
       'imdbId': new FormControl(imdbId),
-      'standalone': new FormGroup({
-        'videoId': new FormControl(videoId, [Validators.required]),
-        'videoSource': new FormControl(videoSource, [Validators.required])
-      }),
+      'seasons': this.fb.array([], Validators.required)
     });
 
-    this.editDocumentaryForm.statusChanges.subscribe(
-      (status) => console.log(status)
+    if (seasons != null) {
+      seasons.forEach(season => {
+        this.addNewSeason(season);
+      });
+    }
+  }
+
+  addNewSeason(season = null) {
+    if (season != null) {
+      this.seasonNumber = season.number;
+    }
+
+    let control = <FormArray>this.episodicForm.controls.seasons;
+    control.push(
+      this.fb.group({
+        'number': new FormControl(this.seasonNumber, [Validators.required]),
+        'episodes': this.fb.array([], Validators.required)
+      })
     );
+
+    if (season != null) {
+      let episodes = season.episodes;
+      if (season != null && episodes != null) {
+        episodes.forEach(episode => {
+          let episodesControl = control.at(this.seasonNumber - 1).get('episodes');
+          this.addNewEpisode(episodesControl, season, episode);
+        })
+      }
+    }
+
+    if (season == null) {
+      this.seasonNumber++;
+    }
+  }
+
+  deleteSeason(number) {
+    var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
+
+    let index = 0;
+    seasonsFormArray.value.forEach(seasonArray => {
+      if (number == seasonArray.number) {
+        seasonsFormArray.removeAt(index);
+        return;
+      }
+      index++;
+    });
+  }
+
+  deleteEpisode(control, index) {
+    control.removeAt(index);
+  }
+
+  addNewEpisode(control, season, episode = null) {
+    console.log("control");
+    console.log(control);
+    console.log("season");
+    console.log(season);
+    if (episode == null) {
+      let currentNumber = season.episodes.length;
+      currentNumber++;
+      this.episodeNumber = currentNumber;
+    }
+
+    let title;
+    let storyline;
+    let summary;
+    let year;
+    let length;
+    let imdbId;
+    let videoId;
+    let videoSource;
+    let thumbnail;
+
+    if (episode != null) {
+      this.episodeNumber = episode.number;
+      title = episode.title;
+      imdbId = episode.imdbId;
+      thumbnail = episode.thumbnail;
+      summary = episode.summary;
+      storyline = episode.storyline;
+      year = episode.year;
+      videoId = episode.videoId;
+      videoSource = episode.videoSource;
+      length = episode.length;
+
+      if (this.thumbnailImgURLDict[season.number - 1] == undefined) {
+        this.thumbnailImgURLDict[season.number - 1] = {};
+      }
+      this.thumbnailImgURLDict[season.number - 1][this.episodeNumber - 1] = thumbnail;
+    }
+
+    control.push(
+      this.fb.group({
+        'number': new FormControl(this.episodeNumber, [Validators.required]),
+        'title': new FormControl(title, [Validators.required]),
+        'imdbId': new FormControl(imdbId),
+        'storyline': new FormControl(storyline, [Validators.required]),
+        'summary': new FormControl(summary, [Validators.required]),
+        'length': new FormControl(length, [Validators.required]),
+        'year': new FormControl(year, [Validators.required]),
+        'videoSource': new FormControl(videoSource, [Validators.required]),
+        'videoId': new FormControl(videoId, [Validators.required]),
+        'thumbnail': new FormControl(thumbnail, [Validators.required]),
+      }));
+  }
+
+  getEpisodeNumber(episode) {
+    return episode.value.number;
+  }
+
+  getSeasonNumber(season) {
+    return season.value.number;
   }
 
   onPosterChange(event) {
     let reader = new FileReader();
- 
-  if(event.target.files && event.target.files.length) {
-    const [file] = event.target.files;
-    reader.readAsDataURL(file);
-  
-    reader.onload = () => {
-      this.editDocumentaryForm.patchValue({
-        poster: reader.result
-      });
-      
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
 
-      this.posterImgURL = reader.result; 
-    };
-  }
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.episodicForm.patchValue({
+          poster: reader.result
+        });
+
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+
+        this.posterImgURL = reader.result;
+      };
+    }
   }
 
   onWideImageChange(event) {
     let reader = new FileReader();
- 
-  if(event.target.files && event.target.files.length) {
-    const [file] = event.target.files;
-    reader.readAsDataURL(file);
-  
-    reader.onload = () => {
-      this.editDocumentaryForm.patchValue({
-        wideImage: reader.result
-      });
-      
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
 
-      this.wideImgURL = reader.result; 
-    };
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.episodicForm.patchValue({
+          wideImage: reader.result
+        });
+
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+
+        this.wideImgURL = reader.result;
+      };
+    }
   }
+
+  onThumbnailChange(event, seasonNumber, episodeNumber) {
+    console.log(event);
+    let reader = new FileReader();
+ 
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+        var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
+        var episodesFormArray = seasonsFormArray.at(seasonNumber).get("episodes") as FormArray;
+        episodesFormArray.at(episodeNumber)['controls']['thumbnail'].patchValue(reader.result);
+
+        if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
+          this.thumbnailImgURLDict[seasonNumber] = {};
+        }
+        this.thumbnailImgURLDict[seasonNumber][episodeNumber] = reader.result;
+      }
+        
+        this.cd.markForCheck();
+
+      };
+    }
+
+
+  getThumbnailForSeasonAndEpsiode(seasonNumber, episodeNumber) {
+    if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
+      this.thumbnailImgURLDict[seasonNumber] = {};
+    }
+
+    return this.thumbnailImgURLDict[seasonNumber][episodeNumber];
   }
 
   openIMDBModal(content) {
     this.initIMDBFrom();
-    
-    this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-omdb' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${reason}`;
@@ -262,7 +390,7 @@ export class AdminStandaloneEditComponent implements OnInit {
 
     let title = this.imdbForm.value.title;
     let imdbType = 'movie';
-    
+
     this.omdbService.getSearchedDocumentaries(title, imdbType)
       .subscribe((result: any) => {
         console.log(result);
@@ -270,7 +398,7 @@ export class AdminStandaloneEditComponent implements OnInit {
         this.isFetchingDocumentariesFromIMDB = false;
       });
   }
-  
+
   imdbView(imdbId) {
     console.log("imdbId");
     console.log(imdbId);
@@ -311,14 +439,14 @@ export class AdminStandaloneEditComponent implements OnInit {
       }
     }
 
-      this.initForm();
-      this.modalService.dismissAll();  
+    this.initForm();
+    this.modalService.dismissAll();
   }
 
   openYoutubeModal(content) {
     this.initYoutubeForm();
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-youtube'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-youtube' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${reason}`;
@@ -370,27 +498,31 @@ export class AdminStandaloneEditComponent implements OnInit {
     this.modalService.dismissAll();
   }
 
-  onSubmit() {
+  onEpisodicSubmit() {
     this.submitted = true;
 
     let documentaryId = this.documentary.id;
-    let formValue = this.editDocumentaryForm.value;
-    
+    let formValue = this.episodicForm.value;
+    let episodic = {};
+    episodic['seasons'] = formValue.seasons;
+    formValue.episodic = episodic;
+    formValue.seasons = null;
+
     console.log("formValue");
     console.log(formValue);
 
 
-    if (this.editDocumentaryForm.valid) {
+    if (this.episodicForm.valid) {
       if (this.editMode) {
-          this.documentaryService.editStandaloneDocumentary(documentaryId, formValue)
+        this.documentaryService.editEpisodicDocumentary(documentaryId, formValue)
           .subscribe(result => {
             console.log(result);
             this.router.navigate(["/admin/documentaries", result.slug]);
-        }, error => {
+          }, error => {
             console.log(error);
-        });
+          });
       } else {
-        this.documentaryService.createStandaloneDocumentary(formValue)
+        this.documentaryService.createEpisodicDocumentary(formValue)
           .subscribe(result => {
             console.log("created result");
             console.log(result);
@@ -401,6 +533,8 @@ export class AdminStandaloneEditComponent implements OnInit {
       }
     }
   }
+
+  get fEpisodic() { return this.episodicForm.controls; }
 
   ngOnDestroy() {
     this.routeParamsSubscription.unsubscribe();

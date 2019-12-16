@@ -1,3 +1,4 @@
+import { Type } from './../../models/type.model';
 import { Status } from './../../models/status.model';
 import { CategoryService } from './../../services/category.service';
 import { VideoSourceService } from './../../services/video-source.service';
@@ -32,6 +33,10 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     { id: true },
     { id: false }
   ];
+  public types: Array<Type> = [
+    { id: 'standalone', name: 'Standalone' },
+    { id: 'episodic', name: 'Episodic' }
+  ];
   config: any;
   private page;
   private videoSource;
@@ -42,6 +47,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private previousStatus;
   private featured;
   private previousFeatured;
+  private type;
+  private previousType;
 
   constructor(
     private service: DocumentaryService,
@@ -60,6 +67,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
         this.category = +params['category'] || 'all';
         this.status = params['status'] || 'all';
         this.featured = params['featured'] || 'all';
+        this.type = params['type'] || 'all';
         this.fetchVideoSources();
         this.fetchCategories();
         this.fetchDocumentaries();
@@ -104,6 +112,14 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       }
       this.previousFeatured = this.featured;
     }
+    if (this.type) {
+      if (this.type != 'all') {
+        params = params.append('type', this.type.toString());
+        if (this.type != this.previousType) {
+          this.page = 1;
+        }
+      }
+    }
     
     params = params.append('page', this.page.toString());
     
@@ -118,7 +134,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
               totalItems: result['count_results']
             };
             this.documentaries = result['items'];
-            console.log(result);
+            console.log("this.documentaries");
+            console.log(this.documentaries);
           }
       );
   }
@@ -161,6 +178,11 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
   onFeaturedSelected(value: string) {
     this.featured = value;
+    this.fetchDocumentaries();
+  }
+
+  onTypeSelected(value: string) {
+    this.type = value;
     this.fetchDocumentaries();
   }
 

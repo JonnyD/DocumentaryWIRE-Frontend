@@ -47,10 +47,13 @@ export class DataService {
     ), options);
   }
 
-  patch(id, resource, options) {
+  patch(id, resource, options, url?) {
+    if (!url) {
+      url = this.url;
+    }
     console.log("resource patch");
     console.log(resource);
-    return this.http.patch(this.url + '/' + Number(id), JSON.stringify(
+    return this.http.patch(url + '/' + Number(id), JSON.stringify(
       resource
     ), options);
   }

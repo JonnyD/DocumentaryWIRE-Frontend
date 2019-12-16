@@ -1,3 +1,4 @@
+import { Episodic } from './episodic.model';
 import { Standalone } from './standalone.model';
 import { VideoSource } from './video-source.model';
 import { Category } from './category.model';
@@ -21,5 +22,6 @@ export class Documentary {
     poster: string;
     imdbId: string;
     type: string;
-    standalone: Standalone
+    standalone: Standalone;
+    episodic: Episodic;
 }

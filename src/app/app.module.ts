@@ -1,3 +1,4 @@
+import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
 import { StatusService } from './services/status.service';
 import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
 import { RecaptchaModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY, RECAPTCHA_SETTINGS, RecaptchaSettings, RecaptchaFormsModule } from 'ng-recaptcha';
@@ -124,7 +125,8 @@ import { EmailNotConfirmedComponent } from './public/register/email-not-confirme
     ConfirmComponent,
     AdminEmailsComponent,
     ResendComponent,
-    EmailNotConfirmedComponent
+    EmailNotConfirmedComponent,
+    AdminSeriesEditComponent
   ],
   imports: [
     BrowserModule,

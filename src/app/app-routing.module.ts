@@ -1,3 +1,4 @@
+import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
 import { ResendComponent } from './public/register/resend/resend.component';
 import { EmailNotConfirmedComponent } from './public/register/email-not-confirmed/email-not-confirmed.component';
 import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.component';
@@ -153,8 +154,16 @@ const routes: Routes = [
         component: AdminStandaloneEditComponent
       },
       { 
+        path: 'documentaries/series/add', 
+        component: AdminSeriesEditComponent
+      },
+      { 
         path: 'documentaries/standalone/:slug/edit', 
         component: AdminStandaloneEditComponent
+      },
+      { 
+        path: 'documentaries/series/:slug/edit', 
+        component: AdminSeriesEditComponent
       },
       { 
         path: 'documentaries/:slug', 
