@@ -74,6 +74,8 @@ import { ConfirmComponent } from './public/register/confirm/confirm.component';
 import { AdminEmailsComponent } from './admin/admin-emails/admin-emails.component';
 import { ResendComponent } from './public/register/resend/resend.component';
 import { EmailNotConfirmedComponent } from './public/register/email-not-confirmed/email-not-confirmed.component';
+import { AdminEmailAddComponent } from './admin/admin-emails/admin-email-add/admin-email-add.component';
+import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-detail/admin-email-detail.component';
 
 @NgModule({
   declarations: [
@@ -126,7 +128,9 @@ import { EmailNotConfirmedComponent } from './public/register/email-not-confirme
     AdminEmailsComponent,
     ResendComponent,
     EmailNotConfirmedComponent,
-    AdminSeriesEditComponent
+    AdminSeriesEditComponent,
+    AdminEmailAddComponent,
+    AdminEmailDetailComponent
   ],
   imports: [
     BrowserModule,

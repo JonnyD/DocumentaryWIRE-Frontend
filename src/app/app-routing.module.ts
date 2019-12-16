@@ -1,3 +1,5 @@
+import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-detail/admin-email-detail.component';
+import { AdminEmailAddComponent } from './admin/admin-emails/admin-email-add/admin-email-add.component';
 import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
 import { ResendComponent } from './public/register/resend/resend.component';
 import { EmailNotConfirmedComponent } from './public/register/email-not-confirmed/email-not-confirmed.component';
@@ -237,6 +239,18 @@ const routes: Routes = [
       { 
         path: 'emails', 
         component: AdminEmailsComponent 
+      },
+      { 
+        path: 'emails/add', 
+        component: AdminEmailAddComponent 
+      },
+      { 
+        path: 'emails/:id', 
+        component: AdminEmailDetailComponent 
+      },
+      { 
+        path: 'emails/:id/edit', 
+        component: AdminEmailAddComponent 
       },
     ]
   },

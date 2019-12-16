@@ -1,5 +1,11 @@
 <br />
 
+<span>
+    <a [routerLink]="['/admin/emails/add']">
+        <button class="btn btn-primary" type="submit">Add Email</button>
+    </a>
+</span>
+
 <table class="table table-striped">
     <thead>
       <tr>
@@ -13,7 +19,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let email of emails | paginate: config">
-        <td>{{ email.id }}</td>
+        <td>
+            <a [routerLink]="['/admin/emails', email.id]">
+                {{ email.id }}
+            </a>
+        </td>
         <td>{{ email.email }}</td>
         <td>{{ email.subscribed }}</td>
         <td>{{ email.subscriptionKey }}</td>
