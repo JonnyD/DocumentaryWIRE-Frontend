@@ -39,6 +39,8 @@ export class AdminEmailAddComponent implements OnInit {
       if (this.editMode) {
         this.emailSubscription = this.emailService.getEmailById(id)
           .subscribe((result: any) => {
+            console.log("result");
+            console.log(result);
             this.emailModel = result;
             this.initForm();
           });
@@ -50,12 +52,10 @@ export class AdminEmailAddComponent implements OnInit {
   initForm() {
     let email = this.emailModel.email;
     let subscribed = this.emailModel.subscribed;
-    let subscriptionKey = this.emailModel.subscriptionKey;
 
     this.editEmailForm = new FormGroup({
       'email': new FormControl(email, [Validators.required]),
       'subscribed': new FormControl(subscribed, [Validators.required]),
-      'subscriptionKey': new FormControl(subscriptionKey, [Validators.required]),
     });
   }
 
@@ -64,6 +64,8 @@ export class AdminEmailAddComponent implements OnInit {
 
     let emailId = this.emailModel.id;
     let formValue = this.editEmailForm.value;
+    let subscribed = String(formValue.subscribed);
+    formValue.subscribed = subscribed;
 
     console.log("formValue");
     console.log(formValue);
@@ -73,6 +75,7 @@ export class AdminEmailAddComponent implements OnInit {
       if (this.editMode) {
         this.emailService.editEmail(emailId, formValue)
           .subscribe(result => {
+            console.log("updated result");
             console.log(result);
             this.router.navigate(["/admin/emails", result.id]);
           }, error => {
