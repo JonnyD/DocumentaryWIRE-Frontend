@@ -76,6 +76,8 @@ import { ResendComponent } from './public/register/resend/resend.component';
 import { EmailNotConfirmedComponent } from './public/register/email-not-confirmed/email-not-confirmed.component';
 import { AdminEmailAddComponent } from './admin/admin-emails/admin-email-add/admin-email-add.component';
 import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-detail/admin-email-detail.component';
+import { DocumentaryAddStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-add-standalone.component';
+import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
 
 @NgModule({
   declarations: [
@@ -130,7 +132,9 @@ import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-deta
     EmailNotConfirmedComponent,
     AdminSeriesEditComponent,
     AdminEmailAddComponent,
-    AdminEmailDetailComponent
+    AdminEmailDetailComponent,
+    DocumentaryAddStandaloneComponent,
+    DocumentaryAddEpisodicComponent
   ],
   imports: [
     BrowserModule,

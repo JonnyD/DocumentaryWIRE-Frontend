@@ -1,3 +1,5 @@
+import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
+import { DocumentaryAddStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-add-standalone.component';
 import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-detail/admin-email-detail.component';
 import { AdminEmailAddComponent } from './admin/admin-emails/admin-email-add/admin-email-add.component';
 import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
@@ -255,9 +257,14 @@ const routes: Routes = [
     ]
   },
   { 
-    path: 'add/:type', 
+    path: 'add/standalone',
     canActivate: [UserGuard],
-    component: DocumentaryAddComponent
+    component: DocumentaryAddStandaloneComponent,
+  },  
+  { 
+    path: 'add/episodic',
+    canActivate: [UserGuard],
+    component: DocumentaryAddEpisodicComponent,
   },  
   { 
     path: 'add', 
