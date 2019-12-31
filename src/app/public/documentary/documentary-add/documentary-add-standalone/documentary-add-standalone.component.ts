@@ -1,3 +1,4 @@
+import { YoutubeService } from './../../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OMDBService } from './../../../../services/omdb.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -33,6 +34,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   private errors = null;
 
   private imdbForm: FormGroup;
+  private youtubeForm: FormGroup;
 
   private posterImgURL;
   private wideImgURL;
@@ -55,6 +57,10 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   private searchedDocumentariesFromIMDB;
   private searchedDocumentaryFromIMDB;
 
+  private isFetchingVideosFromYoutube = false;
+  private showSearchedVideosFromYoutube = false;
+  private searchedVideosFromYoutube;
+
   private years;
   private videoSources;
   private categories;
@@ -70,6 +76,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   private videoSourcesSubscription;
   private categoriesSubscription;
   private getByImdbIdSubscription;
+  private ombdSearchSubscription;
+  private youtubeSearchSubscription;
 
   private config: any;
 
@@ -92,6 +100,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     private documentaryService: DocumentaryService,
     private userService: UserService,
     private omdbService: OMDBService,
+    private youtubeService: YoutubeService,
     private modalService: NgbModal,
     private cd: ChangeDetectorRef,
     private router: Router,
@@ -398,7 +407,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     let title = this.imdbForm.value.title;
     let imdbType = 'movie';
 
-    this.omdbService.getSearchedDocumentaries(title, imdbType)
+    this.ombdSearchSubscription = this.omdbService.getSearchedDocumentaries(title, imdbType)
       .subscribe((result: any) => {
         console.log(result);
         this.searchedDocumentariesFromIMDB = result['Search'];
@@ -417,6 +426,61 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     });
   }
 
+  openYoutubeModal(content) {
+    this.initYoutubeForm();
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-youtube' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+  initYoutubeForm() {
+    let title = this.form.value.title;
+
+    this.youtubeForm = new FormGroup({
+      'title': new FormControl(title, [Validators.required])
+    });
+
+    if (title) {
+      this.searchYoutube();
+    }
+  }
+
+  searchYoutube() {
+    this.isFetchingVideosFromYoutube = true;
+    this.showSearchedVideosFromYoutube = true;
+
+    let title = this.youtubeForm.value.title;
+    this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(title)
+      .subscribe((result: any) => {
+        this.searchedVideosFromYoutube = result['items'];
+        this.isFetchingVideosFromYoutube = false;
+      });
+  }
+
+  youtubeSelect(selectedVideo) {
+    if (!this.documentary.title) {
+      this.documentary.title = selectedVideo.snippet.title;
+    }
+
+    if (!this.documentary.storyline) {
+      this.documentary.storyline = selectedVideo.snippet.description;
+    }
+
+    if (!this.documentary.wideImage) {
+      this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
+      this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
+    }
+
+    this.documentary.standalone.videoId = selectedVideo.id.videoId;
+
+    this.initForm();
+
+    this.modalService.dismissAll();
+  }
+
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
     this.routeParamsSubscription.unsubscribe();
@@ -431,5 +495,11 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     }
     this.videoSourcesSubscription.unsubscribe();
     this.categoriesSubscription.unsubcribe();
+    if (this.ombdSearchSubscription != null) {
+      this.ombdSearchSubscription.unsubscribe();
+    }
+    if (this.youtubeSearchSubscription != null) {
+      this.youtubeSearchSubscription.unsubscribe();
+    }
   }
 }
