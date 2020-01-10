@@ -13,6 +13,7 @@
             <div *ngIf="!showPage || isFetchingDocumentaries">
                 Loading...
             </div>
+
             <div style="margin-top: 20px; margin-bottom: 20px">
                 <button *ngIf="showAddTitleButton" type="button" class="btn btn-primary" (click)="toggleForm()">Add
                     Documentary</button>
@@ -54,44 +55,46 @@
                     </div>
                     <div class="form-group">
                         <label for="imdbId">IMDB ID</label>
-                        <input type="text" formControlName="imdbId" class="form-control"
+                        <input type="text" formControlName="imdbId" class="form-control" disabled
                             [ngClass]="{ 'is-invalid': submitted && f.imdbId.errors }" />
-                        <button class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search</button>
+                        <button type="button" class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search</button>
                         <div *ngIf="submitted && f.imdbId.errors" class="invalid-feedback">
                             <div *ngIf="f.imdbId.errors.required">IMDB Id is required</div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="videoSource">Video Source</label>
-                        <span *ngIf="isFetchingVideoSources"><br />Loading...</span>
-                        <select *ngIf="!isFetchingVideoSources" formControlName="videoSource" class="form-control"
-                            id="videoSource" [ngClass]="{ 'is-invalid': submitted && f.videoSource.errors }">
-                            <option disabled>Choose Video Source</option>
-                            <option *ngFor="let videoSourceItem of videoSources" [value]="videoSourceItem.id">
-                                {{ videoSourceItem.name }}
-                            </option>
-                        </select>
-                        <div *ngIf="submitted && f.videoSource.errors" class="invalid-feedback">
-                            <div *ngIf="f.videoSource.errors.required">Video Source is required</div>
+                    <div formGroupName="standalone">
+                        <div class="form-group">
+                            <label for="videoSource">Video Source</label>
+                            <span *ngIf="isFetchingVideoSources"><br />Loading...</span>
+                            <select *ngIf="!isFetchingVideoSources" formControlName="videoSource" class="form-control"
+                                id="videoSource"
+                                [ngClass]="{ 'is-invalid': submitted && form.get('standalone.videoSource').errors }">
+                                <option disabled>Choose Video Source</option>
+                                <option *ngFor="let videoSourceItem of videoSources" [value]="videoSourceItem.id">
+                                    {{ videoSourceItem.name }}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && form.get('standalone.videoSource').errors"
+                                class="invalid-feedback">
+                                <div *ngIf="form.get('standalone.videoSource').errors.required">Video Source is required
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="videoId">Video ID</label>
-                        <input type="text" formControlName="videoId" class="form-control"
-                            [ngClass]="{ 'is-invalid': submitted && f.videoId.errors }" />
-                        <button class="btn btn-secondary" (click)="openYoutubeModal(youtubeContent)">Search</button>
-                        <div *ngIf="submitted && f.videoId.errors" class="invalid-feedback">
-                            <div *ngIf="f.videoId.errors.required">Video ID is required</div>
+                        <div class="form-group">
+                            <label for="videoId">Video ID</label>
+                            <input type="text" formControlName="videoId" class="form-control" disabled
+                                [ngClass]="{ 'is-invalid': submitted && form.get('standalone.videoId').errors }" />
+                            <button type="button" class="btn btn-secondary" (click)="openYoutubeModal(youtubeContent)">Search</button>
+                            <div *ngIf="submitted && form.get('standalone.videoId').errors" class="invalid-feedback">
+                                <div *ngIf="form.get('standalone.videoId').errors.required">Video ID is required</div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="poster">Poster</label>
                         <input id="poster" type="file" (change)="onPosterChange($event)"
-                            [ngClass]="{ 'is-invalid': submitted && f.poster.errors }" />
+                            [ngClass]="{ 'is-invalid': submitted && posterRequiredError }" />
                         <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
-                        <div *ngIf="submitted && f.poster.errors" class="invalid-feedback">
-                            <div *ngIf="f.poster.errors.required">Poster is required</div>
-                        </div>
                     </div>
                     <div class="form-group">
                         <label for="wideImage">Wide Image</label>
@@ -155,7 +158,9 @@
                             <div *ngIf="f.length.errors.required">Duration is required</div>
                         </div>
                     </div>
-                    <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+                    <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">
+                        {{ errors }}
+                    </div>
                     <button [disabled]="loading" class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Save

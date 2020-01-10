@@ -1,3 +1,4 @@
+import { VideoSource } from './../../../../models/video-source.model';
 import { YoutubeService } from './../../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { OMDBService } from './../../../../services/omdb.service';
@@ -31,7 +32,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   private form: FormGroup;
   private submitted = false;
-  private errors = null;
+  public errors = null;
 
   private imdbForm: FormGroup;
   private youtubeForm: FormGroup;
@@ -83,6 +84,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   private closeResult = null;
 
+  public posterRequiredError = false;
+
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -109,9 +112,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.documentary = new Documentary();
-    let standalone = new Standalone;
-    this.documentary.standalone = standalone;
+    this.initModel();
 
     this.queryParamsSubscription = this.route
       .queryParams
@@ -147,9 +148,14 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       });
   }
 
+  initModel() {
+    this.documentary = new Documentary();
+    let standalone = new Standalone();
+    this.documentary.standalone = standalone;
+  }
+
   toggleForm() {
     this.showAddTitleButton = false;
-
     this.showDocumentaries = false;
 
     this.showForm = !this.showForm;
@@ -170,10 +176,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     }
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let videoSource = null;
-    if (this.documentary.standalone.videoSource) {
-      videoSource = this.documentary.standalone.videoSource.id
-    }
+    let videoSource = this.documentary.standalone.videoSource;
     let videoId = this.documentary.standalone.videoId;
     let year = this.documentary.year;
     let length = this.documentary.length;
@@ -188,8 +191,10 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'videoSource': new FormControl(videoSource, [Validators.required]),
-      'videoId': new FormControl(videoId, [Validators.required]),
+      'standalone': new FormGroup({
+        'videoSource': new FormControl(videoSource, [Validators.required]),
+        'videoId': new FormControl(videoId, [Validators.required]),
+      }),
       'year': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
@@ -272,14 +277,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.form.valid) {
-      return;
-    }
-
     this.submitted = true;
-    this.errors = null;
-
-    let values = this.form.value;
 
     let formValue = this.form.value;
 
@@ -302,6 +300,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
           (error) => {
             console.log(error);
             this.errors = error.error;
+            console.log("this.errors");
+            console.log(this.errors);
           });
     }
   }
@@ -346,6 +346,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   }
 
   reset() {
+    this.initModel();
+    this.submitted = false;
     this.hasToggledForm = false;
     this.showForm = false;
     this.showPage = false;
@@ -359,10 +361,6 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     this.imdbForm = new FormGroup({
       'title': new FormControl(title, [Validators.required])
     });
-
-    if (title) {
-      this.searchOMDB();
-    }
   }
 
   imdbView(imdbId) {
@@ -442,10 +440,6 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     this.youtubeForm = new FormGroup({
       'title': new FormControl(title, [Validators.required])
     });
-
-    if (title) {
-      this.searchYoutube();
-    }
   }
 
   searchYoutube() {
@@ -470,8 +464,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     }
 
     if (!this.documentary.wideImage) {
-      this.documentary.wideImage = selectedVideo.snippet.thumbnails.high.url;
-      this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
+      this.documentary.wideImage = selectedVideo.snippet.thumbnails.default.url;
+      this.wideImgURL = selectedVideo.snippet.thumbnails.default.url;
     }
 
     this.documentary.standalone.videoId = selectedVideo.id.videoId;
@@ -482,8 +476,12 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.queryParamsSubscription.unsubscribe();
-    this.routeParamsSubscription.unsubscribe();
+    if (this.queryParamsSubscription != null) {
+      this.queryParamsSubscription.unsubscribe();
+    }
+    if (this.routeParamsSubscription != null) {
+      this.routeParamsSubscription.unsubscribe();
+    }
     if (this.documentaryBySlugSubscription != null) {
       this.documentaryBySlugSubscription.unsubscribe();
     }
@@ -493,8 +491,12 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     if (this.getByImdbIdSubscription != null) {
       this.getByImdbIdSubscription.unsubscribe();
     }
-    this.videoSourcesSubscription.unsubscribe();
-    this.categoriesSubscription.unsubcribe();
+    if (this.videoSourcesSubscription != null) {
+      this.videoSourcesSubscription.unsubscribe();
+    }
+    if (this.categoriesSubscription != null) {
+      this.categoriesSubscription.unsubcribe();
+    }
     if (this.ombdSearchSubscription != null) {
       this.ombdSearchSubscription.unsubscribe();
     }
