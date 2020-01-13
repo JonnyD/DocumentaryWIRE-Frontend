@@ -57,7 +57,8 @@
                         <label for="imdbId">IMDB ID</label>
                         <input type="text" formControlName="imdbId" class="form-control" disabled
                             [ngClass]="{ 'is-invalid': submitted && f.imdbId.errors }" />
-                        <button type="button" class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search</button>
+                        <button type="button" class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search or
+                            Paste ID</button>
                         <div *ngIf="submitted && f.imdbId.errors" class="invalid-feedback">
                             <div *ngIf="f.imdbId.errors.required">IMDB Id is required</div>
                         </div>
@@ -84,7 +85,8 @@
                             <label for="videoId">Video ID</label>
                             <input type="text" formControlName="videoId" class="form-control" disabled
                                 [ngClass]="{ 'is-invalid': submitted && form.get('standalone.videoId').errors }" />
-                            <button type="button" class="btn btn-secondary" (click)="openYoutubeModal(youtubeContent)">Search</button>
+                            <button type="button" class="btn btn-secondary"
+                                (click)="openYoutubeModal(youtubeContent)">Search</button>
                             <div *ngIf="submitted && form.get('standalone.videoId').errors" class="invalid-feedback">
                                 <div *ngIf="form.get('standalone.videoId').errors.required">Video ID is required</div>
                             </div>
@@ -96,7 +98,8 @@
                             [ngClass]="{ 'is-invalid': submitted && posterRequiredError }" />
                         <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
                         <div *ngIf="submitted && f.poster.errors">
-                            <div *ngIf="f.poster.errors.required" style="font-size: 80%; color: #dc3545;">Poster is required</div>
+                            <div *ngIf="f.poster.errors.required" style="font-size: 80%; color: #dc3545;">Poster is
+                                required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -105,7 +108,8 @@
                             [ngClass]="{ 'is-invalid': submitted && f.wideImage.errors }" />
                         <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
                         <div *ngIf="submitted && f.wideImage.errors">
-                            <div *ngIf="f.wideImage.errors.required" style="font-size: 80%; color: #dc3545;">Wide Image is required</div>
+                            <div *ngIf="f.wideImage.errors.required" style="font-size: 80%; color: #dc3545;">Wide Image
+                                is required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -114,7 +118,8 @@
                             [ngClass]="{ 'is-invalid': submitted && f.storyline.errors }"></angular-editor>
                         <br />
                         <div *ngIf="submitted && f.storyline.errors">
-                            <div *ngIf="f.storyline.errors.required" style="font-size: 80%; color: #dc3545;">Description is required</div>
+                            <div *ngIf="f.storyline.errors.required" style="font-size: 80%; color: #dc3545;">Description
+                                is required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -182,9 +187,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form [formGroup]="imdbForm" (click)="searchOMDB()">
+                    <form [formGroup]="imdbForm" (ngSubmit)="searchOMDB()">
                         <div class="form-group">
-                            <label for="title">Title</label>
+                            <label for="title">Title or ID</label>
                             <div class="input-group">
                                 <input id="title" class="form-control" formControlName="title">
                             </div>
@@ -206,20 +211,20 @@
                                         <span class="activity-image">
                                             <a href="">
 
-                                                <img alt='{{ searchedDocumentary.Title }}'
-                                                    src='{{ searchedDocumentary.Poster }}' style="margin-right: 20px"
+                                                <img alt='{{ searchedDocumentary.tiitle }}'
+                                                    src='{{ searchedDocumentary.poster }}' style="margin-right: 20px"
                                                     height='200' width='160' /></a>
                                         </span>
                                         <div class="data">
                                             <span class="author">
-                                                {{ searchedDocumentary.Title }} <br />
+                                                {{ searchedDocumentary.title }} <br />
                                             </span>
                                             <span class="excerpt">
-                                                Type: {{ searchedDocumentary.Type }} <br />
-                                                Year: {{ searchedDocumentary.Year }} <br />
-                                                IMDB ID: {{ searchedDocumentary.imdbID }} <br />
+                                                Type: {{ searchedDocumentary.type }} <br />
+                                                Year: {{ searchedDocumentary.year }} <br />
+                                                IMDB ID: {{ searchedDocumentary.imdbId }} <br />
                                                 <button type="button" class="btn btn-secondary"
-                                                    (click)="imdbView(searchedDocumentary.imdbID)">View</button>
+                                                    (click)="imdbView(searchedDocumentary.imdbId)">View</button>
                                             </span>
                                         </div>
                                     </span>

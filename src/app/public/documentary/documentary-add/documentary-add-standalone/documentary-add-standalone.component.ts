@@ -282,7 +282,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     if (!this.form.valid) {
       return;
     }
-    
+
     let formValue = this.form.value;
 
     if (this.editMode) {
@@ -331,10 +331,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
           currentPage: this.page,
           totalItems: result['count_results']
         };
-        this.myDocumentaries = result['items'];
-
-        console.log("result");
-        console.log(result);
+        this.myDocumentaries = result['items'];fimdbsel
 
         this.isFetchingDocumentaries = false;
         this.showDocumentaries = true;
@@ -391,8 +388,17 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
     if (this.documentary.imdbId != selectedDocumentary.imdbId) {
       this.documentary.imdbId = selectedDocumentary.imdbId;
+    }
+
+    if (this.documentary.storyline = null) {
       this.documentary.storyline = selectedDocumentary.storyline;
+    };
+
+    if (this.documentary.year == null) {
       this.documentary.year = selectedDocumentary.year;
+    }
+      
+    if (this.documentary.poster == null) {
       this.documentary.poster = selectedDocumentary.poster;
       this.posterImgURL = selectedDocumentary.poster;
     }
@@ -406,15 +412,22 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     this.showSearchedDocumentaryFromIMDB = false;
     this.showSearchedDocumentariesFromIMDB = true;
 
-    let title = this.imdbForm.value.title;
+    let titleOrId = this.imdbForm.value.title;
     let imdbType = 'movie';
 
-    this.ombdSearchSubscription = this.omdbService.getSearchedDocumentaries(title, imdbType)
+    this.omdbService.getByImdbId(titleOrId, imdbType)
       .subscribe((result: any) => {
-        console.log(result);
-        this.searchedDocumentariesFromIMDB = result['Search'];
+        result = [result];
+        this.searchedDocumentariesFromIMDB = result;
         this.isFetchingDocumentariesFromIMDB = false;
-      });
+      },
+        (error) => {
+          this.ombdSearchSubscription = this.omdbService.getSearchedDocumentaries(titleOrId, imdbType)
+            .subscribe((result: any) => {
+              this.searchedDocumentariesFromIMDB = result;
+              this.isFetchingDocumentariesFromIMDB = false;
+            });
+        });
   }
 
   openIMDBModal(content) {
