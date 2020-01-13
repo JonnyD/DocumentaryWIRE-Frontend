@@ -331,7 +331,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
           currentPage: this.page,
           totalItems: result['count_results']
         };
-        this.myDocumentaries = result['items'];fimdbsel
+        this.myDocumentaries = result['items'];
 
         this.isFetchingDocumentaries = false;
         this.showDocumentaries = true;
@@ -415,7 +415,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     let titleOrId = this.imdbForm.value.title;
     let imdbType = 'movie';
 
-    this.omdbService.getByImdbId(titleOrId, imdbType)
+    this.getByImdbIdSubscription = this.omdbService.getByImdbId(titleOrId, imdbType)
       .subscribe((result: any) => {
         result = [result];
         this.searchedDocumentariesFromIMDB = result;
