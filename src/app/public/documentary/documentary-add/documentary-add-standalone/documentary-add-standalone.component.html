@@ -95,14 +95,17 @@
                         <input id="poster" type="file" (change)="onPosterChange($event)"
                             [ngClass]="{ 'is-invalid': submitted && posterRequiredError }" />
                         <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
+                        <div *ngIf="submitted && f.poster.errors">
+                            <div *ngIf="f.poster.errors.required" style="font-size: 80%; color: #dc3545;">Poster is required</div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="wideImage">Wide Image</label>
                         <input id="wideImage" type="file" (change)="onWideImageChange($event)"
                             [ngClass]="{ 'is-invalid': submitted && f.wideImage.errors }" />
                         <img [src]="wideImgURL" height="200" *ngIf="wideImgURL">
-                        <div *ngIf="submitted && f.wideImage.errors" class="invalid-feedback">
-                            <div *ngIf="f.wideImage.errors.required">Wide Image is required</div>
+                        <div *ngIf="submitted && f.wideImage.errors">
+                            <div *ngIf="f.wideImage.errors.required" style="font-size: 80%; color: #dc3545;">Wide Image is required</div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -110,8 +113,8 @@
                         <angular-editor formControlName="storyline" [config]="editorConfig"
                             [ngClass]="{ 'is-invalid': submitted && f.storyline.errors }"></angular-editor>
                         <br />
-                        <div *ngIf="submitted && f.storyline.errors" class="invalid-feedback">
-                            <div *ngIf="f.storyline.errors.required">Description is required</div>
+                        <div *ngIf="submitted && f.storyline.errors">
+                            <div *ngIf="f.storyline.errors.required" style="font-size: 80%; color: #dc3545;">Description is required</div>
                         </div>
                     </div>
                     <div class="form-group">

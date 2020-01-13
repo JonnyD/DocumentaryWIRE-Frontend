@@ -84,7 +84,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   private closeResult = null;
 
-  public posterRequiredError = false;
+  public posterRequiredError = true;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -279,6 +279,10 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
+    if (!this.form.valid) {
+      return;
+    }
+    
     let formValue = this.form.value;
 
     if (this.editMode) {
