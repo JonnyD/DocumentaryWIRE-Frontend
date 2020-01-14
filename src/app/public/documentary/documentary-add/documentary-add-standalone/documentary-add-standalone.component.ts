@@ -79,6 +79,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   private getByImdbIdSubscription;
   private ombdSearchSubscription;
   private youtubeSearchSubscription;
+  private youtubeByIdSubscription;
 
   private config: any;
 
@@ -170,10 +171,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   initForm() {
     let title = this.documentary.title;
-    let category = null;
-    if (this.documentary.category) {
-      category = this.documentary.category.id;
-    }
+    let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let videoSource = this.documentary.standalone.videoSource;
@@ -411,6 +409,9 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     if (this.form.value.poster == null) {
       this.documentary.poster = selectedDocumentary.poster;
       this.posterImgURL = selectedDocumentary.poster;
+    } else {
+      this.documentary.poster = this.form.value.poster;
+      this.posterImgURL = this.form.value.poster;
     }
 
     if (this.form.value.length == null) {
@@ -481,7 +482,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
     let titleOrId = this.youtubeForm.value.title;
 
-    this.youtubeService.getById(titleOrId)
+    this.youtubeByIdSubscription = this.youtubeService.getById(titleOrId)
       .subscribe((result: any) => {
         this.searchedVideosFromYoutube = result['items'];
         this.isFetchingVideosFromYoutube = false;
@@ -495,24 +496,50 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   }
 
   youtubeSelect(selectedVideo) {
+    
+    console.log("this.form.value");
+    console.log(this.form.value);
+
     console.log("this.documentary"); 
     console.log(this.documentary); 
 
-    if (this.documentary.title == null) {
+    if (this.form.value.title == null) {
       this.documentary.title = selectedVideo.snippet.title;
+    } else {
+      this.documentary.title = this.form.value.title;
     }
 
-    if (this.documentary.storyline == null) {
+    if (this.form.value.storyline == null) {
       this.documentary.storyline = selectedVideo.snippet.description;
+    } else {
+      this.documentary.storyline = this.form.value.storyline;
     }
 
-    if (this.documentary.wideImage == null) {
+    if (this.form.value.wideImage == null) {
       this.documentary.wideImage = selectedVideo.snippet.thumbnails.default.url;
       this.wideImgURL = selectedVideo.snippet.thumbnails.default.url;
+    } else {
+      this.documentary.wideImage = this.form.value.wideImage;
     }
 
+    if (this.form.value.summary == null) {
+      this.documentary.summary = selectedVideo.snippet.description;
+    } else {
+      this.documentary.summary = this.form.value.summary;
+    }
+
+    if (this.form.value.standalone.videoId == null) {
+      this.documentary.standalone.videoId = selectedVideo.id.videoId;
+    } else {
+      this.documentary.standalone.videoId = this.form.value.standalone.videoId;
+    }
+
+    this.documentary.poster = this.form.value.poster;
+    this.posterImgURL = this.form.value.poster;
+    this.documentary.category = this.form.value.category;
+    this.documentary.year = this.form.value.year;
+    this.documentary.length = this.form.value.length;
     this.documentary.standalone.videoSource = 2;
-    this.documentary.standalone.videoId = selectedVideo.id.videoId;
 
     this.initForm();
 
@@ -546,6 +573,9 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     }
     if (this.youtubeSearchSubscription != null) {
       this.youtubeSearchSubscription.unsubscribe();
+    }
+    if (this.youtubeByIdSubscription != null) {
+      this.youtubeByIdSubscription.unsubscribe();
     }
   }
 }

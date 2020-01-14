@@ -7,7 +7,7 @@ export class Documentary {
     id: number;
     title: string;
     slug: string;
-    category: Category;
+    category: number;
     storyline: string;
     summary: string;
     year: number;
