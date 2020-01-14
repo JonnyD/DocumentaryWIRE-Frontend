@@ -387,24 +387,36 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     console.log("this.form.value.title");
     console.log(this.form.value.title);
     if (this.form.value.title == null) {
-      this.form.value.title = selectedDocumentary.title;
+      this.documentary.title = selectedDocumentary.title;
+    } else {
+      this.documentary.title = this.form.value.title;
     }
 
-    if (this.documentary.imdbId != selectedDocumentary.imdbId) {
+    if (this.form.value.imdbId != selectedDocumentary.imdbId) {
       this.documentary.imdbId = selectedDocumentary.imdbId;
     }
 
-    if (this.documentary.storyline = null) {
+    if (this.form.value.storyline == null) {
       this.documentary.storyline = selectedDocumentary.storyline;
-    };
-
-    if (this.documentary.year == null) {
-      this.documentary.year = selectedDocumentary.year;
+    } else {
+      this.documentary.storyline = this.form.value.storyline;
     }
 
-    if (this.documentary.poster == null) {
+    if (this.form.value.year == null) {
+      this.documentary.year = selectedDocumentary.year;
+    } else {
+      this.documentary.year = this.form.value.year;
+    }
+
+    if (this.form.value.poster == null) {
       this.documentary.poster = selectedDocumentary.poster;
       this.posterImgURL = selectedDocumentary.poster;
+    }
+
+    if (this.form.value.length == null) {
+      this.documentary.length = selectedDocumentary.duration;
+    } else {
+      this.documentary.length = this.form.value.length;
     }
 
     this.initForm();
