@@ -184,6 +184,9 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     this.wideImgURL = this.documentary.wideImage;
     let imdbId = this.documentary.imdbId;
 
+    console.log("poster");
+    console.log(poster);
+
     this.form = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
       'category': new FormControl(category, [Validators.required]),
@@ -276,12 +279,15 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.errors = null;
 
     if (!this.form.valid) {
       return;
     }
 
     let formValue = this.form.value;
+    console.log("formValue");
+    console.log(formValue);
 
     if (this.editMode) {
       this.documentaryService.editStandaloneDocumentary(this.documentary.id, formValue)
@@ -406,13 +412,20 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.documentary.year = this.form.value.year;
     }
 
+    console.log("this.form.value.poster");
+    console.log(this.form.value.poster);
     if (this.form.value.poster == null) {
+      console.log("selectedDocumentary.poster");
+      console.log(selectedDocumentary.poster);
       this.documentary.poster = selectedDocumentary.poster;
       this.posterImgURL = selectedDocumentary.poster;
     } else {
       this.documentary.poster = this.form.value.poster;
       this.posterImgURL = this.form.value.poster;
     }
+
+    console.log("this.documentary.poster");
+    console.log(this.documentary.poster);
 
     if (this.form.value.length == null) {
       this.documentary.length = selectedDocumentary.duration;
