@@ -69,14 +69,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   fetchRecentlyAddedDocumentaries() {
     this.isFetchingRecentlyAddedDocumentaries = true;
 
+    let amountPerPage = 8;
     let params = new HttpParams();
-  
+    params = params.append('amountPerPage', amountPerPage.toString());
+
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
       .subscribe(result => {
-        console.log("result");
+        this.recentlyAdded = result['items'];
         console.log(result);
-        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 3, 12);
-        this.recentlyAdded = cardDecks;
 
         this.isFetchingRecentlyAddedDocumentaries = false;
       });
