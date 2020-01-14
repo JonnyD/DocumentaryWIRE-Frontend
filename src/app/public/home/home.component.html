@@ -1,65 +1,67 @@
 <script>
-$(".pop").popover({ trigger: "manual" , html: true, animation:false})
-    .on("mouseenter", function () {
-        var _this = this;
-        $(this).popover("show");
-        $(".popover").on("mouseleave", function () {
-            $(_this).popover('hide');
+    $(".pop").popover({ trigger: "manual", html: true, animation: false })
+        .on("mouseenter", function () {
+            var _this = this;
+            $(this).popover("show");
+            $(".popover").on("mouseleave", function () {
+                $(_this).popover('hide');
+            });
+        }).on("mouseleave", function () {
+            var _this = this;
+            setTimeout(function () {
+                if (!$(".popover:hover").length) {
+                    $(_this).popover("hide");
+                }
+            }, 300);
         });
-    }).on("mouseleave", function () {
-        var _this = this;
-        setTimeout(function () {
-            if (!$(".popover:hover").length) {
-                $(_this).popover("hide");
-            }
-        }, 300);
-});
 </script>
 
 <div class="container" style="margin-top: 40px">
-<div class="row">
-    <div class="col-md-8">
+    <div class="row">
+        <div class="col-md-8">
             <div class="card text-white bg-dark mb-3">
-                    <div class="card-body">
-                      <h1 class="card-title"> Watch Free Documentaries Online</h1>
-                      <p class="card-text"> Discover thousands of eye-opening, paradigm shifting, and mind-blowing top documentary films.</p>
-                    </div>
-                  </div>
-            
-          <div style="margin-top: 40px"></div>
-                  <h3>Featured</h3>
-            <div class="card mb-3">
-                    <img class="card-img-top"  src="/assets/sunset.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">Card title</h5>
-                      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                    </div>
-                  </div>
+                <div class="card-body">
+                    <h1 class="card-title"> Watch Free Documentaries Online</h1>
+                    <p class="card-text"> Discover thousands of eye-opening, paradigm shifting, and mind-blowing top
+                        documentary films.</p>
+                </div>
+            </div>
 
-                  <div style="margin-top: 40px" *ngIf="!isFetchingRecentlyAddedDocumentaries">
-                  <h2>Recently Added</h2>
-                <div class="card-deck" *ngFor="let cardDeck of recentlyAdded | keyvalue">
-                    <div class="card" style="margin-top: 20px" *ngFor="let documentary of cardDeck.value">
-                        <ng-template #popContent>{{ documentary.summary }}</ng-template>
-                        <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
-                            <a class="pop" placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave">
-                                <img [src]="getSantizeUrl(documentary.poster)" class="card-img-top" style="width: 100%; height: 280px" alt="...">
-                            </a>
-                        
+            <div style="margin-top: 40px"></div>
+            <h3>Featured</h3>
+            <div class="card mb-3">
+                <img class="card-img-top" src="/assets/sunset.jpg" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                        additional content. This content is a little bit longer.</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+            <div style="margin-top: 40px"></div>
+            <h3>Recently Added</h3>
+            <div class="card mb-1" style="margin-top: 20px" *ngFor="let documentary of recentlyAdded">
+                <div class="row no-gutters">
+                    <div class="col-md-3">
+                        <img src="{{ documentary.poster }}" class="card-img" style="width: 160px; height: 200px"
+                            alt="{{ documentary.title }}">
+                    </div>
+                    <div class="col-md-9">
                         <div class="card-body">
-                        
-                        <a [routerLink]="['/', documentary.slug]">
-                          <h5 class="card-title">{{ documentary.title }}</h5>
-                        </a>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+
+                            <a [routerLink]="['/', documentary.slug]">
+                                <h5 class="card-title">{{ documentary.title }}</h5>
+                            </a>
+                            <p class="card-text">{{ documentary.summary }}.</p>
+                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                         </div>
                     </div>
                 </div>
             </div>
+
             <p *ngIf="isFetchingRecentlyAddedDocumentaries">Loading...</p>
 
-                    <!--<div style="clear:both"></div>
+            <!--<div style="clear:both"></div>
                   
                     <div style="margin-top: 40px" *ngIf="!isFetchingRecentlyUpdatedDocumentaries">
                     <h2>Recently Updated</h2>
@@ -97,204 +99,227 @@ $(".pop").popover({ trigger: "manual" , html: true, animation:false})
                         </div>
                         <p *ngIf="isFetchingNewDocumentaries">Loading...</p>
                     -->
-                  
-      </div>
-      <div class="col-md-4">
-          <h2>Subscribe / Follow</h2>
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <p class="card-text">
-                        <img src="/assets/email.png" width="50" height="50" style="float: left; margin-right: 10px"/>
-                        <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" target="popupwindow" href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest documentaries sent straight to your inbox.</a>
-                    </p>
-                </li>
-                <li class="list-group-item">
+
+        </div>
+        <div class="col-md-4">
+            <h2>Subscribe / Follow</h2>
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p class="card-text">
+                            <img src="/assets/email.png" width="50" height="50"
+                                style="float: left; margin-right: 10px" />
+                            <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"
+                                target="popupwindow"
+                                href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest
+                                documentaries sent straight to your inbox.</a>
+                        </p>
+                    </li>
+                    <li class="list-group-item">
                         <div class="text-center">
-                    <p class="card-text">
-                            <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px"/>
-                            <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px"/>
-                            <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px"/>
-                            <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px"/>
-                            <img src="/assets/gab.png" width="40" height="40" />
-                    </p>
-                </div>
-                </li>
-            </ul>
-          </div>
-          <div style="margin-top: 40px" *ngIf="!isFetchingNewestUsers && !isFetchingActiveUsers">
-          <h2>Members</h2>
-          <div class="card">
-                <div class="card-header" style="background-color: #ffffff">
-                  <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
-                    <li class="nav-item">
-                      <a class="nav-link active" href="#newest" role="tab" aria-controls="newest" aria-selected="true">Newest</a>
+                            <p class="card-text">
+                                <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/gab.png" width="40" height="40" />
+                            </p>
+                        </div>
                     </li>
-                    <li class="nav-item">
-                      <a class="nav-link"  href="#active" role="tab" aria-controls="active" aria-selected="false">Active</a>
-                    </li>
-                  </ul>
-                </div>
-                <div class="card-body">
-                    <div class="avatar-block" style="margin-left: 15px">
-                        <div class="item-avatar" *ngFor="let user of newestUsers">
-                            <a [routerLink]="['/user', user.username]"
-                                title="{{ user.username }}" rel="nofollow">
-                                <img src="{{ user.avatar }}" class="rounded-circle"
-                                        style="float:left; margin:3px"
+                </ul>
+            </div>
+            <div style="margin-top: 40px" *ngIf="!isFetchingNewestUsers && !isFetchingActiveUsers">
+                <h2>Members</h2>
+                <div class="card">
+                    <div class="card-header" style="background-color: #ffffff">
+                        <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#newest" role="tab" aria-controls="newest"
+                                    aria-selected="true">Newest</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#active" role="tab" aria-controls="active"
+                                    aria-selected="false">Active</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="avatar-block" style="margin-left: 15px">
+                            <div class="item-avatar" *ngFor="let user of newestUsers">
+                                <a [routerLink]="['/user', user.username]" title="{{ user.username }}" rel="nofollow">
+                                    <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin:3px"
                                         width="60" height="60" alt="Profile picture of {{ user.username }}" />
-                            </a>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
-              </div>
             </div>
             <p *ngIf="isFetchingNewestUsers || isFetchingActiveUsers">Loading...</p>
-            
-              <div style="clear: both"></div>
-              <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
-              <h2>Categories</h2>
-              <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
-                <li *ngFor="let categoryObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries" [routerLink]="['/category', categoryObject.slug ]" routerLinkActive="active">{{ categoryObject.name }}</a>
-                </li>
-              </ul>
+
+            <div style="clear: both"></div>
+            <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
+                <h2>Categories</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
+                    <li *ngFor="let categoryObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
+                            [routerLink]="['/category', categoryObject.slug ]"
+                            routerLinkActive="active">{{ categoryObject.name }}</a>
+                    </li>
+                </ul>
             </div>
             <p *ngIf="isFetchingCategories">Loading...</p>
-                    <div style="clear: both"></div>
+            <div style="clear: both"></div>
 
-                    <div *ngIf="!isFetchingDuration">
-                        
-                    <h2>Duration</h2>
-                    <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
-                        <li *ngFor="let durationObject of columnPosition.value">
-                                <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}" [routerLink]="['/duration', durationObject.slug ]" routerLinkActive="active">{{ durationObject.display }}</a>
+            <div *ngIf="!isFetchingDuration">
+
+                <h2>Duration</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                    <li *ngFor="let durationObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
+                            [routerLink]="['/duration', durationObject.slug ]"
+                            routerLinkActive="active">{{ durationObject.display }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <p *ngIf="isFetchingDuration">Loading...</p>
+            <div style="clear: both"></div>
+
+            <div *ngIf="!isFetchingYears">
+                <h2>Years</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
+                    <li *ngFor="let yearObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}"
+                            [routerLink]="['/year', yearObject.year ]"
+                            routerLinkActive="active">{{ yearObject.year }}</a>
+                    </li>
+                </ul>
+            </div>
+            <p *ngIf="isFetchingYears">Loading...</p>
+            <div style="clear: both"></div>
+
+            <div *ngIf="!isFetchingActivity">
+
+                <h2>Activity</h2>
+                <div class="card recent-activity">
+                    <ul class="list-group list-group-flush ">
+                        <li class="list-group-item" *ngFor="let activityItem of activity">
+                            <span class="card-text" *ngIf="activityItem.type == 'joined'">
+                                <span class="acitvity-item">
+                                    <span class="activity-image">
+                                        <a href="">
+
+                                            <img alt='{{ activityItem.parent.user.name }}'
+                                                src='{{ activityItem.parent.user.avatar }}'
+                                                class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
+                                                width='60' /></a>
+                                    </span>
+                                    <div class="data">
+                                        <span class="author">
+                                            <a href="">
+                                                {{ activityItem.parent.user.name }}</a>
+                                            <span *ngIf="activityItem.child">
+                                                and {{ activityItem.child.length }} more people
+                                            </span>
+                                            joined
+                                        </span>
+                                        <span class="excerpt" *ngIf="activityItem.child">
+                                            <img *ngFor="let child of activityItem.child"
+                                                class="tiny-image rounded-circle" alt='{{ child.user.name }}'
+                                                src='{{ child.user.avatar }}' height='30' width='30' />
+                                        </span>
+                                    </div>
+                                </span>
+                            </span>
+                            <span class="card-text" *ngIf="activityItem.type == 'comment'">
+                                <span class="acitvity-item">
+                                    <div class="activity-image">
+                                        <a href="">
+                                            <img alt='{{ activityItem.parent.user.name }}'
+                                                src='{{ activityItem.parent.user.avatar }}'
+                                                class='avatar avatar-48 photo avatar-default' height='48'
+                                                width='48' /></a>
+                                    </div>
+                                    <div class="data">
+                                        <span class="author">
+                                            <a href="">
+                                                {{ activityItem.parent.user.name }}</a> commented on
+                                            <a href="">
+                                                {{ activityItem.parent.data.documentaryTitle }}</a>
+                                        </span>
+                                        <p class="excerpt">
+                                            {{ activityItem.parent.data.comment | slice:0:100 }}...
+                                        </p>
+                                    </div>
+                                </span>
+                            </span>
+
+                            <span class="card-text" *ngIf="activityItem.type == 'added'">
+                                <span class="acitvity-item">
+                                    <span class="activity-image">
+                                        <a href="">
+
+                                            <img alt='{{ activityItem.parent.user.name }}'
+                                                src='{{ activityItem.parent.user.avatar }}'
+                                                class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
+                                                width='60' /></a>
+                                    </span>
+                                    <div class="data">
+                                        <span class="author">
+                                            <a href="">
+                                                {{ activityItem.parent.user.name }}</a> added a new documentary
+                                            <span *ngIf="activityItem.child">
+                                                plus {{ activityItem.child.length }} more
+                                            </span>
+                                        </span>
+                                        <img class="image" width="50" height="70"
+                                            src="{{ activityItem.parent.data.documentaryThumbail }}" />
+                                        <span class="excerpt" *ngIf="activityItem.child">
+                                            <img *ngFor="let child of activityItem.child"
+                                                class="tiny-image rounded-circle" alt='{{ child.user.name }}'
+                                                src='{{ child.user.avatar }}' height='30' width='30' />
+                                        </span>
+                                    </div>
+                                </span>
+                            </span>
+
+                            <span class="card-text" *ngIf="activityItem.type == 'like'">
+                                <span class="acitvity-item">
+                                    <span class="activity-image">
+                                        <a href=""> <img alt='{{ activityItem.parent.user.name }}'
+                                                src='{{ activityItem.parent.user.avatar }}'
+                                                class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
+                                                width='60' />
+                                        </a>
+                                    </span>
+                                    <div class="data">
+                                        <span class="author">
+                                            <a href="">
+                                                {{ activityItem.parent.user.name }}</a> added <a
+                                                [routerLink]="['/', activityItem.parent.data.documentarySlug]">{{ activityItem.parent.data.documentaryTitle }}</a>
+                                            to their Watchlist
+                                            <span *ngIf="activityItem.child">
+                                                and {{ activityItem.child.length }} more documentaries
+                                            </span>
+                                        </span>
+                                        <img class="image" width="50" height="70"
+                                            src="{{ activityItem.parent.data.documentaryThumbnail }}" />
+                                        <span class="excerpt" *ngIf="activityItem.child">
+                                            <img *ngFor="let child of activityItem.child" class="tiny-image"
+                                                alt='{{ child.data.documentaryTitle }}'
+                                                src='{{ child.data.documentaryThumbnail }}' height='30' width='30' />
+                                        </span>
+                                    </div>
+                                </span>
+                            </span>
                         </li>
-                      </ul>
-                    </div>
-                    
-                    <p *ngIf="isFetchingDuration">Loading...</p>
-                          <div style="clear: both"></div>
+                    </ul>
+                </div>
+            </div>
 
-                          <div *ngIf="!isFetchingYears">
-                          <h2>Years</h2>
-                            <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
-                              <li *ngFor="let yearObject of columnPosition.value">
-                                    <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}" [routerLink]="['/year', yearObject.year ]" routerLinkActive="active">{{ yearObject.year }}</a>
-                              </li>
-                            </ul>
-                            </div>
-                            <p *ngIf="isFetchingYears">Loading...</p>
-                          <div style="clear: both"></div>
-          
-                          <div *ngIf="!isFetchingActivity">
-                              
-                          <h2>Activity</h2>
-                          <div class="card recent-activity">
-                                <ul class="list-group list-group-flush ">
-                                    <li class="list-group-item" *ngFor="let activityItem of activity">
-                                        <span class="card-text" *ngIf="activityItem.type == 'joined'">
-                                            <span class="acitvity-item">
-                                            <span class="activity-image">
-                                                <a href="">
-                            
-                                                    <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
-                                                         class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' /></a>
-                                                </span>
-                                                <div class="data">
-                                                    <span class="author">
-                                                        <a href="">
-                                                            {{ activityItem.parent.user.name }}</a>
-                                                            <span *ngIf="activityItem.child">
-                                                                and {{ activityItem.child.length }} more people 
-                                                            </span>
-                                                            joined
-                                                    </span>
-                                                        <span class="excerpt" *ngIf="activityItem.child">
-                                                            <img *ngFor="let child of activityItem.child" class="tiny-image rounded-circle" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
-                                                                    height='30' width='30' />
-                                                        </span>
-                                                    </div>
-                                                </span>
-                                                </span>
-                                                <span class="card-text" *ngIf="activityItem.type == 'comment'">
-                                                <span class="acitvity-item">
-                                                    <div class="activity-image">
-                                                            <a href="">
-                                                                <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
-                                                                        class='avatar avatar-48 photo avatar-default' height='48' width='48' /></a>
-                                                            </div>
-                                                            <div class="data">
-                                                            <span class="author">
-                                                                <a href="">
-                                                                    {{ activityItem.parent.user.name }}</a> commented on
-                                                                <a href="">
-                                                                    {{ activityItem.parent.data.documentaryTitle }}</a>
-                                                            </span>
-                                                                <p class="excerpt">
-                                                                    {{ activityItem.parent.data.comment | slice:0:100 }}...
-                                                                </p>
-                                                            </div>
-                                                    </span>
-                                                    </span>
+            <p *ngIf="isFetchingActivity">Loading...</p>
 
-                                                    <span class="card-text" *ngIf="activityItem.type == 'added'">
-                                                            <span class="acitvity-item">
-                                                            <span class="activity-image">
-                                                                <a href="">
-                                            
-                                                                    <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
-                                                                         class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' /></a>
-                                                                </span>
-                                                                <div class="data">
-                                                                    <span class="author">
-                                                                        <a href="">
-                                                                            {{ activityItem.parent.user.name }}</a> added a new documentary
-                                                                            <span *ngIf="activityItem.child">
-                                                                                plus {{ activityItem.child.length }} more
-                                                                            </span>
-                                                                    </span>
-                                                                        <img class="image" width="50" height="70"
-                                                                            src="{{ activityItem.parent.data.documentaryThumbail }}" />
-                                                                        <span class="excerpt" *ngIf="activityItem.child">
-                                                                            <img *ngFor="let child of activityItem.child" class="tiny-image rounded-circle" alt='{{ child.user.name }}' src='{{ child.user.avatar }}'
-                                                                                    height='30' width='30' />
-                                                                        </span>
-                                                                    </div>
-                                                                </span>
-                                                                </span>
-
-                                                                <span class="card-text" *ngIf="activityItem.type == 'like'">
-                                                                        <span class="acitvity-item">
-                                                                        <span class="activity-image">
-                                                                            <a href="">                                                                              <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
-                                                                                     class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' />
-                                                                                    </a>
-                                                                            </span>
-                                                                            <div class="data">
-                                                                                <span class="author">
-                                                                                    <a href="">
-                                                                                        {{ activityItem.parent.user.name }}</a> added <a [routerLink]="['/', activityItem.parent.data.documentarySlug]">{{ activityItem.parent.data.documentaryTitle }}</a> to their Watchlist
-                                                                                        <span *ngIf="activityItem.child">
-                                                                                            and {{ activityItem.child.length }} more documentaries
-                                                                                        </span>
-                                                                                </span>
-                                                                                    <img class="image" width="50" height="70"
-                                                                                        src="{{ activityItem.parent.data.documentaryThumbnail }}" />
-                                                                                    <span class="excerpt" *ngIf="activityItem.child">
-                                                                                        <img *ngFor="let child of activityItem.child" class="tiny-image" alt='{{ child.data.documentaryTitle }}' src='{{ child.data.documentaryThumbnail }}'
-                                                                                                height='30' width='30' />
-                                                                                    </span>
-                                                                                </div>
-                                                                            </span>
-                                                                            </span>
-                                    </li>
-                                </ul>
-                              </div>
-                          </div>
-                              
-                          <p *ngIf="isFetchingActivity">Loading...</p>
-
-      </div>
-</div>
+        </div>
+    </div>
 </div>
