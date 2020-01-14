@@ -44,7 +44,7 @@
       <div *ngIf="isAuthenticated" ngbDropdown class="d-inline-block">
         <div *ngIf="hasMe">
             <button class="btn btn-dark" id="dropdownBasic1" ngbDropdownToggle>
-              {{ me.name }}</button> <img style="margin-left: 10px" class="rounded-circle" width="35" height="35" src="{{ me.avatar }}" />
+                <img class="rounded-circle" width="35" height="35" src="{{ me.avatar }}" /> {{ me.name }}</button> 
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <a [routerLink]="['/user', me.username]" routerLinkActive="active">
                 <button ngbDropdownItem>My Profile</button>
