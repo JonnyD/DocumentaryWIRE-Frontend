@@ -384,7 +384,11 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   imdbSelect(selectedDocumentary) {
     console.log("selectedDocumentary");
     console.log(selectedDocumentary);
-    this.documentary.title = selectedDocumentary.title;
+    console.log("this.form.value.title");
+    console.log(this.form.value.title);
+    if (this.form.value.title == null) {
+      this.form.value.title = selectedDocumentary.title;
+    }
 
     if (this.documentary.imdbId != selectedDocumentary.imdbId) {
       this.documentary.imdbId = selectedDocumentary.imdbId;
@@ -397,7 +401,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     if (this.documentary.year == null) {
       this.documentary.year = selectedDocumentary.year;
     }
-      
+
     if (this.documentary.poster == null) {
       this.documentary.poster = selectedDocumentary.poster;
       this.posterImgURL = selectedDocumentary.poster;
@@ -452,10 +456,10 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   }
 
   initYoutubeForm() {
-    let title = this.form.value.title;
+    let titleOrId = this.form.value.title;
 
     this.youtubeForm = new FormGroup({
-      'title': new FormControl(title, [Validators.required])
+      'title': new FormControl(titleOrId, [Validators.required])
     });
   }
 
@@ -463,28 +467,39 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     this.isFetchingVideosFromYoutube = true;
     this.showSearchedVideosFromYoutube = true;
 
-    let title = this.youtubeForm.value.title;
-    this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(title)
+    let titleOrId = this.youtubeForm.value.title;
+
+    this.youtubeService.getById(titleOrId)
       .subscribe((result: any) => {
         this.searchedVideosFromYoutube = result['items'];
         this.isFetchingVideosFromYoutube = false;
+      }, (error) => {
+        this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(titleOrId)
+          .subscribe((result: any) => {
+            this.searchedVideosFromYoutube = result['items'];
+            this.isFetchingVideosFromYoutube = false;
+          });
       });
   }
 
   youtubeSelect(selectedVideo) {
-    if (!this.documentary.title) {
+    console.log("this.documentary"); 
+    console.log(this.documentary); 
+
+    if (this.documentary.title == null) {
       this.documentary.title = selectedVideo.snippet.title;
     }
 
-    if (!this.documentary.storyline) {
+    if (this.documentary.storyline == null) {
       this.documentary.storyline = selectedVideo.snippet.description;
     }
 
-    if (!this.documentary.wideImage) {
+    if (this.documentary.wideImage == null) {
       this.documentary.wideImage = selectedVideo.snippet.thumbnails.default.url;
       this.wideImgURL = selectedVideo.snippet.thumbnails.default.url;
     }
 
+    this.documentary.standalone.videoSource = 2;
     this.documentary.standalone.videoId = selectedVideo.id.videoId;
 
     this.initForm();

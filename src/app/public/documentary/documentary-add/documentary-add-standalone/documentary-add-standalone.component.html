@@ -58,7 +58,7 @@
                         <input type="text" formControlName="imdbId" class="form-control" disabled
                             [ngClass]="{ 'is-invalid': submitted && f.imdbId.errors }" />
                         <button type="button" class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search or
-                            Paste ID</button>
+                            enter id</button>
                         <div *ngIf="submitted && f.imdbId.errors" class="invalid-feedback">
                             <div *ngIf="f.imdbId.errors.required">IMDB Id is required</div>
                         </div>
@@ -86,7 +86,7 @@
                             <input type="text" formControlName="videoId" class="form-control" disabled
                                 [ngClass]="{ 'is-invalid': submitted && form.get('standalone.videoId').errors }" />
                             <button type="button" class="btn btn-secondary"
-                                (click)="openYoutubeModal(youtubeContent)">Search</button>
+                                (click)="openYoutubeModal(youtubeContent)">Search or enter id</button>
                             <div *ngIf="submitted && form.get('standalone.videoId').errors" class="invalid-feedback">
                                 <div *ngIf="form.get('standalone.videoId').errors.required">Video ID is required</div>
                             </div>
@@ -260,9 +260,9 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form [formGroup]="youtubeForm" (click)="searchYoutube()">
+                    <form [formGroup]="youtubeForm" (ngSubmit)="searchYoutube()">
                         <div class="form-group">
-                            <label for="title">Title</label>
+                            <label for="title">Title or ID</label>
                             <div class="input-group">
                                 <input id="title" class="form-control" formControlName="title">
                             </div>
