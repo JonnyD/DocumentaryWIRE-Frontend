@@ -157,49 +157,7 @@
             </div>
             <p *ngIf="isFetchingNewestUsers || isFetchingActiveUsers">Loading...</p>
 
-            <div style="clear: both"></div>
-            <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
-                <h2>Categories</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
-                    <li *ngFor="let categoryObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
-                            [routerLink]="['/category', categoryObject.slug ]"
-                            routerLinkActive="active">{{ categoryObject.name }}</a>
-                    </li>
-                </ul>
-            </div>
-            <p *ngIf="isFetchingCategories">Loading...</p>
-            <div style="clear: both"></div>
-
-            <div *ngIf="!isFetchingDuration">
-
-                <h2>Duration</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
-                    <li *ngFor="let durationObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
-                            [routerLink]="['/duration', durationObject.slug ]"
-                            routerLinkActive="active">{{ durationObject.display }}</a>
-                    </li>
-                </ul>
-            </div>
-
-            <p *ngIf="isFetchingDuration">Loading...</p>
-            <div style="clear: both"></div>
-
-            <div *ngIf="!isFetchingYears">
-                <h2>Years</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
-                    <li *ngFor="let yearObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}"
-                            [routerLink]="['/year', yearObject.year ]"
-                            routerLinkActive="active">{{ yearObject.year }}</a>
-                    </li>
-                </ul>
-            </div>
-            <p *ngIf="isFetchingYears">Loading...</p>
-            <div style="clear: both"></div>
-
-            <div *ngIf="!isFetchingActivity">
+            <div *ngIf="!isFetchingActivity" style="margin-top: 40px">
 
                 <h2>Activity</h2>
                 <div class="card recent-activity">
@@ -319,6 +277,47 @@
             </div>
 
             <p *ngIf="isFetchingActivity">Loading...</p>
+
+            <div style="clear: both"></div>
+            <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
+                <h2>Categories</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
+                    <li *ngFor="let categoryObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
+                            [routerLink]="['/category', categoryObject.slug ]"
+                            routerLinkActive="active">{{ categoryObject.name }}</a>
+                    </li>
+                </ul>
+            </div>
+            <p *ngIf="isFetchingCategories">Loading...</p>
+            <div style="clear: both"></div>
+
+            <div *ngIf="!isFetchingDuration">
+
+                <h2>Duration</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                    <li *ngFor="let durationObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
+                            [routerLink]="['/duration', durationObject.slug ]"
+                            routerLinkActive="active">{{ durationObject.display }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <p *ngIf="isFetchingDuration">Loading...</p>
+            <div style="clear: both"></div>
+
+            <div *ngIf="!isFetchingYears">
+                <h2>Years</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
+                    <li *ngFor="let yearObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}"
+                            [routerLink]="['/year', yearObject.year ]"
+                            routerLinkActive="active">{{ yearObject.year }}</a>
+                    </li>
+                </ul>
+            </div>
+            <p *ngIf="isFetchingYears">Loading...</p>
 
         </div>
     </div>
