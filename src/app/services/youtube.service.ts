@@ -18,22 +18,37 @@ export class YoutubeService extends DataService {
     authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/youtube`, http);
     this.authenticationService = authenticationService;
-   }
+  }
 
-   getSearchedDocumentaries(title: string) {
+  getSearchedDocumentaries(title: string) {
     let params = new HttpParams();
 
     params = params.append('q', title);
 
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        params = params.append('access_token', accessToken)
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
 
     let options = {
-        params: params
+      params: params
     }
-    
+
     return this.get('search', options);
-   }
+  }
+
+  getById(id: string) {
+    let params = new HttpParams();
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
+    }
+
+    return this.get(id, options);
+  }
 }
