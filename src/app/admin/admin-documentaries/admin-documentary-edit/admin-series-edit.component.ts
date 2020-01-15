@@ -86,7 +86,6 @@ export class AdminSeriesEditComponent implements OnInit {
   ngOnInit() {
     this.documentary = new Documentary();
     let category = new Category();
-    this.documentary.category = category;
     let episodic = new Episodic();
     this.documentary.episodic = episodic;
 

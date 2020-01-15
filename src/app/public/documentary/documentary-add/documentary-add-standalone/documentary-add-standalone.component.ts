@@ -32,7 +32,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   private form: FormGroup;
   private submitted = false;
-  public errors = null;
+  private errors = null;
 
   private imdbForm: FormGroup;
   private youtubeForm: FormGroup;

@@ -95,7 +95,7 @@
                     <div class="form-group">
                         <label for="poster">Poster</label>
                         <input id="poster" type="file" (change)="onPosterChange($event)"
-                            [ngClass]="{ 'is-invalid': submitted && posterRequiredError }" />
+                            [ngClass]="{ 'is-invalid': submitted && f.poster.errors }" />
                         <img [src]="posterImgURL" height="200" *ngIf="posterImgURL">
                         <div *ngIf="submitted && f.poster.errors">
                             <div *ngIf="f.poster.errors.required" style="font-size: 80%; color: #dc3545;">Poster is
