@@ -1,3 +1,4 @@
+import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
 import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
 import { DocumentaryAddStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-add-standalone.component';
 import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-detail/admin-email-detail.component';
@@ -149,6 +150,10 @@ const routes: Routes = [
     canActivate: [AdminGuard], 
     component: AdminHomeComponent,
     children: [
+      { 
+        path: 'sync', 
+        component: AdminSyncComponent 
+      },
       { 
         path: 'documentaries', 
         component: AdminDocumentariesComponent 

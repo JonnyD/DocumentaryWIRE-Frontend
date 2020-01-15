@@ -78,6 +78,7 @@ import { AdminEmailAddComponent } from './admin/admin-emails/admin-email-add/adm
 import { AdminEmailDetailComponent } from './admin/admin-emails/admin-email-detail/admin-email-detail.component';
 import { DocumentaryAddStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-add-standalone.component';
 import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
+import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +135,8 @@ import { DocumentaryAddEpisodicComponent } from './public/documentary/documentar
     AdminEmailAddComponent,
     AdminEmailDetailComponent,
     DocumentaryAddStandaloneComponent,
-    DocumentaryAddEpisodicComponent
+    DocumentaryAddEpisodicComponent,
+    AdminSyncComponent
   ],
   imports: [
     BrowserModule,
