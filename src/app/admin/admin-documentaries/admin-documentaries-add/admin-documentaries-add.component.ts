@@ -164,7 +164,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
   onSubmit() {
     let formValue = this.addDocumentaryForm.value;
     console.log(formValue);
-    this.documentaryService.createAdminDocumentary(formValue).subscribe((result: any) => {
+    this.documentaryService.createStandaloneDocumentary(formValue).subscribe((result: any) => {
       console.log(result);
       this.router.navigate(["/admin/documentaries",  result.slug]);
     },
