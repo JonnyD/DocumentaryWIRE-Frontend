@@ -345,6 +345,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     this.videoSourcesSubscription = this.videoSourceService.getAll(params)
       .subscribe(result => {
         this.videoSources = result;
+        console.log("this.videoSources");
+        console.log(this.videoSources);
 
         this.isFetchingVideoSources = false;
       });
