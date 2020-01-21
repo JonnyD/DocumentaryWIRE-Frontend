@@ -11,6 +11,8 @@ export class Documentary {
     storyline: string;
     summary: string;
     year: number;
+    yearFrom: number;
+    yearTo: number;
     length: number;
     status: string;
     views: number;

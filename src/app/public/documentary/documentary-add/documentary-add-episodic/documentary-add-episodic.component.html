@@ -116,18 +116,31 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="year">Year</label>
+                        <label>Year From:</label>
                         <span *ngIf="isFetchingYears"><br />Loading...</span>
-                        <select *ngIf="!isFetchingYears" formControlName="year" class="form-control" id="year"
-                            [ngClass]="{ 'is-invalid': submitted && f.year.errors }">
+                        <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control" id="yearFrom"
+                            [ngClass]="{ 'is-invalid': submitted && episode.get('yearFrom').errors }">
                             <option disabled>Choose Year</option>
                             <option *ngFor="let yearItem of years" [value]="yearItem">
                                 {{ yearItem }}
                             </option>
                         </select>
-                        <div *ngIf="submitted && f.year.errors" class="invalid-feedback">
-                            <div *ngIf="f.year.errors.required">Year is required</div>
+                        <div *ngIf="submitted && episode.get('yearFrom').errors" class="invalid-feedback">
+                            <div *ngIf="episode.get('yearFrom').errors.required">Year From is required
+                            </div>
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Year To:</label>
+                        <span *ngIf="isFetchingYears"><br />Loading...</span>
+                        <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
+                            [ngClass]="{ 'is-invalid': submitted && episode.get('yearTo').errors }">
+                            <option disabled>Choose Year</option>
+                            <option [value]="null">Present</option>
+                            <option *ngFor="let yearItem of years" [value]="yearItem">
+                                {{ yearItem }}
+                            </option>
+                        </select>
                     </div>
 
                     <div formArrayName="seasons">
@@ -221,7 +234,7 @@
                                             <div class="form-group">
                                                 <label for="thumbnail">Thumbnail</label>
                                                 <input id="thumbnail" type="file"
-                                                    (change)="onThumbnailChange($event, i, j)"
+                                                    (change)="onThumbnailChange($event, getSeasonNumber(seas), getEpisodeNumber(episode))"
                                                     [ngClass]="{ 'is-invalid': submitted && episode.get('thumbnail').errors }" />
                                                 <img [src]="getThumbnailForSeasonAndEpsiode(getSeasonNumber(seas), getEpisodeNumber(episode))"
                                                     height="200">

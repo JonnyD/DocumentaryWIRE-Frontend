@@ -183,6 +183,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     // }
     //let videoId = this.documentary.standalone.videoId;
     let year = this.documentary.year;
+    let yearFrom = this.documentary.yearFrom;
+    let yearTo = this.documentary.yearTo;
     //let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
@@ -195,7 +197,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'year': new FormControl(year, [Validators.required]),
+      'yearFrom': new FormControl(yearFrom, [Validators.required]),
+      'yearTo': new FormControl(yearTo, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
       'imdbId': new FormControl(imdbId),
@@ -437,10 +440,16 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       this.documentary.storyline = this.form.value.storyline;
     }
 
-    if (this.form.value.yaer == null) {
-      this.documentary.year = selectedDocumentary.year;
+    if (this.form.value.yearFrom == null) {
+      this.documentary.yearFrom = selectedDocumentary.yearFrom;
     } else {
-      this.documentary.year = this.form.value.year;
+      this.documentary.yearFrom = this.form.value.yearFrom;
+    }
+
+    if (this.form.value.yearTo == null) {
+      this.documentary.yearTo = selectedDocumentary.yearTo;
+    } else {
+      this.documentary.yearTo = this.form.value.yearTo;
     }
 
     if (this.form.value.poster == null) {
