@@ -375,7 +375,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     this.showSearchedDocumentariesFromIMDB = false;
     this.showSearchedDocumentaryFromIMDB = true;
 
-    this.omdbService.getByImdbId(imdbId, 'movie')
+    let imdbType = 'movie';
+    this.omdbService.getByImdbId(imdbId, imdbType)
       .subscribe((result: any) => {
         this.searchedDocumentaryFromIMDB = result;
         this.isFetchingDocumentaryFromIMDB = false;
@@ -434,6 +435,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     }
 
     this.initForm();
+    
     this.modalService.dismissAll();
   }
 
@@ -509,12 +511,12 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   }
 
   youtubeSelect(selectedVideo) {
-    
+
     console.log("this.form.value");
     console.log(this.form.value);
 
-    console.log("this.documentary"); 
-    console.log(this.documentary); 
+    console.log("this.documentary");
+    console.log(this.documentary);
 
     if (this.form.value.title == null) {
       this.documentary.title = selectedVideo.snippet.title;

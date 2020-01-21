@@ -147,10 +147,7 @@ export class AdminSeriesEditComponent implements OnInit {
 
   initForm(seasons = null) {
     let title = this.documentary.title;
-    let category = null;
-    if (this.documentary.category) {
-      category = this.documentary.category.id;
-    }
+    let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     let year = this.documentary.year;

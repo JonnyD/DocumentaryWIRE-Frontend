@@ -1,3 +1,5 @@
+import { YoutubeService } from './../../../../services/youtube.service';
+import { OMDBService } from './../../../../services/omdb.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { FormBuilder, FormControl, Validators, FormArray, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -21,12 +23,15 @@ import { Location } from "@angular/common";
 export class DocumentaryAddEpisodicComponent implements OnInit {
 
   private documentary: Documentary;
-  
+
   private form: FormGroup;
+  private imdbForm: FormGroup;
+  private youtubeForm: FormGroup;
+
   private submitted = false;
   private errors = null;
 
-  private posterImgURL;s
+  private posterImgURL; s
   private wideImgURL;
   private thumbnailImgURLDict = {};
 
@@ -37,7 +42,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private me;
 
   private config: any;
-  
+
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -58,7 +63,19 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private isFetchingVideoSources = false;
   private isFetchingCategories = false;
   private isFetchingDocumentaries = false;
-  
+
+  private isFetchingDocumentariesFromIMDB = false;
+  private isFetchingDocumentaryFromIMDB = false;
+  private showSearchedDocumentariesFromIMDB = false;
+  private showSearchedDocumentaryFromIMDB = false;
+
+  private searchedDocumentariesFromIMDB;
+  private searchedDocumentaryFromIMDB;
+
+  private isFetchingVideosFromYoutube = false;
+  private showSearchedVideosFromYoutube = false;
+  private searchedVideosFromYoutube;
+
   private years;
   private videoSources;
   private categories;
@@ -71,9 +88,17 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private meSubscription;
   private videoSourcesSubscription;
   private categoriesSubscription;
-  
+  private getByImdbIdSubscription;
+  private ombdSearchSubscription;
+  private youtubeByIdSubscription;
+  private youtubeSearchSubscription;
+
+  private closeResult: string;
+
   private seasonNumber = 1;
   private episodeNumber = 1;
+
+  private imdbType;
 
   constructor(
     private documentaryService: DocumentaryService,
@@ -81,6 +106,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     private yearService: YearService,
     private videoSourceService: VideoSourceService,
     private categoryService: CategoryService,
+    private omdbService: OMDBService,
+    private youtubeService: YoutubeService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private router: Router,
@@ -150,10 +177,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-   // let videoSource = null;
+    // let videoSource = null;
     //if (this.documentary.standalone.videoSource) {
     //  videoSource = this.documentary.standalone.videoSource.id
-   // }
+    // }
     //let videoId = this.documentary.standalone.videoId;
     let year = this.documentary.year;
     //let length = this.documentary.length;
@@ -177,9 +204,12 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     if (seasons != null) {
       seasons.forEach(season => {
-        this.addNewSeason(season);
+        this.addSeason(season);
       });
     }
+
+    console.log("this.thumbnailImgURLDict");
+    console.log(this.thumbnailImgURLDict);
   }
 
   getEpisodeNumber(episode) {
@@ -190,7 +220,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     return season.value.number;
   }
 
-  addNewSeason(season = null) {
+  addSeason(season = null) {
     if (season != null) {
       this.seasonNumber = season.number;
     }
@@ -208,7 +238,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       if (season != null && episodes != null) {
         episodes.forEach(episode => {
           let episodesControl = control.at(this.seasonNumber - 1).get('episodes');
-          this.addNewEpisode(episodesControl, season, episode);
+          this.addEpisode(episodesControl, season, episode);
         })
       }
     }
@@ -235,13 +265,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     control.removeAt(index);
   }
 
-  addNewEpisode(control, season, episode = null) {
-    if (episode == null) {
-      let currentNumber = season.episodes.length;
-      currentNumber++;
-      this.episodeNumber = currentNumber;
-    }
-
+  insertEpisode(control,index) {
     let title;
     let storyline;
     let summary;
@@ -249,30 +273,13 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let length;
     let imdbId;
     let videoId;
-    let videoSource;
+    let videoSource = 2;
     let thumbnail;
-
-    if (episode != null) {
-      this.episodeNumber = episode.number;
-      title = episode.title;
-      imdbId = episode.imdbId;
-      thumbnail = episode.thumbnail;
-      summary = episode.summary;
-      storyline = episode.storyline;
-      year = episode.year;
-      videoId = episode.videoId;
-      videoSource = episode.videoSource;
-      length = episode.length;
-
-      if (this.thumbnailImgURLDict[season.number - 1] == undefined) {
-        this.thumbnailImgURLDict[season.number - 1] = {};
-      }
-      this.thumbnailImgURLDict[season.number - 1][this.episodeNumber - 1] = thumbnail;
-    }
-
-    control.push(
+    let episodeNumber;
+    
+    control.insert(index,
       this.fb.group({
-        'number': new FormControl(this.episodeNumber, [Validators.required]),
+        'number': new FormControl(episodeNumber, [Validators.required]),
         'title': new FormControl(title, [Validators.required]),
         'imdbId': new FormControl(imdbId),
         'storyline': new FormControl(storyline, [Validators.required]),
@@ -285,14 +292,281 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       }));
   }
 
+  addEpisode(control, season, episode = null) {
+    let title;
+    let storyline;
+    let summary;
+    let year;
+    let length;
+    let imdbId;
+    let videoId;
+    let videoSource = 2;
+    let thumbnail;
+    let episodeNumber;
+
+    if (episode != null) {
+      episodeNumber = episode.number;
+      title = episode.title;
+      imdbId = episode.imdbId;
+      thumbnail = episode.thumbnail;
+      summary = episode.summary;
+      storyline = episode.storyline;
+      year = episode.year;
+      videoId = episode.videoId;
+      videoSource = 2;
+      length = episode.length;
+      
+      if (this.thumbnailImgURLDict[season.number] == undefined) {
+        this.thumbnailImgURLDict[season.number] = {};
+      }
+      if (this.thumbnailImgURLDict[season.number][episode.number] == undefined) {
+        this.thumbnailImgURLDict[season.number][episode.number] = {};
+      }
+      this.thumbnailImgURLDict[season.number][episode.number] = thumbnail;
+    }
+
+    control.push(
+      this.fb.group({
+        'number': new FormControl(episodeNumber, [Validators.required]),
+        'title': new FormControl(title, [Validators.required]),
+        'imdbId': new FormControl(imdbId),
+        'storyline': new FormControl(storyline, [Validators.required]),
+        'summary': new FormControl(summary, [Validators.required]),
+        'length': new FormControl(length, [Validators.required]),
+        'year': new FormControl(year, [Validators.required]),
+        'videoSource': new FormControl(videoSource, [Validators.required]),
+        'videoId': new FormControl(videoId, [Validators.required]),
+        'thumbnail': new FormControl(thumbnail, [Validators.required]),
+      }));
+      
+  }
+
   get f() { return this.form.controls; }
 
-  getThumbnailForSeasonAndEpsiode(seasonNumber, episodeNumber) {
+  getThumbnailForSeasonAndEpsiode(seasonNumber: number, episodeNumber: number) {
     if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
       this.thumbnailImgURLDict[seasonNumber] = {};
     }
-
     return this.thumbnailImgURLDict[seasonNumber][episodeNumber];
+  }
+
+  onThumbnailChange(event, seasonIndex, episodeIndex) {
+    console.log(event);
+    let reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        var seasonsFormArray = this.form.get("seasons") as FormArray;
+        var episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
+        episodesFormArray.at(episodeIndex)['controls']['thumbnail'].patchValue(reader.result);
+
+        let seasonNumber = seasonsFormArray.at(seasonIndex).value.number;
+        let episodeNumber = episodesFormArray.at(episodeIndex).value.number;
+
+        if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
+          this.thumbnailImgURLDict[seasonNumber] = {};
+        }
+        this.thumbnailImgURLDict[seasonNumber][episodeNumber] = reader.result;
+      }
+
+      this.cd.markForCheck();
+
+    };
+  }
+
+  openIMDBModal(content, imdbType) {
+    console.log(imdbType);
+    this.imdbType = imdbType;
+    this.initIMDBFrom();
+    console.log(content);
+    this.modalService.open(content, { ariaLabelledBy: 'modal-omdb' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+
+  initIMDBFrom() {
+    let title = this.form.value.title;
+
+    this.imdbForm = new FormGroup({
+      'title': new FormControl(title, [Validators.required])
+    });
+  }
+
+  imdbView(imdbId) {
+    console.log("imdbId");
+    console.log(imdbId);
+    this.isFetchingDocumentaryFromIMDB = true;
+    this.showSearchedDocumentariesFromIMDB = false;
+    this.showSearchedDocumentaryFromIMDB = true;
+
+    let imdbType = this.imdbType;
+    this.omdbService.getByImdbId(imdbId, imdbType)
+      .subscribe((result: any) => {
+        this.searchedDocumentaryFromIMDB = result;
+        this.isFetchingDocumentaryFromIMDB = false;
+        console.log("searchedDocumentaryFromIMDB");
+        console.log(this.searchedDocumentaryFromIMDB);
+      })
+  }
+
+  imdbSelect() {
+    let selectedDocumentary = this.searchedDocumentaryFromIMDB;
+    console.log("selectedDocumentary");
+    console.log(selectedDocumentary);
+    console.log("this.form");
+    console.log(this.form);
+    if (this.form.value.title == null) {
+      this.documentary.title = selectedDocumentary.title;
+    } else {
+      this.documentary.title = this.form.value.title;
+    }
+
+    if (this.form.value.imdbId != selectedDocumentary.imdbId) {
+      this.documentary.imdbId = selectedDocumentary.imdbId;
+    }
+
+    if (this.form.value.storyline == null) {
+      this.documentary.storyline = selectedDocumentary.storyline;
+    } else {
+      this.documentary.storyline = this.form.value.storyline;
+    }
+
+    if (this.form.value.yaer == null) {
+      this.documentary.year = selectedDocumentary.year;
+    } else {
+      this.documentary.year = this.form.value.year;
+    }
+
+    if (this.form.value.poster == null) {
+      this.documentary.poster = selectedDocumentary.poster;
+      this.posterImgURL = selectedDocumentary.poster;
+    } else {
+      this.documentary.poster = this.form.value.poster;
+      this.posterImgURL = this.form.value.poster;
+    }
+
+    let seasons = selectedDocumentary.seasons;
+    this.initForm(seasons);
+
+    this.modalService.dismissAll();
+  }
+
+  searchOMDB() {
+    this.isFetchingDocumentariesFromIMDB = true;
+    this.showSearchedDocumentaryFromIMDB = false;
+    this.showSearchedDocumentariesFromIMDB = true;
+
+    let titleOrId = this.imdbForm.value.title;
+    let imdbType = this.imdbType;
+
+    this.getByImdbIdSubscription = this.omdbService.getByImdbId(titleOrId, imdbType)
+      .subscribe((result: any) => {
+        result = [result];
+        this.searchedDocumentariesFromIMDB = result;
+        this.isFetchingDocumentariesFromIMDB = false;
+      },
+        (error) => {
+          this.ombdSearchSubscription = this.omdbService.getSearchedDocumentaries(titleOrId, imdbType)
+            .subscribe((result: any) => {
+              this.searchedDocumentariesFromIMDB = result;
+              this.isFetchingDocumentariesFromIMDB = false;
+            });
+        });
+  }
+
+
+  openYoutubeModal(content) {
+    this.initYoutubeForm();
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-youtube' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${reason}`;
+    });
+  }
+
+  initYoutubeForm() {
+    let titleOrId = this.form.value.title;
+
+    this.youtubeForm = new FormGroup({
+      'title': new FormControl(titleOrId, [Validators.required])
+    });
+  }
+
+  searchYoutube() {
+    this.isFetchingVideosFromYoutube = true;
+    this.showSearchedVideosFromYoutube = true;
+
+    let titleOrId = this.youtubeForm.value.title;
+
+    this.youtubeByIdSubscription = this.youtubeService.getById(titleOrId)
+      .subscribe((result: any) => {
+        this.searchedVideosFromYoutube = result['items'];
+        this.isFetchingVideosFromYoutube = false;
+      }, (error) => {
+        this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(titleOrId)
+          .subscribe((result: any) => {
+            this.searchedVideosFromYoutube = result['items'];
+            this.isFetchingVideosFromYoutube = false;
+          });
+      });
+  }
+
+  youtubeSelect(selectedVideo) {
+
+    console.log("this.form.value");
+    console.log(this.form.value);
+
+    console.log("this.documentary");
+    console.log(this.documentary);
+
+    if (this.form.value.title == null) {
+      this.documentary.title = selectedVideo.snippet.title;
+    } else {
+      this.documentary.title = this.form.value.title;
+    }
+
+    if (this.form.value.storyline == null) {
+      this.documentary.storyline = selectedVideo.snippet.description;
+    } else {
+      this.documentary.storyline = this.form.value.storyline;
+    }
+
+    if (this.form.value.wideImage == null) {
+      this.documentary.wideImage = selectedVideo.snippet.thumbnails.default.url;
+      this.wideImgURL = selectedVideo.snippet.thumbnails.default.url;
+    } else {
+      this.documentary.wideImage = this.form.value.wideImage;
+    }
+
+    if (this.form.value.summary == null) {
+      this.documentary.summary = selectedVideo.snippet.description;
+    } else {
+      this.documentary.summary = this.form.value.summary;
+    }
+
+    if (this.form.value.standalone.videoId == null) {
+      this.documentary.standalone.videoId = selectedVideo.id.videoId;
+    } else {
+      this.documentary.standalone.videoId = this.form.value.standalone.videoId;
+    }
+
+    this.documentary.poster = this.form.value.poster;
+    this.posterImgURL = this.form.value.poster;
+    this.documentary.category = this.form.value.category;
+    this.documentary.year = this.form.value.year;
+    this.documentary.length = this.form.value.length;
+    this.documentary.standalone.videoSource = 2;
+
+    this.initForm();
+
+    this.modalService.dismissAll();
   }
 
   fetchDocumentaries() {
@@ -323,7 +597,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         this.showAddTitleButton = true;
       })
   }
-  
+
   pageChanged(event) {
     this.config.currentPage = event;
     this.page = event;
@@ -394,20 +668,38 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
           //this.reset();
           this.router.navigate(["/add/episodic"]);
         },
-        (error) => {
-          console.log(error);
-          this.errors = error.error;
-        });
+          (error) => {
+            console.log(error);
+            this.errors = error.error;
+          });
     } else {
       this.documentaryService.createEpisodicDocumentary(formValue)
         .subscribe((result: any) => {
           //this.reset();
           this.router.navigate(["/add/episodic"]);
-      },
-      (error) => {
-        console.log(error);
-        this.errors = error.error;
-      });
+        },
+          (error) => {
+            console.log(error);
+            this.errors = error.error;
+          });
     }
+  }
+
+  ngOnDestroy() {
+    this.queryParamsSubscription.unsubscribe();
+    this.routeParamsSubscription.unsubscribe();
+    if (this.documentaryBySlugSubscription != null) {
+      this.documentaryBySlugSubscription.unsubscribe();
+    }
+    if (this.meSubscription != null) {
+      this.meSubscription.unsubscribe();
+    }
+    if (this.getByImdbIdSubscription != null) {
+      this.getByImdbIdSubscription.unsubscribe();
+    }
+    if (this.ombdSearchSubscription != null) {
+      this.ombdSearchSubscription.unsubscribe();
+    }
+    this.meSubscription.unsubscribe();
   }
 }

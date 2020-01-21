@@ -371,143 +371,6 @@ export class DocumentaryAddComponent implements OnInit {
     });
   }
 
-  initEpisodicForm(seasons = null) {
-    let title = this.documentary.title;
-    let category = null;
-    if (this.documentary.category) {
-      category = this.documentary.category.id;
-    }
-    let storyline = this.documentary.storyline;
-    let summary = this.documentary.summary;
-    let videoSource = null;
-    if (this.documentary.standalone.videoSource) {
-      videoSource = this.documentary.standalone.videoSource.id
-    }
-    let videoId = this.documentary.standalone.videoId;
-    let year = this.documentary.year;
-    let length = this.documentary.length;
-    let poster = this.documentary.poster;
-    this.posterImgURL = this.documentary.poster;
-    let wideImage = this.documentary.wideImage;
-    this.wideImgURL = this.documentary.wideImage;
-    let imdbId = this.documentary.imdbId;
-
-    this.episodicForm = this.fb.group({
-      'title': new FormControl(title, [Validators.required]),
-      'category': new FormControl(category, [Validators.required]),
-      'storyline': new FormControl(storyline, [Validators.required]),
-      'summary': new FormControl(summary, [Validators.required]),
-      'year': new FormControl(year, [Validators.required]),
-      'poster': new FormControl(poster, [Validators.required]),
-      'wideImage': new FormControl(wideImage),
-      'imdbId': new FormControl(imdbId),
-      'seasons': this.fb.array([], Validators.required)
-    });
-
-    if (seasons != null) {
-      seasons.forEach(season => {
-        this.addNewSeason(season);
-      });
-    }
-  }
-    
-
-  addNewSeason(season = null) {
-    if (season != null) {
-      this.seasonNumber = season.number;
-    }
-
-    let control = <FormArray>this.episodicForm.controls.seasons;
-    control.push(
-      this.fb.group({
-        'number': new FormControl(this.seasonNumber, [Validators.required]),
-        'episodes': this.fb.array([], Validators.required)
-      })
-    );
-
-    if (season != null) {
-      let episodes = season.episodes;
-      if (season != null && episodes != null) {
-        episodes.forEach(episode => {
-          let episodesControl = control.at(this.seasonNumber - 1).get('episodes');
-          this.addNewEpisode(episodesControl, season, episode);
-        })
-      }
-    }
-
-    if (season == null) {
-      this.seasonNumber++;
-    }
-  }
-
-  deleteSeason(number) {
-    var seasonsFormArray = this.episodicForm.get("seasons") as FormArray;
-
-    let index = 0;
-    seasonsFormArray.value.forEach(seasonArray => {
-      if (number == seasonArray.number) {
-        seasonsFormArray.removeAt(index);
-        return;
-      }
-      index++;
-    });
-  }
-
-  deleteEpisode(control, index) {
-    control.removeAt(index);
-  }
-
-  addNewEpisode(control, season, episode = null) {
-    if (episode == null) {
-      let currentNumber = season.episodes.length;
-      currentNumber++;
-      this.episodeNumber = currentNumber;
-    }
-
-    let title;
-    let storyline;
-    let summary;
-    let year;
-    let length;
-    let imdbId;
-    let videoId;
-    let videoSource;
-    let thumbnail;
-
-    if (episode != null) {
-      this.episodeNumber = episode.number;
-      title = episode.title;
-      imdbId = episode.imdbId;
-      thumbnail = episode.thumbnail;
-      summary = episode.summary;
-      storyline = episode.storyline;
-      year = episode.year;
-      videoId = episode.videoId;
-      videoSource = episode.videoSource;
-      length = episode.length;
-
-      if (this.thumbnailImgURLDict[season.number - 1] == undefined) {
-        this.thumbnailImgURLDict[season.number - 1] = {};
-      }
-      this.thumbnailImgURLDict[season.number - 1][this.episodeNumber - 1] = thumbnail;
-    }
-
-    control.push(
-      this.fb.group({
-        'number': new FormControl(this.episodeNumber, [Validators.required]),
-        'title': new FormControl(title, [Validators.required]),
-        'imdbId': new FormControl(imdbId),
-        'storyline': new FormControl(storyline, [Validators.required]),
-        'summary': new FormControl(summary, [Validators.required]),
-        'length': new FormControl(length, [Validators.required]),
-        'year': new FormControl(year, [Validators.required]),
-        'videoSource': new FormControl(videoSource, [Validators.required]),
-        'videoId': new FormControl(videoId, [Validators.required]),
-        'thumbnail': new FormControl(thumbnail, [Validators.required]),
-      }));
-  }
-
-  get fStandalone() { return this.standaloneForm.controls; }
   get fEpisodic() { return this.episodicForm.controls; }
 
   onPosterChange(event) {
@@ -591,14 +454,6 @@ export class DocumentaryAddComponent implements OnInit {
         this.wideImgURL = reader.result; 
       };
     }
-  }
-
-  getEpisodeNumber(episode) {
-    return episode.value.number;
-  }
-
-  getSeasonNumber(season) {
-    return season.value.number;
   }
 
   initIMDBFrom() {
@@ -828,43 +683,7 @@ export class DocumentaryAddComponent implements OnInit {
   }
   
 
-  onEpisodicSubmit() {
-    console.log(this.fEpisodic);
-    console.log(this.episodicForm.value);
 
-    if (!this.episodicForm.valid) {
-      return;
-    }
-
-    this.submitted = true;
-    this.errors = null;
-
-    let values = this.episodicForm.value;
-
-    let formValue = this.episodicForm.value;
-
-    if (this.editMode) {
-      this.documentaryService.editEpisodicDocumentary(this.documentary.id, formValue)
-        .subscribe((result: any) => {
-          this.reset();
-          this.router.navigate(["/add/episodic"]);
-        },
-        (error) => {
-          console.log(error);
-          this.errors = error.error;
-        });
-    } else {
-      this.documentaryService.createEpisodicDocumentary(formValue)
-        .subscribe((result: any) => {
-          this.reset();
-          this.router.navigate(["/add/episodic"]);
-      },
-      (error) => {
-        console.log(error);
-        this.errors = error.error;
-      });
-    }
-  }
   pageChanged(event) {
     console.log(event);
     this.standaloneConfig.currentPage = event;

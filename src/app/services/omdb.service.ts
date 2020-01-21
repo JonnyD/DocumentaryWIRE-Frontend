@@ -44,7 +44,6 @@ export class OMDBService extends DataService {
     let params = new HttpParams();
 
     params = params.append('type', type);
-
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
         params = params.append('access_token', accessToken)
