@@ -31,7 +31,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private submitted = false;
   private errors = null;
 
-  private posterImgURL; s
+  private posterImgURL;
   private wideImgURL;
   private thumbnailImgURLDict = {};
 
@@ -42,6 +42,9 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private me;
 
   private config: any;
+
+  private seasonIndex;
+  private episodeIndex;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -268,7 +271,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     control.removeAt(index);
   }
 
-  insertEpisode(control,index) {
+  insertEpisode(control, index) {
     let title;
     let storyline;
     let summary;
@@ -279,7 +282,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let videoSource = 2;
     let thumbnail;
     let episodeNumber;
-    
+
     control.insert(index,
       this.fb.group({
         'number': new FormControl(episodeNumber, [Validators.required]),
@@ -318,7 +321,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       videoId = episode.videoId;
       videoSource = 2;
       length = episode.length;
-      
+
       if (this.thumbnailImgURLDict[season.number] == undefined) {
         this.thumbnailImgURLDict[season.number] = {};
       }
@@ -341,7 +344,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         'videoId': new FormControl(videoId, [Validators.required]),
         'thumbnail': new FormControl(thumbnail, [Validators.required]),
       }));
-      
+
   }
 
   get f() { return this.form.controls; }
@@ -490,7 +493,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
 
-  openYoutubeModal(content) {
+  openYoutubeModal(content, seasonIndex: number, episodeIndex: number) {
+    this.seasonIndex = seasonIndex;
+    this.episodeIndex = episodeIndex;
+
     this.initYoutubeForm();
 
     this.modalService.open(content, { ariaLabelledBy: 'modal-youtube' }).result.then((result) => {
@@ -501,7 +507,12 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   initYoutubeForm() {
-    let titleOrId = this.form.value.title;
+    let seasonIndex = this.seasonIndex;
+    let episodeIndex = this.episodeIndex;
+
+    let seasonsFormArray = this.form.get("seasons") as FormArray;
+    let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
+    let titleOrId = episodesFormArray.at(episodeIndex)['controls']['title'].value;
 
     this.youtubeForm = new FormGroup({
       'title': new FormControl(titleOrId, [Validators.required])
@@ -528,53 +539,40 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   youtubeSelect(selectedVideo) {
+    let seasonIndex = this.seasonIndex;
+    let episodeIndex = this.episodeIndex;
 
-    console.log("this.form.value");
-    console.log(this.form.value);
+    let seasonsFormArray = this.form.get("seasons") as FormArray;
+    let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
 
-    console.log("this.documentary");
-    console.log(this.documentary);
-
-    if (this.form.value.title == null) {
-      this.documentary.title = selectedVideo.snippet.title;
-    } else {
-      this.documentary.title = this.form.value.title;
+    let title = episodesFormArray.at(episodeIndex)['controls']['title'].value;
+    if (title == null || !title.trim()) {
+      let selectedTitle = selectedVideo.snippet.title;
+      episodesFormArray.at(episodeIndex)['controls']['title'].patchValue(selectedTitle);
     }
 
-    if (this.form.value.storyline == null) {
-      this.documentary.storyline = selectedVideo.snippet.description;
-    } else {
-      this.documentary.storyline = this.form.value.storyline;
+    let videoId = episodesFormArray.at(episodeIndex)['controls']['videoId'].value;
+    if (videoId == null || !videoId.trim()) {
+      let selectedVideoId = selectedVideo.id.videoId;
+      episodesFormArray.at(episodeIndex)['controls']['videoId'].patchValue(selectedVideoId);
     }
 
-    if (this.form.value.wideImage == null) {
-      this.documentary.wideImage = selectedVideo.snippet.thumbnails.default.url;
-      this.wideImgURL = selectedVideo.snippet.thumbnails.default.url;
-    } else {
-      this.documentary.wideImage = this.form.value.wideImage;
+    let thumbnail = episodesFormArray.at(episodeIndex)['controls']['thumbnail'].value;
+    if (thumbnail == null || !thumbnail.trim()) {
+      let selectedThumbnail = selectedVideo.snippet.thumbnails.default.url;
+      episodesFormArray.at(episodeIndex)['controls']['thumbnail'].patchValue(selectedThumbnail);
+
+      let seasonNumber = seasonsFormArray.at(seasonIndex).value.number;
+      let episodeNumber = episodesFormArray.at(episodeIndex).value.number;
+
+      if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
+        this.thumbnailImgURLDict[seasonNumber] = {};
+      }
+      this.thumbnailImgURLDict[seasonNumber][episodeNumber] = selectedThumbnail;
     }
 
-    if (this.form.value.summary == null) {
-      this.documentary.summary = selectedVideo.snippet.description;
-    } else {
-      this.documentary.summary = this.form.value.summary;
-    }
-
-    if (this.form.value.standalone.videoId == null) {
-      this.documentary.standalone.videoId = selectedVideo.id.videoId;
-    } else {
-      this.documentary.standalone.videoId = this.form.value.standalone.videoId;
-    }
-
-    this.documentary.poster = this.form.value.poster;
-    this.posterImgURL = this.form.value.poster;
-    this.documentary.category = this.form.value.category;
-    this.documentary.year = this.form.value.year;
-    this.documentary.length = this.form.value.length;
-    this.documentary.standalone.videoSource = 2;
-
-    this.initForm();
-
+    this.episodeIndex = null;
+    this.seasonIndex = null;
     this.modalService.dismissAll();
   }
 

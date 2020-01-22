@@ -223,7 +223,7 @@
                                                     disabled
                                                     [ngClass]="{ 'is-invalid': submitted && episode.get('videoId').errors }" />
                                                 <button type="button" class="btn btn-secondary"
-                                                    (click)="openYoutubeModal(youtubeContent)">Search or enter
+                                                    (click)="openYoutubeModal(youtubeContent, i, j)">Search or enter
                                                     id</button>
                                                 <div *ngIf="submitted && episode.get('videoId').errors"
                                                     class="invalid-feedback">
@@ -286,7 +286,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                                <label for="length">Duration</label>
+                                                <label for="length">Duration (in mins)</label>
                                                 <input type="text" formControlName="length" class="form-control"
                                                     [ngClass]="{ 'is-invalid': submitted && episode.get('length').errors }" />
                                                 <div *ngIf="submitted && episode.get('length').errors"
