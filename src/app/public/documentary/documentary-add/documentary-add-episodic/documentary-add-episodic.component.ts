@@ -29,7 +29,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private youtubeForm: FormGroup;
 
   private submitted = false;
-  private errors = null;
+  private errors = [];
 
   private posterImgURL;
   private wideImgURL;
@@ -350,7 +350,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   get f() { return this.form.controls; }
 
   getThumbnailForSeasonAndEpsiode(seasonIndex: number, episodeIndex: number) {
-    
+
     let seasonsFormArray = this.form.get("seasons") as FormArray;
     let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
     let thumbnail = episodesFormArray.at(episodeIndex).value.thumbnail;
@@ -380,7 +380,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     };
   }
-
+  
   openIMDBModal(content, imdbType) {
     console.log(imdbType);
     this.imdbType = imdbType;
@@ -640,8 +640,12 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       });
   }
 
+  hasErrors() {
+    return this.errors.length > 0;
+  }
+
   onSubmit() {
-    this.errors = null;
+    this.errors = [];
 
     console.log(this.f);
     console.log(this.form.value);
@@ -650,19 +654,27 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     let formValue = this.form.value;
 
-    if (formValue.seasons.length === 0) {
-      this.errors = "You must add a season";
+    let seasons = formValue.seasons;
+    if (seasons.length === 0) {
+      this.errors.push("You must add a season");
     }
 
-    if (formValue.seasons[0].episodes.length === 0) {
-      this.errors = "You must add an episode";
+    if (seasons.length > 0) {
+      let seasonOne = seasons[0];
+      if (seasonOne.episodes.length === 0) {
+        this.errors.push("You must add an episode");
+      }
     }
+
+    console.log("this.errors");
+    console.log(this.errors);
 
     if (!this.form.valid) {
+      this.errors.push("Form has errors");
       return;
     }
 
-    this.errors = null;
+    this.errors = [];
 
     if (this.editMode) {
       this.documentaryService.editEpisodicDocumentary(this.documentary.id, formValue)
@@ -672,7 +684,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         },
           (error) => {
             console.log(error);
-            this.errors = error.error;
+            this.errors.push(error.error);
           });
     } else {
       this.documentaryService.createEpisodicDocumentary(formValue)
@@ -682,7 +694,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         },
           (error) => {
             console.log(error);
-            this.errors = error.error;
+            this.errors.push(error.error);
           });
     }
   }
