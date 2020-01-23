@@ -543,6 +543,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   initYoutubeForm() {
+    this.searchedVideosFromYoutube = null;
+
     let seasonIndex = this.seasonIndex;
     let episodeIndex = this.episodeIndex;
 
@@ -556,6 +558,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   searchYoutube() {
+    this.searchedVideosFromYoutube = null;
+
     this.isFetchingVideosFromYoutube = true;
     this.showSearchedVideosFromYoutube = true;
 
@@ -566,7 +570,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         this.searchedVideosFromYoutube = result['items'];
         this.isFetchingVideosFromYoutube = false;
       }, (error) => {
-        this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(titleOrId)
+        let episodeTitle = this.form.value.title + " - " + titleOrId;
+        this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(episodeTitle)
           .subscribe((result: any) => {
             this.searchedVideosFromYoutube = result['items'];
             this.isFetchingVideosFromYoutube = false;
