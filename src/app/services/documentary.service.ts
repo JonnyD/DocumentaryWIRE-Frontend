@@ -53,7 +53,7 @@ export class DocumentaryService extends DataService {
 
   getMyStandloneDocumentaries(params: HttpParams, username: string) {
     params = params.append('addedBy', username);
-    params = params.append('type', 'standalone');
+    params = params.append('type', 'movie');
     params = params.append('sort', 'createdAt-desc');
 
     if (this.authenticationService.isAuthenticated()) {
@@ -70,7 +70,7 @@ export class DocumentaryService extends DataService {
 
   getMyEpisodicDocumentaries(params: HttpParams, username: string) {
     params = params.append('addedBy', username);
-    params = params.append('type', 'episodic');
+    params = params.append('type', 'series');
     params = params.append('sort', 'createdAt-desc');
 
     if (this.authenticationService.isAuthenticated()) {
@@ -139,7 +139,7 @@ export class DocumentaryService extends DataService {
       params: params
     }
 
-    let url = `${environment.apiUrl}/api/v1/documentary/standalone`;
+    let url = `${environment.apiUrl}/api/v1/documentary/movie`;
     return this.create(resource, options, url);
   }
 
@@ -155,7 +155,7 @@ export class DocumentaryService extends DataService {
       params: params
     }
 
-    let url = `${environment.apiUrl}/api/v1/documentary/standalone`;
+    let url = `${environment.apiUrl}/api/v1/documentary/movie`;
     return this.patch(id, documentary, options, url);
   }
 
@@ -171,14 +171,14 @@ export class DocumentaryService extends DataService {
       params: params
     }
 
-    let url = `${environment.apiUrl}/api/v1/documentary/episodic`;
+    let url = `${environment.apiUrl}/api/v1/documentary/series`;
     return this.create(resource, options, url);
   }
 
   editEpisodicDocumentary(id, documentary: Documentary) {
     let params = new HttpParams();
 
-    params = params.append('type', 'episodic');
+    params = params.append('type', 'series');
 
     if (this.authenticationService.isAuthenticated()) {
       let accessToken = this.authenticationService.currentTokenValue.access_token;
