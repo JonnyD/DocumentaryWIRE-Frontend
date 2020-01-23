@@ -570,8 +570,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         this.searchedVideosFromYoutube = result['items'];
         this.isFetchingVideosFromYoutube = false;
       }, (error) => {
-        let episodeTitle = this.form.value.title + " - " + titleOrId;
-        this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(episodeTitle)
+        //let episodeTitle = this.form.value.title + " - " + titleOrId;
+        this.youtubeSearchSubscription = this.youtubeService.getSearchedDocumentaries(titleOrId)
           .subscribe((result: any) => {
             this.searchedVideosFromYoutube = result['items'];
             this.isFetchingVideosFromYoutube = false;
@@ -733,7 +733,9 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       this.documentaryService.createEpisodicDocumentary(formValue)
         .subscribe((result: any) => {
           //this.reset();
-          this.router.navigate(["/add/episodic"]);
+          console.log("result");
+          console.log(result);
+          this.router.navigate(["/add"]);
         },
           (error) => {
             console.log(error);
