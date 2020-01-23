@@ -380,7 +380,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     };
   }
-  
+
   openIMDBModal(content, imdbType) {
     console.log(imdbType);
     this.imdbType = imdbType;
@@ -393,6 +393,44 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     });
   }
 
+  onWideImageChange(event) {
+    let reader = new FileReader();
+ 
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+        this.form.patchValue({
+          wideImage: reader.result
+        });
+        
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+
+        this.wideImgURL = reader.result; 
+      };
+    }
+  }
+  
+  onPosterChange(event) {
+    let reader = new FileReader();
+ 
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+    
+      reader.onload = () => {
+        this.form.patchValue({
+          poster: reader.result
+        });
+        
+        this.cd.markForCheck();
+
+        this.posterImgURL = reader.result; 
+      };
+    }
+  }
 
   initIMDBFrom() {
     let title = this.form.value.title;
