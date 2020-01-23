@@ -136,7 +136,7 @@
                         <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
                             [ngClass]="{ 'is-invalid': submitted && episode.get('yearTo').errors }">
                             <option disabled>Choose Year</option>
-                            <option [value]="null">Present</option>
+                            <option>Present</option>
                             <option *ngFor="let yearItem of years" [value]="yearItem">
                                 {{ yearItem }}
                             </option>
@@ -234,9 +234,9 @@
                                             <div class="form-group">
                                                 <label for="thumbnail">Thumbnail</label>
                                                 <input id="thumbnail" type="file"
-                                                    (change)="onThumbnailChange($event, getSeasonNumber(seas), getEpisodeNumber(episode))"
+                                                    (change)="onThumbnailChange($event, i, j)"
                                                     [ngClass]="{ 'is-invalid': submitted && episode.get('thumbnail').errors }" />
-                                                <img [src]="getThumbnailForSeasonAndEpsiode(getSeasonNumber(seas), getEpisodeNumber(episode))"
+                                                <img [src]="getThumbnailForSeasonAndEpsiode(i, j)"
                                                     height="200">
                                                 <div *ngIf="submitted && episode.get('thumbnail').errors">
                                                     <div *ngIf="episode.get('thumbnail').errors.required"

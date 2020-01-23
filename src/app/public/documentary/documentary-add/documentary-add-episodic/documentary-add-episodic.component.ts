@@ -349,11 +349,12 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
   get f() { return this.form.controls; }
 
-  getThumbnailForSeasonAndEpsiode(seasonNumber: number, episodeNumber: number) {
-    if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
-      this.thumbnailImgURLDict[seasonNumber] = {};
-    }
-    return this.thumbnailImgURLDict[seasonNumber][episodeNumber];
+  getThumbnailForSeasonAndEpsiode(seasonIndex: number, episodeIndex: number) {
+    
+    let seasonsFormArray = this.form.get("seasons") as FormArray;
+    let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
+    let thumbnail = episodesFormArray.at(episodeIndex).value.thumbnail;
+    return thumbnail;
   }
 
   onThumbnailChange(event, seasonIndex, episodeIndex) {
@@ -369,13 +370,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         var episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
         episodesFormArray.at(episodeIndex)['controls']['thumbnail'].patchValue(reader.result);
 
-        let seasonNumber = seasonsFormArray.at(seasonIndex).value.number;
-        let episodeNumber = episodesFormArray.at(episodeIndex).value.number;
-
-        if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
-          this.thumbnailImgURLDict[seasonNumber] = {};
+        if (this.thumbnailImgURLDict[seasonIndex] == undefined) {
+          this.thumbnailImgURLDict[seasonIndex] = {};
         }
-        this.thumbnailImgURLDict[seasonNumber][episodeNumber] = reader.result;
+        this.thumbnailImgURLDict[seasonIndex][episodeIndex] = reader.result;
       }
 
       this.cd.markForCheck();
@@ -562,13 +560,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       let selectedThumbnail = selectedVideo.snippet.thumbnails.default.url;
       episodesFormArray.at(episodeIndex)['controls']['thumbnail'].patchValue(selectedThumbnail);
 
-      let seasonNumber = seasonsFormArray.at(seasonIndex).value.number;
-      let episodeNumber = episodesFormArray.at(episodeIndex).value.number;
-
-      if (this.thumbnailImgURLDict[seasonNumber] == undefined) {
-        this.thumbnailImgURLDict[seasonNumber] = {};
+      if (this.thumbnailImgURLDict[seasonIndex] == undefined) {
+        this.thumbnailImgURLDict[seasonIndex] = {};
       }
-      this.thumbnailImgURLDict[seasonNumber][episodeNumber] = selectedThumbnail;
+      this.thumbnailImgURLDict[seasonIndex][episodeIndex] = selectedThumbnail;
     }
 
     this.episodeIndex = null;
