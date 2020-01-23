@@ -119,14 +119,14 @@
                         <label>Year From:</label>
                         <span *ngIf="isFetchingYears"><br />Loading...</span>
                         <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control" id="yearFrom"
-                            [ngClass]="{ 'is-invalid': submitted && episode.get('yearFrom').errors }">
+                            [ngClass]="{ 'is-invalid': submitted && f.yearFrom.errors }">
                             <option disabled>Choose Year</option>
                             <option *ngFor="let yearItem of years" [value]="yearItem">
                                 {{ yearItem }}
                             </option>
                         </select>
-                        <div *ngIf="submitted && episode.get('yearFrom').errors" class="invalid-feedback">
-                            <div *ngIf="episode.get('yearFrom').errors.required">Year From is required
+                        <div *ngIf="submitted && f.yearFrom.errors" class="invalid-feedback">
+                            <div *ngIf="f.yearFrom.errors.required">Year From is required
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                         <label>Year To:</label>
                         <span *ngIf="isFetchingYears"><br />Loading...</span>
                         <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
-                            [ngClass]="{ 'is-invalid': submitted && episode.get('yearTo').errors }">
+                            [ngClass]="{ 'is-invalid': submitted && f.yearTo.errors }">
                             <option disabled>Choose Year</option>
                             <option>Present</option>
                             <option *ngFor="let yearItem of years" [value]="yearItem">
@@ -305,15 +305,11 @@
                             </div>
                         </div>
                     </div>
-
-                    <button type="button" class="btn btn-secondary" (click)="addSeason()">Add Season</button>
-
-
-
-                    <pre>{{form.value | json}}</pre>
-                    <pre>{{ form.valid }}</pre>
-
-                    <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+                    <div style="margin-bottom: 2px">
+                        <button type="button" class="btn btn-secondary" (click)="addSeason()">Add Season</button>
+                    </div>
+                   
+                    <div *ngIf="hasErrors()" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
                     <button class="btn btn-primary">
                         <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                         Save
