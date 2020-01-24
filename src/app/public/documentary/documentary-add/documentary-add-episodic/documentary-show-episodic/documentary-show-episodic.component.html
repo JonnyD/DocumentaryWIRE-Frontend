@@ -32,11 +32,11 @@
                 </tr>
                 <tr>
                     <td>Poster</td>
-                    <td>{{ documentary.poster }}</td>
+                    <td><img src="{{ documentary.poster }}" height="200" width="160" /></td>
                 </tr>
                 <tr>
                     <td>Wide Image</td>
-                    <td>{{ documentary.wideImage }}</td>
+                    <td><img src="{{ documentary.wideImage }}" height="300" width="300"/></td>
                 </tr>
                 <tr>
                     <td>IMDB ID</td>
@@ -48,10 +48,10 @@
                 </tr>
             </tbody>
         </table>
-
-        <h2>Seasons</h2><br />
-        <div style="margin-top: 30px; clear:both">
-        </div>
+    </div>
+    <div class="row">
+        <h2>Seasons</h2>
+        <br>
         <div *ngFor="let season of documentary.seasons">
             <h3>Season {{ season.number }}</h3>
             <div *ngFor="let episode of season.episodes">
@@ -101,7 +101,7 @@
                         </tr>
                         <tr>
                             <td>Thumbnail</td>
-                            <td>{{ episode.thumbnail }}</td>
+                            <td><img src="{{ episode.thumbnail }}" height="250" width="250"/></td>
                         </tr>
                     </tbody>
                 </table>

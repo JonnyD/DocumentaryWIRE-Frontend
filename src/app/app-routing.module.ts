@@ -268,7 +268,7 @@ const routes: Routes = [
     component: DocumentaryAddStandaloneComponent,
   },  
   { 
-    path: 'add/episodic/:slug/show',
+    path: 'add/episodic/show/:slug',
     canActivate: [UserGuard],
     component: DocumentaryShowEpisodicComponent,
     resolve: [DocumentaryResolverService]
