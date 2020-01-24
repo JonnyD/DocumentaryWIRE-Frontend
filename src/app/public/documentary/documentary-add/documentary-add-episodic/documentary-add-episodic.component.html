@@ -29,7 +29,7 @@
                         <tbody>
                             <tr *ngFor="let myDocumentary of myDocumentaries | paginate: config">
                                 <td>
-                                    <a [routerLink]="['/add', 'episodic', myDocumentary.slug, 'edit']">
+                                    <a [routerLink]="['/add', 'episodic', myDocumentary.slug, 'show']">
                                         {{ myDocumentary.title }}
                                     </a>
                                 </td>
