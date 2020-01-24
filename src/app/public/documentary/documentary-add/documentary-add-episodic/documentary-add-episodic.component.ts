@@ -200,17 +200,23 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'yearFrom': new FormControl(yearFrom, [Validators.required]),
-      'yearTo': new FormControl(yearTo, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
       'imdbId': new FormControl(imdbId),
-      'seasons': this.fb.array([], Validators.required)
+      'series': new FormGroup({
+        'yearFrom': new FormControl(yearFrom, [Validators.required]),
+        'yearTo': new FormControl(yearTo),
+        'seasons': this.fb.array([], Validators.required)
+      })
     });
 
+    let seasonIndex = 0;
     if (seasons != null) {
       seasons.forEach(season => {
-        this.addSeason(season);
+        if (season != null) {
+          this.addSeason(season, seasonIndex);
+          seasonIndex++;
+        }
       });
     }
 
@@ -226,25 +232,31 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     return season.value.number;
   }
 
-  addSeason(season = null) {
+  addSeason(season = null, seasonIndex: number) {
     if (season != null) {
       this.seasonNumber = season.number;
     }
 
-    let control = <FormArray>this.form.controls.seasons;
+    let control = <FormArray>this.form.controls.series.controls.seasons;
+    console.log("control");
+    console.log(control);
     control.push(
       this.fb.group({
         'number': new FormControl(this.seasonNumber, [Validators.required]),
         'episodes': this.fb.array([], Validators.required)
       })
     );
+    console.log("control push");
+    console.log(control.value);
 
     if (season != null) {
       let episodes = season.episodes;
       if (season != null && episodes != null) {
+        let episodeIndex = 0;
         episodes.forEach(episode => {
-          let episodesControl = control.at(this.seasonNumber - 1).get('episodes');
-          this.addEpisode(episodesControl, season, episode);
+          let episodesControl = control.at(seasonIndex).get('episodes');
+          this.addEpisode(episodesControl, season, episode, seasonIndex, episodeIndex);
+          episodeIndex++;
         })
       }
     }
@@ -298,14 +310,14 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       }));
   }
 
-  addEpisode(control, season, episode = null) {
+  addEpisode(control, season, episode = null, seasonIndex: number, episodeIndex: number) {
     let title;
     let storyline;
     let summary;
     let year;
     let length;
     let imdbId;
-    let videoId;
+    let videoId = "dfsdf";
     let videoSource = 2;
     let thumbnail;
     let episodeNumber;
@@ -315,20 +327,20 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       title = episode.title;
       imdbId = episode.imdbId;
       thumbnail = episode.thumbnail;
-      summary = episode.summary;
+      summary = "sdffdsfsd";
       storyline = episode.storyline;
       year = episode.year;
-      videoId = episode.videoId;
+      videoId = "fdsdfs";
       videoSource = 2;
       length = episode.length;
 
-      if (this.thumbnailImgURLDict[season.number] == undefined) {
-        this.thumbnailImgURLDict[season.number] = {};
+      if (this.thumbnailImgURLDict[seasonIndex] == undefined) {
+        this.thumbnailImgURLDict[seasonIndex] = {};
       }
-      if (this.thumbnailImgURLDict[season.number][episode.number] == undefined) {
-        this.thumbnailImgURLDict[season.number][episode.number] = {};
+      if (this.thumbnailImgURLDict[seasonIndex][episodeIndex] == undefined) {
+        this.thumbnailImgURLDict[seasonIndex][episodeIndex] = {};
       }
-      this.thumbnailImgURLDict[season.number][episode.number] = thumbnail;
+      this.thumbnailImgURLDict[seasonIndex][episodeIndex] = thumbnail;
     }
 
     control.push(
@@ -350,8 +362,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   get f() { return this.form.controls; }
 
   getThumbnailForSeasonAndEpsiode(seasonIndex: number, episodeIndex: number) {
-
-    let seasonsFormArray = this.form.get("seasons") as FormArray;
+    let seriesFormArray = this.form.get("series") as FormArray;
+    let seasonsFormArray = seriesFormArray.get("seasons") as FormArray;
     let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
     let thumbnail = episodesFormArray.at(episodeIndex).value.thumbnail;
     return thumbnail;
@@ -366,7 +378,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        var seasonsFormArray = this.form.get("seasons") as FormArray;
+        let seriesFormArray = this.form.get("series") as FormArray;
+        let seasonsFormArray = seriesFormArray.get("seasons") as FormArray;
         var episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
         episodesFormArray.at(episodeIndex)['controls']['thumbnail'].patchValue(reader.result);
 
@@ -395,39 +408,39 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
   onWideImageChange(event) {
     let reader = new FileReader();
- 
+
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
-    
+
       reader.onload = () => {
         this.form.patchValue({
           wideImage: reader.result
         });
-        
+
         // need to run CD since file load runs outside of zone
         this.cd.markForCheck();
 
-        this.wideImgURL = reader.result; 
+        this.wideImgURL = reader.result;
       };
     }
   }
-  
+
   onPosterChange(event) {
     let reader = new FileReader();
- 
+
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
-    
+
       reader.onload = () => {
         this.form.patchValue({
           poster: reader.result
         });
-        
+
         this.cd.markForCheck();
 
-        this.posterImgURL = reader.result; 
+        this.posterImgURL = reader.result;
       };
     }
   }
@@ -548,7 +561,9 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let seasonIndex = this.seasonIndex;
     let episodeIndex = this.episodeIndex;
 
-    let seasonsFormArray = this.form.get("seasons") as FormArray;
+
+    let seriesFormArray = this.form.get("series") as FormArray;
+    let seasonsFormArray = seriesFormArray.get("seasons") as FormArray;
     let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
     let titleOrId = episodesFormArray.at(episodeIndex)['controls']['title'].value;
 
@@ -583,7 +598,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let seasonIndex = this.seasonIndex;
     let episodeIndex = this.episodeIndex;
 
-    let seasonsFormArray = this.form.get("seasons") as FormArray;
+    let seriesFormArray = this.form.get("series") as FormArray;
+    let seasonsFormArray = seriesFormArray.get("seasons") as FormArray;
     let episodesFormArray = seasonsFormArray.at(seasonIndex).get("episodes") as FormArray;
 
     let title = episodesFormArray.at(episodeIndex)['controls']['title'].value;
@@ -697,7 +713,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     let formValue = this.form.value;
 
-    let seasons = formValue.seasons;
+    let seasons = formValue.series.seasons;
     if (seasons.length === 0) {
       this.errors.push("You must add a season");
     }
@@ -723,7 +739,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       this.documentaryService.editEpisodicDocumentary(this.documentary.id, formValue)
         .subscribe((result: any) => {
           //this.reset();
-          this.router.navigate(["/add/episodic"]);
+          this.router.navigate(["/add"]);
         },
           (error) => {
             console.log(error);
@@ -735,7 +751,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
           //this.reset();
           console.log("result");
           console.log(result);
-          this.router.navigate(["/add"]);
+          this.router.navigate(["/add/episodic/show", result.slug]);
         },
           (error) => {
             console.log(error);
