@@ -1,3 +1,5 @@
+import { DocumentaryShowEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-show-episodic/documentary-show-episodic.component';
+import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
 import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
 import { DocumentaryAddStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-add-standalone.component';
@@ -21,7 +23,6 @@ import { AuthneticatedUserResolverService } from './services/authenticated-user-
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
-import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
 import { UserShowComponent } from './public/user/user-show/user-show.component';
@@ -267,6 +268,12 @@ const routes: Routes = [
     component: DocumentaryAddStandaloneComponent,
   },  
   { 
+    path: 'add/episodic/:slug/show',
+    canActivate: [UserGuard],
+    component: DocumentaryShowEpisodicComponent,
+    resolve: [DocumentaryResolverService]
+  },  
+  { 
     path: 'add/episodic',
     canActivate: [UserGuard],
     component: DocumentaryAddEpisodicComponent,
@@ -276,11 +283,6 @@ const routes: Routes = [
     canActivate: [UserGuard],
     component: DocumentaryAddComponent
   },
-  { 
-    path: 'add/:type/:slug/edit', 
-    canActivate: [UserGuard],
-    component: DocumentaryAddComponent
-  },  
   { 
     path: ':slug', 
     component: DocumentaryShowComponent,
