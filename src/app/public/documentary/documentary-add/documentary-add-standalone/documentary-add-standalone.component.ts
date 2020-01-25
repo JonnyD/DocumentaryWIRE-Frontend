@@ -40,8 +40,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
   private posterImgURL;
   private wideImgURL;
 
-  private showAddTitleButton = true;
-  private showDocumentaries = true;
+  private showAddTitleButton = false;
+  private showDocumentaries = false;
   private showForm = false;
   private hasToggledForm = false;
   private showPage = false;
@@ -293,7 +293,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.documentaryService.editStandaloneDocumentary(this.documentary.id, formValue)
         .subscribe((result: any) => {
           this.reset();
-          this.router.navigate(["/add/standalone"]);
+          this.router.navigate(["/add"]);
         },
           (error) => {
             console.log(error);
@@ -303,7 +303,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.documentaryService.createStandaloneDocumentary(formValue)
         .subscribe((result: any) => {
           this.reset();
-          this.router.navigate(["/add/standalone"]);
+          this.router.navigate(["/add"]);
         },
           (error) => {
             console.log(error);
@@ -581,7 +581,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.videoSourcesSubscription.unsubscribe();
     }
     if (this.categoriesSubscription != null) {
-      this.categoriesSubscription.unsubcribe();
+      this.categoriesSubscription.unsubscribe();
     }
     if (this.ombdSearchSubscription != null) {
       this.ombdSearchSubscription.unsubscribe();

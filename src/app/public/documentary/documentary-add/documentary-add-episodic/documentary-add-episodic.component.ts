@@ -59,8 +59,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   private showPage = false;
   private hasToggledForm = false;
   private showForm = false;
-  private showAddTitleButton = true;
-  private showDocumentaries = true;
+  private showAddTitleButton = false;
+  private showDocumentaries = false;
 
   private isFetchingYears = false;
   private isFetchingVideoSources = false;
