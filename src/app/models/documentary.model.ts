@@ -1,3 +1,4 @@
+import { Series } from './series.model';
 import { Episodic } from './episodic.model';
 import { Standalone } from './standalone.model';
 import { VideoSource } from './video-source.model';
@@ -10,7 +11,6 @@ export class Documentary {
     category: number;
     storyline: string;
     summary: string;
-    year: number;
     yearFrom: number;
     yearTo: number;
     length: number;
@@ -25,5 +25,5 @@ export class Documentary {
     imdbId: string;
     type: string;
     standalone: Standalone;
-    episodic: Episodic;
+    series: Series;
 }
