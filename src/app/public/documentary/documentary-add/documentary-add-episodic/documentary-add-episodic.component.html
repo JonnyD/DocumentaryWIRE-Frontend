@@ -115,36 +115,35 @@
                         <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
                             <div *ngIf="f.category.errors.required">Category is required</div>
                         </div>
-                    </div>
-                    <div formGroupName="series">
                         <div class="form-group">
-                            <label>Year From:</label>
-                            <span *ngIf="isFetchingYears"><br />Loading...</span>
-                            <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control"
-                                id="yearFrom" [ngClass]="{ 'is-invalid': submitted && form.get('series.yearFrom').errors }">
-                                <option disabled>Choose Year</option>
-                                <option *ngFor="let yearItem of years" [value]="yearItem">
-                                    {{ yearItem }}
-                                </option>
-                            </select>
-                            <div *ngIf="submitted && form.get('series.yearFrom').errors" class="invalid-feedback">
-                                <div *ngIf="form.get('series.yearFrom').errors.required">Year From is required
+                                <label>Year From:</label>
+                                <span *ngIf="isFetchingYears"><br />Loading...</span>
+                                <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control"
+                                    id="yearFrom" [ngClass]="{ 'is-invalid': submitted && f.yearFrom.errors }">
+                                    <option disabled>Choose Year</option>
+                                    <option *ngFor="let yearItem of years" [value]="yearItem">
+                                        {{ yearItem }}
+                                    </option>
+                                </select>
+                                <div *ngIf="submitted && f.yearFrom.errors" class="invalid-feedback">
+                                    <div *ngIf="f.yearFrom.errors.required">Year From is required
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Year To:</label>
-                            <span *ngIf="isFetchingYears"><br />Loading...</span>
-                            <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
-                                [ngClass]="{ 'is-invalid': submitted && form.get('series.yearTo').errors }">
-                                <option disabled>Choose Year</option>
-                                <option>Present</option>
-                                <option *ngFor="let yearItem of years" [value]="yearItem">
-                                    {{ yearItem }}
-                                </option>
-                            </select>
-                        </div>
-
+                            <div class="form-group">
+                                <label>Year To:</label>
+                                <span *ngIf="isFetchingYears"><br />Loading...</span>
+                                <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
+                                    [ngClass]="{ 'is-invalid': submitted && f.yearTo.errors }">
+                                    <option disabled>Choose Year</option>
+                                    <option>Present</option>
+                                    <option *ngFor="let yearItem of years" [value]="yearItem">
+                                        {{ yearItem }}
+                                    </option>
+                                </select>
+                            </div>
+                    </div>
+                    <div formGroupName="series">
                         <div formArrayName="seasons">
                             <div *ngFor="let seas of form.get('series').get('seasons').controls; let i=index">
                                 <legend>

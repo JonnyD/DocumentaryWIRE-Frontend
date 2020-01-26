@@ -1,3 +1,4 @@
+import { Series } from './../../../../models/series.model';
 import { YoutubeService } from './../../../../services/youtube.service';
 import { OMDBService } from './../../../../services/omdb.service';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -138,6 +139,8 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
                 .getDocumentaryBySlug(this.slug)
                 .subscribe((result: any) => {
                   this.documentary = result;
+                  console.log("this.documentary");
+                  console.log(this.documentary);
                   this.toggleForm();
                   this.showPage = true;
                 });
@@ -159,15 +162,16 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
   initModel() {
     this.documentary = new Documentary();
-    let episodic = new Episodic();
-    this.documentary.episodic = episodic;
+    let series = new Series();
+    this.documentary.series = series;
   }
 
   toggleForm() {
     this.showAddTitleButton = false;
     this.showDocumentaries = false;
 
-    this.showForm = !this.showForm;
+    this.hasToggledForm = true;
+    this.showForm = true;
 
     this.initYears();
     this.initVideoSources();
@@ -185,15 +189,20 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     //  videoSource = this.documentary.standalone.videoSource.id
     // }
     //let videoId = this.documentary.standalone.videoId;
-    let year = this.documentary.year;
-    let yearFrom = this.documentary.yearFrom;
-    let yearTo = this.documentary.yearTo;
+    //let year = this.documentary.year;
     //let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
     let wideImage = this.documentary.wideImage;
     this.wideImgURL = this.documentary.wideImage;
     let imdbId = this.documentary.imdbId;
+    let series = this.documentary.series;
+    let yearFrom = this.documentary.yearFrom;
+    let yearTo = this.documentary.yearTo;
+    console.log("this.documentary");
+    console.log(this.documentary);
+    console.log("series");
+    console.log(series);
 
     this.form = this.fb.group({
       'title': new FormControl(title, [Validators.required]),
@@ -203,9 +212,9 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
       'imdbId': new FormControl(imdbId),
+      'yearFrom': new FormControl(yearFrom, [Validators.required]),
+      'yearTo': new FormControl(yearTo),
       'series': new FormGroup({
-        'yearFrom': new FormControl(yearFrom, [Validators.required]),
-        'yearTo': new FormControl(yearTo),
         'seasons': this.fb.array([], Validators.required)
       })
     });
@@ -775,6 +784,5 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     if (this.ombdSearchSubscription != null) {
       this.ombdSearchSubscription.unsubscribe();
     }
-    this.meSubscription.unsubscribe();
   }
 }
