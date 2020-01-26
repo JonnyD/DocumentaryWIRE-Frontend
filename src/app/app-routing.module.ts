@@ -274,6 +274,11 @@ const routes: Routes = [
     resolve: [DocumentaryResolverService]
   },  
   { 
+    path: 'add/episodic/edit/:slug',
+    canActivate: [UserGuard],
+    component: DocumentaryAddEpisodicComponent,
+  },  
+  { 
     path: 'add/episodic',
     canActivate: [UserGuard],
     component: DocumentaryAddEpisodicComponent,
