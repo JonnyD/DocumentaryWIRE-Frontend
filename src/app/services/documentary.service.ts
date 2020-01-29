@@ -112,7 +112,7 @@ export class DocumentaryService extends DataService {
   }
 
   getNewDocumentaries(params: HttpParams) {
-    params = params.append('sort', 'year-desc');
+    params = params.append('sort', 'yearFrom-desc');
     params = params.append('status', 'publish');
 
     if (this.authenticationService.isAuthenticated()) {
@@ -189,7 +189,8 @@ export class DocumentaryService extends DataService {
       params: params
     }
 
-    return this.patch(id, documentary, options);
+    let url = `${environment.apiUrl}/api/v1/documentary/series`;
+    return this.patch(id, documentary, options, url);
   }
 
   convertArrayOfDocumentariesToMap(documentaries, amountPerRow, amountTotal) {

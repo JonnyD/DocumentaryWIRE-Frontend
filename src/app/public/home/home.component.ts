@@ -149,6 +149,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
         this.activity = arr.reverse();
 
+        console.log("act");
+        console.log(result);
+
         this.isFetchingActivity = false;
       });
   }
@@ -178,6 +181,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.yearsSubscription = this.yearService.getAllYears()
       .subscribe(result => {
+        console.log("years result");
+        console.log(result);
         this.years = this.yearService.getColumnsForYears(result);
         
         this.isFetchingYears = false;
