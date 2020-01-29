@@ -21,7 +21,7 @@
         <div class="col-md-8">
             <div class="card text-white bg-dark mb-3">
                 <div class="card-body">
-                    <h1 class="card-title"> Watch Free Documentaries Online</h1>
+                    <h1 class="card-title"> Watch Documentaries Online</h1>
                     <p class="card-text"> Discover thousands of eye-opening, paradigm shifting, and mind-blowing top
                         documentary films.</p>
                 </div>
@@ -158,7 +158,6 @@
             <p *ngIf="isFetchingNewestUsers || isFetchingActiveUsers">Loading...</p>
 
             <div *ngIf="!isFetchingActivity" style="margin-top: 40px">
-
                 <h2>Activity</h2>
                 <div class="card recent-activity">
                     <ul class="list-group list-group-flush ">
@@ -168,15 +167,15 @@
                                     <span class="activity-image">
                                         <a href="">
 
-                                            <img alt='{{ activityItem.parent.user.name }}'
-                                                src='{{ activityItem.parent.user.avatar }}'
+                                            <img alt='{{ activityItem.parent.name }}'
+                                                src='{{ activityItem.parent.avatar }}'
                                                 class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
                                                 width='60' /></a>
                                     </span>
                                     <div class="data">
                                         <span class="author">
                                             <a href="">
-                                                {{ activityItem.parent.user.name }}</a>
+                                                {{ activityItem.parent.name }}</a>
                                             <span *ngIf="activityItem.child">
                                                 and {{ activityItem.child.length }} more people
                                             </span>
@@ -184,8 +183,8 @@
                                         </span>
                                         <span class="excerpt" *ngIf="activityItem.child">
                                             <img *ngFor="let child of activityItem.child"
-                                                class="tiny-image rounded-circle" alt='{{ child.user.name }}'
-                                                src='{{ child.user.avatar }}' height='30' width='30' />
+                                                class="tiny-image rounded-circle" alt='{{ child.name }}'
+                                                src='{{ child.avatar }}' height='30' width='30' />
                                         </span>
                                     </div>
                                 </span>
@@ -194,20 +193,20 @@
                                 <span class="acitvity-item">
                                     <div class="activity-image">
                                         <a href="">
-                                            <img alt='{{ activityItem.parent.user.name }}'
-                                                src='{{ activityItem.parent.user.avatar }}'
+                                            <img alt='{{ activityItem.parent.name }}'
+                                                src='{{ activityItem.parent.avatar }}'
                                                 class='avatar avatar-48 photo avatar-default' height='48'
                                                 width='48' /></a>
                                     </div>
                                     <div class="data">
                                         <span class="author">
                                             <a href="">
-                                                {{ activityItem.parent.user.name }}</a> commented on
+                                                {{ activityItem.parent.name }}</a> commented on
                                             <a href="">
                                                 {{ activityItem.parent.data.documentaryTitle }}</a>
                                         </span>
                                         <p class="excerpt">
-                                            {{ activityItem.parent.data.comment | slice:0:100 }}...
+                                            {{ activityItem.parent.data.commentText | slice:0:100 }}...
                                         </p>
                                     </div>
                                 </span>
@@ -218,25 +217,25 @@
                                     <span class="activity-image">
                                         <a href="">
 
-                                            <img alt='{{ activityItem.parent.user.name }}'
-                                                src='{{ activityItem.parent.user.avatar }}'
+                                            <img alt='{{ activityItem.parent.name }}'
+                                                src='{{ activityItem.parent.avatar }}'
                                                 class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
                                                 width='60' /></a>
                                     </span>
                                     <div class="data">
                                         <span class="author">
                                             <a href="">
-                                                {{ activityItem.parent.user.name }}</a> added a new documentary
+                                                {{ activityItem.parent.name }}</a> added a new documentary
                                             <span *ngIf="activityItem.child">
                                                 plus {{ activityItem.child.length }} more
                                             </span>
                                         </span>
                                         <img class="image" width="50" height="70"
-                                            src="{{ activityItem.parent.data.documentaryThumbail }}" />
+                                            src="{{ activityItem.parent.data.documentaryPoster }}" />
                                         <span class="excerpt" *ngIf="activityItem.child">
                                             <img *ngFor="let child of activityItem.child"
-                                                class="tiny-image rounded-circle" alt='{{ child.user.name }}'
-                                                src='{{ child.user.avatar }}' height='30' width='30' />
+                                                class="tiny-image rounded-circle" alt='{{ child.name }}'
+                                                src='{{ child.avatar }}' height='30' width='30' />
                                         </span>
                                     </div>
                                 </span>
@@ -245,16 +244,17 @@
                             <span class="card-text" *ngIf="activityItem.type == 'like'">
                                 <span class="acitvity-item">
                                     <span class="activity-image">
-                                        <a href=""> <img alt='{{ activityItem.parent.user.name }}'
-                                                src='{{ activityItem.parent.user.avatar }}'
+                                        <a href=""> <img alt='{{ activityItem.parent.name }}'
+                                                src='{{ activityItem.parent.avatar }}'
                                                 class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
                                                 width='60' />
                                         </a>
                                     </span>
                                     <div class="data">
+                                        {{ data | json }}
                                         <span class="author">
                                             <a href="">
-                                                {{ activityItem.parent.user.name }}</a> added <a
+                                                {{ activityItem.parent.name }}</a> added <a
                                                 [routerLink]="['/', activityItem.parent.data.documentarySlug]">{{ activityItem.parent.data.documentaryTitle }}</a>
                                             to their Watchlist
                                             <span *ngIf="activityItem.child">
@@ -262,11 +262,11 @@
                                             </span>
                                         </span>
                                         <img class="image" width="50" height="70"
-                                            src="{{ activityItem.parent.data.documentaryThumbnail }}" />
+                                            src="{{ activityItem.parent.data.documentaryPoster }}" />
                                         <span class="excerpt" *ngIf="activityItem.child">
                                             <img *ngFor="let child of activityItem.child" class="tiny-image"
                                                 alt='{{ child.data.documentaryTitle }}'
-                                                src='{{ child.data.documentaryThumbnail }}' height='30' width='30' />
+                                                src='{{ child.data.documentaryPoster}}' height='60' width='60' />
                                         </span>
                                     </div>
                                 </span>
