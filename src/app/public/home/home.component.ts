@@ -1,3 +1,4 @@
+import { ActivatedRoute } from '@angular/router';
 import { DurationService } from './../../services/duration.service';
 import { CategoryService } from './../../services/category.service';
 import { YearService } from './../../services/year.service';
@@ -5,9 +6,9 @@ import { ActivityService } from './../../services/activity.service';
 import { UserService } from './../../services/user.service';
 import { DocumentaryService } from './../../services/documentary.service';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,8 @@ import { DomSanitizer } from '@angular/platform-browser';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  
+
   public recentlyAdded;
   public recentlyUpdated;
   public newDocumentaries;
@@ -44,6 +47,33 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingDuration = false;
   isFetchingActivity = false;
 
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    autoWidth: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true,
+    margin: 10,
+    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+  };
+
   constructor(
     private documentaryService: DocumentaryService,
     private userService: UserService,
@@ -51,19 +81,20 @@ export class HomeComponent implements OnInit, OnDestroy {
     private activityService: ActivityService,
     private yearService: YearService,
     private categoryService: CategoryService,
-    private durationService: DurationService
+    private durationService: DurationService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.fetchRecentlyAddedDocumentaries();
-    this.fetchRecentlyUpdatedDocumentaries();
-    this.fetchNewDocumentaries();
-    this.fetchNewestUsers();
-    this.fetchActiveUsers();
-    this.fetchCategories();
-    this.fetchYears();
-    this.fetchDuration();
-    this.fetchActivity();
+      this.fetchRecentlyAddedDocumentaries();
+      this.fetchRecentlyUpdatedDocumentaries();
+      this.fetchNewDocumentaries();
+      this.fetchNewestUsers();
+      this.fetchActiveUsers();
+      this.fetchCategories();
+      this.fetchYears();
+      this.fetchDuration();
+      this.fetchActivity();
   }
 
   fetchRecentlyAddedDocumentaries() {
@@ -91,7 +122,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(result => {
         let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
         this.recentlyUpdated = cardDecks;
-        
+
         this.isFetchingRecentlyUpdatedDocumentaries = false;
       });
   }
@@ -131,7 +162,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.activeUsersSubscription = this.userService.getActiveUsers(params)
       .subscribe(result => {
         this.activeUsers = result['items'];
-        
+
         this.isFetchingActiveUsers = false;
       });
   }
@@ -162,7 +193,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.categoriesSubscription = this.categoryService.getAllCategories()
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
-        
+
         this.isFetchingCategories = false;
       })
   }
@@ -184,7 +215,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log("years result");
         console.log(result);
         this.years = this.yearService.getColumnsForYears(result);
-        
+
         this.isFetchingYears = false;
       })
   }
@@ -200,7 +231,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.yearsSubscription.unsubscribe();
   }
 
-  public getSantizeUrl(url : string) {
+  public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }

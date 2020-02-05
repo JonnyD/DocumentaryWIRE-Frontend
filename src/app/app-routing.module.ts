@@ -1,3 +1,4 @@
+import { HomeResolverService } from './services/home-resolver.service';
 import { DocumentaryShowEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-show-episodic/documentary-show-episodic.component';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
@@ -66,76 +67,79 @@ import { DocumentaryShowComponent } from './public/documentary/documentary-show/
 import { UserAddedComponent } from './public/user/user-added/user-added.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  {
+    path: '',
+    component: HomeComponent
+  },
   { path: 'browse', component: BrowseComponent },
-  { 
-    path: 'category/:slug', 
+  {
+    path: 'category/:slug',
     component: CategoryShowComponent,
-    resolve: [CategoryResolverService] 
+    resolve: [CategoryResolverService]
   },
-  { 
-    path: 'year/:id', 
+  {
+    path: 'year/:id',
     component: YearShowComponent,
-    resolve: [YearResolverService] 
+    resolve: [YearResolverService]
   },
-  { 
-    path: 'duration/:slug', 
+  {
+    path: 'duration/:slug',
     component: DurationShowComponent,
-    resolve: [DurationResolverService] 
+    resolve: [DurationResolverService]
   },
-  { 
-    path: 'community', 
+  {
+    path: 'community',
     component: CommunityComponent
   },
-  { 
-    path: 'user/edit', 
+  {
+    path: 'user/edit',
     component: UserEditComponent,
     resolve: [AuthneticatedUserResolverService]
   },
-  { 
-    path: 'user/edit/change-name', 
+  {
+    path: 'user/edit/change-name',
     component: ChangeNameComponent,
     resolve: [AuthneticatedUserResolverService]
   },
-  { 
-    path: 'user/edit/change-username', 
+  {
+    path: 'user/edit/change-username',
     component: ChangeUsernameComponent,
     resolve: [AuthneticatedUserResolverService]
   },
-  { 
-    path: 'user/edit/change-password', 
+  {
+    path: 'user/edit/change-password',
     component: ChangePasswordComponent,
     resolve: [AuthneticatedUserResolverService]
   },
-  { 
-    path: 'user/edit/forgot-password', 
+  {
+    path: 'user/edit/forgot-password',
     component: ForgotPasswordComponent
   },
-  { 
-    path: 'user/edit/reset-password', 
+  {
+    path: 'user/edit/reset-password',
     component: ResetPasswordComponent
   },
-  { 
-    path: 'user/edit/forgot-username', 
+  {
+    path: 'user/edit/forgot-username',
     component: ForgotUsernameComponent
   },
-  { 
-    path: 'user/:username', 
+  {
+    path: 'user/:username',
     component: UserShowComponent,
     resolve: [UserResolverService]
   },
-  { 
-    path: 'user/:username/activity', 
+  {
+    path: 'user/:username/activity',
     component: UserActivityComponent,
     resolve: [UserResolverService]
   },
-  { 
-    path: 'user/:username/added', 
+  {
+    path: 'user/:username/added',
     component: UserAddedComponent,
     resolve: [UserResolverService]
   },
-  { 
-    path: 'user/:username/watchlist', 
+  {
+    path: 'user/:username/watchlist',
     component: UserWatchlistComponent,
     resolve: [UserResolverService]
   },
@@ -146,150 +150,150 @@ const routes: Routes = [
   { path: 'confirm', component: ConfirmComponent },
   { path: 'email-not-confirmed/:email', component: EmailNotConfirmedComponent },
   { path: 'resend/:email', component: ResendComponent },
-  { 
-    path: 'admin', 
-    canActivate: [AdminGuard], 
+  {
+    path: 'admin',
+    canActivate: [AdminGuard],
     component: AdminHomeComponent,
     children: [
-      { 
-        path: 'sync', 
-        component: AdminSyncComponent 
+      {
+        path: 'sync',
+        component: AdminSyncComponent
       },
-      { 
-        path: 'documentaries', 
-        component: AdminDocumentariesComponent 
+      {
+        path: 'documentaries',
+        component: AdminDocumentariesComponent
       },
-      { 
-        path: 'documentaries/standalone/add', 
+      {
+        path: 'documentaries/standalone/add',
         component: AdminStandaloneEditComponent
       },
-      { 
-        path: 'documentaries/series/add', 
+      {
+        path: 'documentaries/series/add',
         component: AdminSeriesEditComponent
       },
-      { 
-        path: 'documentaries/standalone/:slug/edit', 
+      {
+        path: 'documentaries/standalone/:slug/edit',
         component: AdminStandaloneEditComponent
       },
-      { 
-        path: 'documentaries/series/:slug/edit', 
+      {
+        path: 'documentaries/series/:slug/edit',
         component: AdminSeriesEditComponent
       },
-      { 
-        path: 'documentaries/:slug', 
+      {
+        path: 'documentaries/:slug',
         component: AdminDocumentaryDetailComponent,
         resolve: [DocumentaryResolverService]
       },
-      { 
-        path: 'categories', 
-        component: AdminCategoriesComponent 
+      {
+        path: 'categories',
+        component: AdminCategoriesComponent
       },
-      { 
-        path: 'categories/:slug', 
+      {
+        path: 'categories/:slug',
         component: AdminCategoryDetailComponent,
         resolve: [CategoryResolverService]
       },
-      { 
-        path: 'categories/:slug/edit', 
+      {
+        path: 'categories/:slug/edit',
         component: AdminCategoryEditComponent,
         resolve: [CategoryResolverService]
       },
-      { 
-        path: 'video-sources', 
+      {
+        path: 'video-sources',
         component: AdminVideoSourcesComponent
       },
-      { 
-        path: 'video-sources/:id', 
+      {
+        path: 'video-sources/:id',
         component: AdminVideoSourceDetailComponent,
         resolve: [VideoSourceResolverService]
       },
-      { 
-        path: 'video-sources/:id/edit', 
+      {
+        path: 'video-sources/:id/edit',
         component: AdminVideoSourceEditComponent,
         resolve: [VideoSourceResolverService]
       },
-      { 
-        path: 'comments', 
-        component: AdminCommentsComponent 
+      {
+        path: 'comments',
+        component: AdminCommentsComponent
       },
-      { 
-        path: 'comments/:id', 
+      {
+        path: 'comments/:id',
         component: AdminCommentDetailComponent,
         resolve: [CommentResolverService]
       },
-      { 
-        path: 'comments/:id/edit', 
+      {
+        path: 'comments/:id/edit',
         component: AdminCommentEditComponent,
         resolve: [CommentResolverService]
       },
-      { 
-        path: 'users', 
-        component: AdminUsersComponent 
+      {
+        path: 'users',
+        component: AdminUsersComponent
       },
-      { 
-        path: 'users/:username', 
+      {
+        path: 'users/:username',
         component: AdminUserDetailComponent,
         resolve: [UserResolverService]
       },
-      { 
-        path: 'users/:username/edit', 
+      {
+        path: 'users/:username/edit',
         component: AdminUserEditComponent,
         resolve: [UserResolverService]
       },
-      { 
-        path: 'subscriptions', 
-        component: AdminSubscriptionsComponent 
+      {
+        path: 'subscriptions',
+        component: AdminSubscriptionsComponent
       },
-      { 
-        path: 'activity', 
-        component: AdminActivityComponent 
+      {
+        path: 'activity',
+        component: AdminActivityComponent
       },
-      { 
-        path: 'emails', 
-        component: AdminEmailsComponent 
+      {
+        path: 'emails',
+        component: AdminEmailsComponent
       },
-      { 
-        path: 'emails/add', 
-        component: AdminEmailAddComponent 
+      {
+        path: 'emails/add',
+        component: AdminEmailAddComponent
       },
-      { 
-        path: 'emails/:id', 
-        component: AdminEmailDetailComponent 
+      {
+        path: 'emails/:id',
+        component: AdminEmailDetailComponent
       },
-      { 
-        path: 'emails/:id/edit', 
-        component: AdminEmailAddComponent 
+      {
+        path: 'emails/:id/edit',
+        component: AdminEmailAddComponent
       },
     ]
   },
-  { 
+  {
     path: 'add/standalone',
     canActivate: [UserGuard],
     component: DocumentaryAddStandaloneComponent,
-  },  
-  { 
+  },
+  {
     path: 'add/episodic/show/:slug',
     canActivate: [UserGuard],
     component: DocumentaryShowEpisodicComponent,
     resolve: [DocumentaryResolverService]
-  },  
-  { 
+  },
+  {
     path: 'add/episodic/edit/:slug',
     canActivate: [UserGuard],
     component: DocumentaryAddEpisodicComponent,
-  },  
-  { 
+  },
+  {
     path: 'add/episodic',
     canActivate: [UserGuard],
     component: DocumentaryAddEpisodicComponent,
-  },  
-  { 
-    path: 'add', 
+  },
+  {
+    path: 'add',
     canActivate: [UserGuard],
     component: DocumentaryAddComponent
   },
-  { 
-    path: ':slug', 
+  {
+    path: ':slug',
     component: DocumentaryShowComponent,
     resolve: [DocumentaryResolverService]
   }

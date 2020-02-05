@@ -45,7 +45,6 @@ import { AdminCommentEditComponent } from './admin/admin-comments/admin-comment-
 import { AdminCategoryEditComponent } from './admin/admin-categories/admin-category-edit/admin-category-edit.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AdminUserDetailComponent } from './admin/admin-users/admin-user-detail/admin-user-detail.component';
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
 import { BrowseComponent } from './public/browse/browse.component';
@@ -80,6 +79,7 @@ import { DocumentaryAddStandaloneComponent } from './public/documentary/document
 import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
 import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
 import { DocumentaryShowEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-show-episodic/documentary-show-episodic.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -150,10 +150,10 @@ import { DocumentaryShowEpisodicComponent } from './public/documentary/documenta
     AngularEditorModule,
     BrowserAnimationsModule,
     NgbModule,
-    CarouselModule,
     RecaptchaFormsModule,
     RecaptchaModule,
-    RecaptchaModule.forRoot()
+    RecaptchaModule.forRoot(),
+    CarouselModule
   ],
   providers: [
     DocumentaryService,
