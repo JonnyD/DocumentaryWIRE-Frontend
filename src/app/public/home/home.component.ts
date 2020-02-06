@@ -184,10 +184,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   fetchRecentlyAddedDocumentaries() {
     this.isFetchingRecentlyAddedDocumentaries = true;
-
-    let amountPerPage = 9;
     let params = new HttpParams();
-    params = params.append('amountPerPage', amountPerPage.toString());
 
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
       .subscribe(result => {
