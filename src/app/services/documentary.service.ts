@@ -139,6 +139,17 @@ export class DocumentaryService extends DataService {
     return this.getAll(options);
   }
 
+  getTrendingDocumentaries(params: HttpParams) {
+    params = params.append('sort', 'todayViews-desc');
+    params = params.append('status', 'publish');
+
+    let options = {
+      params: params
+    }
+
+    return this.getAll(options);
+  }
+
   createStandaloneDocumentary(resource) {
     let params = new HttpParams();
 

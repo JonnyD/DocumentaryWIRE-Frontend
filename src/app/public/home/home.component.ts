@@ -16,7 +16,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  
+
 
   public recentlyAdded;
   public recentlyUpdated;
@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public years;
   public categories;
   public duration;
+  public trending;
 
   private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
@@ -38,6 +39,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private activitySubscription;
   private yearsSubscription;
   private categoriesSubscription;
+  private trendingSubscription;
 
   isFetchingRecentlyAddedDocumentaries = false;
   isFetchingRecentlyUpdatedDocumentaries = false;
@@ -49,6 +51,34 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingYears = false;
   isFetchingDuration = false;
   isFetchingActivity = false;
+  isFetchingTrendingDocumentaries = false;
+
+  trendingOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    autoWidth: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true,
+    margin: 10,
+    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+  };
 
   recentlyAddedOptions: OwlOptions = {
     loop: true,
@@ -74,7 +104,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
   };
 
   recentlyUpdatedOptions: OwlOptions = {
@@ -101,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
   };
 
   newOptions: OwlOptions = {
@@ -128,9 +158,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
   };
-  
+
   popularOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -155,7 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
   };
 
   constructor(
@@ -170,16 +200,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-      this.fetchRecentlyAddedDocumentaries();
-      this.fetchRecentlyUpdatedDocumentaries();
-      this.fetchNewDocumentaries();
-      this.fetchPopularDocumentaries();
-      this.fetchNewestUsers();
-      this.fetchActiveUsers();
-      this.fetchCategories();
-      this.fetchYears();
-      this.fetchDuration();
-      this.fetchActivity();
+    this.fetchTrendingDocumentaries();
+    this.fetchRecentlyAddedDocumentaries();
+    this.fetchRecentlyUpdatedDocumentaries();
+    this.fetchNewDocumentaries();
+    this.fetchPopularDocumentaries();
+    this.fetchNewestUsers();
+    this.fetchActiveUsers();
+    this.fetchCategories();
+    this.fetchYears();
+    this.fetchDuration();
+    this.fetchActivity();
+  }
+
+  fetchTrendingDocumentaries() {
+    this.isFetchingTrendingDocumentaries = true;
+    let params = new HttpParams();
+
+    this.trendingSubscription = this.documentaryService.getTrendingDocumentaries(params)
+      .subscribe(result => {
+        this.trending = result['items'];
+        console.log(result);
+
+        this.isFetchingTrendingDocumentaries = false;
+      });
   }
 
   fetchRecentlyAddedDocumentaries() {
@@ -314,6 +358,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.trendingSubscription.unsubscribe();
     this.recentlyAddedSubscription.unsubscribe();
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
