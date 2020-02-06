@@ -87,6 +87,23 @@ export class DocumentaryService extends DataService {
 
   getRecentlyUpdatedDocumentaries(params: HttpParams) {
     params = params.append('sort', 'updatedAt-desc');
+    params = params.append('status', 'publish');
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
+    }
+
+    return this.getAll(options);
+  }
+
+  getPopularDocumentaries(params: HttpParams) {
+    params = params.append('sort', 'views-desc');
+    params = params.append('status', 'publish');
 
     if (this.authenticationService.isAuthenticated()) {
       let accessToken = this.authenticationService.currentTokenValue.access_token;
@@ -114,11 +131,6 @@ export class DocumentaryService extends DataService {
   getNewDocumentaries(params: HttpParams) {
     params = params.append('sort', 'yearFrom-desc');
     params = params.append('status', 'publish');
-
-    if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      params = params.append('access_token', accessToken)
-    }
 
     let options = {
       params: params

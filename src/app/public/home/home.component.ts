@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public recentlyAdded;
   public recentlyUpdated;
   public newDocumentaries;
+  public popularDocumentaries;
   public newestUsers;
   public activeUsers;
   public activity;
@@ -31,6 +32,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
   private newDocumentariesSubscription;
+  private popularDocumentariesSubscription;
   private newestUsersSubscription;
   private activeUsersSubscription;
   private activitySubscription;
@@ -40,6 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingRecentlyAddedDocumentaries = false;
   isFetchingRecentlyUpdatedDocumentaries = false;
   isFetchingNewDocumentaries = false;
+  isFetchingPopularDocumentaries = false;
   isFetchingNewestUsers = false;
   isFetchingActiveUsers = false;
   isFetchingCategories = false;
@@ -47,7 +50,88 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingDuration = false;
   isFetchingActivity = false;
 
-  customOptions: OwlOptions = {
+  recentlyAddedOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    autoWidth: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true,
+    margin: 10,
+    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+  };
+
+  recentlyUpdatedOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    autoWidth: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true,
+    margin: 10,
+    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+  };
+
+  newOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    dots: false,
+    autoWidth: true,
+    navSpeed: 700,
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true,
+    margin: 10,
+    navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>']
+  };
+  
+  popularOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -89,6 +173,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.fetchRecentlyAddedDocumentaries();
       this.fetchRecentlyUpdatedDocumentaries();
       this.fetchNewDocumentaries();
+      this.fetchPopularDocumentaries();
       this.fetchNewestUsers();
       this.fetchActiveUsers();
       this.fetchCategories();
@@ -120,8 +205,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.recentlyUpdatedSubscription = this.documentaryService.getRecentlyUpdatedDocumentaries(params)
       .subscribe(result => {
-        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
-        this.recentlyUpdated = cardDecks;
+        this.recentlyUpdated = result['items'];
 
         this.isFetchingRecentlyUpdatedDocumentaries = false;
       });
@@ -134,10 +218,22 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     this.newDocumentariesSubscription = this.documentaryService.getNewDocumentaries(params)
       .subscribe(result => {
-        let cardDecks = this.documentaryService.convertArrayOfDocumentariesToMap(result['items'], 4, 8);
-        this.newDocumentaries = cardDecks;
+        this.newDocumentaries = result['items'];
 
         this.isFetchingNewDocumentaries = false;
+      });
+  }
+
+  fetchPopularDocumentaries() {
+    this.isFetchingPopularDocumentaries = true;
+
+    let params = new HttpParams();
+
+    this.popularDocumentariesSubscription = this.documentaryService.getPopularDocumentaries(params)
+      .subscribe(result => {
+        this.popularDocumentaries = result['items'];
+
+        this.isFetchingPopularDocumentaries = false;
       });
   }
 
@@ -224,6 +320,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.recentlyAddedSubscription.unsubscribe();
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
+    this.popularDocumentariesSubscription.unsubscribe();
     this.newestUsersSubscription.unsubscribe();
     this.activeUsersSubscription.unsubscribe();
     this.activitySubscription.unsubscribe();
