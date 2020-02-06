@@ -95,7 +95,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
     let summary = this.documentary.summary;
     let videoSource = this.documentary.standalone.videoSource;
     let videoId = this.documentary.standalone.videoId;
-    let year = this.documentary.year;
+    let year = this.documentary.yearFrom;
     let length = this.documentary.length;
     let status = this.documentary.status;
     let poster = this.documentary.poster;
