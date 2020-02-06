@@ -151,35 +151,9 @@
 
         </div>
         <div class="col-md-4">
-            <h2>Follow Us</h2>
-            <div class="card">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <p class="card-text">
-                            <img src="/assets/email.png" width="50" height="50"
-                                style="float: left; margin-right: 10px" />
-                            <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"
-                                target="popupwindow"
-                                href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest
-                                documentaries sent straight to your inbox.</a>
-                        </p>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="text-center">
-                            <p class="card-text">
-                                <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px" />
-                                <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px" />
-                                <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px" />
-                                <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px" />
-                                <img src="/assets/gab.png" width="40" height="40" />
-                            </p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div style="margin-top: 40px" *ngIf="!isFetchingNewestUsers && !isFetchingActiveUsers">
+            <div>
                 <h2>Members</h2>
-                <div class="card">
+                <div class="card" *ngIf="!isFetchingNewestUsers && !isFetchingActiveUsers">
                     <div class="card-header" style="background-color: #ffffff">
                         <ul class="nav nav-tabs card-header-tabs" id="bologna-list" role="tablist">
                             <li class="nav-item">
@@ -207,9 +181,9 @@
             <p *ngIf="isFetchingNewestUsers || isFetchingActiveUsers">Loading...</p>
 
             <div style="clear: both"></div>
-            <div *ngIf="!isFetchingActivity" style="margin-top: 40px">
+            <div style="margin-top: 40px">
                 <h2>Activity</h2>
-                <div class="card recent-activity">
+                <div *ngIf="!isFetchingActivity" class="card recent-activity">
                     <ul class="list-group list-group-flush ">
                         <li class="list-group-item" *ngFor="let activityItem of activity">
                             <span class="card-text" *ngIf="activityItem.type == 'joined'">
@@ -329,45 +303,77 @@
             <p *ngIf="isFetchingActivity">Loading...</p>
 
             <div style="clear: both"></div>
-            <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
+            <div style="margin-top: 30px">
                 <h2>Categories</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
-                    <li *ngFor="let categoryObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
-                            [routerLink]="['/category', categoryObject.slug ]"
-                            routerLinkActive="active">{{ categoryObject.name }}</a>
-                    </li>
-                </ul>
+                <div *ngIf="!isFetchingCategories">
+                    <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
+                        <li *ngFor="let categoryObject of columnPosition.value">
+                            <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
+                                [routerLink]="['/category', categoryObject.slug ]"
+                                routerLinkActive="active">{{ categoryObject.name }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
             <p *ngIf="isFetchingCategories">Loading...</p>
             <div style="clear: both"></div>
 
-            <div *ngIf="!isFetchingDuration">
-
+            <div>
                 <h2>Duration</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
-                    <li *ngFor="let durationObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
-                            [routerLink]="['/duration', durationObject.slug ]"
-                            routerLinkActive="active">{{ durationObject.display }}</a>
-                    </li>
-                </ul>
+                <div *ngIf="!isFetchingDuration">
+                    <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                        <li *ngFor="let durationObject of columnPosition.value">
+                            <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
+                                [routerLink]="['/duration', durationObject.slug ]"
+                                routerLinkActive="active">{{ durationObject.display }}</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-
             <p *ngIf="isFetchingDuration">Loading...</p>
             <div style="clear: both"></div>
 
-            <div *ngIf="!isFetchingYears">
+            <div>
                 <h2>Years</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
-                    <li *ngFor="let yearObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year_from }}"
-                            [routerLink]="['/year', yearObject.year_from ]"
-                            routerLinkActive="active">{{ yearObject.year_from }}</a>
+                <div *ngIf="!isFetchingYears">
+                    <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
+                        <li *ngFor="let yearObject of columnPosition.value">
+                            <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year_from }}"
+                                [routerLink]="['/year', yearObject.year_from ]"
+                                routerLinkActive="active">{{ yearObject.year_from }}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <p *ngIf="isFetchingYears">Loading...</p>
+
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p class="card-text">
+                            <img src="/assets/email.png" width="50" height="50"
+                                style="float: left; margin-right: 10px" />
+                            <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"
+                                target="popupwindow"
+                                href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest
+                                documentaries sent straight to your inbox.</a>
+                        </p>
+                    </li>
+                </ul>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="text-center">
+                            <p class="card-text">
+                                <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/gab.png" width="40" height="40" />
+                            </p>
+                        </div>
                     </li>
                 </ul>
             </div>
-            <p *ngIf="isFetchingYears">Loading...</p>
 
         </div>
     </div>
