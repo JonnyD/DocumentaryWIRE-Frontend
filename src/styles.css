@@ -2,27 +2,6 @@
 @import '~ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css';
 @import '~ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css';
 
-.owl-prev {
-    width: 15px;
-    height: 100px;
-    position: absolute;
-    top: 40%;
-    margin-left: -20px;
-    display: block !important;
-    border:0px solid black;
-}
-
-.owl-next {
-    width: 15px;
-    height: 100px;
-    position: absolute;
-    top: 40%;
-    right: 0;
-    display: block !important;
-    border:0px solid black;
-}
-.owl-prev i, .owl-next i {transform : scale(1,6); color: #ccc;}
-
 body {
     background-color: #FAFAFA !important;
 }
@@ -62,7 +41,7 @@ h1,h4 {
 }
 
 .recent-activity {
-    height: 750px;
+    height: 850px;
     overflow-y: scroll;
     border: 1px solid #DDD;
     padding-left: 0;

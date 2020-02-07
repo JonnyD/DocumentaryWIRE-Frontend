@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
   };
 
   recentlyAddedOptions: OwlOptions = {
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
   };
 
   recentlyUpdatedOptions: OwlOptions = {
@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
   };
 
   newOptions: OwlOptions = {
@@ -158,7 +158,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
   };
 
   popularOptions: OwlOptions = {
@@ -185,7 +185,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     },
     nav: true,
     margin: 10,
-    navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>']
+    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
   };
 
   constructor(
