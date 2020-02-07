@@ -1,5 +1,5 @@
 <script>
-    $(".pop").popover({ trigger: "manual", html: true, animation: false })
+    $(".pop").popover({ trigger: "manual", html: true, animation: false, container: 'body'} })
         .on("mouseenter", function () {
             var _this = this;
             $(this).popover("show");
@@ -16,7 +16,7 @@
         });  
 </script>
 
-<div class="container" style="margin-top: 40px">
+<div class="container" style="margin-top: 20px">
     <div class="row">
         <div class="col-md-8">
             <h3>Welcome to DocumentaryWIRE</h3>
@@ -47,7 +47,7 @@
                     [id]="documentary.id">
                     <ng-template #popContent>{{ documentary.summary }}</ng-template>
                     <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
-                    <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle"
+                    <a class="pop" href="http://localhost" placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle"
                         triggers="mouseenter:mouseleave">
                         <img height="280" [src]="documentary.poster" [alt]="documentary.title"
                             [title]="documentary.title">
@@ -283,7 +283,7 @@
                                 </span>
                             </span>
 
-                            <span class="card-text" *ngIf="activityItem.type == 'like'">
+                            <span class="card-text" *ngIf="activityItem.type == 'watchlist'">
                                 <span class="acitvity-item">
                                     <span class="activity-image">
                                         <a href=""> <img alt='{{ activityItem.parent.name }}'
