@@ -1,8 +1,5 @@
 import { Series } from './series.model';
-import { Episodic } from './episodic.model';
-import { Standalone } from './standalone.model';
-import { VideoSource } from './video-source.model';
-import { Category } from './category.model';
+import { Movie } from './movie.model';
 
 export class Documentary {
     id: number;
@@ -24,6 +21,6 @@ export class Documentary {
     poster: string;
     imdbId: string;
     type: string;
-    standalone: Standalone;
+    movie: Movie;
     series: Series;
 }

@@ -1,3 +1,4 @@
+import { Movie } from './../../../../models/movie.model';
 import { VideoSource } from './../../../../models/video-source.model';
 import { YoutubeService } from './../../../../services/youtube.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -151,8 +152,8 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
 
   initModel() {
     this.documentary = new Documentary();
-    let standalone = new Standalone();
-    this.documentary.standalone = standalone;
+    let movie = new Movie();
+    this.documentary.movie = movie;
   }
 
   toggleForm() {
@@ -174,9 +175,9 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let videoSource = this.documentary.standalone.videoSource;
-    let videoId = this.documentary.standalone.videoId;
-    let year = this.documentary.year;
+    let videoSource = this.documentary.movie.videoSource;
+    let videoId = this.documentary.movie.videoId;
+    let yearFrom = this.documentary.yearFrom;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
@@ -192,11 +193,11 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'standalone': new FormGroup({
+      'movie': new FormGroup({
         'videoSource': new FormControl(videoSource, [Validators.required]),
         'videoId': new FormControl(videoId, [Validators.required]),
       }),
-      'year': new FormControl(year, [Validators.required]),
+      'yearFrom': new FormControl(yearFrom, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
@@ -407,10 +408,12 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.documentary.storyline = this.form.value.storyline;
     }
 
-    if (this.form.value.year == null) {
-      this.documentary.year = selectedDocumentary.year;
+    console.log("this.form.value.yearFrom");
+    console.log(this.form.value.yearFrom);
+    if (this.form.value.yearFrom == null) {
+      this.documentary.yearFrom = selectedDocumentary.year;
     } else {
-      this.documentary.year = this.form.value.year;
+      this.documentary.yearFrom = this.form.value.yearFrom;
     }
 
     console.log("this.form.value.poster");
@@ -543,18 +546,18 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.documentary.summary = this.form.value.summary;
     }
 
-    if (this.form.value.standalone.videoId == null) {
-      this.documentary.standalone.videoId = selectedVideo.id.videoId;
+    if (this.form.value.movie.videoId == null) {
+      this.documentary.movie.videoId = selectedVideo.id.videoId;
     } else {
-      this.documentary.standalone.videoId = this.form.value.standalone.videoId;
+      this.documentary.movie.videoId = this.form.value.movie.videoId;
     }
 
     this.documentary.poster = this.form.value.poster;
     this.posterImgURL = this.form.value.poster;
     this.documentary.category = this.form.value.category;
-    this.documentary.year = this.form.value.year;
+    this.documentary.yearFrom = this.form.value.yearFrom;
     this.documentary.length = this.form.value.length;
-    this.documentary.standalone.videoSource = 2;
+    this.documentary.movie.videoSource = 2;
 
     this.initForm();
 

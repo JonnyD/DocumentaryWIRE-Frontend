@@ -64,32 +64,32 @@
                             <div *ngIf="f.imdbId.errors.required">IMDB Id is required</div>
                         </div>
                     </div>
-                    <div formGroupName="standalone">
+                    <div formGroupName="movie">
                         <div class="form-group">
                             <label for="videoSource">Video Source</label>
                             <span *ngIf="isFetchingVideoSources"><br />Loading...</span>
                             <select *ngIf="!isFetchingVideoSources" formControlName="videoSource" class="form-control"
                                 id="videoSource"
-                                [ngClass]="{ 'is-invalid': submitted && form.get('standalone.videoSource').errors }">
+                                [ngClass]="{ 'is-invalid': submitted && form.get('movie.videoSource').errors }">
                                 <option disabled>Choose Video Source</option>
                                 <option *ngFor="let videoSourceItem of videoSources" [value]="videoSourceItem.id">
                                     {{ videoSourceItem.name }}
                                 </option>
                             </select>
-                            <div *ngIf="submitted && form.get('standalone.videoSource').errors"
+                            <div *ngIf="submitted && form.get('movie.videoSource').errors"
                                 class="invalid-feedback">
-                                <div *ngIf="form.get('standalone.videoSource').errors.required">Video Source is required
+                                <div *ngIf="form.get('movie.videoSource').errors.required">Video Source is required
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="videoId">Video ID</label>
                             <input type="text" formControlName="videoId" class="form-control" disabled
-                                [ngClass]="{ 'is-invalid': submitted && form.get('standalone.videoId').errors }" />
+                                [ngClass]="{ 'is-invalid': submitted && form.get('movie.videoId').errors }" />
                             <button type="button" class="btn btn-secondary"
                                 (click)="openYoutubeModal(youtubeContent)">Search or enter id</button>
-                            <div *ngIf="submitted && form.get('standalone.videoId').errors" class="invalid-feedback">
-                                <div *ngIf="form.get('standalone.videoId').errors.required">Video ID is required</div>
+                            <div *ngIf="submitted && form.get('movie.videoId').errors" class="invalid-feedback">
+                                <div *ngIf="form.get('movie.videoId').errors.required">Video ID is required</div>
                             </div>
                         </div>
                     </div>
@@ -146,17 +146,17 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="year">Year</label>
+                        <label for="yearFrom">Year</label>
                         <span *ngIf="isFetchingYears"><br />Loading...</span>
-                        <select *ngIf="!isFetchingYears" formControlName="year" class="form-control" id="year"
-                            [ngClass]="{ 'is-invalid': submitted && f.year.errors }">
+                        <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control" id="yearFrom"
+                            [ngClass]="{ 'is-invalid': submitted && f.yearFrom.errors }">
                             <option disabled>Choose Year</option>
                             <option *ngFor="let yearItem of years" [value]="yearItem">
                                 {{ yearItem }}
                             </option>
                         </select>
-                        <div *ngIf="submitted && f.year.errors" class="invalid-feedback">
-                            <div *ngIf="f.year.errors.required">Year is required</div>
+                        <div *ngIf="submitted && f.yearFrom.errors" class="invalid-feedback">
+                            <div *ngIf="f.yearFrom.errors.required">Year is required</div>
                         </div>
                     </div>
                     <div class="form-group">
