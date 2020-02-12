@@ -31,7 +31,7 @@
                         <tbody>
                             <tr *ngFor="let myDocumentary of myDocumentaries | paginate: config">
                                 <td>
-                                    <a [routerLink]="['/add', 'standalone', myDocumentary.slug, 'edit']">
+                                    <a [routerLink]="['/add/standalone/show', myDocumentary.slug]">
                                         {{ myDocumentary.title }}
                                     </a>
                                 </td>

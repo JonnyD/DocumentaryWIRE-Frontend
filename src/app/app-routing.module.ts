@@ -1,5 +1,6 @@
-import { HomeResolverService } from './services/home-resolver.service';
+import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
 import { DocumentaryShowEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-show-episodic/documentary-show-episodic.component';
+import { HomeResolverService } from './services/home-resolver.service';
 import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
 import { DocumentaryAddEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-add-episodic.component';
@@ -268,6 +269,17 @@ const routes: Routes = [
   },
   {
     path: 'add/standalone',
+    canActivate: [UserGuard],
+    component: DocumentaryAddStandaloneComponent,
+  },
+  {
+    path: 'add/standalone/show/:slug',
+    canActivate: [UserGuard],
+    component: DocumentaryShowStandaloneComponent,
+    resolve: [DocumentaryResolverService]
+  },
+  {
+    path: 'add/standalone/edit/:slug',
     canActivate: [UserGuard],
     component: DocumentaryAddStandaloneComponent,
   },

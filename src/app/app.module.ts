@@ -1,3 +1,4 @@
+import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
 import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
 import { StatusService } from './services/status.service';
 import { AdminStandaloneEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-standalone-edit.component';
@@ -138,7 +139,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     DocumentaryAddStandaloneComponent,
     DocumentaryAddEpisodicComponent,
     AdminSyncComponent,
-    DocumentaryShowEpisodicComponent
+    DocumentaryShowEpisodicComponent,
+    DocumentaryShowStandaloneComponent
   ],
   imports: [
     BrowserModule,

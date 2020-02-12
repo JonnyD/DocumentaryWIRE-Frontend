@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+        <h1>{{ documentary.title }}</h1>
+        <div style="margin-top: 20px">
+            <a [routerLink]="['/add/standalone/edit', documentary.slug]">
+                <button type="button" class="btn btn-primary">Edit</button>
+            </a>
+        </div>
+        <table class="table table-striped">
+            <thead>
+
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Status</td>
+                    <td>{{ documentary.status }}</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{ documentary.category.name }}</td>
+                </tr>
+                <tr>
+                    <td>Storyline</td>
+                    <td>{{ documentary.storyline }}</td>
+                </tr>
+                <tr>
+                    <td>Summary</td>
+                    <td>{{ documentary.summary }}</td>
+                </tr>
+                <tr>
+                    <td>Year</td>
+                    <td>{{ documentary.year }}</td>
+                </tr>
+                <tr>
+                    <td>Poster</td>
+                    <td><img src="{{ documentary.poster }}" height="200" width="160" /></td>
+                </tr>
+                <tr>
+                    <td>Wide Image</td>
+                    <td><img src="{{ documentary.wideImage }}" height="300" width="300" /></td>
+                </tr>
+                <tr>
+                    <td>IMDB ID</td>
+                    <td>{{ documentary.imdbId }}</td>
+                </tr>
+                <tr>
+                    <td>Video Sources</td>
+                    <td>{{ documentary.movie.videoSource.name }}</td>
+                </tr>
+                <tr>
+                    <td>Video Id</td>
+                    <td>{{ documentary.movie.videoId }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

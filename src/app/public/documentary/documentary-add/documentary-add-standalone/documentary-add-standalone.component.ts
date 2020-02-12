@@ -124,11 +124,17 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
         this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
           this.slug = params['params']['slug'];
           this.editMode = this.slug != null;
+          console.log("this.editMode");
+          console.log(this.editMode);
 
           if (this.editMode) {
             this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(this.slug)
               .subscribe((result: any) => {
+                console.log("result");
+                console.log(result);
                 this.documentary = result;
+                this.documentary.movie.videoSource = result.movie.videoSource.id;
+                this.documentary.category = result.category.id;
                 this.toggleForm();
                 this.showPage = true;
               });
@@ -177,7 +183,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     let summary = this.documentary.summary;
     let videoSource = this.documentary.movie.videoSource;
     let videoId = this.documentary.movie.videoId;
-    let yearFrom = this.documentary.yearFrom;
+    let year = this.documentary.year;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
@@ -197,7 +203,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
         'videoSource': new FormControl(videoSource, [Validators.required]),
         'videoId': new FormControl(videoId, [Validators.required]),
       }),
-      'yearFrom': new FormControl(yearFrom, [Validators.required]),
+      'yearFrom': new FormControl(year, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
@@ -304,7 +310,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
       this.documentaryService.createStandaloneDocumentary(formValue)
         .subscribe((result: any) => {
           this.reset();
-          this.router.navigate(["/add"]);
+          this.router.navigate(["/add/standalone/show", result.slug]);
         },
           (error) => {
             console.log(error);
