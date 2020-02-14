@@ -75,7 +75,7 @@ export class CategoryShowComponent implements OnInit {
       url = url + '/page/' + this.page;
     } else {
       let split = this.router.url.split("page/")[0];
-      url = split + '/page/' + this.page;
+      url = split + 'page/' + this.page;
     }
 
     this.location.go(url);

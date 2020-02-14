@@ -1,89 +1,101 @@
-<div class="container" >
-        <div class="row">
-            <div class="col-md-8" style="margin-top: 20px">
-                <div *ngIf="!isFetchingDocumentaries">
+<div class="container">
+    <div class="row">
+        <div class="col-md-8" style="margin-top: 20px">
+            <div *ngIf="!isFetchingDocumentaries">
                 <h2>Watch {{ category.name }} Documentaries - Page {{ page }}</h2>
-                <div class="card mb-1" style="margin-top: 20px" *ngFor="let documentary of documentaries | paginate: config">
+                <div class="card mb-1" style="margin-top: 20px"
+                    *ngFor="let documentary of documentaries | paginate: config">
                     <div class="row no-gutters">
                         <div class="col-md-3">
-                        <img src="{{ documentary.poster }}" class="card-img" style="width: 160px; height: 200px" alt="...">
+                            <img src="{{ documentary.poster }}" class="card-img" style="width: 160px; height: 200px"
+                                alt="...">
                         </div>
                         <div class="col-md-9">
-                        <div class="card-body">
-                            
-                            <a [routerLink]="['/', documentary.slug]">
-                            <h5 class="card-title">{{ documentary.title }}</h5>
-                            </a>
-                            <p class="card-text">{{ documentary.summary }}.</p>
-                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                        </div>
+                            <div class="card-body">
+
+                                <a [routerLink]="['/', documentary.slug]">
+                                    <h5 class="card-title">{{ documentary.title }}</h5>
+                                </a>
+                                <p class="card-text">{{ documentary.summary }}.</p>
+                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div style="margin-top: 20px; margin-bottom: 20px">
-                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
                 </div>
-                </div>
-                <p *ngIf="isFetchingDocumentaries">Loading...</p>
             </div>
-            <div class="col-md-4" style="margin-top: 20px">
-                    <h2>Subscribe / Follow</h2>
-                    <div class="card">
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <p class="card-text">
-                                    <img src="/assets/email.png" width="50" height="50" style="float: left; margin-right: 10px"/>
-                                    <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true" target="popupwindow" href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest documentaries sent straight to your inbox.</a>
-                                </p>
-                            </li>
-                            <li class="list-group-item">
-                                    <div class="text-center">
-                                <p class="card-text">
-                                        <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px"/>
-                                        <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px"/>
-                                        <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px"/>
-                                        <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px"/>
-                                        <img src="/assets/gab.png" width="40" height="40" />
-                                </p>
-                            </div>
-                            </li>
-                        </ul>
-                      </div>
-    
-                      <div style="clear: both"></div>
-                  <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
-                  <h2>Categories</h2>
-                  <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
-                    <li *ngFor="let categoryObject of columnPosition.value">
-                            <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries" [routerLink]="['/category', categoryObject.slug ]" routerLinkActive="active">{{ categoryObject.name }}</a>
+            <p *ngIf="isFetchingDocumentaries">Loading...</p>
+        </div>
+        <div class="col-md-4" style="margin-top: 20px">
+            <h2>Subscribe / Follow</h2>
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <p class="card-text">
+                            <img src="/assets/email.png" width="50" height="50"
+                                style="float: left; margin-right: 10px" />
+                            <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"
+                                target="popupwindow"
+                                href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the latest
+                                documentaries sent straight to your inbox.</a>
+                        </p>
                     </li>
-                  </ul>
-                </div>
-                <p *ngIf="isFetchingCategories">Loading...</p>
-                  <div style="clear: both"></div>
-    
-                  <div *ngIf="!isFetchingDuration">
-                  <h2>Duration</h2>
-                  <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
-                      <li *ngFor="let durationObject of columnPosition.value">
-                              <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}" [routerLink]="['/duration', durationObject.slug ]" routerLinkActive="active">{{ durationObject.display }}</a>
-                      </li>
-                    </ul>
-                </div>
-                <p *ngIf="isFetchingDuration">Loading...</p>
-                          <div style="clear: both"></div>
-    
-                          
-                  <div *ngIf="!isFetchingYears">
-                              <h2>Years</h2>
-                                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
-                                  <li *ngFor="let yearObject of columnPosition.value">
-                                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year }}" [routerLink]="['/year', yearObject.year ]" routerLinkActive="active">{{ yearObject.year }}</a>
-                                  </li>
-                                </ul>
-                                </div>
-                                
-                <p *ngIf="isFetchingYears">Loading...</p>
-                     </div>
+                    <li class="list-group-item">
+                        <div class="text-center">
+                            <p class="card-text">
+                                <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px" />
+                                <img src="/assets/gab.png" width="40" height="40" />
+                            </p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div style="clear: both"></div>
+            <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
+                <h2>Categories</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
+                    <li *ngFor="let categoryObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
+                            [routerLink]="['/category', categoryObject.slug ]"
+                            routerLinkActive="active">{{ categoryObject.name }}</a>
+                    </li>
+                </ul>
+            </div>
+            <p *ngIf="isFetchingCategories">Loading...</p>
+            <div style="clear: both"></div>
+
+            <div *ngIf="!isFetchingDuration">
+                <h2>Duration</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+                    <li *ngFor="let durationObject of columnPosition.value">
+                        <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
+                            [routerLink]="['/duration', durationObject.slug ]"
+                            routerLinkActive="active">{{ durationObject.display }}</a>
+                    </li>
+                </ul>
+            </div>
+            <p *ngIf="isFetchingDuration">Loading...</p>
+            <div style="clear: both"></div>
+
+
+            <div *ngIf="!isFetchingYears">
+                <h2>Years</h2>
+                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
+                    <li *ngFor="let yearObject of columnPosition.value"><a rel="bookmark"
+                            title="Watch Documentaries released in {{ yearObject.year_from }}"
+                            [routerLink]="['/year', yearObject.year_from ]"
+                            routerLinkActive="active">{{ yearObject.year_from }}</a>
+                    </li>
+                </ul>
+            </div>
+
+            <p *ngIf="isFetchingYears">Loading...</p>
         </div>
     </div>
+</div>
