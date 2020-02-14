@@ -86,6 +86,11 @@ const routes: Routes = [
     resolve: [CategoryResolverService]
   },
   {
+    path: 'category/:slug/page/:page',
+    component: CategoryShowComponent,
+    resolve: [CategoryResolverService]
+  },
+  {
     path: 'year/:id',
     component: YearShowComponent,
     resolve: [YearResolverService]
