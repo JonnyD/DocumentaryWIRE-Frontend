@@ -27,9 +27,18 @@ export class DocumentaryService extends DataService {
     return this.get(slug, options);
   }
 
-  getAllDocumentaries(params: HttpParams) {    
-    params = params.append('sort', 'createdAt-desc');
-    params = params.append('status', 'publish');
+  getAllDocumentaries(params: HttpParams, authenticate: boolean = false, isAdmin: boolean = false) {
+    if (!isAdmin) {
+      params = params.append('sort', 'createdAt-desc');
+      params = params.append('status', 'publish');
+    }
+
+    if (authenticate) {
+      if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+      }
+    }
 
     let options = {
       params: params

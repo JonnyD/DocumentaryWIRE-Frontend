@@ -120,12 +120,14 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
         }
       }
     }
-    
+
     params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
 
-    this.documentariesSubscription = this.service.getAllDocumentaries(params)
+    let authenticate = true;
+    let isAdmin = true;
+    this.documentariesSubscription = this.service.getAllDocumentaries(params, authenticate, isAdmin)
       .subscribe(
           result => {
             this.config = {
