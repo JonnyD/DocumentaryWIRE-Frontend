@@ -1,3 +1,4 @@
+import { PopoverModule } from 'ngx-smart-popover';
 import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
 import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
 import { StatusService } from './services/status.service';
@@ -155,7 +156,8 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     RecaptchaFormsModule,
     RecaptchaModule,
     RecaptchaModule.forRoot(),
-    CarouselModule
+    CarouselModule,
+    PopoverModule
   ],
   providers: [
     DocumentaryService,

@@ -9,6 +9,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OwlOptions } from 'ngx-owl-carousel-o';
+import {PopoverModule} from "ngx-smart-popover";
 
 @Component({
   selector: 'app-home',
