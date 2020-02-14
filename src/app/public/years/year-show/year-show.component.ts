@@ -21,9 +21,11 @@ export class YearShowComponent implements OnInit {
   private queryParamsSubscription;
   private categoriesSubscription;
   private yearsSubscription;
+  private routeParamsSubscription;
 
   config: any;
   private page;
+  private previousPage;
   private categories;
   private duration;
   private years;
@@ -32,7 +34,7 @@ export class YearShowComponent implements OnInit {
   isFetchingCategories = false;
   isFetchingDuration = false;
   isFetchingYears = false;
-  
+
   constructor(
     private categoryService: CategoryService,
     private documentaryService: DocumentaryService,
@@ -48,12 +50,15 @@ export class YearShowComponent implements OnInit {
       this.queryParamsSubscription = this.route
         .queryParams
         .subscribe(params => {
-          this.page = +params['page'] || 1;
+        this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
+          this.page = +params['params']['page'] || 1;
+
           this.fetchDocumentaries();
           this.fetchCategories();
           this.fetchDuration();
           this.fetchYears();
-      });
+        });
+        });
     });
   }
 
@@ -63,8 +68,20 @@ export class YearShowComponent implements OnInit {
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
-    this.location.go(this.router.url.split("?")[0], params.toString());
-  
+    let url = this.location.path();
+    let hasPage = url.indexOf("/page") !== -1;
+
+    if (!hasPage) {
+      url = url + '/page/' + this.page;
+    } else {
+      let split = this.router.url.split("page/")[0];
+      url = split + '/page/' + this.page;
+    }
+
+    this.location.go(url);
+
+    this.previousPage = this.page;
+
     let amountPerPage = 6;
     params = params.append('amountPerPage', amountPerPage.toString());
     params = params.append('year', this.year.toString());
@@ -112,7 +129,7 @@ export class YearShowComponent implements OnInit {
         this.isFetchingYears = false;
       })
   }
-  
+
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;

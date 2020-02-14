@@ -96,6 +96,11 @@ const routes: Routes = [
     resolve: [YearResolverService]
   },
   {
+    path: 'year/:id/page/:page',
+    component: YearShowComponent,
+    resolve: [YearResolverService]
+  },
+  {
     path: 'duration/:slug',
     component: DurationShowComponent,
     resolve: [DurationResolverService]
