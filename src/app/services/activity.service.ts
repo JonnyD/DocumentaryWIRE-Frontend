@@ -32,11 +32,6 @@ export class ActivityService extends DataService {
    getActivityForRecentWidget(params: HttpParams) {
      params = params.append("show", "widget");
 
-    if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      params = params.append('access_token', accessToken)
-    }
-
     let options = {
       params: params
     }

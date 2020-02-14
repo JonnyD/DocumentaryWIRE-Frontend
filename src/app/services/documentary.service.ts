@@ -24,23 +24,10 @@ export class DocumentaryService extends DataService {
   getDocumentaryBySlug(slug: string) {
     let options = {};
 
-    if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      options = {
-        params: new HttpParams()
-          .append('access_token', accessToken)
-      }
-    }
-
     return this.get(slug, options);
   }
 
-  getAllDocumentaries(params: HttpParams) {
-    if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      params = params.append('access_token', accessToken)
-    }
-    
+  getAllDocumentaries(params: HttpParams) {    
     params = params.append('sort', 'createdAt-desc');
     params = params.append('status', 'publish');
 
@@ -89,11 +76,6 @@ export class DocumentaryService extends DataService {
     params = params.append('sort', 'updatedAt-desc');
     params = params.append('status', 'publish');
 
-    if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      params = params.append('access_token', accessToken)
-    }
-
     let options = {
       params: params
     }
@@ -104,11 +86,6 @@ export class DocumentaryService extends DataService {
   getPopularDocumentaries(params: HttpParams) {
     params = params.append('sort', 'views-desc');
     params = params.append('status', 'publish');
-
-    if (this.authenticationService.isAuthenticated()) {
-      let accessToken = this.authenticationService.currentTokenValue.access_token;
-      params = params.append('access_token', accessToken)
-    }
 
     let options = {
       params: params

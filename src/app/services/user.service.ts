@@ -80,11 +80,6 @@ export class UserService extends DataService {
         params = params.append('sort', 'createdAt-desc');
         params = params.append('enabled', 'true');
 
-        if (this.authenticationService.isAuthenticated()) {
-            let accessToken = this.authenticationService.currentTokenValue.access_token;
-            params = params.append('access_token', accessToken)
-        }
-
         let options = {
             params: params
         }
@@ -95,11 +90,6 @@ export class UserService extends DataService {
     getActiveUsers(params: HttpParams) {
         params = params.append('sort', 'lastLogin-desc');
         params = params.append('enabled', 'true');
-
-        if (this.authenticationService.isAuthenticated()) {
-            let accessToken = this.authenticationService.currentTokenValue.access_token;
-            params = params.append('access_token', accessToken)
-        }
 
         let options = {
             params: params
