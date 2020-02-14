@@ -115,6 +115,10 @@ const routes: Routes = [
     component: CommunityComponent
   },
   {
+    path: 'community/page/:page',
+    component: CommunityComponent
+  },
+  {
     path: 'user/edit',
     component: UserEditComponent,
     resolve: [AuthneticatedUserResolverService]
