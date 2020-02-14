@@ -72,7 +72,14 @@ const routes: Routes = [
     path: '',
     component: HomeComponent
   },
-  { path: 'browse', component: BrowseComponent },
+  { 
+    path: 'browse',
+    component: BrowseComponent 
+  },
+  { 
+    path: 'browse/page/:page',
+    component: BrowseComponent 
+  },
   {
     path: 'category/:slug',
     component: CategoryShowComponent,
