@@ -67,15 +67,15 @@ export class CategoryShowComponent implements OnInit {
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
+    
     let url = this.location.path();
-
     let hasPage = url.indexOf("/page") !== -1;
 
     if (!hasPage) {
-      url = url + 'page/' + this.page;
+      url = url + '/page/' + this.page;
     } else {
       let split = this.router.url.split("page/")[0];
-      url = split + 'page/' + this.page;
+      url = split + '/page/' + this.page;
     }
 
     this.location.go(url);

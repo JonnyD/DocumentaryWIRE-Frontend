@@ -101,6 +101,11 @@ const routes: Routes = [
     resolve: [DurationResolverService]
   },
   {
+    path: 'duration/:slug/page/:page',
+    component: DurationShowComponent,
+    resolve: [DurationResolverService]
+  },
+  {
     path: 'community',
     component: CommunityComponent
   },
