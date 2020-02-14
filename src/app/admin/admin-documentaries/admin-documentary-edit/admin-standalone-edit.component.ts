@@ -1,3 +1,4 @@
+import { Movie } from './../../../models/movie.model';
 import { StatusService } from './../../../services/status.service';
 import { VideoSource } from './../../../models/video-source.model';
 import { Standalone } from './../../../models/standalone.model';
@@ -77,22 +78,15 @@ export class AdminStandaloneEditComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.documentary = new Documentary();
-    let category = new Category();
-    this.documentary.category = category;
-    let standalone = new Standalone();
-    let videoSource = new VideoSource();
-    standalone.videoSource = videoSource;
-    this.documentary.standalone = standalone;
+    this.initModel();
 
     this.initStatuses();
     this.initYears();
     this.initVideoSources();
     this.initCategories();
-
-    this.initForm();
     
-    console.log("Here2");
+    this.initForm();
+
     this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
         let slug = params['params']['slug'];
         console.log("slug");
@@ -112,6 +106,12 @@ export class AdminStandaloneEditComponent implements OnInit {
         }
 
     });
+  }
+
+  initModel() {
+    this.documentary = new Documentary();
+    let movie = new Movie();
+    this.documentary.movie = movie;
   }
 
   initStatuses() {
@@ -143,29 +143,19 @@ export class AdminStandaloneEditComponent implements OnInit {
   
   initForm() {
     let title = this.documentary.title;
-    console.log("title");
-    console.log(title);
     let slug = this.documentary.slug;
-    let category = this.documentary.category.id;
-    console.log("category");
-    console.log(category);
+    let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let imdbId = this.documentary.imdbId;
-    let videoSource = this.documentary.standalone.videoSource.id;
-    let videoId = this.documentary.standalone.videoId;
-    //console.log(videoSource);
-    let year = this.documentary.year;
+    let videoSource = this.documentary.movie.videoSource;
+    let videoId = this.documentary.movie.videoId;
+    let yearFrom = this.documentary.year;
     let length = this.documentary.length;
-    let status = this.documentary.status;
     let poster = this.documentary.poster;
-    this.posterImgURL = poster;
-    console.log("this.posterImgURL");
-    console.log(this.posterImgURL);
+    this.posterImgURL = this.documentary.poster;
     let wideImage = this.documentary.wideImage;
-    //console.log(wideImage);
-    this.wideImgURL = wideImage;
-    console.log(this.wideImgURL);
+    this.wideImgURL = this.documentary.wideImage;
+    let imdbId = this.documentary.imdbId;
 
     console.log("this.documentary");
     console.log(this.documentary);
@@ -176,13 +166,13 @@ export class AdminStandaloneEditComponent implements OnInit {
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'year': new FormControl(year, [Validators.required]),
+      'yearFrom': new FormControl(yearFrom, [Validators.required]),
       'length': new FormControl(length, [Validators.required]),
       'status': new FormControl(status, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
       'imdbId': new FormControl(imdbId),
-      'standalone': new FormGroup({
+      'movie': new FormGroup({
         'videoId': new FormControl(videoId, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required])
       }),
@@ -363,7 +353,7 @@ export class AdminStandaloneEditComponent implements OnInit {
       this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
     }
 
-    this.documentary.standalone.videoId = selectedVideo.id.videoId;
+    this.documentary.movie.videoId = selectedVideo.id.videoId;
 
     this.initForm();
 

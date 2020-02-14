@@ -1,13 +1,13 @@
 <br>
 
-<span *ngIf="documentary.type == 'standalone'">
+<span *ngIf="documentary.type == 'movie'">
     <a [routerLink]="['/admin/documentaries/standalone', documentary.slug, 'edit']">
         <button class="btn btn-primary" type="submit">Edit</button>
     </a>
 </span>
 
 
-<span *ngIf="documentary.type == 'episodic'">
+<span *ngIf="documentary.type == 'series'">
     <a [routerLink]="['/admin/documentaries/series', documentary.slug, 'edit']">
         <button class="btn btn-primary" type="submit">Edit</button>
     </a>
@@ -68,14 +68,20 @@
             <td>{{ documentary.wideImage }}</td>
         </tr>
         <tr>
-            <td>Video Souce</td>
-            <td>{{ documentary.videoSources }}</td>
+            <td>Video Source</td>
+            <td>
+                <span *ngIf="documentary.movie">
+                    {{ documentary.movie.videoSource.name }}
+                </span>
+            </td>
         </tr>
         <tr>
             <td>Video ID</td>
-            <td><span *ngIf="documentary.type == 'standalone'">
-                {{ documentary.standalone.videoId }}
-            </span></td>
+            <td>
+                <span *ngIf="documentary.movie">
+                    {{ documentary.movie.videoId }}
+                </span>
+            </td>
         </tr>
         <tr>
             <td>Featured</td>
@@ -84,14 +90,14 @@
         <tr>
             <td>Created At</td>
             <td><span *ngIf="documentary.createdAt">
-                {{ documentary.createdAt.date }}
-            </span></td>
+                    {{ documentary.createdAt.date }}
+                </span></td>
         </tr>
         <tr>
             <td>Updated At</td>
             <td><span *ngIf="documentary.updatedAt">
-                {{ documentary.updatedAt.date }}
-            </span></td>
+                    {{ documentary.updatedAt.date }}
+                </span></td>
         </tr>
     </tbody>
 </table>
