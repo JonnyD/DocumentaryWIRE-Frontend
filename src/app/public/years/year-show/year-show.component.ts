@@ -74,7 +74,7 @@ export class YearShowComponent implements OnInit {
     if (!hasPage) {
       url = url + '/page/' + this.page;
     } else {
-      let split = this.router.url.split("page/")[0];
+      let split = this.router.url.split("/page/")[0];
       url = split + '/page/' + this.page;
     }
 
