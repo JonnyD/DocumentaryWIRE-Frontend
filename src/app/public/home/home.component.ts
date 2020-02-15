@@ -328,7 +328,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   fetchCategories() {
     this.isFetchingCategories = true;
 
-    this.categoriesSubscription = this.categoryService.getAllCategories()
+    this.categoriesSubscription = this.categoryService.getAllCategories(new HttpParams)
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
 
@@ -366,7 +366,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.popularDocumentariesSubscription.unsubscribe();
     this.newestUsersSubscription.unsubscribe();
     this.activeUsersSubscription.unsubscribe();
-    this.activitySubscription.unsubscribe();
+    if (this.activitySubscription != null) {
+      this.activitySubscription.unsubscribe();
+    }
     this.categoriesSubscription.unsubscribe();
     this.yearsSubscription.unsubscribe();
   }

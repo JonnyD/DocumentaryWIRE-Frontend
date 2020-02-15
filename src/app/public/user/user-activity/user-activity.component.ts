@@ -33,11 +33,11 @@ export class UserActivityComponent implements OnInit {
       this.user = result[0];
 
       this.queryParamsSubscription = this.route
-      .queryParams
-      .subscribe(params => {
+        .queryParams
+        .subscribe(params => {
           this.page = +params['page'] || 1;
           this.fetchActivity();
-    });
+        });
     });
   }
 
@@ -48,7 +48,7 @@ export class UserActivityComponent implements OnInit {
     params = params.append('page', this.page.toString());
 
     this.location.go(this.router.url.split("?")[0], params.toString());
-  
+
     let amountPerPage = 6;
     params = params.append('amountPerPage', amountPerPage.toString());
     params = params.append('user', this.user.username);
@@ -76,6 +76,8 @@ export class UserActivityComponent implements OnInit {
 
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
-    this.activitySubscription.unsubscribe();
+    if (this.activitySubscription != null) {
+      this.activitySubscription.unsubscribe();
+    }
   }
 }

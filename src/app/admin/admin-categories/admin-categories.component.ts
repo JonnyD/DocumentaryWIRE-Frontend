@@ -1,5 +1,6 @@
 import { CategoryService } from './../../services/category.service';
 import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-categories',
@@ -16,7 +17,10 @@ export class AdminCategoriesComponent implements OnInit {
   }
 
   fetchCategories() {
-    this.categoryService.getAllCategories()
+    let params = new HttpParams();
+    let authenticate = true;
+    let isAdmin = true;
+    this.categoryService.getAllCategories(params, authenticate, isAdmin)
       .subscribe(result => {
         this.categories = result;
       })

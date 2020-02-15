@@ -28,10 +28,24 @@ export class CategoryService extends DataService {
      return this.get(slug, options);
    }
 
-   getAllCategories() {
-    let options = {};
+   getAllCategories(params: HttpParams, authenticate: boolean = false, isAdmin: boolean = false) {
+    if (!isAdmin) {
+      params = params.append('sort', 'name-asc');
+      params = params.append('status', 'enabled');
+    }
 
-     return this.getAll(options);
+    if (authenticate) {
+      if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+      }
+    }
+
+    let options = {
+      params: params
+    }
+
+    return this.getAll(options);
    }
 
    editCategory(id, resource) {

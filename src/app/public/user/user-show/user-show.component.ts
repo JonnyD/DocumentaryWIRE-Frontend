@@ -52,18 +52,18 @@ export class UserShowComponent implements OnInit {
 
     this.route.data.subscribe(result => {
       this.user = result[0];
-      
+
       this.isFetchingUser = false;
 
       this.queryParamsSubscription = this.route
         .queryParams
         .subscribe(params => {
-            this.page = +params['page'] || 1;
-            this.fetchMe();
-            this.fetchActivity();
-            this.fetchDocumentaries();
-            this.fetchWatchlists();
-      });
+          this.page = +params['page'] || 1;
+          this.fetchMe();
+          this.fetchActivity();
+          this.fetchDocumentaries();
+          this.fetchWatchlists();
+        });
     });
   }
 
@@ -120,7 +120,7 @@ export class UserShowComponent implements OnInit {
         this.documentaries = result['items'];
 
         console.log(this.documentaries);
-        
+
         this.isFetchingDocumentaries = false;
       })
   }
@@ -143,7 +143,7 @@ export class UserShowComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.watchlists = result['items'];
-        
+
         this.isFetchingWatchlisted = false;
       })
   }
@@ -151,12 +151,14 @@ export class UserShowComponent implements OnInit {
   ngOnDestroy() {
     this.documentarySubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
-    this.activitySubscription.unsubscribe();
+    if (this.activitySubscription != null) {
+      this.activitySubscription.unsubscribe();
+    }
     this.watchlistSubscription.unsubscribe();
     this.meSubscription.unsubscribe();
   }
-  
-  public getSantizeUrl(url : string) {
+
+  public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 }

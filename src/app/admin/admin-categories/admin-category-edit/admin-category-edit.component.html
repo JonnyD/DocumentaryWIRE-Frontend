@@ -28,8 +28,26 @@
                 class="help-block">
                 <span *ngIf="editCategoryForm.get('slug').errors['required']">This field is required!</span>
                 </span>
-            </div>
-            
+            </div>          
+            {{ status | json }}
+            <div class="form-group">
+              <label for="status">Status</label>
+              <select 
+                  formControlName="status"
+                  class="form-control"
+                  id="status">
+                  <option disabled>Choose Enabled / Disabled</option>
+                  <option *ngFor="let statusOption of statusOptions" 
+                      [value]="statusOption" 
+                      [selected]="category.status == statusOption">
+                      {{ statusOption }}
+                  </option>
+                  </select>
+              <span
+              *ngIf="!editCategoryForm.get('status').valid && editCategoryForm.get('status').touched"
+              class="help-block">Please enter a valid status!</span>
+          </div>
+
           <span
             *ngIf="!editCategoryForm.valid && editCategoryForm.touched"
             class="help-block">Please enter valid data!</span>

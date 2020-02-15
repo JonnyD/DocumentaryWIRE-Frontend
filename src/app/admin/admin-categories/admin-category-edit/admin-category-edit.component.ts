@@ -15,6 +15,8 @@ export class AdminCategoryEditComponent implements OnInit {
 
   category: Category;
 
+  statusOptions: any;
+
   constructor(
     private categoryService: CategoryService,
     private route: ActivatedRoute,
@@ -23,8 +25,9 @@ export class AdminCategoryEditComponent implements OnInit {
 
   ngOnInit() {
     this.route.data.subscribe(result => {
-      this.category = <Category> result[0];
+      this.category = <Category>result[0];
 
+      this.initStatusOptions();
       this.initForm();
     })
   }
@@ -32,20 +35,28 @@ export class AdminCategoryEditComponent implements OnInit {
   initForm() {
     let name = this.category.name;
     let slug = this.category.slug;
+    let status = this.category.status;
 
     this.editCategoryForm = new FormGroup({
       'name': new FormControl(name, [Validators.required]),
       'slug': new FormControl(slug, [Validators.required]),
+      'status': new FormControl(status, [Validators.required]),
     });
   }
-  
+
   onSubmit() {
     let categoryId = this.category.id;
+    let categorySlug = this.category.slug;
     let formValue = this.editCategoryForm.value;
 
-    this.categoryService.editCategory(categoryId, formValue).subscribe(result => {
-      console.log(result);
-      this.router.navigate(["/admin/categories", categoryId]);
-    });
+    this.categoryService.editCategory(categoryId, formValue)
+      .subscribe(result => {
+        console.log(result);
+        this.router.navigate(["/admin/categories", categorySlug]);
+      });
+  }
+
+  initStatusOptions() {
+    this.statusOptions = ["enabled", "disabled"];
   }
 }

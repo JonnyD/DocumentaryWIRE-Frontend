@@ -105,7 +105,7 @@ export class DurationShowComponent implements OnInit {
   fetchCategories() {
     this.isFetchingCategories = true;
 
-    this.categoriesSubscription = this.categoryService.getAllCategories()
+    this.categoriesSubscription = this.categoryService.getAllCategories(new HttpParams)
       .subscribe(result => {
         this.categories = this.categoryService.getColumnsForCategories(result);
 

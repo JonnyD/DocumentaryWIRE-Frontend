@@ -150,7 +150,10 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   }
 
   fetchCategories() {
-    this.categoriesSubscription = this.categoryService.getAllCategories()
+    let params: HttpParams;
+    let authenticate = true;
+    let isAdmin = true;
+    this.categoriesSubscription = this.categoryService.getAllCategories(params, authenticate, isAdmin)
       .subscribe(result => { 
         this.categories = <any> result;
       });
