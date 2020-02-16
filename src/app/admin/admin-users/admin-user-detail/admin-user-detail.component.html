@@ -23,6 +23,14 @@
             <td>{{ user.usernameCanonical }}</td>
         </tr>
         <tr>
+            <td>Email</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td>Email Canonical</td>
+            <td>{{ user.emailCanonical }}</td>
+        </tr>
+        <tr>
             <td>Enabled</td>
             <td>{{ user.enabled }}</td>
         </tr>
@@ -40,7 +48,11 @@
         </tr>
         <tr>
             <td>Password Requested At</td>
-            <td>{{ user.passwordRequestedAt }}</td>
+            <td>
+                <span *ngIf="user.passwordRequestedAt">
+                    {{ user.passwordRequestedAt.date }}
+                </span>
+            </td>
         </tr>
         <tr>
             <td>Roles</td>
@@ -56,7 +68,11 @@
         </tr>
         <tr>
             <td>Activated At</td>
-            <td *ngIf="user.activatedAt">{{ user.activatedAt.date }}</td>
+            <td>
+                <span *ngIf="user.activatedAt">
+                    {{ user.activatedAt.date }}
+                </span>
+            </td>
         </tr>
         <tr>
             <td>Created AT</td>
@@ -64,7 +80,11 @@
         </tr>
         <tr>
             <td>Updated At</td>
-            <td *ngIf="user.updatedAt">{{ user.updatedAt.date }}</td>
+            <td>
+                <span *ngIf="user.updatedAt">
+                    {{ user.updatedAt.date }}
+                </span>
+            </td>
         </tr>
     </tbody>
 </table>
