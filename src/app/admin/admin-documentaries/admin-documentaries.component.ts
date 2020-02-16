@@ -27,14 +27,15 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   public categories: Array<Category>;
   public statuses: Array<Status> = [
     { id: 'pending', name: 'Pending' },
-    { id: 'publish', name: 'Published' }
+    { id: 'publish', name: 'Published' },
+    { id: 'rejected', name: 'Rejected' }
   ];
   public featuredOptions = [
     { id: true },
     { id: false }
   ];
   public types: Array<Type> = [
-    { id: 'standalone', name: 'Standalone' },
+    { id: 'movie', name: 'Movie' },
     { id: 'series', name: 'Series' }
   ];
   config: any;

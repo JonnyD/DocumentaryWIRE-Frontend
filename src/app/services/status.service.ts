@@ -25,6 +25,10 @@ export class StatusService extends DataService {
         {
           value: 'publish',
           name: 'Published'
+        },
+        {
+          value: 'rejected',
+          name: 'Rejected'
         }
       ];
    }
