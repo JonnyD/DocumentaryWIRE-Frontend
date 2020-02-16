@@ -35,7 +35,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   ];
   public types: Array<Type> = [
     { id: 'standalone', name: 'Standalone' },
-    { id: 'episodic', name: 'Episodic' }
+    { id: 'series', name: 'Series' }
   ];
   config: any;
   private page;
@@ -150,7 +150,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   }
 
   fetchCategories() {
-    let params: HttpParams;
+    let params = new HttpParams();
     let authenticate = true;
     let isAdmin = true;
     this.categoriesSubscription = this.categoryService.getAllCategories(params, authenticate, isAdmin)
