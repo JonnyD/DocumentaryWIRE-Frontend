@@ -1,3 +1,4 @@
+import { Series } from './../../../models/series.model';
 import { Episodic } from './../../../models/episodic.model';
 import { StatusService } from '../../../services/status.service';
 import { YearService } from '../../../services/year.service';
@@ -86,8 +87,8 @@ export class AdminSeriesEditComponent implements OnInit {
   ngOnInit() {
     this.documentary = new Documentary();
     let category = new Category();
-    let episodic = new Episodic();
-    this.documentary.episodic = episodic;
+    let series = new Series();
+    this.documentary.series = series;
 
     this.initStatuses();
     this.initYears();

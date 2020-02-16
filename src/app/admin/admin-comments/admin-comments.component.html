@@ -32,7 +32,11 @@ Status:
         </td>
         <td>{{ comment.commentText }}</td>
         <td>{{ comment.documentary.title }}</td>
-        <td>{{ comment.user.username }}</td>
+        <td>
+          <span *ngIf="comment.user">
+            {{ comment.user.username }}
+          </span>
+        </td>
         <td>{{ comment.author }}</td>
         <td>{{ comment.email }}</td>
         <td>{{ comment.status }}</td>

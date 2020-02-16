@@ -93,8 +93,8 @@ export class AdminDocumentariesAddComponent implements OnInit {
     let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let videoSource = this.documentary.standalone.videoSource;
-    let videoId = this.documentary.standalone.videoId;
+    let videoSource = this.documentary.movie.videoSource;
+    let videoId = this.documentary.movie.videoId;
     let year = this.documentary.yearFrom;
     let length = this.documentary.length;
     let status = this.documentary.status;

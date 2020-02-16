@@ -16,8 +16,9 @@ export class AdminCommentEditComponent implements OnInit {
   comment: Comment;
 
   public statuses = [
-    { id: 1, name: 'Published' },
-    { id: 2, name: 'Pending' }
+    { id: 'published', name: 'Published' },
+    { id: 'pending', name: 'Pending' },
+    { id: 'rejected', name: 'Rejected' }
   ];
 
   constructor(
