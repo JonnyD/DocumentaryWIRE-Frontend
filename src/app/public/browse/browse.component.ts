@@ -24,7 +24,6 @@ export class BrowseComponent implements OnInit {
 
   config: any;
   private page;
-  private previousPage;
   private categories;
   private duration;
   private years;
@@ -47,15 +46,11 @@ export class BrowseComponent implements OnInit {
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {
-        
-        this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
-          this.page = +params['params']['page'] || 1;
-          this.previousPage = this.page;
-          this.fetchDocumentaries();
-          this.fetchCategories();
-          this.fetchYears();
-          this.fetchDuration();
-        });
+        this.page = +params['page'] || 1;
+        this.fetchDocumentaries();
+        this.fetchCategories();
+        this.fetchYears();
+        this.fetchDuration();
       })
   }
 
@@ -72,25 +67,8 @@ export class BrowseComponent implements OnInit {
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
-
-    //this.location.go(this.router.url.split("?")[0], params.toString())
-    console.log("this.location.path()");
-    let url = this.location.path().replace(this.previousPage, this.page);
-    let hasBrowseUrl = url.indexOf("/page") !== -1;
-
-    console.log("hasBrowseUrl");
-    console.log(hasBrowseUrl);
-    if (!hasBrowseUrl) {
-      url = url + '/page/' + this.page;
-    }
-
-    console.log("url");
-    console.log(url);
-    this.location.go(url);
-
-    this.previousPage = this.page;
-        console.log("page");
-    console.log(this.page);
+    
+    this.location.go(this.router.url.split("?")[0], params.toString());
 
     let amountPerPage = 6;
     params = params.append('amountPerPage', amountPerPage.toString());

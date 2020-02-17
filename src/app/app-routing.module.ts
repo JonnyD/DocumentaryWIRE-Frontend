@@ -78,17 +78,14 @@ const routes: Routes = [
     path: 'browse',
     component: BrowseComponent 
   },
-  { 
-    path: 'browse/page/:page',
-    component: BrowseComponent 
-  },
+  { path: 'browse', component: BrowseComponent },
   {
     path: 'category/:slug',
     component: CategoryShowComponent,
     resolve: [CategoryResolverService]
   },
   {
-    path: 'category/:slug/page/:page',
+    path: 'category/:slug',
     component: CategoryShowComponent,
     resolve: [CategoryResolverService]
   },
@@ -98,7 +95,7 @@ const routes: Routes = [
     resolve: [YearResolverService]
   },
   {
-    path: 'year/:id/page/:page',
+    path: 'year/:id',
     component: YearShowComponent,
     resolve: [YearResolverService]
   },
@@ -108,7 +105,7 @@ const routes: Routes = [
     resolve: [DurationResolverService]
   },
   {
-    path: 'duration/:slug/page/:page',
+    path: 'duration/:slug',
     component: DurationShowComponent,
     resolve: [DurationResolverService]
   },
@@ -117,7 +114,7 @@ const routes: Routes = [
     component: CommunityComponent
   },
   {
-    path: 'community/page/:page',
+    path: 'community',
     component: CommunityComponent
   },
   {
