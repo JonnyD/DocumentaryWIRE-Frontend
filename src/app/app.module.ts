@@ -82,6 +82,8 @@ import { DocumentaryAddEpisodicComponent } from './public/documentary/documentar
 import { AdminSyncComponent } from './admin/admin-sync/admin-sync.component';
 import { DocumentaryShowEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-show-episodic/documentary-show-episodic.component';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { AdminDocumentaryDetailStandaloneComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-standalone/admin-documentary-detail-standalone.component';
+import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-series/admin-documentary-detail-series.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +143,9 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
     DocumentaryAddEpisodicComponent,
     AdminSyncComponent,
     DocumentaryShowEpisodicComponent,
-    DocumentaryShowStandaloneComponent
+    DocumentaryShowStandaloneComponent,
+    AdminDocumentaryDetailStandaloneComponent,
+    AdminDocumentaryDetailSeriesComponent
   ],
   imports: [
     BrowserModule,
