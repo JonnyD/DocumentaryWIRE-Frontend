@@ -68,17 +68,31 @@
         </div>
       </div>
       <div class="form-group">
-        <label for="year">Year</label>
+        <label for="yearFrom">Year From</label>
         <span *ngIf="isFetchingYears"><br />Loading...</span>
-        <select *ngIf="!isFetchingYears" formControlName="year" class="form-control" id="year"
-          [ngClass]="{ 'is-invalid': submitted && fEpisodic.year.errors }">
+        <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control" id="yearFrom"
+          [ngClass]="{ 'is-invalid': submitted && fEpisodic.yearFrom.errors }">
           <option disabled>Choose Year</option>
           <option *ngFor="let yearItem of years" [value]="yearItem">
             {{ yearItem }}
           </option>
         </select>
-        <div *ngIf="submitted && fEpisodic.year.errors" class="invalid-feedback">
-          <div *ngIf="fEpisodic.year.errors.required">Year is required</div>
+        <div *ngIf="submitted && fEpisodic.yearFrom.errors" class="invalid-feedback">
+          <div *ngIf="fEpisodic.yearFrom.errors.required">Year From is required</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="yearTo">Year To</label>
+        <span *ngIf="isFetchingYears"><br />Loading...</span>
+        <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
+          [ngClass]="{ 'is-invalid': submitted && fEpisodic.yearTo.errors }">
+          <option disabled>Choose Year</option>
+          <option *ngFor="let yearItem of years" [value]="yearItem">
+            {{ yearItem }}
+          </option>
+        </select>
+        <div *ngIf="submitted && fEpisodic.yearTo.errors" class="invalid-feedback">
+          <div *ngIf="fEpisodic.yearTo.errors.required">Year From is required</div>
         </div>
       </div>
 
@@ -103,69 +117,129 @@
                 <div [formGroupName]="j">
                   <div class="form-group">
                     <label for="number">Episode Number</label>
-                    <input formControlName="number" value="{{ getEpisodeNumber(episode) }}" />
-                  </div>
-                  <div class="form-group">
+                    <input formControlName="number" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('number').errors }"
+                        value="{{ getEpisodeNumber(episode) }}" />
+                    <div *ngIf="submitted && episode.get('number').errors && episode.get('number').errors.required"
+                        style="font-size: 80%; color: #dc3545;">Episode Number is
+                        required
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="title">Title</label>
-                    <input type="text" formControlName="title" class="form-control" />
-                  </div>
-                  <div class="form-group">
+                    <input type="text" formControlName="title" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('title').errors }" />
+                    <div *ngIf="submitted && episode.get('title').errors && episode.get('title').errors.required"
+                        style="font-size: 80%; color: #dc3545;">Title is
+                        required
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="imdbId">IMDB ID</label>
-                    <input type="text" formControlName="imdbId" class="form-control" />
-                    <button class="btn btn-secondary" (click)="openIMDBModal(imdbContent)">Search</button>
-                  </div>
-                  <div class="form-group">
-                    <label for="thumbnail">Thumbnail</label>
-                    <input id="thumbnail" type="file" (change)="onThumbnailChange($event, i, j)" />
-                    <img [src]="getThumbnailForSeasonAndEpsiode(i, j)" height="200">
-                  </div>
-                  <div class="form-group">
-                    <label for="storyline">Description</label>
-                    <angular-editor formControlName="storyline" [config]="editorConfig"></angular-editor>
-                  </div>
-                  <div class="form-group">
-                    <label for="summary">Summary</label>
-                    <textarea type="text" id="summary" formControlName="summary" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <label>Year:</label>
-                    <span *ngIf="isFetchingYears"><br />Loading...</span>
-                    <select *ngIf="!isFetchingYears" formControlName="year" class="form-control" id="year">
-                      <option disabled>Choose Year</option>
-                      <option *ngFor="let yearItem of years" [value]="yearItem">
-                        {{ yearItem }}
-                      </option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <label for="length">Duration</label>
-                    <input type="text" formControlName="length" class="form-control" />
-                  </div>
-                  <div class="form-group">
+                    <input type="text" formControlName="imdbId" class="form-control"
+                        disabled />
+                    <button type="button" class="btn btn-secondary"
+                        (click)="openIMDBModal(imdbContent, 'episode')">Search</button>
+                </div>
+                <div class="form-group">
                     <label for="videoSource">Video Source</label>
                     <span *ngIf="isFetchingVideoSources"><br />Loading...</span>
-                    <select *ngIf="!isFetchingVideoSources" formControlName="videoSource" class="form-control"
-                      id="videoSource" [ngClass]="{ 'is-invalid': submitted }">
-                      <option disabled>Choose Video Source</option>
-                      <option *ngFor="let videoSourceItem of videoSources" [value]="videoSourceItem.id">
-                        {{ videoSourceItem.name }}
-                      </option>
+                    <select *ngIf="!isFetchingVideoSources"
+                        formControlName="videoSource" class="form-control"
+                        id="videoSource"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('videoSource').errors }">
+                        <option disabled>Choose Video Source</option>
+                        <option *ngFor="let videoSourceItem of videoSources"
+                            [value]="videoSourceItem.id">
+                            {{ videoSourceItem.name }}
+                        </option>
                     </select>
-                    <div class="invalid-feedback">
-                      <div>Video Source is required</div>
+                    <div *ngIf="submitted && episode.get('videoSource').errors"
+                        class="invalid-feedback">
+                        <div *ngIf="episode.get('videoSource').errors.required">
+                            Video Source is required
+                        </div>
                     </div>
-                  </div>
-                  <div class="form-group">
+                </div>
+                <div class="form-group">
                     <label for="videoId">Video ID</label>
                     <input type="text" formControlName="videoId" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted }" />
-                    <button class="btn btn-secondary"
-                      (click)="openYoutubeModal(youtubeContent,  getSeasonNumber(seas), getEpisodeNumber(episode))">Search</button>
-                    <div *ngIf="submitted" class="invalid-feedback">
-                      <div>Video ID is required</div>
+                        disabled
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('videoId').errors }" />
+                    <button type="button" class="btn btn-secondary"
+                        (click)="openYoutubeModal(youtubeContent, i, j)">Search or enter
+                        id</button>
+                    <div *ngIf="submitted && episode.get('videoId').errors"
+                        class="invalid-feedback">
+                        <div *ngIf="episode.get('videoId').errors.required">Video ID
+                            is required</div>
                     </div>
-                  </div>
-
+                </div>
+                <div class="form-group">
+                    <label for="thumbnail">Thumbnail</label>
+                    <input id="thumbnail" type="file"
+                        (change)="onThumbnailChange($event, i, j)"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('thumbnail').errors }" />
+                    <img [src]="getThumbnailForSeasonAndEpsiode(i, j)" height="200">
+                    <div *ngIf="submitted && episode.get('thumbnail').errors">
+                        <div *ngIf="episode.get('thumbnail').errors.required"
+                            style="font-size: 80%; color: #dc3545;">Thumbnail is
+                            required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="storyline">Description</label>
+                    <angular-editor formControlName="storyline" [config]="editorConfig">
+                    </angular-editor>
+                    <div *ngIf="submitted && episode.get('storyline').errors">
+                        <div *ngIf="episode.get('storyline').errors.required"
+                            style="font-size: 80%; color: #dc3545;">Description is
+                            required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="summary">Summary</label>
+                    <textarea type="text" id="summary" formControlName="summary"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('summary').errors }"></textarea>
+                    <div *ngIf="submitted && episode.get('summary').errors"
+                        class="invalid-feedback">
+                        <div *ngIf="episode.get('summary').errors.required">Summary is
+                            required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Year:</label>
+                    <span *ngIf="isFetchingYears"><br />Loading...</span>
+                    <select *ngIf="!isFetchingYears" formControlName="year"
+                        class="form-control" id="year"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('year').errors }">
+                        <option disabled>Choose Year</option>
+                        <option *ngFor="let yearItem of years" [value]="yearItem">
+                            {{ yearItem }}
+                        </option>
+                    </select>
+                    <div *ngIf="submitted && episode.get('year').errors"
+                        class="invalid-feedback">
+                        <div *ngIf="episode.get('year').errors.required">Year is
+                            required
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="length">Duration (in mins)</label>
+                    <input type="text" formControlName="length" class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && episode.get('length').errors }" />
+                    <div *ngIf="submitted && episode.get('length').errors"
+                        class="invalid-feedback">
+                        <div *ngIf="episode.get('length').errors.required">Duration is
+                            required
+                        </div>
+                    </div>
+                </div>
                 </div>
               </div>
               <button class="btn btn-secondary" (click)="addNewEpisode(seas.controls.episodes, seas.value)">Add new

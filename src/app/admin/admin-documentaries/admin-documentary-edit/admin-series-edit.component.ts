@@ -112,7 +112,7 @@ export class AdminSeriesEditComponent implements OnInit {
             this.documentary = result;
             console.log("this.documentary");
             console.log(this.documentary);
-            this.initForm();
+            this.initForm(this.documentary.series.seasons);
           });
       }
 
@@ -149,9 +149,12 @@ export class AdminSeriesEditComponent implements OnInit {
   initForm(seasons = null) {
     let title = this.documentary.title;
     let category = this.documentary.category;
+    console.log("category");
+    console.log(category);
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
-    let year = this.documentary.year;
+    let yearFrom = this.documentary.yearFrom;
+    let yearTo = this.documentary.yearTo;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
@@ -164,7 +167,8 @@ export class AdminSeriesEditComponent implements OnInit {
       'category': new FormControl(category, [Validators.required]),
       'storyline': new FormControl(storyline, [Validators.required]),
       'summary': new FormControl(summary, [Validators.required]),
-      'year': new FormControl(year, [Validators.required]),
+      'yearFrom': new FormControl(yearFrom, [Validators.required]),
+      'yearTo': new FormControl(yearTo),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage),
       'imdbId': new FormControl(imdbId),
@@ -253,7 +257,7 @@ export class AdminSeriesEditComponent implements OnInit {
       storyline = episode.storyline;
       year = episode.year;
       videoId = episode.videoId;
-      videoSource = episode.videoSource;
+      videoSource = 2;
       length = episode.length;
 
       if (this.thumbnailImgURLDict[season.number - 1] == undefined) {

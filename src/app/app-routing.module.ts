@@ -1,3 +1,5 @@
+import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-series/admin-documentary-detail-series.component';
+import { AdminDocumentaryDetailStandaloneComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-standalone/admin-documentary-detail-standalone.component';
 import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
 import { DocumentaryShowEpisodicComponent } from './public/documentary/documentary-add/documentary-add-episodic/documentary-show-episodic/documentary-show-episodic.component';
 import { HomeResolverService } from './services/home-resolver.service';
@@ -207,8 +209,13 @@ const routes: Routes = [
         component: AdminSeriesEditComponent
       },
       {
-        path: 'documentaries/:slug',
-        component: AdminDocumentaryDetailComponent,
+        path: 'documentaries/standalone/:slug',
+        component: AdminDocumentaryDetailStandaloneComponent,
+        resolve: [DocumentaryResolverService]
+      },
+      {
+        path: 'documentaries/series/:slug',
+        component: AdminDocumentaryDetailSeriesComponent,
         resolve: [DocumentaryResolverService]
       },
       {

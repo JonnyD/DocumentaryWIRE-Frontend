@@ -141,7 +141,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
                   this.documentary = result;
                   console.log("this.documentary");
                   console.log(this.documentary);
-                  this.toggleForm();
+                  this.toggleForm(this.documentary.series.seasons);
                   this.showPage = true;
                 });
             } else {
@@ -166,7 +166,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     this.documentary.series = series;
   }
 
-  toggleForm() {
+  toggleForm(seasons = null) {
     this.showAddTitleButton = false;
     this.showDocumentaries = false;
 
@@ -176,7 +176,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     this.initYears();
     this.initVideoSources();
     this.initCategories();
-    this.initForm();
+    this.initForm(seasons);
   }
 
   initForm(seasons = null) {

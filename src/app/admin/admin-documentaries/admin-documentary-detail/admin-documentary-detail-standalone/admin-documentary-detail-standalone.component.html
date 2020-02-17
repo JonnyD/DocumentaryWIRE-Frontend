@@ -1,1 +1,110 @@
-<p>admin-documentary-detail-standalone works!</p>
+<div class="container">
+    <div class="row">
+
+        <a [routerLink]="['/admin/documentaries/standalone', documentary.slug, 'edit']">
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </a>
+
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>ID</td>
+                    <td>{{ documentary.id }}</td>
+                </tr>
+                <tr>
+                    <td>Slug</td>
+                    <td>{{ documentary.slug }}</td>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td>{{ documentary.title }}</td>
+                </tr>
+                <tr>
+                    <td>Storyline</td>
+                    <td>{{ documentary.storyline }}</td>
+                </tr>
+                <tr>
+                    <td>Summary</td>
+                    <td>{{ documentary.summary }}</td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>{{ documentary.type }}</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{ documentary.category.name }}</td>
+                </tr>
+                <tr>
+                    <td>Year</td>
+                    <td>{{ documentary.year }}</td>
+                </tr>
+                <tr>
+                    <td>Length</td>
+                    <td>{{ documentary.length }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>{{ documentary.status }}</td>
+                </tr>
+                <tr>
+                    <td>Views</td>
+                    <td>{{ documentary.views }}</td>
+                </tr>
+                <tr>
+                    <td>Short Url</td>
+                    <td>{{ documentary.shortUrl }}</td>
+                </tr>
+                <tr>
+                    <td>Poster</td>
+                    <td>
+                        <span *ngIf="documentary.poster">
+                            <img src="{{ documentary.poster }}" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wide Image</td>
+                    <td>
+                        <span *ngIf="documentary.wideImage">
+                            <img src="{{ documentary.wideImage }}" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Video Source</td>
+                    <td>
+                        <span *ngIf="documentary.movie">
+                            {{ documentary.movie.videoSource.name }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Video ID</td>
+                    <td>
+                        <span *ngIf="documentary.movie">
+                            {{ documentary.movie.videoId }}
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Featured</td>
+                    <td>{{ documentary.featured }}</td>
+                </tr>
+                <tr>
+                    <td>Created At</td>
+                    <td><span *ngIf="documentary.createdAt">
+                            {{ documentary.createdAt.date }}
+                        </span></td>
+                </tr>
+                <tr>
+                    <td>Updated At</td>
+                    <td><span *ngIf="documentary.updatedAt">
+                            {{ documentary.updatedAt.date }}
+                        </span></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

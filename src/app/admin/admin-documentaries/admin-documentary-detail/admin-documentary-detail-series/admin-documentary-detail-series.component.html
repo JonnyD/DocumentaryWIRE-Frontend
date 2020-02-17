@@ -1,1 +1,161 @@
-<p>admin-documentary-detail-series works!</p>
+<div class="container">
+    <div class="row">
+
+        <a [routerLink]="['/admin/documentaries/series', documentary.slug, 'edit']">
+            <button class="btn btn-primary" type="submit">Edit</button>
+        </a>
+
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>ID</td>
+                    <td>{{ documentary.id }}</td>
+                </tr>
+                <tr>
+                    <td>Slug</td>
+                    <td>{{ documentary.slug }}</td>
+                </tr>
+                <tr>
+                    <td>Title</td>
+                    <td>{{ documentary.title }}</td>
+                </tr>
+                <tr>
+                    <td>Storyline</td>
+                    <td>{{ documentary.storyline }}</td>
+                </tr>
+                <tr>
+                    <td>Summary</td>
+                    <td>{{ documentary.summary }}</td>
+                </tr>
+                <tr>
+                    <td>Type</td>
+                    <td>{{ documentary.type }}</td>
+                </tr>
+                <tr>
+                    <td>Category</td>
+                    <td>{{ documentary.category.name }}</td>
+                </tr>
+                <tr>
+                    <td>Year From</td>
+                    <td>{{ documentary.yearFrom }}</td>
+                </tr>
+                <tr>
+                    <td>Year To</td>
+                    <td>{{ documentary.yearFrom }}</td>
+                </tr>
+                <tr>
+                    <td>Status</td>
+                    <td>{{ documentary.status }}</td>
+                </tr>
+                <tr>
+                    <td>Views</td>
+                    <td>{{ documentary.views }}</td>
+                </tr>
+                <tr>
+                    <td>Short Url</td>
+                    <td>{{ documentary.shortUrl }}</td>
+                </tr>
+                <tr>
+                    <td>Poster</td>
+                    <td>
+                        <span *ngIf="documentary.poster">
+                            <img src="{{ documentary.poster }}" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Wide Image</td>
+                    <td>
+                        <span *ngIf="documentary.wideImage">
+                            <img src="{{ documentary.wideImage }}" />
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Video Sources</td>
+                    <td>
+                        {{ documentary.videoSources }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>Featured</td>
+                    <td>{{ documentary.featured }}</td>
+                </tr>
+                <tr>
+                    <td>Created At</td>
+                    <td><span *ngIf="documentary.createdAt">
+                            {{ documentary.createdAt.date }}
+                        </span></td>
+                </tr>
+                <tr>
+                    <td>Updated At</td>
+                    <td><span *ngIf="documentary.updatedAt">
+                            {{ documentary.updatedAt.date }}
+                        </span></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+    <div class="row">
+        <h2>Seasons</h2>
+        <br>
+        <div *ngFor="let season of documentary.series.seasons">
+            <h3>Season {{ season.number }}</h3>
+            <div *ngFor="let episode of season.episodes">
+                <table class="table table-striped">
+                    <thead>
+
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>Episode Number</td>
+                            <td>{{ episode.number }}</td>
+                        </tr>
+                        <tr>
+                            <td>Title</td>
+                            <td>{{ episode.title }}</td>
+                        </tr>
+                        <tr>
+                            <td>IMDB ID</td>
+                            <td>{{ episode.imdbId }}</td>
+                        </tr>
+                        <tr>
+                            <td>Storyline</td>
+                            <td>{{ episode.storyline }}</td>
+                        </tr>
+                        <tr>
+                            <td>Summary</td>
+                            <td>{{ episode.summary }}</td>
+                        </tr>
+                        <tr>
+                            <td>Duration</td>
+                            <td>{{ episode.duration }}</td>
+                        </tr>
+                        <tr>
+                            <td>Year</td>
+                            <td>{{ episode.year }}</td>
+                        </tr>
+                        <tr>
+                            <td>Video Source</td>
+                            <td>
+                                {{ episode.videoSource }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Video ID</td>
+                            <td>{{ episode.videoId }}</td>
+                        </tr>
+                        <tr>
+                            <td>Thumbnail</td>
+                            <td><img src="{{ episode.thumbnail }}" height="250" width="250" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

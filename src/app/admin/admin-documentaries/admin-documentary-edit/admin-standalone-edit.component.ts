@@ -375,7 +375,7 @@ export class AdminStandaloneEditComponent implements OnInit {
           this.documentaryService.editStandaloneDocumentary(documentaryId, formValue)
           .subscribe(result => {
             console.log(result);
-            this.router.navigate(["/admin/documentaries", result.slug]);
+            this.router.navigate(["/admin/documentaries/standalone", result.slug]);
         }, error => {
             console.log(error);
         });
@@ -384,7 +384,7 @@ export class AdminStandaloneEditComponent implements OnInit {
           .subscribe(result => {
             console.log("created result");
             console.log(result);
-            this.router.navigate(["/admin/documentaries", result.slug]);
+            this.router.navigate(["/admin/documentaries/standalone", result.slug]);
           }, error => {
             console.log(error);
           })

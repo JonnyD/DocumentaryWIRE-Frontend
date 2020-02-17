@@ -74,9 +74,16 @@ Featured:
   <tbody>
     <tr *ngFor="let documentary of documentaries | paginate: config">
       <td>
-        <a [routerLink]="['/admin/documentaries', documentary.slug]">
-          {{ documentary.slug }}
-        </a>
+        <span *ngIf="documentary.type == 'movie'">
+          <a [routerLink]="['/admin/documentaries/standalone', documentary.slug]">
+            {{ documentary.slug }}
+          </a>
+        </span>
+        <span *ngIf="documentary.type == 'series'">
+          <a [routerLink]="['/admin/documentaries/series', documentary.slug]">
+            {{ documentary.slug }}
+          </a>
+        </span>
       </td>
       <td>{{ documentary.type }}</td>
       <td>{{ documentary.title }}</td>
