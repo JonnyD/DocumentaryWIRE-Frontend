@@ -1,3 +1,4 @@
+import { SEOService } from './../../services/seo.service';
 import { Me } from './../../models/me.model';
 import { UserService } from './../../services/user.service';
 import { Location } from '@angular/common';
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private userService: UserService
+        private userService: UserService,
+        private seoService: SEOService
     ) { 
         // redirect to home if already logged in
         if (this.authenticationService.isAuthenticated()) {
@@ -37,6 +39,8 @@ export class LoginComponent implements OnInit {
 
         // get return url from route parameters or default to '/'
         this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+        this.seoService.setPageTitle('Login | DocumentaryWIRE');
     }
 
     // convenience getter for easy access to form fields

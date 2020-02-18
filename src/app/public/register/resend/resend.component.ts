@@ -1,3 +1,4 @@
+import { SEOService } from './../../../services/seo.service';
 import { UserService } from './../../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -20,7 +21,8 @@ export class ResendComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private userService: UserService) { }
+    private userService: UserService,
+    private seoService: SEOService) { }
 
   ngOnInit() {
     console.log("Here");
@@ -56,6 +58,8 @@ export class ResendComponent implements OnInit {
             this.loading = false;
           }
           );
+          
+        this.seoService.setPageTitle('Resend | DocumentaryWIRE');
     });
   }
 

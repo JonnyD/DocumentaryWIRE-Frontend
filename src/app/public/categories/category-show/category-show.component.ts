@@ -60,7 +60,7 @@ export class CategoryShowComponent implements OnInit {
   }
 
   refreshMetaTags(numberOfPages: number) {
-    let pageTitle = 'Watch ' + this.category.name + ' Documentaries - Page ' + this.page;
+    let pageTitle = 'Watch ' + this.category.name + ' Documentaries - Page ' + this.page + " | DocumentaryWIRE";
     this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
   }
 

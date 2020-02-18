@@ -1,3 +1,4 @@
+import { SEOService } from './../../../services/seo.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,10 +14,13 @@ export class ActivateComponent implements OnInit {
   private email;
 
   constructor(
+    private seoService: SEOService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.seoService.setPageTitle('Activate | DocumentaryWIRE');
+
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {

@@ -60,7 +60,7 @@ export class DurationShowComponent implements OnInit {
   }
 
   refreshMetaTags(numberOfPages: number) {
-    let pageTitle = "Watch Documentaries with a duration " + this.duration.display + " Page " + this.page;
+    let pageTitle = "Watch Documentaries with a duration " + this.duration.display + " Page " + this.page + " | DocumentaryWIRE";
     this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
   }
 

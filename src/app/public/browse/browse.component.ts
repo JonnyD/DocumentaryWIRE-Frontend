@@ -56,7 +56,7 @@ export class BrowseComponent implements OnInit {
   }
 
   refreshMetaTags(numberOfPages) {
-    let pageTitle = 'Browse Documentaries - Page ' + this.page;
+    let pageTitle = 'Watch Documentaries - Page ' + this.page + " | DocumentaryWIRE";
     this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
   }
 

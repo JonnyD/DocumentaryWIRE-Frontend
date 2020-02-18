@@ -1,3 +1,4 @@
+import { SEOService } from './../../services/seo.service';
 import { UserService } from './../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
@@ -22,7 +23,8 @@ export class RegisterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private seoService: SEOService
   ) { 
     if (this.authenticationService.isAuthenticated()) {
       this.router.navigate(['/']);
@@ -31,6 +33,8 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.initForm();
+
+    this.seoService.setPageTitle('Register | DocumentaryWIRE');
   }
 
   initForm() {

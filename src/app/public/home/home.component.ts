@@ -1,3 +1,4 @@
+import { SEOService } from './../../services/seo.service';
 import { ActivatedRoute } from '@angular/router';
 import { DurationService } from './../../services/duration.service';
 import { CategoryService } from './../../services/category.service';
@@ -197,6 +198,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private yearService: YearService,
     private categoryService: CategoryService,
     private durationService: DurationService,
+    private seoService: SEOService,
     private route: ActivatedRoute
   ) { }
 
@@ -212,6 +214,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchYears();
     this.fetchDuration();
     this.fetchActivity();
+
+    this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
   }
 
   fetchTrendingDocumentaries() {

@@ -61,7 +61,7 @@ export class YearShowComponent implements OnInit {
   }
 
   refreshMetaTags(numberOfPages: number) {
-    let pageTitle = "Documentaries Released in " + this.year + " - Page " + this.page;
+    let pageTitle = "Documentaries Released in " + this.year + " - Page " + this.page + " | DocumentaryWIRE";
     this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
   }
 

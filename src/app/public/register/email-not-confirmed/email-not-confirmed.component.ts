@@ -1,3 +1,4 @@
+import { SEOService } from './../../../services/seo.service';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -12,7 +13,9 @@ export class EmailNotConfirmedComponent implements OnInit {
 
   private routeParamsSubscription;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private seoService: SEOService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.routeParamsSubscription = this.route.paramMap
@@ -20,6 +23,8 @@ export class EmailNotConfirmedComponent implements OnInit {
         console.log("params");
         console.log(params);
         this.email = params['params']['email'];
+        
+        this.seoService.setPageTitle('Email not Confirmed | DocumentaryWIRE');
       });
   }
 

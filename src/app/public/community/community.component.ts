@@ -49,7 +49,7 @@ export class CommunityComponent implements OnInit {
   }
 
   refreshMetaTags(numberOfPages: number) {
-    let pageTitle = "Community - Page " + this.page;
+    let pageTitle = "Community - Page " + this.page + " | DocumentaryWIRE";
     this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
   }
 
@@ -64,7 +64,7 @@ export class CommunityComponent implements OnInit {
     } else {
       this.location.go(this.router.url.split("?")[0]);
     }
-    
+
     let amountPerPage = 20;
     params = params.append('amountPerPage', amountPerPage.toString());
 
