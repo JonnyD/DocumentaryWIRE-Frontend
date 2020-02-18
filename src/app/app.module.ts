@@ -1,3 +1,4 @@
+import { SEOService } from './services/seo.service';
 import { PopoverModule } from 'ngx-smart-popover';
 import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
 import { AdminSeriesEditComponent } from './admin/admin-documentaries/admin-documentary-edit/admin-series-edit.component';
@@ -178,6 +179,7 @@ import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentari
     StatusService,
     AdminGuard,
     UserGuard,
+    SEOService,
     {
       provide: RECAPTCHA_SETTINGS,
       useValue: {

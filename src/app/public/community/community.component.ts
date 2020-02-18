@@ -1,3 +1,4 @@
+import { SEOService } from './../../services/seo.service';
 import { UserService } from './../../services/user.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -17,7 +18,6 @@ export class CommunityComponent implements OnInit {
   private communtiyItemsSubscription;
   private newestUsersSubscription;
   private activeUsersSubscription;
-  private routeParamsSubscription;
 
   config: any;
   private page;
@@ -31,6 +31,7 @@ export class CommunityComponent implements OnInit {
   constructor(
     private communityService: CommunityService,
     private userService: UserService,
+    private seoService: SEOService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router) { }
@@ -39,12 +40,17 @@ export class CommunityComponent implements OnInit {
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {
-        this.page = +params['params']['page'] || 1;
+        this.page = +params['page'] || 1;
 
         this.fetchCommunityItems();
         this.fetchNewestUsers();
         this.fetchActiveUsers();
       });
+  }
+
+  refreshMetaTags(numberOfPages: number) {
+    let pageTitle = "Community - Page " + this.page;
+    this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
   }
 
   fetchCommunityItems() {
@@ -53,8 +59,12 @@ export class CommunityComponent implements OnInit {
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
-    this.location.go(this.router.url.split("?")[0], params.toString());
-
+    if (this.page > 1) {
+      this.location.go(this.router.url.split("?")[0], params.toString());
+    } else {
+      this.location.go(this.router.url.split("?")[0]);
+    }
+    
     let amountPerPage = 20;
     params = params.append('amountPerPage', amountPerPage.toString());
 
@@ -66,6 +76,8 @@ export class CommunityComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.communityItems = result['items'];
+
+        this.refreshMetaTags(result['number_of_pages']);
 
         this.isFetchingCommunityItems = false;
       });

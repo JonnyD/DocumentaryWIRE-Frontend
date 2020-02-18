@@ -1,3 +1,4 @@
+import { SEOService } from './../../../services/seo.service';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +20,6 @@ export class DurationShowComponent implements OnInit {
   private queryParamsSubscription;
   private categoriesSubscription;
   private yearsSubscription;
-  private routeParamsSubscription;
 
   config: any;
   private page;
@@ -38,6 +38,7 @@ export class DurationShowComponent implements OnInit {
     private documentaryService: DocumentaryService,
     private durationService: DurationService,
     private yearService: YearService,
+    private seoService: SEOService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location) { }
@@ -48,7 +49,7 @@ export class DurationShowComponent implements OnInit {
       this.queryParamsSubscription = this.route
         .queryParams
         .subscribe(params => {
-          this.page = +params['params']['page'] || 1;
+          this.page = +params['page'] || 1;
 
           this.fetchDocumentaries();
           this.fetchCategories();
@@ -58,13 +59,22 @@ export class DurationShowComponent implements OnInit {
     });
   }
 
+  refreshMetaTags(numberOfPages: number) {
+    let pageTitle = "Watch Documentaries with a duration " + this.duration.display + " Page " + this.page;
+    this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
+  }
+
   fetchDocumentaries() {
     this.isFetchingDocumentaries = true;
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
 
-    this.location.go(this.router.url.split("?")[0], params.toString());
+    if (this.page > 1) {
+      this.location.go(this.router.url.split("?")[0], params.toString());
+    } else {
+      this.location.go(this.router.url.split("?")[0]);
+    }
 
     let amountPerPage = 6;
     params = params.append('amountPerPage', amountPerPage.toString());
@@ -80,6 +90,8 @@ export class DurationShowComponent implements OnInit {
         this.documentaries = result['items'];
 
         this.isFetchingDocumentaries = false;
+
+        this.refreshMetaTags(result['number_of_pages']);
       });
   }
 

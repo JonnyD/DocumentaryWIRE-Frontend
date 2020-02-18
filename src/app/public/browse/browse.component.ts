@@ -1,3 +1,4 @@
+import { SEOService } from './../../services/seo.service';
 import { DurationService } from './../../services/duration.service';
 import { CategoryService } from './../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,7 +21,6 @@ export class BrowseComponent implements OnInit {
   private categoriesSubscription;
   private durationSubscription;
   private yearsSubscription;
-  private routeParamsSubscription;
 
   config: any;
   private page;
@@ -38,6 +38,7 @@ export class BrowseComponent implements OnInit {
     private categoryService: CategoryService,
     private durationService: DurationService,
     private yearService: YearService,
+    private seoService: SEOService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router) { }
@@ -54,12 +55,16 @@ export class BrowseComponent implements OnInit {
       })
   }
 
+  refreshMetaTags(numberOfPages) {
+    let pageTitle = 'Browse Documentaries - Page ' + this.page;
+    this.seoService.refreshMetaTags(pageTitle, this.page, numberOfPages);
+  }
+
   ngOnDestroy() {
     this.documentariesSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
     this.categoriesSubscription.unsubscribe();
     this.yearsSubscription.unsubscribe();
-    this.routeParamsSubscription.unsubscribe();
   }
 
   fetchDocumentaries() {
@@ -67,8 +72,12 @@ export class BrowseComponent implements OnInit {
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
-    
-    this.location.go(this.router.url.split("?")[0], params.toString());
+
+    if (this.page > 1) {
+      this.location.go(this.router.url.split("?")[0], params.toString());
+    } else {
+      this.location.go(this.router.url.split("?")[0]);
+    }
 
     let amountPerPage = 6;
     params = params.append('amountPerPage', amountPerPage.toString());
@@ -83,6 +92,8 @@ export class BrowseComponent implements OnInit {
         this.documentaries = result['items'];
 
         this.isFetchingDocumentaries = false;
+        
+        this.refreshMetaTags(result['number_of_pages']);
       });
   }
 
@@ -116,7 +127,7 @@ export class BrowseComponent implements OnInit {
         this.isFetchingYears = false;
       })
   }
-  
+
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;
