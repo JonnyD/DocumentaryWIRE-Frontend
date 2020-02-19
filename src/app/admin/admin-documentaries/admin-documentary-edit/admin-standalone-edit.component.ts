@@ -392,6 +392,16 @@ export class AdminStandaloneEditComponent implements OnInit {
     }
   }
 
+  convertToSeries() {
+    console.log("convert to series");
+    this.documentaryService.convertToSeries(this.documentary)
+      .subscribe(result => {
+        console.log("convert to series result");
+        console.log(result);
+        this.router.navigate(["/admin/documentaries/series", result.slug]);
+      });
+  }
+
   ngOnDestroy() {
     this.routeParamsSubscription.unsubscribe();
     if (this.documentaryBySlugSubscription != null) {

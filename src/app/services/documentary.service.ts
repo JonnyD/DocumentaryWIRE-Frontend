@@ -202,6 +202,22 @@ export class DocumentaryService extends DataService {
     return this.patch(id, documentary, options, url);
   }
 
+  convertToSeries(documentary: Documentary) {
+    let params = new HttpParams();
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken);
+    }
+
+    let options = {
+      params: params
+    }
+
+    let url = `${environment.apiUrl}/api/v1/documentary/convert-to-series`;
+    return this.update(documentary, options, url);
+  }
+
   convertArrayOfDocumentariesToMap(documentaries, amountPerRow, amountTotal) {
     let cardDecks = new Map();
 

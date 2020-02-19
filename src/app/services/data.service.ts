@@ -35,14 +35,17 @@ export class DataService {
     return this.http.post(url, JSON.stringify(resource), options);
   }
 
-  update(resource, options) {
+  update(resource, options, url?) {
+    if (!url) {
+      url = this.url;
+    }
     console.log("resource put");
     console.log(resource);
     console.log("this url");
-    console.log(this.url + '/' + resource.id);
+    console.log(url + '/' + resource.id);
     console.log("options");
     console.log(options);
-    return this.http.put(this.url + '/' + resource.id, JSON.stringify(
+    return this.http.put(url + '/' + resource.id, JSON.stringify(
       resource
     ), options);
   }
