@@ -80,7 +80,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     if (this.videoSource) {
       if (this.videoSource != 'all') {
         params = params.append('videoSource', this.videoSource.toString());
-        if (this.videoSource != this.previousVideoSource) {
+        if (this.videoSource != this.previousVideoSource 
+          && this.previousVideoSource != null) {
           this.page = 1;
         }
      }
@@ -89,7 +90,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     if (this.category) {
       if (this.category != 'all') {
         params = params.append('category', this.category.toString());
-        if (this.category != this.previousCategory) {
+        if (this.category != this.previousCategory
+          && this.previousCategory != null) {
           this.page = 1;
         }
       }
@@ -98,7 +100,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     if (this.status) {
       if (this.status != 'all') {
         params = params.append('status', this.status.toString());
-        if (this.status != this.previousStatus) {
+        if (this.status != this.previousStatus
+          && this.previousStatus != null) {
           this.page = 1;
         }
       }
@@ -107,7 +110,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     if (this.featured) {
       if (this.featured != 'all') {
         params = params.append('featured', this.featured.toString());
-        if (this.featured != this.previousFeatured) {
+        if (this.featured != this.previousFeatured
+          && this.previousFeatured != null) {
           this.page = 1;
         }
       }
@@ -116,7 +120,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     if (this.type) {
       if (this.type != 'all') {
         params = params.append('type', this.type.toString());
-        if (this.type != this.previousType) {
+        if (this.type != this.previousType
+          && this.previousType != null) {
           this.page = 1;
         }
       }
@@ -132,7 +137,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       .subscribe(
           result => {
             this.config = {
-              itemsPerPage: 12,
+              itemsPerPage: 20,
               currentPage: this.page,
               totalItems: result['count_results']
             };
