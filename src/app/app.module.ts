@@ -1,3 +1,4 @@
+import { FeaturedService } from './services/featured.service';
 import { SEOService } from './services/seo.service';
 import { PopoverModule } from 'ngx-smart-popover';
 import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
@@ -177,6 +178,7 @@ import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentari
     OMDBService,
     YoutubeService,
     StatusService,
+    FeaturedService,
     AdminGuard,
     UserGuard,
     SEOService,

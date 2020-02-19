@@ -1,3 +1,4 @@
+import { FeaturedService } from './../../../services/featured.service';
 import { Movie } from './../../../models/movie.model';
 import { StatusService } from './../../../services/status.service';
 import { VideoSource } from './../../../models/video-source.model';
@@ -36,6 +37,7 @@ export class AdminStandaloneEditComponent implements OnInit {
   categories: any;
   submitted = false;
   closeResult: string;
+  featuredOptions: any;
 
   private editMode = false;
   
@@ -63,6 +65,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     private youtubeService: YoutubeService,
     private yearService: YearService,
     private statusService: StatusService,
+    private featuredService: FeaturedService,
     private router: Router,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal) {}
@@ -84,6 +87,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     this.initYears();
     this.initVideoSources();
     this.initCategories();
+    this.initFeatured();
     
     this.initForm();
 
@@ -112,6 +116,10 @@ export class AdminStandaloneEditComponent implements OnInit {
     this.documentary = new Documentary();
     let movie = new Movie();
     this.documentary.movie = movie;
+  }
+  
+  initFeatured() {
+    this.featuredOptions = this.featuredService.getFeaturedOptions();
   }
 
   initStatuses() {
@@ -156,9 +164,12 @@ export class AdminStandaloneEditComponent implements OnInit {
     let wideImage = this.documentary.wideImage;
     this.wideImgURL = this.documentary.wideImage;
     let imdbId = this.documentary.imdbId;
+    let featured = this.documentary.featured;
 
     console.log("this.documentary");
     console.log(this.documentary);
+    console.log("featured");
+    console.log(this.documentary.featured);
 
     this.editDocumentaryForm = new FormGroup({
       'title': new FormControl(title, [Validators.required]),
@@ -171,6 +182,7 @@ export class AdminStandaloneEditComponent implements OnInit {
       'status': new FormControl(status, [Validators.required]),
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage, [Validators.required]),
+      'featured': new FormControl(featured, [Validators.required]),
       'imdbId': new FormControl(imdbId),
       'movie': new FormGroup({
         'videoId': new FormControl(videoId, [Validators.required]),

@@ -1,3 +1,4 @@
+import { FeaturedService } from './../../../services/featured.service';
 import { Series } from './../../../models/series.model';
 import { Episodic } from './../../../models/episodic.model';
 import { StatusService } from '../../../services/status.service';
@@ -34,6 +35,7 @@ export class AdminSeriesEditComponent implements OnInit {
   categories: any;
   submitted = false;
   closeResult: string;
+  featuredOptions: any;
 
   private editMode = false;
 
@@ -69,6 +71,7 @@ export class AdminSeriesEditComponent implements OnInit {
     private youtubeService: YoutubeService,
     private yearService: YearService,
     private statusService: StatusService,
+    private featuredService: FeaturedService,
     private router: Router,
     private cd: ChangeDetectorRef,
     private modalService: NgbModal,
@@ -94,6 +97,7 @@ export class AdminSeriesEditComponent implements OnInit {
     this.initYears();
     this.initVideoSources();
     this.initCategories();
+    this.initFeatured();
 
     this.initForm();
 
@@ -117,6 +121,10 @@ export class AdminSeriesEditComponent implements OnInit {
       }
 
     });
+  }
+
+  initFeatured() {
+    this.featuredOptions = this.featuredService.getFeaturedOptions();
   }
 
   initStatuses() {
@@ -155,12 +163,12 @@ export class AdminSeriesEditComponent implements OnInit {
     let summary = this.documentary.summary;
     let yearFrom = this.documentary.yearFrom;
     let yearTo = this.documentary.yearTo;
-    let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
     let wideImage = this.documentary.wideImage;
     this.wideImgURL = this.documentary.wideImage;
     let imdbId = this.documentary.imdbId;
+    let featured = this.documentary.featured;
 
     this.episodicForm = this.fb.group({
       'title': new FormControl(title, [Validators.required]),
@@ -172,6 +180,7 @@ export class AdminSeriesEditComponent implements OnInit {
       'poster': new FormControl(poster, [Validators.required]),
       'wideImage': new FormControl(wideImage),
       'imdbId': new FormControl(imdbId),
+      'featured': new FormControl(featured, [Validators.required]),
       'seasons': this.fb.array([], Validators.required)
     });
 

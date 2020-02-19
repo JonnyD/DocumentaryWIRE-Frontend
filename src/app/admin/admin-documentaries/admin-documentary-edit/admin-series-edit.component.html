@@ -95,6 +95,19 @@
           <div *ngIf="fEpisodic.yearTo.errors.required">Year From is required</div>
         </div>
       </div>
+      <div class="form-group">
+        <label for="Featured">Featured</label>
+        <select formControlName="featured" class="form-control" id="Featured"
+          [ngClass]="{ 'is-invalid': submitted && fEpisodic.Featured.errors }">
+          <option disabled>Choose Featured</option>
+          <option *ngFor="let featuredOption of featuredOptions" [value]="featuredOption.value">
+            {{ featuredOption.name }}
+          </option>
+        </select>
+        <div *ngIf="submitted && fEpisodic.feartured.errors" class="invalid-feedback">
+          <div *ngIf="fEpisodic.feartured.errors.required">Feartured is required</div>
+        </div>
+      </div>
 
       <div formArrayName="seasons">
         <div *ngFor="let seas of episodicForm.get('seasons').controls; let i=index">

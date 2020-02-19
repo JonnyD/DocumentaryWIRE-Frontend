@@ -1,9 +1,9 @@
 <div class="container">
-  <div class="row">           
+  <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-      
-    <button class="btn btn-secondary" (click)="convertToSeries()">Convert To Series</button>
-    
+
+      <button class="btn btn-secondary" (click)="convertToSeries()">Convert To Series</button>
+
       <form [formGroup]="editDocumentaryForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="title">Title</label>
@@ -43,20 +43,30 @@
           <span *ngIf="!editDocumentaryForm.get('summary').valid && submitted" class="help-block">Please enter a valid
             summary!</span>
         </div>
-
+        <div class="form-group">
+          <label for="featured">Featured</label>
+          <select formControlName="featured" class="form-control" id="featured">
+            <option disabled>Choose Featured Option</option>
+            <option *ngFor="let featuredOption of featuredOptions" [value]="featuredOption.value" [selected]="documentary.featured == featuredOption.value">
+              {{ featuredOption.name }}
+            </option>
+          </select>
+          <span *ngIf="!editDocumentaryForm.get('featured').valid && submitted" class="help-block">Please enter a valid
+            featured option!</span>
+        </div>
         <div formGroupName="movie">
           <div class="form-group">
             <label for="videoSource">Video Source</label>
-            <select [(ngModel)]="documentary.movie.videoSource.id" formControlName="videoSource"
-              class="form-control" id="videoSource">
+            <select [(ngModel)]="documentary.movie.videoSource.id" formControlName="videoSource" class="form-control"
+              id="videoSource">
               <option disabled>Choose Video Source</option>
               <option *ngFor="let videoSourceItem of videoSources" [value]="videoSourceItem.id"
                 [selected]="videoSource == videoSourceItem.id">
                 {{ videoSourceItem.name }}
               </option>
             </select>
-            <span *ngIf="!editDocumentaryForm.get('movie.videoSource').valid && submitted"
-              class="help-block">Please enter a valid video source!</span>
+            <span *ngIf="!editDocumentaryForm.get('movie.videoSource').valid && submitted" class="help-block">Please
+              enter a valid video source!</span>
           </div>
           <div class="form-group">
             <label for="videoId">Video ID</label>
