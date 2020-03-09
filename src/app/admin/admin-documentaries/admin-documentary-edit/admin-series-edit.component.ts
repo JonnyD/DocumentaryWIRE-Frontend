@@ -437,8 +437,8 @@ export class AdminSeriesEditComponent implements OnInit {
       if (this.documentary.storyline == null) {
         this.documentary.storyline = selectedDocumentary.storyline;
       }
-      if (this.documentary.year == null) {
-        this.documentary.year = selectedDocumentary.year;
+      if (this.documentary.yearFrom == null) {
+        this.documentary.yearFrom = selectedDocumentary.year;
       }
       if (this.documentary.poster == null) {
         this.documentary.poster = selectedDocumentary.poster;
