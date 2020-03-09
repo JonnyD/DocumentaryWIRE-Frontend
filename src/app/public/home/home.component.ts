@@ -320,7 +320,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           arr.push(result[key])
         }
 
-        this.activity = arr.reverse();
+        this.activity = arr;
 
         console.log("act");
         console.log(result);

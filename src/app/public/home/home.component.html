@@ -47,16 +47,11 @@
                     <ng-template #popContent>{{ documentary.summary }}</ng-template>
                     <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
                     <a href="http://localhost">
-                        <img popover="content to be shown in the popover"
-                        popoverTitle="Popover header"
-                        popoverPlacement="top"
-                        [popoverOnHover]="true"
-                        [popoverCloseOnClickOutside]="true"
-                        [popoverCloseOnMouseOutside]="false"
-                        [popoverDisabled]="false"
-                        [popoverAnimation]="true"
-                        [popoverDismissTimeout]="1000" height="280" [src]="documentary.poster" [alt]="documentary.title"
-                            [title]="documentary.title">
+                        <img popover="content to be shown in the popover" popoverTitle="Popover header"
+                            popoverPlacement="top" [popoverOnHover]="true" [popoverCloseOnClickOutside]="true"
+                            [popoverCloseOnMouseOutside]="false" [popoverDisabled]="false" [popoverAnimation]="true"
+                            [popoverDismissTimeout]="1000" height="280" [src]="documentary.poster"
+                            [alt]="documentary.title" [title]="documentary.title">
                     </a>
                 </ng-template>
             </owl-carousel-o>
@@ -204,15 +199,15 @@
                                         <span class="activity-image">
                                             <a href="">
 
-                                                <img alt='{{ activityItem.parent.name }}'
-                                                    src='{{ activityItem.parent.avatar }}'
+                                                <img alt='{{ activityItem.parent.user.name }}'
+                                                    src='{{ activityItem.parent.user.avatar }}'
                                                     class='avatar avatar-48 photo avatar-default rounded-circle'
                                                     height='60' width='60' /></a>
                                         </span>
                                         <div class="data">
                                             <span class="author">
                                                 <a href="">
-                                                    {{ activityItem.parent.name }}</a>
+                                                    {{ activityItem.parent.user.name }}</a>
                                                 <span *ngIf="activityItem.child">
                                                     and {{ activityItem.child.length }} more people
                                                 </span>
@@ -220,8 +215,8 @@
                                             </span>
                                             <span class="excerpt" *ngIf="activityItem.child">
                                                 <img *ngFor="let child of activityItem.child"
-                                                    class="tiny-image rounded-circle" alt='{{ child.name }}'
-                                                    src='{{ child.avatar }}' height='30' width='30' />
+                                                    class="tiny-image rounded-circle" alt='{{ child.user.name }}'
+                                                    src='{{ child.user.avatar }}' height='30' width='30' />
                                             </span>
                                         </div>
                                     </span>
@@ -230,15 +225,15 @@
                                     <span class="acitvity-item">
                                         <div class="activity-image">
                                             <a href="">
-                                                <img alt='{{ activityItem.parent.name }}'
-                                                    src='{{ activityItem.parent.avatar }}'
+                                                <img alt='{{ activityItem.parent.user.name }}'
+                                                    src='{{ activityItem.parent.user.avatar }}'
                                                     class='avatar avatar-48 photo avatar-default' height='48'
                                                     width='48' /></a>
                                         </div>
                                         <div class="data">
                                             <span class="author">
                                                 <a href="">
-                                                    {{ activityItem.parent.name }}</a> commented on
+                                                    {{ activityItem.parent.user.name }}</a> commented on
                                                 <a href="">
                                                     {{ activityItem.parent.data.documentaryTitle }}</a>
                                             </span>
@@ -254,15 +249,15 @@
                                         <span class="activity-image">
                                             <a href="">
 
-                                                <img alt='{{ activityItem.parent.name }}'
-                                                    src='{{ activityItem.parent.avatar }}'
+                                                <img alt='{{ activityItem.parent.user.name }}'
+                                                    src='{{ activityItem.parent.user.avatar }}'
                                                     class='avatar avatar-48 photo avatar-default rounded-circle'
                                                     height='60' width='60' /></a>
                                         </span>
                                         <div class="data">
                                             <span class="author">
                                                 <a href="">
-                                                    {{ activityItem.parent.name }}</a> added a new documentary
+                                                    {{ activityItem.parent.user.name }}</a> added a new documentary
                                                 <span *ngIf="activityItem.child">
                                                     plus {{ activityItem.child.length }} more
                                                 </span>
@@ -271,8 +266,8 @@
                                                 src="{{ activityItem.parent.data.documentaryPoster }}" />
                                             <span class="excerpt" *ngIf="activityItem.child">
                                                 <img *ngFor="let child of activityItem.child"
-                                                    class="tiny-image rounded-circle" alt='{{ child.name }}'
-                                                    src='{{ child.avatar }}' height='30' width='30' />
+                                                    class="tiny-image rounded-circle" alt='{{ child.user.name }}'
+                                                    src='{{ child.user.avatar }}' height='30' width='30' />
                                             </span>
                                         </div>
                                     </span>
@@ -281,14 +276,13 @@
                                 <span class="card-text" *ngIf="activityItem.type == 'watchlist'">
                                     <span class="acitvity-item">
                                         <span class="activity-image">
-                                            <a href=""> <img alt='{{ activityItem.parent.name }}'
-                                                    src='{{ activityItem.parent.avatar }}'
+                                            <a href=""> <img alt='{{ activityItem.parent.user.name }}'
+                                                    src='{{ activityItem.parent.user.avatar }}'
                                                     class='avatar avatar-48 photo avatar-default rounded-circle'
                                                     height='60' width='60' />
                                             </a>
                                         </span>
                                         <div class="data">
-                                            {{ data | json }}
                                             <span class="author">
                                                 <a href="">
                                                     {{ activityItem.parent.name }}</a> added <a
@@ -381,7 +375,9 @@
                             <p class="card-text">
                                 <img src="/assets/discord.png" width="50" height="50"
                                     style="float: left; margin-right: 10px" />
-                                <a href="test.com">Join us on Discord</a>
+                                <span style="vertical-align: middle">
+                                    <a href="test.com">Join us on Discord</a>
+                                </span>
                             </p>
                         </li>
                     </ul>
