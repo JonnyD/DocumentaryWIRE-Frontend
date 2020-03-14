@@ -18,7 +18,7 @@
                     Series</button>
             </div>
             <div style="margin-top: 20px" *ngIf="showDocumentaries">
-                    <h4>My Series Documentaries</h4>
+                <h4>My Series Documentaries</h4>
                 <div>
                     <table class="table table-striped">
                         <thead>
@@ -116,32 +116,32 @@
                             <div *ngIf="f.category.errors.required">Category is required</div>
                         </div>
                         <div class="form-group">
-                                <label>Year From:</label>
-                                <span *ngIf="isFetchingYears"><br />Loading...</span>
-                                <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control"
-                                    id="yearFrom" [ngClass]="{ 'is-invalid': submitted && f.yearFrom.errors }">
-                                    <option disabled>Choose Year</option>
-                                    <option *ngFor="let yearItem of years" [value]="yearItem">
-                                        {{ yearItem }}
-                                    </option>
-                                </select>
-                                <div *ngIf="submitted && f.yearFrom.errors" class="invalid-feedback">
-                                    <div *ngIf="f.yearFrom.errors.required">Year From is required
-                                    </div>
+                            <label>Year From:</label>
+                            <span *ngIf="isFetchingYears"><br />Loading...</span>
+                            <select *ngIf="!isFetchingYears" formControlName="yearFrom" class="form-control"
+                                id="yearFrom" [ngClass]="{ 'is-invalid': submitted && f.yearFrom.errors }">
+                                <option disabled>Choose Year</option>
+                                <option *ngFor="let yearItem of years" [value]="yearItem">
+                                    {{ yearItem }}
+                                </option>
+                            </select>
+                            <div *ngIf="submitted && f.yearFrom.errors" class="invalid-feedback">
+                                <div *ngIf="f.yearFrom.errors.required">Year From is required
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label>Year To:</label>
-                                <span *ngIf="isFetchingYears"><br />Loading...</span>
-                                <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
-                                    [ngClass]="{ 'is-invalid': submitted && f.yearTo.errors }">
-                                    <option disabled>Choose Year</option>
-                                    <option>Present</option>
-                                    <option *ngFor="let yearItem of years" [value]="yearItem">
-                                        {{ yearItem }}
-                                    </option>
-                                </select>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Year To:</label>
+                            <span *ngIf="isFetchingYears"><br />Loading...</span>
+                            <select *ngIf="!isFetchingYears" formControlName="yearTo" class="form-control" id="yearTo"
+                                [ngClass]="{ 'is-invalid': submitted && f.yearTo.errors }">
+                                <option disabled>Choose Year</option>
+                                <option>Present</option>
+                                <option *ngFor="let yearItem of years" [value]="yearItem">
+                                    {{ yearItem }}
+                                </option>
+                            </select>
+                        </div>
                     </div>
                     <div formGroupName="series">
                         <div formArrayName="seasons">
@@ -157,6 +157,13 @@
                                         <input formControlName="seasonNumber" class="form-control"
                                             value="{{ getSeasonNumber(seas) }}"
                                             [ngClass]="{ 'is-invalid': submitted && seas.get('seasonNumber').errors }" />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="seasonSummary">Summary</label>
+                                        <textarea type="text" id="seasonSummary" formControlName="seasonSummary"
+                                            class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && seas.get('seasonSummary').errors }"></textarea>
                                     </div>
 
                                     <div formArrayName="episodes">

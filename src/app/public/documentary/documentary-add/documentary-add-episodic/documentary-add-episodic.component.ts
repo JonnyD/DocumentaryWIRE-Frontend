@@ -1,3 +1,4 @@
+import { SeasonService } from './../../../../services/season.service';
 import { Series } from './../../../../models/series.model';
 import { YoutubeService } from './../../../../services/youtube.service';
 import { OMDBService } from './../../../../services/omdb.service';
@@ -112,6 +113,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     private categoryService: CategoryService,
     private omdbService: OMDBService,
     private youtubeService: YoutubeService,
+    private SeasonService: SeasonService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private router: Router,
@@ -249,9 +251,11 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let control = <FormArray>this.form.controls.series.controls.seasons;
     console.log("control");
     console.log(control);
+    let seasonSummary;
     control.push(
       this.fb.group({
         'seasonNumber': new FormControl(this.seasonNumber, [Validators.required]),
+        'seasonSummary': new FormControl(seasonSummary, [Validators.required]),
         'episodes': this.fb.array([], Validators.required)
       })
     );
@@ -756,40 +760,48 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
           });
     } else {
       this.documentaryService.createEpisodicDocumentary(formValue)
-        .subscribe((result: any) => {
+        .subscribe((episodicResult: any) => {
           console.log("this result");
-          console.log(result);
+          console.log(episodicResult);
           let series = formValue['series'];
-          let seasons = series['seasons'];
+          let seasonsArray = series['seasons'];
 
-          for (let season of seasons) {
-            let seasonNumber = season.seasonNumber;
-            let episodes = season['episodes'];
-            console.log("episodes");
-            console.log(episodes);
+          for (let seasonItem of seasonsArray) {
+            let seasonNumber = seasonItem.seasonNumber;
 
-            for (let episode of episodes) {
-              episode['episode'] = {
-                'seasonNumber': seasonNumber,
-                'episodeNumber': episode.episodeNumber,
-                'videoSource': episode.videoSource,
-                'videoId': episode.videoId
-              };
-              episode['parent'] = result.id;
-              episode['poster'] = episode.thumbnail;
-              console.log("episode");
-              console.log(episode);
-              this.documentaryService.createEpisodeDocumentary(episode)
-                .subscribe((result: any) => {
-                  console.log("result");
-                  console.log(result);
-                });
-            }
+            let seasonResource = {
+              'seasonNumber': seasonNumber,
+              'summary': seasonItem.seasonSummary
+            };
+
+            this.SeasonService.createSeason(seasonResource)
+              .subscribe((seasonResult: any) => {
+                let episodes = seasonItem['episodes'];
+                console.log("episodes");
+                console.log(episodes);
+    
+                for (let episode of episodes) {
+                  episode['episode'] = {
+                    'seasonNumber': seasonNumber,
+                    'episodeNumber': episode.episodeNumber,
+                    'videoSource': episode.videoSource,
+                    'videoId': episode.videoId,
+                    'season': seasonResult.id
+                  };
+                  episode['parent'] = episodicResult.id;
+                  episode['poster'] = episode.thumbnail;
+                  console.log("episode");
+                  console.log(episode);
+                  this.documentaryService.createEpisodeDocumentary(episode)
+                    .subscribe((episodeResult: any) => {
+                      console.log("result");
+                      console.log(episodeResult);
+                    });
+                }
+              })
           }
 
           //this.reset();
-          console.log("result");
-          console.log(result);
           //this.router.navigate(["/add/episodic/show", result.slug]);
         },
           (error) => {
