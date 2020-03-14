@@ -31,6 +31,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public categories;
   public duration;
   public trending;
+  public featured;
 
   private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
@@ -42,7 +43,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   private yearsSubscription;
   private categoriesSubscription;
   private trendingSubscription;
+  private featuredSubscription;
 
+  isFetchingFeaturedDocumentaries = false;
   isFetchingRecentlyAddedDocumentaries = false;
   isFetchingRecentlyUpdatedDocumentaries = false;
   isFetchingNewDocumentaries = false;
@@ -203,6 +206,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.fetchFeaturedDocumentary();
     this.fetchTrendingDocumentaries();
     this.fetchRecentlyAddedDocumentaries();
     this.fetchRecentlyUpdatedDocumentaries();
@@ -216,6 +220,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchActivity();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
+  }
+
+  fetchFeaturedDocumentary() {
+    this.isFetchingFeaturedDocumentaries = true;
+    let params = new HttpParams();
+
+    this.featuredSubscription = this.documentaryService.getFeaturedDocumentary(params)
+      .subscribe(result => {
+        this.featured = result['items'];
+        console.log('featured');
+        console.log(this.featured);
+        this.isFetchingFeaturedDocumentaries = false;
+      })
   }
 
   fetchTrendingDocumentaries() {
@@ -375,6 +392,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
     this.categoriesSubscription.unsubscribe();
     this.yearsSubscription.unsubscribe();
+    if (this.featuredSubscription != null) {
+      this.featuredSubscription.unsubscribe();
+    }
   }
 
   public getSantizeUrl(url: string) {
