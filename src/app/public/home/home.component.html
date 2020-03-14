@@ -30,15 +30,17 @@
 
             <div style="margin-top: 40px"></div>
             <h3>Featured</h3>
-            <div class="card mb-3">
-                <img class="card-img-top" src="/assets/sunset.jpg" alt="Card image cap">
+            <div class="card mb-3" *ngFor="let feat of featured">
+                <img class="card-img-top" src="{{ feat.poster }}" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                        additional content. This content is a little bit longer.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title">{{ feat.title }}</h5>
+                    <p class="card-text">{{ feat.summary }}</p>
+                    <!--
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
                 </div>
             </div>
+
+            <p *ngIf="isFetchingFeaturedDocumentaries">Loading...</p>
 
             <div style="margin-top: 40px"></div>
             <h3>Trending</h3>
@@ -187,6 +189,56 @@
                 </div>
 
                 <p *ngIf="isFetchingActiveUsers">Loading...</p>
+
+                <div style="clear: both"></div>
+                <div style="margin-top: 40px">
+                    <h2>Subscribe / Follow</h2>
+                    <div class="card">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p class="card-text">
+                                    <img src="/assets/email.png" width="50" height="50"
+                                        style="float: left; margin-right: 10px" />
+                                    <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"
+                                        target="popupwindow"
+                                        href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the
+                                        latest
+                                        documentaries sent straight to your inbox.</a>
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p class="card-text">
+                                    <img src="/assets/discord.png" width="50" height="50"
+                                        style="float: left; margin-right: 10px" />
+                                    <span style="vertical-align: middle">
+                                        Join us on Discord<br />
+                                        <a href="test.com">https://discord.gg/MsMDmH</a>
+                                    </span>
+                                </p>
+                            </li>
+                        </ul>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <div class="text-center">
+                                    <p class="card-text">
+                                        <img src="/assets/facebook.png" width="40" height="40"
+                                            style="margin-right: 5px" />
+                                        <img src="/assets/twitter.png" width="40" height="40"
+                                            style="margin-right: 5px" />
+                                        <img src="/assets/instagram.png" width="40" height="40"
+                                            style="margin-right: 5px" />
+                                        <img src="/assets/pinterest.png" width="40" height="40"
+                                            style="margin-right: 5px" />
+                                        <img src="/assets/gab.png" width="40" height="40" />
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
 
                 <div style="clear: both"></div>
                 <div style="margin-top: 40px">
@@ -354,47 +406,7 @@
                 </div>
                 <p *ngIf="isFetchingYears">Loading...</p>
 
-                <div style="clear: both"></div>
-                <h2>Subscribe / Follow</h2>
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <p class="card-text">
-                                <img src="/assets/email.png" width="50" height="50"
-                                    style="float: left; margin-right: 10px" />
-                                <a onclick="window.open('https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true"
-                                    target="popupwindow"
-                                    href="https://feedburner.google.com/fb/a/mailverify?uri=DocumentaryWire">Get the
-                                    latest
-                                    documentaries sent straight to your inbox.</a>
-                            </p>
-                        </li>
-                    </ul>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <p class="card-text">
-                                <img src="/assets/discord.png" width="50" height="50"
-                                    style="float: left; margin-right: 10px" />
-                                <span style="vertical-align: middle">
-                                    <a href="test.com">Join us on Discord</a>
-                                </span>
-                            </p>
-                        </li>
-                    </ul>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="text-center">
-                                <p class="card-text">
-                                    <img src="/assets/facebook.png" width="40" height="40" style="margin-right: 5px" />
-                                    <img src="/assets/twitter.png" width="40" height="40" style="margin-right: 5px" />
-                                    <img src="/assets/instagram.png" width="40" height="40" style="margin-right: 5px" />
-                                    <img src="/assets/pinterest.png" width="40" height="40" style="margin-right: 5px" />
-                                    <img src="/assets/gab.png" width="40" height="40" />
-                                </p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+
 
             </div>
         </div>
