@@ -154,9 +154,9 @@
 
                                     <div class="form-group">
                                         <label for="number">Season Number</label>
-                                        <input formControlName="number" class="form-control"
+                                        <input formControlName="seasonNumber" class="form-control"
                                             value="{{ getSeasonNumber(seas) }}"
-                                            [ngClass]="{ 'is-invalid': submitted && seas.get('number').errors }" />
+                                            [ngClass]="{ 'is-invalid': submitted && seas.get('seasonNumber').errors }" />
                                     </div>
 
                                     <div formArrayName="episodes">
@@ -175,10 +175,10 @@
                                             <div [formGroupName]="j">
                                                 <div class="form-group">
                                                     <label for="number">Episode Number</label>
-                                                    <input formControlName="number" class="form-control"
-                                                        [ngClass]="{ 'is-invalid': submitted && episode.get('number').errors }"
+                                                    <input formControlName="episodeNumber" class="form-control"
+                                                        [ngClass]="{ 'is-invalid': submitted && episode.get('episodeNumber').errors }"
                                                         value="{{ getEpisodeNumber(episode) }}" />
-                                                    <div *ngIf="submitted && episode.get('number').errors && episode.get('number').errors.required"
+                                                    <div *ngIf="submitted && episode.get('episodeNumber').errors && episode.get('episodeNumber').errors.required"
                                                         style="font-size: 80%; color: #dc3545;">Episode Number is
                                                         required
                                                     </div>
@@ -272,17 +272,17 @@
                                                 <div class="form-group">
                                                     <label>Year:</label>
                                                     <span *ngIf="isFetchingYears"><br />Loading...</span>
-                                                    <select *ngIf="!isFetchingYears" formControlName="year"
-                                                        class="form-control" id="year"
-                                                        [ngClass]="{ 'is-invalid': submitted && episode.get('year').errors }">
+                                                    <select *ngIf="!isFetchingYears" formControlName="yearFrom"
+                                                        class="form-control" id="yearFrom"
+                                                        [ngClass]="{ 'is-invalid': submitted && episode.get('yearFrom').errors }">
                                                         <option disabled>Choose Year</option>
                                                         <option *ngFor="let yearItem of years" [value]="yearItem">
                                                             {{ yearItem }}
                                                         </option>
                                                     </select>
-                                                    <div *ngIf="submitted && episode.get('year').errors"
+                                                    <div *ngIf="submitted && episode.get('yearFrom').errors"
                                                         class="invalid-feedback">
-                                                        <div *ngIf="episode.get('year').errors.required">Year is
+                                                        <div *ngIf="episode.get('yearFrom').errors.required">Year is
                                                             required
                                                         </div>
                                                     </div>

@@ -136,6 +136,17 @@ export class DocumentaryService extends DataService {
     return this.getAll(options);
   }
 
+  getFeaturedDocumentary(params: HttpParams) {
+    params = params.append('status', 'publish');
+    params = params.append('featured', 'true');
+
+    let options = {
+      params: params
+    }
+
+    return this.getAll(options);
+  }
+
   createStandaloneDocumentary(resource) {
     let params = new HttpParams();
 
@@ -181,6 +192,22 @@ export class DocumentaryService extends DataService {
     }
 
     let url = `${environment.apiUrl}/api/v1/documentary/series`;
+    return this.create(resource, options, url);
+  }
+
+  createEpisodeDocumentary(resource) {
+    let params = new HttpParams();
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
+    }
+
+    let url = `${environment.apiUrl}/api/v1/documentary/episode`;
     return this.create(resource, options, url);
   }
 

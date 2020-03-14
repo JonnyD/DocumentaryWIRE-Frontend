@@ -251,7 +251,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     console.log(control);
     control.push(
       this.fb.group({
-        'number': new FormControl(this.seasonNumber, [Validators.required]),
+        'seasonNumber': new FormControl(this.seasonNumber, [Validators.required]),
         'episodes': this.fb.array([], Validators.required)
       })
     );
@@ -296,7 +296,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let title;
     let storyline;
     let summary;
-    let year;
+    let yearFrom;
     let length;
     let imdbId;
     let videoId;
@@ -306,13 +306,13 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     control.insert(index,
       this.fb.group({
-        'number': new FormControl(episodeNumber, [Validators.required]),
+        'episodeNumber': new FormControl(episodeNumber, [Validators.required]),
         'title': new FormControl(title, [Validators.required]),
         'imdbId': new FormControl(imdbId),
         'storyline': new FormControl(storyline, [Validators.required]),
         'summary': new FormControl(summary, [Validators.required]),
         'length': new FormControl(length, [Validators.required]),
-        'year': new FormControl(year, [Validators.required]),
+        'yearFrom': new FormControl(yearFrom, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required]),
         'videoId': new FormControl(videoId, [Validators.required]),
         'thumbnail': new FormControl(thumbnail, [Validators.required]),
@@ -323,10 +323,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let title;
     let storyline;
     let summary;
-    let year;
+    let yearFrom;
     let length;
     let imdbId;
-    let videoId = "dfsdf";
+    let videoId;
     let videoSource = 2;
     let thumbnail;
     let episodeNumber;
@@ -338,7 +338,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       thumbnail = episode.thumbnail;
       summary = "sdffdsfsd";
       storyline = episode.storyline;
-      year = episode.year;
+      yearFrom = episode.yearFrom;
       videoId = "fdsdfs";
       videoSource = 2;
       length = episode.length;
@@ -354,13 +354,13 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     control.push(
       this.fb.group({
-        'number': new FormControl(episodeNumber, [Validators.required]),
+        'episodeNumber': new FormControl(episodeNumber, [Validators.required]),
         'title': new FormControl(title, [Validators.required]),
         'imdbId': new FormControl(imdbId),
         'storyline': new FormControl(storyline, [Validators.required]),
         'summary': new FormControl(summary, [Validators.required]),
         'length': new FormControl(length, [Validators.required]),
-        'year': new FormControl(year, [Validators.required]),
+        'yearFrom': new FormControl(yearFrom, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required]),
         'videoId': new FormControl(videoId, [Validators.required]),
         'thumbnail': new FormControl(thumbnail, [Validators.required]),
@@ -757,10 +757,40 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     } else {
       this.documentaryService.createEpisodicDocumentary(formValue)
         .subscribe((result: any) => {
+          console.log("this result");
+          console.log(result);
+          let series = formValue['series'];
+          let seasons = series['seasons'];
+
+          for (let season of seasons) {
+            let seasonNumber = season.seasonNumber;
+            let episodes = season['episodes'];
+            console.log("episodes");
+            console.log(episodes);
+
+            for (let episode of episodes) {
+              episode['episode'] = {
+                'seasonNumber': seasonNumber,
+                'episodeNumber': episode.episodeNumber,
+                'videoSource': episode.videoSource,
+                'videoId': episode.videoId
+              };
+              episode['parent'] = result.id;
+              episode['poster'] = episode.thumbnail;
+              console.log("episode");
+              console.log(episode);
+              this.documentaryService.createEpisodeDocumentary(episode)
+                .subscribe((result: any) => {
+                  console.log("result");
+                  console.log(result);
+                });
+            }
+          }
+
           //this.reset();
           console.log("result");
           console.log(result);
-          this.router.navigate(["/add/episodic/show", result.slug]);
+          //this.router.navigate(["/add/episodic/show", result.slug]);
         },
           (error) => {
             console.log(error);
