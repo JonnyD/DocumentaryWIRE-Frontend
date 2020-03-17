@@ -183,7 +183,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
   initForm(seasons = null) {
     let title = this.documentary.title;
-    let category = this.documentary.category;
+    let category = this.documentary.category.id;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     // let videoSource = null;
@@ -240,18 +240,20 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   getSeasonNumber(season) {
-    return season.value.number;
+    return season.seasonNumber;
   }
 
   addSeason(season = null, seasonIndex: number) {
+    let seasonSummary;
+    
     if (season != null) {
       this.seasonNumber = season.number;
+      seasonSummary = season.seasonSummary;
     }
 
     let control = <FormArray>this.form.controls.series.controls.seasons;
     console.log("control");
     console.log(control);
-    let seasonSummary;
     control.push(
       this.fb.group({
         'seasonNumber': new FormControl(this.seasonNumber, [Validators.required]),
@@ -303,7 +305,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let yearFrom;
     let length;
     let imdbId;
-    let videoId;
+    let videoId = 99999;
     let videoSource = 2;
     let thumbnail;
     let episodeNumber;
@@ -316,9 +318,9 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
         'storyline': new FormControl(storyline, [Validators.required]),
         'summary': new FormControl(summary, [Validators.required]),
         'length': new FormControl(length, [Validators.required]),
-        'yearFrom': new FormControl(yearFrom, [Validators.required]),
+        'year': new FormControl(yearFrom, [Validators.required]),
         'videoSource': new FormControl(videoSource, [Validators.required]),
-        'videoId': new FormControl(videoId, [Validators.required]),
+        'videoId': new FormControl(videoId),
         'thumbnail': new FormControl(thumbnail, [Validators.required]),
       }));
   }
@@ -330,7 +332,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let yearFrom;
     let length;
     let imdbId;
-    let videoId;
+    let videoId = 9999;
     let videoSource = 2;
     let thumbnail;
     let episodeNumber;
@@ -345,7 +347,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       yearFrom = episode.yearFrom;
       videoId = "fdsdfs";
       videoSource = 2;
-      length = episode.length;
+      length = episode.duration;
+
+      console.log("add ep");
+      console.log(episodeNumber);
 
       if (this.thumbnailImgURLDict[seasonIndex] == undefined) {
         this.thumbnailImgURLDict[seasonIndex] = {};
