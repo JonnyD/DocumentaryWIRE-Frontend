@@ -244,9 +244,11 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   addSeason(season = null, seasonIndex: number) {
+    let id;
     let seasonSummary;
     
     if (season != null) {
+      id = season.id;
       this.seasonNumber = season.number;
       seasonSummary = season.seasonSummary;
     }
@@ -256,6 +258,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     console.log(control);
     control.push(
       this.fb.group({
+        'id': new FormControl(id),
         'seasonNumber': new FormControl(this.seasonNumber, [Validators.required]),
         'seasonSummary': new FormControl(seasonSummary, [Validators.required]),
         'episodes': this.fb.array([], Validators.required)
@@ -326,6 +329,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   }
 
   addEpisode(control, season, episode = null, seasonIndex: number, episodeIndex: number) {
+    let id;
     let title;
     let storyline;
     let summary;
@@ -338,6 +342,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let episodeNumber;
 
     if (episode != null) {
+      id = episode.id;
       episodeNumber = episode.number;
       title = episode.title;
       imdbId = episode.imdbId;
@@ -363,6 +368,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     control.push(
       this.fb.group({
+        'id': new FormControl(episodeNumber),
         'episodeNumber': new FormControl(episodeNumber, [Validators.required]),
         'title': new FormControl(title, [Validators.required]),
         'imdbId': new FormControl(imdbId),
@@ -755,9 +761,12 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
     if (this.editMode) {
       this.documentaryService.editEpisodicDocumentary(this.documentary.id, formValue)
-        .subscribe((result: any) => {
+        .subscribe((episodicResult: any) => {
+          let series = formValue['series'];
+          console.log("edit episodic series");
+          console.log(series);
           //this.reset();
-          this.router.navigate(["/add"]);
+          //this.router.navigate(["/add"]);
         },
           (error) => {
             console.log(error);
@@ -773,10 +782,11 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
           for (let seasonItem of seasonsArray) {
             let seasonNumber = seasonItem.seasonNumber;
+            let summary = seasonItem.summary;
 
             let seasonResource = {
               'seasonNumber': seasonNumber,
-              'summary': seasonItem.seasonSummary
+              'summary': summary
             };
 
             this.SeasonService.createSeason(seasonResource)
