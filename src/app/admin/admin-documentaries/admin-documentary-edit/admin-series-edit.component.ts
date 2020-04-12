@@ -501,7 +501,7 @@ export class AdminSeriesEditComponent implements OnInit {
       this.wideImgURL = selectedVideo.snippet.thumbnails.high.url;
     }
 
-    this.documentary.standalone.videoId = selectedVideo.id.videoId;
+    //this.documentary.series.videoId = selectedVideo.id.videoId;
 
     this.initForm();
 

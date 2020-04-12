@@ -113,7 +113,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     private categoryService: CategoryService,
     private omdbService: OMDBService,
     private youtubeService: YoutubeService,
-    private SeasonService: SeasonService,
+    private seasonService: SeasonService,
     private route: ActivatedRoute,
     private cd: ChangeDetectorRef,
     private router: Router,
@@ -246,7 +246,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
   addSeason(season = null, seasonIndex: number) {
     let id;
     let seasonSummary;
-    
+
     if (season != null) {
       id = season.id;
       this.seasonNumber = season.number;
@@ -765,6 +765,56 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
           let series = formValue['series'];
           console.log("edit episodic series");
           console.log(series);
+
+          let seasonsArray = series['seasons'];
+
+          for (let seasonItem of seasonsArray) {
+            let seasonId = seasonItem.id;
+            let seasonNumber = seasonItem.seasonNumber;
+            let summary = seasonItem.summary;
+
+            let seasonResource = {
+              'seasonNumber': seasonNumber,
+              'summary': summary
+            };
+
+            if (seasonId != null) {
+              this.seasonService.editSeason(seasonId, seasonResource)
+                .subscribe((seasonResult: any) => {
+                  let episodes = seasonItem['episodes'];
+                  console.log("episodes");
+                  console.log(episodes);
+
+                  for (let episode of episodes) {
+                    episode['episode'] = {
+                      'seasonNumber': seasonNumber,
+                      'episodeNumber': episode.episodeNumber,
+                      'videoSource': episode.videoSource,
+                      'videoId': episode.videoId,
+                      'season': seasonResult.id
+                    };
+                    episode['parent'] = episodicResult.id;
+                    episode['poster'] = episode.thumbnail;
+                    console.log("episode");
+                    console.log(episode);
+                    if (episode.id != null) {
+                      this.documentaryService.editEpisodeDocumentary(episode.id, episode);
+                    } else {
+                      this.documentaryService.createEpisodeDocumentary(episode)
+                        .subscribe((episodeResult: any) => {
+                          console.log("result");
+                          console.log(episodeResult);
+                        });
+                    }
+                  }
+                });
+            } else {
+              this.seasonService.createSeason(seasonResource)
+                .subscribe((seasonResult: any) => {
+                  this.createOrEditEpisodes(seasonItem, seasonNumber, seasonResult, episodicResult);
+                });
+            }
+          }
           //this.reset();
           //this.router.navigate(["/add"]);
         },
@@ -789,31 +839,10 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
               'summary': summary
             };
 
-            this.SeasonService.createSeason(seasonResource)
+            this.seasonService.createSeason(seasonResource)
               .subscribe((seasonResult: any) => {
-                let episodes = seasonItem['episodes'];
-                console.log("episodes");
-                console.log(episodes);
-    
-                for (let episode of episodes) {
-                  episode['episode'] = {
-                    'seasonNumber': seasonNumber,
-                    'episodeNumber': episode.episodeNumber,
-                    'videoSource': episode.videoSource,
-                    'videoId': episode.videoId,
-                    'season': seasonResult.id
-                  };
-                  episode['parent'] = episodicResult.id;
-                  episode['poster'] = episode.thumbnail;
-                  console.log("episode");
-                  console.log(episode);
-                  this.documentaryService.createEpisodeDocumentary(episode)
-                    .subscribe((episodeResult: any) => {
-                      console.log("result");
-                      console.log(episodeResult);
-                    });
-                }
-              })
+                this.createOrEditEpisodes(seasonItem, seasonNumber, seasonResult, episodicResult);
+              });
           }
 
           //this.reset();
@@ -823,6 +852,35 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
             console.log(error);
             this.errors.push(error.error);
           });
+    }
+  }
+
+  createOrEditEpisodes(seasonItem, seasonNumber, seasonResult, episodicResult) {
+    let episodes = seasonItem['episodes'];
+    console.log("episodes");
+    console.log(episodes);
+
+    for (let episode of episodes) {
+      episode['episode'] = {
+        'seasonNumber': seasonNumber,
+        'episodeNumber': episode.episodeNumber,
+        'videoSource': episode.videoSource,
+        'videoId': episode.videoId,
+        'season': seasonResult.id
+      };
+      episode['parent'] = episodicResult.id;
+      episode['poster'] = episode.thumbnail;
+      console.log("episode");
+      console.log(episode);
+      if (episode.id != null) {
+        this.documentaryService.editEpisodeDocumentary(episode.id, episode);
+      } else {
+        this.documentaryService.createEpisodeDocumentary(episode)
+          .subscribe((episodeResult: any) => {
+            console.log("result");
+            console.log(episodeResult);
+          });
+      }
     }
   }
 

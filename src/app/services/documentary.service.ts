@@ -211,6 +211,22 @@ export class DocumentaryService extends DataService {
     return this.create(resource, options, url);
   }
 
+  editEpisodeDocumentary(id, resource) {
+    let params = new HttpParams();
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
+    }
+
+    let url = `${environment.apiUrl}/api/v1/documentary/episode`;
+    return this.patch(id, resource, options, url);
+  }
+
   editEpisodicDocumentary(id, documentary: Documentary) {
     let params = new HttpParams();
 

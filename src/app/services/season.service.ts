@@ -35,4 +35,19 @@ export class SeasonService extends DataService {
     
     return this.create(resource, options);
   }
+
+  editSeason(id, resource) {
+    let params = new HttpParams();
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+      params: params
+    }
+    
+    return this.patch(id, resource, options);
+  }
 }
