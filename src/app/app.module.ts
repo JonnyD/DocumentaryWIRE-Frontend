@@ -63,7 +63,6 @@ import { DocumentaryShowComponent } from './public/documentary/documentary-show/
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserAddedComponent } from './public/user/user-added/user-added.component';
-import { DocumentaryAddComponent } from './public/documentary/documentary-add/documentary-add.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
 import { OMDBService } from './services/omdb.service';
@@ -124,7 +123,6 @@ import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentari
     UserActivityComponent,
     UserWatchlistComponent,
     UserAddedComponent,
-    DocumentaryAddComponent,
     UserEditComponent,
     AdminSubscriptionsComponent,
     ChangeNameComponent,
