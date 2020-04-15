@@ -173,25 +173,7 @@
         </div>
         <div class="col-md-4">
             <div>
-                <h2>Members</h2>
-
-                <div class="card" *ngIf="!isFetchingActiveUsers">
-                    <div class="card-body">
-                        <div class="avatar-block" style="margin-left: 10px">
-                            <div class="item-avatar" *ngFor="let user of activeUsers">
-                                <a [routerLink]="['/user', user.username]" title="{{ user.username }}" rel="nofollow">
-                                    <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin:3px"
-                                        width="50" height="50" alt="Profile picture of {{ user.username }}" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <p *ngIf="isFetchingActiveUsers">Loading...</p>
-
-                <div style="clear: both"></div>
-                <div style="margin-top: 40px">
+                <div>
                     <h2>Subscribe / Follow</h2>
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -239,10 +221,29 @@
                     </div>
 
                 </div>
+                
+                <div style="margin-top: 40px">
+                    <h2>Members</h2>
+
+                    <div class="card" *ngIf="!isFetchingActiveUsers">
+                        <div class="card-body">
+                            <div class="avatar-block" style="margin-left: 10px">
+                                <div class="item-avatar" *ngFor="let user of activeUsers">
+                                    <a [routerLink]="['/user', user.username]" title="{{ user.username }}" rel="nofollow">
+                                        <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin:3px"
+                                            width="50" height="50" alt="Profile picture of {{ user.username }}" />
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p *ngIf="isFetchingActiveUsers">Loading...</p>
 
                 <div style="clear: both"></div>
                 <div style="margin-top: 40px">
-                    <h2>Activity</h2>
+                    <h2>Community</h2>
                     <div *ngIf="!isFetchingActivity" class="card recent-activity">
                         <ul class="list-group list-group-flush ">
                             <li class="list-group-item" *ngFor="let activityItem of activity">
