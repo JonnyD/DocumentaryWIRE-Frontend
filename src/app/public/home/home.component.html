@@ -54,6 +54,7 @@
                             [popoverCloseOnMouseOutside]="false" [popoverDisabled]="false" [popoverAnimation]="true"
                             [popoverDismissTimeout]="1000" height="280" [src]="documentary.poster"
                             [alt]="documentary.title" [title]="documentary.title">
+                            {{ documentary.title }}
                     </a>
                 </ng-template>
             </owl-carousel-o>
@@ -71,6 +72,7 @@
                         triggers="mouseenter:mouseleave">
                         <img height="280" [src]="documentary.poster" [alt]="documentary.title"
                             [title]="documentary.title">
+                            {{ documentary.title }}
                     </a>
                 </ng-template>
             </owl-carousel-o>
@@ -83,6 +85,7 @@
                 <ng-template *ngFor="let documentary of recentlyUpdated" carouselSlide [width]="230"
                     [id]="documentary.id">
                     <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
+                    {{ documentary.title }}
                 </ng-template>
             </owl-carousel-o>
 
@@ -94,6 +97,7 @@
                 <ng-template *ngFor="let documentary of newDocumentaries" carouselSlide [width]="230"
                     [id]="documentary.id">
                     <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
+                    {{ documentary.title }}
                 </ng-template>
             </owl-carousel-o>
 
@@ -105,6 +109,7 @@
                 <ng-template *ngFor="let documentary of popularDocumentaries" carouselSlide [width]="230"
                     [id]="documentary.id">
                     <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
+                    {{ documentary.title }}
                 </ng-template>
             </owl-carousel-o>
 
