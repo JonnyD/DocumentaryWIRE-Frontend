@@ -1,3 +1,4 @@
+import { ChatComponent } from './public/chat/chat.component';
 import { FeaturedService } from './services/featured.service';
 import { SEOService } from './services/seo.service';
 import { PopoverModule } from 'ngx-smart-popover';
@@ -90,6 +91,7 @@ import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentari
   declarations: [
     AppComponent,
     NavbarComponent,
+    ChatComponent,
     AdminHomeComponent,
     AdminDocumentariesComponent,
     AdminCommentsComponent,
