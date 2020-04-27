@@ -1,4 +1,4 @@
 export class Movie {
-    videoSource: string;
+    videoSource: number;
     videoId: string;
 }
