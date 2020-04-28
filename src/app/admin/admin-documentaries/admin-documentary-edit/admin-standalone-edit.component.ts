@@ -157,7 +157,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     let summary = this.documentary.summary;
     let videoSource = this.documentary.movie.videoSource;
     let videoId = this.documentary.movie.videoId;
-    let yearFrom = this.documentary.year;
+    let yearFrom = this.documentary.yearFrom;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
@@ -301,8 +301,8 @@ export class AdminStandaloneEditComponent implements OnInit {
       if (this.documentary.storyline == null) {
         this.documentary.storyline = selectedDocumentary.storyline;
       }
-      if (this.documentary.year == null) {
-        this.documentary.year = selectedDocumentary.year;
+      if (this.documentary.yearFrom == null) {
+        this.documentary.yearFrom = selectedDocumentary.year;
       }
       if (this.documentary.poster == null) {
         this.documentary.poster = selectedDocumentary.poster;

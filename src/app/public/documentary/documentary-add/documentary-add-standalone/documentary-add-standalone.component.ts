@@ -183,7 +183,7 @@ export class DocumentaryAddStandaloneComponent implements OnInit {
     let summary = this.documentary.summary;
     let videoSource = this.documentary.movie.videoSource;
     let videoId = this.documentary.movie.videoId;
-    let year = this.documentary.year;
+    let year = this.documentary.yearFrom;
     let length = this.documentary.length;
     let poster = this.documentary.poster;
     this.posterImgURL = this.documentary.poster;
