@@ -183,7 +183,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
 
   initForm(seasons = null) {
     let title = this.documentary.title;
-    let category = this.documentary.category.id;
+    let category = this.documentary.category;
     let storyline = this.documentary.storyline;
     let summary = this.documentary.summary;
     // let videoSource = null;
@@ -336,7 +336,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
     let yearFrom;
     let length;
     let imdbId;
-    let videoId = 9999;
+    let videoId = "9999";
     let videoSource = 2;
     let thumbnail;
     let episodeNumber;
@@ -781,32 +781,7 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
             if (seasonId != null) {
               this.seasonService.editSeason(seasonId, seasonResource)
                 .subscribe((seasonResult: any) => {
-                  let episodes = seasonItem['episodes'];
-                  console.log("episodes");
-                  console.log(episodes);
-
-                  for (let episode of episodes) {
-                    episode['episode'] = {
-                      'seasonNumber': seasonNumber,
-                      'episodeNumber': episode.episodeNumber,
-                      'videoSource': episode.videoSource,
-                      'videoId': episode.videoId,
-                      'season': seasonResult.id
-                    };
-                    episode['parent'] = episodicResult.id;
-                    episode['poster'] = episode.thumbnail;
-                    console.log("episode");
-                    console.log(episode);
-                    if (episode.id != null) {
-                      this.documentaryService.editEpisodeDocumentary(episode.id, episode);
-                    } else {
-                      this.documentaryService.createEpisodeDocumentary(episode)
-                        .subscribe((episodeResult: any) => {
-                          console.log("result");
-                          console.log(episodeResult);
-                        });
-                    }
-                  }
+                  this.createOrEditEpisodes(seasonItem, seasonNumber, seasonResult, episodicResult);
                 });
             } else {
               this.seasonService.createSeason(seasonResource)
