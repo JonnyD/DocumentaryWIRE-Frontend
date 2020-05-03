@@ -53,51 +53,15 @@
         </div>
         <div class="col-md-4" style="margin-top: 20px">
             <app-subscribe></app-subscribe>
-            <div style="margin-top: 20px" *ngIf="!isFetchingNewestUsers">
+            <div style="margin-top: 20px">
                 <h2>Newest Members</h2>
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="text-center">
-                                <div class="avatar-block" style="margin-left: 15px">
-                                    <div class="item-avatar" *ngFor="let user of newestUsers">
-                                        <a [routerLink]="['/user', user.username]" title="{{ user.username }}"
-                                            rel="nofollow">
-                                            <img src="{{ user.avatar }}" class="rounded-circle"
-                                                style="float:left; margin:3px" width="60" height="60"
-                                                alt="Profile picture of {{ user.name }}" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <app-user-new></app-user-new>
             </div>
 
-            <p *ngIf="isFetchingNewestUsers">Loading...</p>
-            <div style="margin-top: 20px" *ngIf="!isFetchingActiveUsers">
+            <div style="margin-top: 20px">
                 <h2>Active Members</h2>
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <div class="text-center">
-                                <div class="avatar-block" style="margin-left: 15px">
-                                    <div class="item-avatar" *ngFor="let user of activeUsers">
-                                        <a [routerLink]="['/user', user.username]" title="{{ user.username }}"
-                                            rel="nofollow">
-                                            <img src="{{ user.avatar }}" class="rounded-circle"
-                                                style="float:left; margin:3px" width="60" height="60"
-                                                alt="Profile picture of {{ user.name }}" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                <app-user-active></app-user-active>
             </div>
-            <p *ngIf="isFetchingActiveUsers">Loading...</p>
 
         </div>
     </div>

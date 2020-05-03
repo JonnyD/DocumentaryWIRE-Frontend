@@ -182,24 +182,8 @@
 
                 <div style="margin-top: 40px">
                     <h2>Members</h2>
-
-                    <div class="card" *ngIf="!isFetchingActiveUsers">
-                        <div class="card-body">
-                            <div class="avatar-block" style="margin-left: 10px">
-                                <div class="item-avatar" *ngFor="let user of activeUsers">
-                                    <a [routerLink]="['/user', user.username]" title="{{ user.username }}"
-                                        rel="nofollow">
-                                        <img src="{{ user.avatar }}" class="rounded-circle"
-                                            style="float:left; margin:3px" width="50" height="50"
-                                            alt="Profile picture of {{ user.username }}" />
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <app-user-active></app-user-active>
                 </div>
-
-                <p *ngIf="isFetchingActiveUsers">Loading...</p>
 
                 <div style="clear: both"></div>
                 <div style="margin-top: 40px">

@@ -10,7 +10,7 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { OwlOptions } from 'ngx-owl-carousel-o';
-import {PopoverModule} from "ngx-smart-popover";
+import {PopoverModule} from 'ngx-smart-popover';
 
 @Component({
   selector: 'app-home',
@@ -37,8 +37,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private recentlyUpdatedSubscription;
   private newDocumentariesSubscription;
   private popularDocumentariesSubscription;
-  private newestUsersSubscription;
-  private activeUsersSubscription;
   private activitySubscription;
   private yearsSubscription;
   private categoriesSubscription;
@@ -50,8 +48,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingRecentlyUpdatedDocumentaries = false;
   isFetchingNewDocumentaries = false;
   isFetchingPopularDocumentaries = false;
-  isFetchingNewestUsers = false;
-  isFetchingActiveUsers = false;
   isFetchingCategories = false;
   isFetchingYears = false;
   isFetchingDuration = false;
@@ -195,7 +191,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private documentaryService: DocumentaryService,
-    private userService: UserService,
     private sanitizer: DomSanitizer,
     private activityService: ActivityService,
     private yearService: YearService,
@@ -212,8 +207,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchRecentlyUpdatedDocumentaries();
     this.fetchNewDocumentaries();
     this.fetchPopularDocumentaries();
-    this.fetchNewestUsers();
-    this.fetchActiveUsers();
     this.fetchCategories();
     this.fetchYears();
     this.fetchDuration();
@@ -300,32 +293,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  fetchNewestUsers() {
-    this.isFetchingNewestUsers = true;
-
-    let params = new HttpParams();
-
-    this.newestUsersSubscription = this.userService.getNewestUsers(params)
-      .subscribe(result => {
-        this.newestUsers = result['items'];
-
-        this.isFetchingNewestUsers = false;
-      });
-  }
-
-  fetchActiveUsers() {
-    this.isFetchingActiveUsers = true;
-
-    let params = new HttpParams();
-
-    this.activeUsersSubscription = this.userService.getActiveUsers(params)
-      .subscribe(result => {
-        this.activeUsers = result['items'];
-
-        this.isFetchingActiveUsers = false;
-      });
-  }
-
   fetchActivity() {
     this.isFetchingActivity = true;
 
@@ -385,8 +352,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
     this.popularDocumentariesSubscription.unsubscribe();
-    this.newestUsersSubscription.unsubscribe();
-    this.activeUsersSubscription.unsubscribe();
     if (this.activitySubscription != null) {
       this.activitySubscription.unsubscribe();
     }

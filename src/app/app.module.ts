@@ -1,3 +1,4 @@
+import { UserActiveComponent } from './public/user/user-active/user-active.component';
 import { ChatComponent } from './public/chat/chat.component';
 import { FeaturedService } from './services/featured.service';
 import { SEOService } from './services/seo.service';
@@ -87,6 +88,7 @@ import { CarouselModule } from 'ngx-owl-carousel-o';
 import { AdminDocumentaryDetailStandaloneComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-standalone/admin-documentary-detail-standalone.component';
 import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-series/admin-documentary-detail-series.component';
 import { SubscribeComponent } from './public/subscribe/subscribe.component';
+import { UserNewComponent } from './public/user/user-new/user-new.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +151,9 @@ import { SubscribeComponent } from './public/subscribe/subscribe.component';
     DocumentaryShowStandaloneComponent,
     AdminDocumentaryDetailStandaloneComponent,
     AdminDocumentaryDetailSeriesComponent,
-    SubscribeComponent
+    SubscribeComponent,
+    UserActiveComponent,
+    UserNewComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,4 @@
 import { SEOService } from './../../services/seo.service';
-import { UserService } from './../../services/user.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -16,21 +15,14 @@ export class CommunityComponent implements OnInit {
 
   private queryParamsSubscription;
   private communtiyItemsSubscription;
-  private newestUsersSubscription;
-  private activeUsersSubscription;
 
   config: any;
   private page;
-  private newestUsers;
-  private activeUsers;
 
   isFetchingCommunityItems = false;
-  isFetchingNewestUsers = false;
-  isFetchingActiveUsers = false;
 
   constructor(
     private communityService: CommunityService,
-    private userService: UserService,
     private seoService: SEOService,
     private route: ActivatedRoute,
     private location: Location,
@@ -43,8 +35,6 @@ export class CommunityComponent implements OnInit {
         this.page = +params['page'] || 1;
 
         this.fetchCommunityItems();
-        this.fetchNewestUsers();
-        this.fetchActiveUsers();
       });
   }
 
@@ -83,37 +73,9 @@ export class CommunityComponent implements OnInit {
       });
   }
 
-  fetchNewestUsers() {
-    this.isFetchingNewestUsers = true;
-
-    let params = new HttpParams();
-
-    this.newestUsersSubscription = this.userService.getNewestUsers(params)
-      .subscribe(result => {
-        this.newestUsers = result['items'];
-
-        this.isFetchingNewestUsers = false;
-      });
-  }
-
-  fetchActiveUsers() {
-    this.isFetchingActiveUsers = true;
-
-    let params = new HttpParams();
-
-    this.activeUsersSubscription = this.userService.getActiveUsers(params)
-      .subscribe(result => {
-        this.activeUsers = result['items'];
-
-        this.isFetchingActiveUsers = false;
-      });
-  }
-
   ngOnDestroy() {
     this.communtiyItemsSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
-    this.newestUsersSubscription.unsubscribe();
-    this.activeUsersSubscription.unsubscribe();
   }
 
   pageChanged(event) {

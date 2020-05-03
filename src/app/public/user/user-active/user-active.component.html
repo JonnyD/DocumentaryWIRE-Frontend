@@ -1,0 +1,14 @@
+<div class="card" *ngIf="!isFetchingActiveUsers">
+    <div class="card-body">
+        <div class="avatar-block" style="margin-left: 10px">
+            <div class="item-avatar" *ngFor="let user of activeUsers">
+                <a [routerLink]="['/user', user.username]" title="{{ user.username }}" rel="nofollow">
+                    <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin:3px" width="50"
+                        height="50" alt="Profile picture of {{ user.username }}" />
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p *ngIf="isFetchingActiveUsers">Loading...</p>
