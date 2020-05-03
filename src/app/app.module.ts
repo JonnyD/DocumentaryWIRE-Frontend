@@ -89,6 +89,7 @@ import { AdminDocumentaryDetailStandaloneComponent } from './admin/admin-documen
 import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-series/admin-documentary-detail-series.component';
 import { SubscribeComponent } from './public/subscribe/subscribe.component';
 import { UserNewComponent } from './public/user/user-new/user-new.component';
+import { CommunityLatestComponent } from './public/community/community-latest/community-latest.component';
 
 @NgModule({
   declarations: [
@@ -153,7 +154,8 @@ import { UserNewComponent } from './public/user/user-new/user-new.component';
     AdminDocumentaryDetailSeriesComponent,
     SubscribeComponent,
     UserActiveComponent,
-    UserNewComponent
+    UserNewComponent,
+    CommunityLatestComponent
   ],
   imports: [
     BrowserModule,

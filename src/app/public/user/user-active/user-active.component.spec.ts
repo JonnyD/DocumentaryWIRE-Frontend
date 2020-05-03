@@ -1,20 +1,19 @@
+import { UserActiveComponent } from './user-active.component';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ActiveMembersComponent } from './active-members.component';
-
-describe('ActiveMembersComponent', () => {
-  let component: ActiveMembersComponent;
-  let fixture: ComponentFixture<ActiveMembersComponent>;
+describe('UserActiveComponent', () => {
+  let component: UserActiveComponent;
+  let fixture: ComponentFixture<UserActiveComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ActiveMembersComponent ]
+      declarations: [ UserActiveComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ActiveMembersComponent);
+    fixture = TestBed.createComponent(UserActiveComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
