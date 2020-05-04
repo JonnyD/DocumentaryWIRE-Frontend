@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public popularDocumentaries;
   public newestUsers;
   public activeUsers;
-  public activity;
   public years;
   public categories;
   public duration;
@@ -37,7 +36,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private recentlyUpdatedSubscription;
   private newDocumentariesSubscription;
   private popularDocumentariesSubscription;
-  private activitySubscription;
   private yearsSubscription;
   private categoriesSubscription;
   private trendingSubscription;
@@ -51,7 +49,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingCategories = false;
   isFetchingYears = false;
   isFetchingDuration = false;
-  isFetchingActivity = false;
   isFetchingTrendingDocumentaries = false;
 
   trendingOptions: OwlOptions = {
@@ -210,7 +207,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchCategories();
     this.fetchYears();
     this.fetchDuration();
-    this.fetchActivity();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
   }
@@ -290,26 +286,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.popularDocumentaries = result['items'];
 
         this.isFetchingPopularDocumentaries = false;
-      });
-  }
-
-  fetchActivity() {
-    this.isFetchingActivity = true;
-
-    this.activitySubscription = this.activityService.getActivityForRecentWidget(new HttpParams)
-      .subscribe(result => {
-        console.log(result);
-        let arr = [];
-        for (var key in result) {
-          arr.push(result[key])
-        }
-
-        this.activity = arr;
-
-        console.log("act");
-        console.log(result);
-
-        this.isFetchingActivity = false;
       });
   }
 
