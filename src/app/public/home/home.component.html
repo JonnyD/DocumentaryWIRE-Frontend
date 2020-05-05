@@ -191,22 +191,10 @@
                     <app-community-latest></app-community-latest>
                 </div>
 
-                <p *ngIf="isFetchingActivity">Loading...</p>
-
                 <div style="clear: both"></div>
                 <div style="margin-top: 30px">
-                    <h2>Categories</h2>
-                    <div *ngIf="!isFetchingCategories">
-                        <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
-                            <li *ngFor="let categoryObject of columnPosition.value">
-                                <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
-                                    [routerLink]="['/category', categoryObject.slug ]"
-                                    routerLinkActive="active">{{ categoryObject.name }}</a>
-                            </li>
-                        </ul>
-                    </div>
+                    <app-categories></app-categories>                    
                 </div>
-                <p *ngIf="isFetchingCategories">Loading...</p>
                 <div style="clear: both"></div>
 
                 <div>

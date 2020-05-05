@@ -18,23 +18,19 @@ export class DurationShowComponent implements OnInit {
 
   private documentariesSubscription;
   private queryParamsSubscription;
-  private categoriesSubscription;
   private yearsSubscription;
 
   config: any;
   private page;
-  private categories;
   private duration;
   private years;
   private durationList;
 
   isFetchingDocumentaries = false;
-  isFetchingCategories = false;
   isFetchingDuration = false;
   isFetchingYears = false;
 
   constructor(
-    private categoryService: CategoryService,
     private documentaryService: DocumentaryService,
     private durationService: DurationService,
     private yearService: YearService,
@@ -52,7 +48,6 @@ export class DurationShowComponent implements OnInit {
           this.page = +params['page'] || 1;
 
           this.fetchDocumentaries();
-          this.fetchCategories();
           this.fetchDuration();
           this.fetchYears();
         });
@@ -95,17 +90,6 @@ export class DurationShowComponent implements OnInit {
       });
   }
 
-  fetchCategories() {
-    this.isFetchingCategories = true;
-
-    this.categoriesSubscription = this.categoryService.getAllCategories(new HttpParams)
-      .subscribe(result => {
-        this.categories = this.categoryService.getColumnsForCategories(result);
-
-        this.isFetchingCategories = false;
-      })
-  }
-
   fetchDuration() {
     this.isFetchingDuration = true;
 
@@ -136,7 +120,6 @@ export class DurationShowComponent implements OnInit {
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
     this.documentariesSubscription.unsubscribe();
-    this.categoriesSubscription.unsubscribe();
     this.yearsSubscription.unsubscribe();
   }
 }

@@ -18,24 +18,20 @@ export class BrowseComponent implements OnInit {
 
   private documentariesSubscription;
   private queryParamsSubscription;
-  private categoriesSubscription;
   private durationSubscription;
   private yearsSubscription;
 
   config: any;
   private page;
-  private categories;
   private duration;
   private years;
 
   isFetchingDocumentaries = false;
-  isFetchingCategories = false;
   isFetchingYears = false;
   isFetchingDuration = false;
 
   constructor(
     private documentaryService: DocumentaryService,
-    private categoryService: CategoryService,
     private durationService: DurationService,
     private yearService: YearService,
     private seoService: SEOService,
@@ -49,7 +45,6 @@ export class BrowseComponent implements OnInit {
       .subscribe(params => {
         this.page = +params['page'] || 1;
         this.fetchDocumentaries();
-        this.fetchCategories();
         this.fetchYears();
         this.fetchDuration();
       })
@@ -63,7 +58,6 @@ export class BrowseComponent implements OnInit {
   ngOnDestroy() {
     this.documentariesSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
-    this.categoriesSubscription.unsubscribe();
     this.yearsSubscription.unsubscribe();
   }
 
@@ -95,17 +89,6 @@ export class BrowseComponent implements OnInit {
         
         this.refreshMetaTags(result['number_of_pages']);
       });
-  }
-
-  fetchCategories() {
-    this.isFetchingCategories = true;
-
-    this.categoriesSubscription = this.categoryService.getAllCategories(new HttpParams)
-      .subscribe(result => {
-        this.categories = this.categoryService.getColumnsForCategories(result);
-
-        this.isFetchingCategories = false;
-      })
   }
 
   fetchDuration() {

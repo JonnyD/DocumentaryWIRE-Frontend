@@ -1,1 +1,13 @@
-<p>categories works!</p>
+<h2>Categories</h2>
+
+<div *ngIf="!isFetchingCategories">
+    <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
+        <li *ngFor="let categoryObject of columnPosition.value">
+            <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
+                [routerLink]="['/category', categoryObject.slug ]"
+                routerLinkActive="active">{{ categoryObject.name }}</a>
+        </li>
+    </ul>
+</div>
+
+<p *ngIf="isFetchingCategories">Loading...</p>

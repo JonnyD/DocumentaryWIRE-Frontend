@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newestUsers;
   public activeUsers;
   public years;
-  public categories;
   public duration;
   public trending;
   public featured;
@@ -37,7 +36,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private newDocumentariesSubscription;
   private popularDocumentariesSubscription;
   private yearsSubscription;
-  private categoriesSubscription;
   private trendingSubscription;
   private featuredSubscription;
 
@@ -46,7 +44,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingRecentlyUpdatedDocumentaries = false;
   isFetchingNewDocumentaries = false;
   isFetchingPopularDocumentaries = false;
-  isFetchingCategories = false;
   isFetchingYears = false;
   isFetchingDuration = false;
   isFetchingTrendingDocumentaries = false;
@@ -204,7 +201,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchRecentlyUpdatedDocumentaries();
     this.fetchNewDocumentaries();
     this.fetchPopularDocumentaries();
-    this.fetchCategories();
     this.fetchYears();
     this.fetchDuration();
 
@@ -289,17 +285,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  fetchCategories() {
-    this.isFetchingCategories = true;
-
-    this.categoriesSubscription = this.categoryService.getAllCategories(new HttpParams)
-      .subscribe(result => {
-        this.categories = this.categoryService.getColumnsForCategories(result);
-
-        this.isFetchingCategories = false;
-      })
-  }
-
   fetchDuration() {
     this.isFetchingDuration = true;
 
@@ -328,10 +313,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
     this.popularDocumentariesSubscription.unsubscribe();
-    if (this.activitySubscription != null) {
-      this.activitySubscription.unsubscribe();
-    }
-    this.categoriesSubscription.unsubscribe();
     this.yearsSubscription.unsubscribe();
     if (this.featuredSubscription != null) {
       this.featuredSubscription.unsubscribe();

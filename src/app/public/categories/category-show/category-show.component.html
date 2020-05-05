@@ -32,17 +32,9 @@
             <app-subscribe></app-subscribe>
 
             <div style="clear: both"></div>
-            <div style="margin-top: 30px" *ngIf="!isFetchingCategories">
-                <h2>Categories</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of categories | keyvalue">
-                    <li *ngFor="let categoryObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch {{ categoryObject.name }} Documentaries"
-                            [routerLink]="['/category', categoryObject.slug ]"
-                            routerLinkActive="active">{{ categoryObject.name }}</a>
-                    </li>
-                </ul>
+            <div style="margin-top: 30px">
+                <app-categories></app-categories>
             </div>
-            <p *ngIf="isFetchingCategories">Loading...</p>
             <div style="clear: both"></div>
 
             <div *ngIf="!isFetchingDuration">
