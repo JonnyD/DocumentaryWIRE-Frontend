@@ -18,21 +18,16 @@ export class BrowseComponent implements OnInit {
 
   private documentariesSubscription;
   private queryParamsSubscription;
-  private durationSubscription;
-  private yearsSubscription;
 
   config: any;
   private page;
-  private duration;
   private years;
 
   isFetchingDocumentaries = false;
   isFetchingYears = false;
-  isFetchingDuration = false;
 
   constructor(
     private documentaryService: DocumentaryService,
-    private durationService: DurationService,
     private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute,
@@ -46,7 +41,6 @@ export class BrowseComponent implements OnInit {
         this.page = +params['page'] || 1;
         this.fetchDocumentaries();
         this.fetchYears();
-        this.fetchDuration();
       })
   }
 
@@ -58,7 +52,6 @@ export class BrowseComponent implements OnInit {
   ngOnDestroy() {
     this.documentariesSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
-    this.yearsSubscription.unsubscribe();
   }
 
   fetchDocumentaries() {
@@ -90,27 +83,7 @@ export class BrowseComponent implements OnInit {
         this.refreshMetaTags(result['number_of_pages']);
       });
   }
-
-  fetchDuration() {
-    this.isFetchingDuration = true;
-
-    let duration = this.durationService.getAllDurations();
-    this.duration = this.durationService.getColumnsForDuration(duration);
-
-    this.isFetchingDuration = false;
-  }
-
-  fetchYears() {
-    this.isFetchingYears = true;
-
-    this.yearsSubscription = this.yearService.getAllYears()
-      .subscribe(result => {
-        this.years = this.yearService.getColumnsForYears(result);
-
-        this.isFetchingYears = false;
-      })
-  }
-
+  
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;

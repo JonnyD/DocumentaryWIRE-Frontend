@@ -24,7 +24,6 @@ export class YearShowComponent implements OnInit {
 
   config: any;
   private page;
-  private duration;
   private years;
 
   isFetchingDocumentaries = false;
@@ -33,7 +32,6 @@ export class YearShowComponent implements OnInit {
 
   constructor(
     private documentaryService: DocumentaryService,
-    private durationService: DurationService,
     private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute,
@@ -49,7 +47,6 @@ export class YearShowComponent implements OnInit {
           this.page = +params['page'] || 1;
 
           this.fetchDocumentaries();
-          this.fetchDuration();
           this.fetchYears();
         });
     });
@@ -89,15 +86,6 @@ export class YearShowComponent implements OnInit {
 
         this.isFetchingDocumentaries = false;
       });
-  }
-
-  fetchDuration() {
-    this.isFetchingDuration = true;
-
-    let duration = this.durationService.getAllDurations();
-    this.duration = this.durationService.getColumnsForDuration(duration);
-
-    this.isFetchingDuration = false;
   }
 
   fetchYears() {

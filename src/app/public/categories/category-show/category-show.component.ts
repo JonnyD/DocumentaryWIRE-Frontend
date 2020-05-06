@@ -24,11 +24,9 @@ export class CategoryShowComponent implements OnInit {
 
   config: any;
   private page;
-  private duration;
   private years;
 
   isFetchingDocumentaries = false;
-  isFetchingDuration = false;
   isFetchingYears = false;
   
   constructor(
@@ -48,7 +46,6 @@ export class CategoryShowComponent implements OnInit {
         .subscribe(params => {
           this.page = +params['page'] || 1;
           this.fetchDocumentaries();
-          this.fetchDuration();
           this.fetchYears();
       });
     });
@@ -93,15 +90,6 @@ export class CategoryShowComponent implements OnInit {
 
         this.refreshMetaTags(result['number_of_pages']);
       });
-  }
-
-  fetchDuration() {
-    this.isFetchingDuration = true;
-
-    let duration = this.durationService.getAllDurations();
-    this.duration = this.durationService.getColumnsForDuration(duration);
-
-    this.isFetchingDuration = false;
   }
 
   fetchYears() {
