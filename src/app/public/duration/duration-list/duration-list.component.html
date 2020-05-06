@@ -1,0 +1,11 @@
+<div *ngIf="!isFetchingDuration">
+    <ul class="cat-list" *ngFor="let columnPosition of duration | keyvalue">
+        <li *ngFor="let durationObject of columnPosition.value">
+            <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
+                [routerLink]="['/duration', durationObject.slug ]"
+                routerLinkActive="active">{{ durationObject.display }}</a>
+        </li>
+    </ul>
+</div>
+
+<p *ngIf="isFetchingDuration">Loading...</p>

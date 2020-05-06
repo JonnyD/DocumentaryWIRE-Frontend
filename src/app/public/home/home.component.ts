@@ -27,7 +27,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public newestUsers;
   public activeUsers;
   public years;
-  public duration;
   public trending;
   public featured;
 
@@ -45,7 +44,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingNewDocumentaries = false;
   isFetchingPopularDocumentaries = false;
   isFetchingYears = false;
-  isFetchingDuration = false;
   isFetchingTrendingDocumentaries = false;
 
   trendingOptions: OwlOptions = {
@@ -186,10 +184,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private documentaryService: DocumentaryService,
     private sanitizer: DomSanitizer,
-    private activityService: ActivityService,
     private yearService: YearService,
-    private categoryService: CategoryService,
-    private durationService: DurationService,
     private seoService: SEOService,
     private route: ActivatedRoute
   ) { }
@@ -202,7 +197,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchNewDocumentaries();
     this.fetchPopularDocumentaries();
     this.fetchYears();
-    this.fetchDuration();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
   }
@@ -284,16 +278,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.isFetchingPopularDocumentaries = false;
       });
   }
-
-  fetchDuration() {
-    this.isFetchingDuration = true;
-
-    let duration = this.durationService.getAllDurations();
-    this.duration = this.durationService.getColumnsForDuration(duration);
-
-    this.isFetchingDuration = false;
-  }
-
+  
   fetchYears() {
     this.isFetchingYears = true;
 
