@@ -26,7 +26,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public popularDocumentaries;
   public newestUsers;
   public activeUsers;
-  public years;
   public trending;
   public featured;
 
@@ -34,7 +33,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private recentlyUpdatedSubscription;
   private newDocumentariesSubscription;
   private popularDocumentariesSubscription;
-  private yearsSubscription;
   private trendingSubscription;
   private featuredSubscription;
 
@@ -43,7 +41,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   isFetchingRecentlyUpdatedDocumentaries = false;
   isFetchingNewDocumentaries = false;
   isFetchingPopularDocumentaries = false;
-  isFetchingYears = false;
   isFetchingTrendingDocumentaries = false;
 
   trendingOptions: OwlOptions = {
@@ -184,7 +181,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private documentaryService: DocumentaryService,
     private sanitizer: DomSanitizer,
-    private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute
   ) { }
@@ -196,7 +192,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.fetchRecentlyUpdatedDocumentaries();
     this.fetchNewDocumentaries();
     this.fetchPopularDocumentaries();
-    this.fetchYears();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
   }
@@ -278,19 +273,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.isFetchingPopularDocumentaries = false;
       });
   }
-  
-  fetchYears() {
-    this.isFetchingYears = true;
-
-    this.yearsSubscription = this.yearService.getAllYears()
-      .subscribe(result => {
-        console.log("years result");
-        console.log(result);
-        this.years = this.yearService.getColumnsForYears(result);
-
-        this.isFetchingYears = false;
-      })
-  }
 
   ngOnDestroy() {
     this.trendingSubscription.unsubscribe();
@@ -298,7 +280,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
     this.popularDocumentariesSubscription.unsubscribe();
-    this.yearsSubscription.unsubscribe();
     if (this.featuredSubscription != null) {
       this.featuredSubscription.unsubscribe();
     }

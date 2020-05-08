@@ -21,14 +21,11 @@ export class BrowseComponent implements OnInit {
 
   config: any;
   private page;
-  private years;
 
   isFetchingDocumentaries = false;
-  isFetchingYears = false;
 
   constructor(
     private documentaryService: DocumentaryService,
-    private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute,
     private location: Location,
@@ -40,7 +37,6 @@ export class BrowseComponent implements OnInit {
       .subscribe(params => {
         this.page = +params['page'] || 1;
         this.fetchDocumentaries();
-        this.fetchYears();
       })
   }
 

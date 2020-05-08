@@ -20,19 +20,15 @@ export class YearShowComponent implements OnInit {
 
   private documentariesSubscription;
   private queryParamsSubscription;
-  private yearsSubscription;
 
   config: any;
   private page;
-  private years;
 
   isFetchingDocumentaries = false;
   isFetchingDuration = false;
-  isFetchingYears = false;
 
   constructor(
     private documentaryService: DocumentaryService,
-    private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute,
     private router: Router,
@@ -47,7 +43,6 @@ export class YearShowComponent implements OnInit {
           this.page = +params['page'] || 1;
 
           this.fetchDocumentaries();
-          this.fetchYears();
         });
     });
   }
@@ -88,17 +83,6 @@ export class YearShowComponent implements OnInit {
       });
   }
 
-  fetchYears() {
-    this.isFetchingYears = true;
-
-    this.yearsSubscription = this.yearService.getAllYears()
-      .subscribe(result => {
-        this.years = this.yearService.getColumnsForYears(result);
-
-        this.isFetchingYears = false;
-      })
-  }
-
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;
@@ -109,6 +93,5 @@ export class YearShowComponent implements OnInit {
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
     this.documentariesSubscription.unsubscribe();
-    this.yearsSubscription.unsubscribe();
   }
 }

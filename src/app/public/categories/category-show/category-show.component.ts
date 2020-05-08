@@ -20,19 +20,14 @@ export class CategoryShowComponent implements OnInit {
 
   private documentariesSubscription;
   private queryParamsSubscription;
-  private yearsSubscription;
 
   config: any;
   private page;
-  private years;
 
   isFetchingDocumentaries = false;
-  isFetchingYears = false;
   
   constructor(
     private documentaryService: DocumentaryService,
-    private durationService: DurationService,
-    private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute,
     private router: Router,
@@ -46,7 +41,6 @@ export class CategoryShowComponent implements OnInit {
         .subscribe(params => {
           this.page = +params['page'] || 1;
           this.fetchDocumentaries();
-          this.fetchYears();
       });
     });
   }
@@ -91,17 +85,6 @@ export class CategoryShowComponent implements OnInit {
         this.refreshMetaTags(result['number_of_pages']);
       });
   }
-
-  fetchYears() {
-    this.isFetchingYears = true;
-
-    this.yearsSubscription = this.yearService.getAllYears()
-      .subscribe(result => {
-        this.years = this.yearService.getColumnsForYears(result);
-
-        this.isFetchingYears = false;
-      })
-  }
   
   pageChanged(event) {
     console.log(event);
@@ -113,6 +96,5 @@ export class CategoryShowComponent implements OnInit {
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
     this.documentariesSubscription.unsubscribe();
-    this.yearsSubscription.unsubscribe();
   }
 }

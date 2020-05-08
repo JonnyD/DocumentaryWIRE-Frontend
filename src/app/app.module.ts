@@ -90,6 +90,8 @@ import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentari
 import { SubscribeComponent } from './public/subscribe/subscribe.component';
 import { UserNewComponent } from './public/user/user-new/user-new.component';
 import { CommunityLatestComponent } from './public/community/community-latest/community-latest.component';
+import { DurationListComponent } from './public/duration/duration-list/duration-list.component';
+import { YearsListComponent } from './public/years/years-list/years-list.component';
 
 @NgModule({
   declarations: [
@@ -155,7 +157,9 @@ import { CommunityLatestComponent } from './public/community/community-latest/co
     SubscribeComponent,
     UserActiveComponent,
     UserNewComponent,
-    CommunityLatestComponent
+    CommunityLatestComponent,
+    DurationListComponent,
+    YearsListComponent
   ],
   imports: [
     BrowserModule,

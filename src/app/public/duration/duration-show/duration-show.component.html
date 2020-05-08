@@ -42,29 +42,14 @@
 
             <div *ngIf="!isFetchingDuration">
                 <h2>Duration</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of durationList | keyvalue">
-                    <li *ngFor="let durationObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries by duration {{ durationObject.display }}"
-                            [routerLink]="['/duration', durationObject.slug ]"
-                            routerLinkActive="active">{{ durationObject.display }}</a>
-                    </li>
-                </ul>
-
+                <app-duration-list></app-duration-list>
             </div>
-            <p *ngIf="isFetchingDuration">Loading...</p>
             <div style="clear: both"></div>
 
             <div *ngIf="!isFetchingYears">
                 <h2>Years</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
-                    <li *ngFor="let yearObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year_from }}"
-                            [routerLink]="['/year', yearObject.year_from ]"
-                            routerLinkActive="active">{{ yearObject.year_from }}</a>
-                    </li>
-                </ul>
+                <app-years-list></app-years-list>
             </div>
-            <p *ngIf="isFetchingYears">Loading...</p>
         </div>
     </div>
 </div>

@@ -1,0 +1,9 @@
+<ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
+    <li *ngFor="let yearObject of columnPosition.value">
+        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year_from }}"
+            [routerLink]="['/year', yearObject.year_from ]"
+            routerLinkActive="active">{{ yearObject.year_from }}</a>
+    </li>
+</ul>
+
+<p *ngIf="isFetchingYears">Loading...</p>

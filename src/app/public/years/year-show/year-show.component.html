@@ -46,17 +46,10 @@
             </div>
             <div style="clear: both"></div>
 
-            <div *ngIf="!isFetchingYears">
+            <div>
                 <h2>Years</h2>
-                <ul class="cat-list" *ngFor="let columnPosition of years | keyvalue">
-                    <li *ngFor="let yearObject of columnPosition.value">
-                        <a rel="bookmark" title="Watch Documentaries released in {{ yearObject.year_from }}"
-                            [routerLink]="['/year', yearObject.year_from ]"
-                            routerLinkActive="active">{{ yearObject.year_from }}</a>
-                    </li>
-                </ul>
+                <app-years-list></app-years-list>
             </div>
-            <p *ngIf="isFetchingYears">Loading...</p>
         </div>
     </div>
 </div>

@@ -18,22 +18,16 @@ export class DurationShowComponent implements OnInit {
 
   private documentariesSubscription;
   private queryParamsSubscription;
-  private yearsSubscription;
 
   config: any;
   private page;
   private duration;
-  private years;
-  private durationList;
 
   isFetchingDocumentaries = false;
-  isFetchingDuration = false;
-  isFetchingYears = false;
 
   constructor(
     private documentaryService: DocumentaryService,
     private durationService: DurationService,
-    private yearService: YearService,
     private seoService: SEOService,
     private route: ActivatedRoute,
     private router: Router,
@@ -48,8 +42,6 @@ export class DurationShowComponent implements OnInit {
           this.page = +params['page'] || 1;
 
           this.fetchDocumentaries();
-          this.fetchDuration();
-          this.fetchYears();
         });
     });
   }
@@ -90,26 +82,6 @@ export class DurationShowComponent implements OnInit {
       });
   }
 
-  fetchDuration() {
-    this.isFetchingDuration = true;
-
-    let durationList = this.durationService.getAllDurations();
-    this.durationList = this.durationService.getColumnsForDuration(durationList);
-
-    this.isFetchingDuration = false;
-  }
-
-  fetchYears() {
-    this.isFetchingYears = true;
-
-    this.yearsSubscription = this.yearService.getAllYears()
-      .subscribe(result => {
-        this.years = this.yearService.getColumnsForYears(result);
-
-        this.isFetchingYears = false;
-      })
-  }
-
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;
@@ -120,6 +92,5 @@ export class DurationShowComponent implements OnInit {
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
     this.documentariesSubscription.unsubscribe();
-    this.yearsSubscription.unsubscribe();
   }
 }
