@@ -93,6 +93,7 @@ import { CommunityLatestComponent } from './public/community/community-latest/co
 import { DurationListComponent } from './public/duration/duration-list/duration-list.component';
 import { YearsListComponent } from './public/years/years-list/years-list.component';
 import { DocumentaryRecentComponent } from './public/documentary/documentary-recent/documentary-recent.component';
+import { DocumentaryRecentUpdatedComponent } from './public/documentary/documentary-recent-updated/documentary-recent-updated.component';
 
 @NgModule({
   declarations: [
@@ -161,7 +162,8 @@ import { DocumentaryRecentComponent } from './public/documentary/documentary-rec
     CommunityLatestComponent,
     DurationListComponent,
     YearsListComponent,
-    DocumentaryRecentComponent
+    DocumentaryRecentComponent,
+    DocumentaryRecentUpdatedComponent
   ],
   imports: [
     BrowserModule,

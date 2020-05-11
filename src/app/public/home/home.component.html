@@ -65,16 +65,7 @@
             <app-documentary-recent></app-documentary-recent>
 
             <div style="margin-top: 40px"></div>
-            <h3>Recently Updated</h3>
-            <owl-carousel-o [options]="recentlyUpdatedOptions">
-                <ng-template *ngFor="let documentary of recentlyUpdated" carouselSlide [width]="230"
-                    [id]="documentary.id">
-                    <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
-                    {{ documentary.title }}
-                </ng-template>
-            </owl-carousel-o>
-
-            <p *ngIf="isFetchingRecentlyUpdatedDocumentaries">Loading...</p>
+            <app-documentary-recent-updated></app-documentary-recent-updated>
 
             <div style="margin-top: 40px"></div>
             <h3>New Releases</h3>
