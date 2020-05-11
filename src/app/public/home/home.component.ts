@@ -19,8 +19,6 @@ import {PopoverModule} from 'ngx-smart-popover';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-
-  public recentlyAdded;
   public recentlyUpdated;
   public newDocumentaries;
   public popularDocumentaries;
@@ -29,7 +27,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public trending;
   public featured;
 
-  private recentlyAddedSubscription;
   private recentlyUpdatedSubscription;
   private newDocumentariesSubscription;
   private popularDocumentariesSubscription;
@@ -37,40 +34,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   private featuredSubscription;
 
   isFetchingFeaturedDocumentaries = false;
-  isFetchingRecentlyAddedDocumentaries = false;
   isFetchingRecentlyUpdatedDocumentaries = false;
   isFetchingNewDocumentaries = false;
   isFetchingPopularDocumentaries = false;
   isFetchingTrendingDocumentaries = false;
 
   trendingOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    autoWidth: true,
-    navSpeed: 700,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 4
-      }
-    },
-    nav: true,
-    margin: 10,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-  };
-
-  recentlyAddedOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -188,7 +157,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchFeaturedDocumentary();
     this.fetchTrendingDocumentaries();
-    this.fetchRecentlyAddedDocumentaries();
     this.fetchRecentlyUpdatedDocumentaries();
     this.fetchNewDocumentaries();
     this.fetchPopularDocumentaries();
@@ -219,19 +187,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         console.log(result);
 
         this.isFetchingTrendingDocumentaries = false;
-      });
-  }
-
-  fetchRecentlyAddedDocumentaries() {
-    this.isFetchingRecentlyAddedDocumentaries = true;
-    let params = new HttpParams();
-
-    this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
-      .subscribe(result => {
-        this.recentlyAdded = result['items'];
-        console.log(result);
-
-        this.isFetchingRecentlyAddedDocumentaries = false;
       });
   }
 
@@ -276,7 +231,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.trendingSubscription.unsubscribe();
-    this.recentlyAddedSubscription.unsubscribe();
     this.recentlyUpdatedSubscription.unsubscribe();
     this.newDocumentariesSubscription.unsubscribe();
     this.popularDocumentariesSubscription.unsubscribe();

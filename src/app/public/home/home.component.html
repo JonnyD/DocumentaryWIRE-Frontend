@@ -62,22 +62,7 @@
             <p *ngIf="isFetchingTrendingDocumentaries">Loading...</p>
 
             <div style="margin-top: 40px"></div>
-            <h3>Recently Added</h3>
-            <owl-carousel-o [options]="recentlyAddedOptions">
-                <ng-template *ngFor="let documentary of recentlyAdded" carouselSlide [width]="230"
-                    [id]="documentary.id">
-                    <ng-template #popContent>{{ documentary.summary }}</ng-template>
-                    <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
-                    <a placement="right" [ngbPopover]="popContent" [popoverTitle]="popTitle"
-                        triggers="mouseenter:mouseleave">
-                        <img height="280" [src]="documentary.poster" [alt]="documentary.title"
-                            [title]="documentary.title">
-                        {{ documentary.title }}
-                    </a>
-                </ng-template>
-            </owl-carousel-o>
-
-            <p *ngIf="isFetchingRecentlyAddedDocumentaries">Loading...</p>
+            <app-documentary-recent></app-documentary-recent>
 
             <div style="margin-top: 40px"></div>
             <h3>Recently Updated</h3>

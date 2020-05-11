@@ -92,6 +92,7 @@ import { UserNewComponent } from './public/user/user-new/user-new.component';
 import { CommunityLatestComponent } from './public/community/community-latest/community-latest.component';
 import { DurationListComponent } from './public/duration/duration-list/duration-list.component';
 import { YearsListComponent } from './public/years/years-list/years-list.component';
+import { DocumentaryRecentComponent } from './public/documentary/documentary-recent/documentary-recent.component';
 
 @NgModule({
   declarations: [
@@ -159,7 +160,8 @@ import { YearsListComponent } from './public/years/years-list/years-list.compone
     UserNewComponent,
     CommunityLatestComponent,
     DurationListComponent,
-    YearsListComponent
+    YearsListComponent,
+    DocumentaryRecentComponent
   ],
   imports: [
     BrowserModule,

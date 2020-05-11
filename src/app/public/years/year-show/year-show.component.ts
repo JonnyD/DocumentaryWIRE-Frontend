@@ -25,7 +25,6 @@ export class YearShowComponent implements OnInit {
   private page;
 
   isFetchingDocumentaries = false;
-  isFetchingDuration = false;
 
   constructor(
     private documentaryService: DocumentaryService,
