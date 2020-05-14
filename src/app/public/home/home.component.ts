@@ -19,51 +19,21 @@ import {PopoverModule} from 'ngx-smart-popover';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  public newDocumentaries;
   public popularDocumentaries;
   public newestUsers;
   public activeUsers;
   public trending;
   public featured;
 
-  private newDocumentariesSubscription;
   private popularDocumentariesSubscription;
   private trendingSubscription;
   private featuredSubscription;
 
   isFetchingFeaturedDocumentaries = false;
-  isFetchingNewDocumentaries = false;
   isFetchingPopularDocumentaries = false;
   isFetchingTrendingDocumentaries = false;
 
   trendingOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    autoWidth: true,
-    navSpeed: 700,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 4
-      }
-    },
-    nav: true,
-    margin: 10,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-  };
-
-  newOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
@@ -127,7 +97,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchFeaturedDocumentary();
     this.fetchTrendingDocumentaries();
-    this.fetchNewDocumentaries();
     this.fetchPopularDocumentaries();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
@@ -159,19 +128,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  fetchNewDocumentaries() {
-    this.isFetchingNewDocumentaries = true;
-
-    let params = new HttpParams();
-
-    this.newDocumentariesSubscription = this.documentaryService.getNewDocumentaries(params)
-      .subscribe(result => {
-        this.newDocumentaries = result['items'];
-
-        this.isFetchingNewDocumentaries = false;
-      });
-  }
-
   fetchPopularDocumentaries() {
     this.isFetchingPopularDocumentaries = true;
 
@@ -187,7 +143,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.trendingSubscription.unsubscribe();
-    this.newDocumentariesSubscription.unsubscribe();
     this.popularDocumentariesSubscription.unsubscribe();
     if (this.featuredSubscription != null) {
       this.featuredSubscription.unsubscribe();

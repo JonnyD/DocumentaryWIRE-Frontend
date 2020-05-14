@@ -68,16 +68,7 @@
             <app-documentary-recent-updated></app-documentary-recent-updated>
 
             <div style="margin-top: 40px"></div>
-            <h3>New Releases</h3>
-            <owl-carousel-o [options]="newOptions">
-                <ng-template *ngFor="let documentary of newDocumentaries" carouselSlide [width]="230"
-                    [id]="documentary.id">
-                    <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
-                    {{ documentary.title }}
-                </ng-template>
-            </owl-carousel-o>
-
-            <p *ngIf="isFetchingNewDocumentaries">Loading...</p>
+            <app-documentary-new-releases></app-documentary-new-releases>
 
             <div style="margin-top: 40px"></div>
             <h3>Popular</h3>

@@ -94,6 +94,7 @@ import { DurationListComponent } from './public/duration/duration-list/duration-
 import { YearsListComponent } from './public/years/years-list/years-list.component';
 import { DocumentaryRecentComponent } from './public/documentary/documentary-recent/documentary-recent.component';
 import { DocumentaryRecentUpdatedComponent } from './public/documentary/documentary-recent-updated/documentary-recent-updated.component';
+import { DocumentaryNewReleasesComponent } from './public/documentary/documentary-new-releases/documentary-new-releases.component';
 
 @NgModule({
   declarations: [
@@ -163,7 +164,8 @@ import { DocumentaryRecentUpdatedComponent } from './public/documentary/document
     DurationListComponent,
     YearsListComponent,
     DocumentaryRecentComponent,
-    DocumentaryRecentUpdatedComponent
+    DocumentaryRecentUpdatedComponent,
+    DocumentaryNewReleasesComponent
   ],
   imports: [
     BrowserModule,
