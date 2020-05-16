@@ -43,23 +43,7 @@
             <p *ngIf="isFetchingFeaturedDocumentaries">Loading...</p>
 
             <div style="margin-top: 40px"></div>
-            <h3>Trending</h3>
-            <owl-carousel-o [options]="trendingOptions">
-                <ng-template *ngFor="let documentary of trending" carouselSlide [width]="230" [id]="documentary.id">
-                    <ng-template #popContent>{{ documentary.summary }}</ng-template>
-                    <ng-template #popTitle><b>{{ documentary.title }}</b></ng-template>
-                    <a href="http://localhost">
-                        <img popover="content to be shown in the popover" popoverTitle="Popover header"
-                            popoverPlacement="top" [popoverOnHover]="true" [popoverCloseOnClickOutside]="true"
-                            [popoverCloseOnMouseOutside]="false" [popoverDisabled]="false" [popoverAnimation]="true"
-                            [popoverDismissTimeout]="1000" height="280" [src]="documentary.poster"
-                            [alt]="documentary.title" [title]="documentary.title">
-                        {{ documentary.title }}
-                    </a>
-                </ng-template>
-            </owl-carousel-o>
-
-            <p *ngIf="isFetchingTrendingDocumentaries">Loading...</p>
+            <app-documentary-trending></app-documentary-trending>
 
             <div style="margin-top: 40px"></div>
             <app-documentary-recent></app-documentary-recent>

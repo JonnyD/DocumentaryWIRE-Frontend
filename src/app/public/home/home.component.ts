@@ -21,41 +21,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public newestUsers;
   public activeUsers;
-  public trending;
   public featured;
 
-  private trendingSubscription;
   private featuredSubscription;
 
   isFetchingFeaturedDocumentaries = false;
-  isFetchingTrendingDocumentaries = false;
-
-  trendingOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    autoWidth: true,
-    navSpeed: 700,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 4
-      }
-    },
-    nav: true,
-    margin: 10,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-  };
 
   constructor(
     private documentaryService: DocumentaryService,
@@ -66,7 +36,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fetchFeaturedDocumentary();
-    this.fetchTrendingDocumentaries();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
   }
@@ -84,21 +53,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
   }
 
-  fetchTrendingDocumentaries() {
-    this.isFetchingTrendingDocumentaries = true;
-    let params = new HttpParams();
-
-    this.trendingSubscription = this.documentaryService.getTrendingDocumentaries(params)
-      .subscribe(result => {
-        this.trending = result['items'];
-        console.log(result);
-
-        this.isFetchingTrendingDocumentaries = false;
-      });
-  }
-
   ngOnDestroy() {
-    this.trendingSubscription.unsubscribe();
     if (this.featuredSubscription != null) {
       this.featuredSubscription.unsubscribe();
     }
