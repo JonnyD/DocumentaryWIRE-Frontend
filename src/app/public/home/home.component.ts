@@ -19,18 +19,15 @@ import {PopoverModule} from 'ngx-smart-popover';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  public popularDocumentaries;
   public newestUsers;
   public activeUsers;
   public trending;
   public featured;
 
-  private popularDocumentariesSubscription;
   private trendingSubscription;
   private featuredSubscription;
 
   isFetchingFeaturedDocumentaries = false;
-  isFetchingPopularDocumentaries = false;
   isFetchingTrendingDocumentaries = false;
 
   trendingOptions: OwlOptions = {
@@ -97,7 +94,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.fetchFeaturedDocumentary();
     this.fetchTrendingDocumentaries();
-    this.fetchPopularDocumentaries();
 
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
   }
@@ -128,22 +124,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       });
   }
 
-  fetchPopularDocumentaries() {
-    this.isFetchingPopularDocumentaries = true;
-
-    let params = new HttpParams();
-
-    this.popularDocumentariesSubscription = this.documentaryService.getPopularDocumentaries(params)
-      .subscribe(result => {
-        this.popularDocumentaries = result['items'];
-
-        this.isFetchingPopularDocumentaries = false;
-      });
-  }
-
   ngOnDestroy() {
     this.trendingSubscription.unsubscribe();
-    this.popularDocumentariesSubscription.unsubscribe();
     if (this.featuredSubscription != null) {
       this.featuredSubscription.unsubscribe();
     }
