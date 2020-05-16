@@ -57,33 +57,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
   };
 
-  popularOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: true,
-    pullDrag: true,
-    dots: false,
-    autoWidth: true,
-    navSpeed: 700,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 4
-      }
-    },
-    nav: true,
-    margin: 10,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
-  };
-
   constructor(
     private documentaryService: DocumentaryService,
     private sanitizer: DomSanitizer,
