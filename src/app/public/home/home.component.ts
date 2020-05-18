@@ -21,42 +21,15 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public newestUsers;
   public activeUsers;
-  public featured;
-
-  private featuredSubscription;
-
-  isFetchingFeaturedDocumentaries = false;
 
   constructor(
-    private documentaryService: DocumentaryService,
     private sanitizer: DomSanitizer,
     private seoService: SEOService,
     private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.fetchFeaturedDocumentary();
-
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
-  }
-
-  fetchFeaturedDocumentary() {
-    this.isFetchingFeaturedDocumentaries = true;
-    let params = new HttpParams();
-
-    this.featuredSubscription = this.documentaryService.getFeaturedDocumentary(params)
-      .subscribe(result => {
-        this.featured = result['items'];
-        console.log('featured');
-        console.log(this.featured);
-        this.isFetchingFeaturedDocumentaries = false;
-      })
-  }
-
-  ngOnDestroy() {
-    if (this.featuredSubscription != null) {
-      this.featuredSubscription.unsubscribe();
-    }
   }
 
   public getSantizeUrl(url: string) {

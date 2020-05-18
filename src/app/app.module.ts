@@ -97,6 +97,7 @@ import { DocumentaryRecentUpdatedComponent } from './public/documentary/document
 import { DocumentaryNewReleasesComponent } from './public/documentary/documentary-new-releases/documentary-new-releases.component';
 import { DocumentaryPopularComponent } from './public/documentary/documentary-popular/documentary-popular.component';
 import { DocumentaryTrendingComponent } from './public/documentary/documentary-trending/documentary-trending.component';
+import { DocumentaryFeaturedComponent } from './public/documentary/documentary-featured/documentary-featured.component';
 
 @NgModule({
   declarations: [
@@ -169,7 +170,8 @@ import { DocumentaryTrendingComponent } from './public/documentary/documentary-t
     DocumentaryRecentUpdatedComponent,
     DocumentaryNewReleasesComponent,
     DocumentaryPopularComponent,
-    DocumentaryTrendingComponent
+    DocumentaryTrendingComponent,
+    DocumentaryFeaturedComponent
   ],
   imports: [
     BrowserModule,

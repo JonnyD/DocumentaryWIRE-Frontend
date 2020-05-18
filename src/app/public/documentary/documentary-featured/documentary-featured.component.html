@@ -1,0 +1,12 @@
+<h3>Featured</h3>
+<div class="card mb-3" *ngFor="let feat of featured">
+    <img class="card-img-top" src="{{ feat.poster }}" alt="Card image cap">
+    <div class="card-body">
+        <h5 class="card-title">{{ feat.title }}</h5>
+        <p class="card-text">{{ feat.summary }}</p>
+        <!--
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>-->
+    </div>
+</div>
+
+<p *ngIf="isFetchingFeaturedDocumentaries">Loading...</p>
