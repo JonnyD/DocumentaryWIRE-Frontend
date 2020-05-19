@@ -39,8 +39,7 @@ export class DocumentaryRecentUpdatedComponent implements OnInit {
       }
     },
     nav: true,
-    margin: 10,
-    navText: ["<i class='fa fa-chevron-left'></i>","<i class='fa fa-chevron-right'></i>"]
+    margin: 10
   };
 
   constructor(
