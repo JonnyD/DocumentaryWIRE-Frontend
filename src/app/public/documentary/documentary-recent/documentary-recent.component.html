@@ -8,7 +8,9 @@
             triggers="mouseenter:mouseleave">
             <img height="280" [src]="documentary.poster" [alt]="documentary.title"
                 [title]="documentary.title">
-            {{ documentary.title }}
+            <span class="slideshow-title">
+                {{ documentary.title }}
+            </span>
         </a>
     </ng-template>
 </owl-carousel-o>

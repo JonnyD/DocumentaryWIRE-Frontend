@@ -2,7 +2,9 @@
 <owl-carousel-o [options]="newOptions">
     <ng-template *ngFor="let documentary of newDocumentaries" carouselSlide [width]="230" [id]="documentary.id">
         <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
-        {{ documentary.title }}
+        <span class="slideshow-title">
+            {{ documentary.title }}
+        </span>
     </ng-template>
 </owl-carousel-o>
 
