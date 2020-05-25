@@ -1023,3 +1023,7 @@ img.avatar{
     float: left;
     margin-right: 10px;
 }
+.slideshow-title {
+    color: #007bff;
+    text-decoration: none;
+}
