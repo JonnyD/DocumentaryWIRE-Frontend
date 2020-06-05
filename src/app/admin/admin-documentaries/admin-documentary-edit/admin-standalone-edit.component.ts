@@ -385,7 +385,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     if (this.editDocumentaryForm.valid) {
       if (this.editMode) {
           this.documentaryService.editStandaloneDocumentary(documentaryId, formValue)
-          .subscribe(result => {
+          .subscribe((result: any) => {
             console.log(result);
             this.router.navigate(["/admin/documentaries/standalone", result.slug]);
         }, error => {
@@ -393,7 +393,7 @@ export class AdminStandaloneEditComponent implements OnInit {
         });
       } else {
         this.documentaryService.createStandaloneDocumentary(formValue)
-          .subscribe(result => {
+          .subscribe((result: any) => {
             console.log("created result");
             console.log(result);
             this.router.navigate(["/admin/documentaries/standalone", result.slug]);
@@ -407,7 +407,7 @@ export class AdminStandaloneEditComponent implements OnInit {
   convertToSeries() {
     console.log("convert to series");
     this.documentaryService.convertToSeries(this.documentary)
-      .subscribe(result => {
+      .subscribe((result: any) => {
         console.log("convert to series result");
         console.log(result);
         this.router.navigate(["/admin/documentaries/series", result.slug]);

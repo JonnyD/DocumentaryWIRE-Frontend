@@ -252,8 +252,9 @@ export class DocumentaryAddEpisodicComponent implements OnInit {
       this.seasonNumber = season.number;
       seasonSummary = season.seasonSummary;
     }
-
-    let control = <FormArray>this.form.controls.series.controls.seasons;
+    
+    let seriesFormArray = this.form.get("series") as FormArray;
+    let control = seriesFormArray.get("seasons") as FormArray;
     console.log("control");
     console.log(control);
     control.push(

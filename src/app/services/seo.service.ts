@@ -21,7 +21,7 @@ export class SEOService {
         var canonical = document.querySelector('link[rel="canonical"]');
 
         if (canonical) {
-            canonical.href = this.doc.URL;
+            canonical['href'] = this.doc.URL;
         } else {
             let link: HTMLLinkElement = this.doc.createElement('link');
             link.setAttribute('rel', 'canonical');
@@ -36,7 +36,7 @@ export class SEOService {
         var previous = document.querySelector('link[rel="prev"]');
 
         if (previous) {
-            previous.href = url;
+            previous['href'] = url;
         } else {
             let link: HTMLLinkElement = this.doc.createElement('link');
             link.setAttribute('rel', 'prev');
@@ -58,7 +58,7 @@ export class SEOService {
         let next = document.querySelector('link[rel="next"]');
 
         if (next) {
-            next.href = url;
+            next['href'] = url;
         } else {
             let link: HTMLLinkElement = this.doc.createElement('link');
             link.setAttribute('rel', 'next');

@@ -74,7 +74,7 @@ export class AdminEmailAddComponent implements OnInit {
     if (this.editEmailForm.valid) {
       if (this.editMode) {
         this.emailService.editEmail(emailId, formValue)
-          .subscribe(result => {
+          .subscribe((result: any) => {
             console.log("updated result");
             console.log(result);
             this.router.navigate(["/admin/emails", result.id]);
@@ -83,7 +83,7 @@ export class AdminEmailAddComponent implements OnInit {
           });
       } else {
         this.emailService.createEmail(formValue)
-          .subscribe(result => {
+          .subscribe((result: any) => {
             console.log("created result");
             console.log(result);
             this.router.navigate(["/admin/emails", result.id]);

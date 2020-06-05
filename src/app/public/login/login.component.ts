@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     this.userService.getMe()
-                        .subscribe(result => {
+                        .subscribe((result: any) => {
                             if (!result.activatedAt) {
                                 console.log("result");
                                 console.log(result);

@@ -525,7 +525,7 @@ export class AdminSeriesEditComponent implements OnInit {
     if (this.episodicForm.valid) {
       if (this.editMode) {
         this.documentaryService.editEpisodicDocumentary(documentaryId, formValue)
-          .subscribe(result => {
+          .subscribe((result: any) => {
             console.log(result);
             this.router.navigate(["/admin/documentaries", result.slug]);
           }, error => {
@@ -533,7 +533,7 @@ export class AdminSeriesEditComponent implements OnInit {
           });
       } else {
         this.documentaryService.createEpisodicDocumentary(formValue)
-          .subscribe(result => {
+          .subscribe((result: any) => {
             console.log("created result");
             console.log(result);
             this.router.navigate(["/admin/documentaries", result.slug]);
