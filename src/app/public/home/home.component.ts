@@ -17,19 +17,18 @@ import {PopoverModule} from 'ngx-smart-popover';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit, OnDestroy {
-
-  public newestUsers;
-  public activeUsers;
+export class HomeComponent implements OnInit {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private seoService: SEOService,
-    private route: ActivatedRoute
+    private seoService: SEOService
   ) { }
 
   ngOnInit() {
     this.seoService.setPageTitle('Watch Documentaires Online | DocumentaryWIRE');
+    this.seoService.createOrUpdateLinkForCanonicalURL();
+    this.seoService.deleteNextPage();
+    this.seoService.deletePreviousPage();
   }
 
   public getSantizeUrl(url: string) {
