@@ -30,7 +30,7 @@ export class DocumentaryService extends DataService {
   getAllDocumentaries(params: HttpParams, authenticate: boolean = false, isAdmin: boolean = false) {
     if (!isAdmin) {
       params = params.append('sort', 'createdAt-desc');
-      params = params.append('status', 'publish');
+      params = params.append('status', 'published');
     }
 
     if (authenticate) {
@@ -83,7 +83,7 @@ export class DocumentaryService extends DataService {
 
   getRecentlyUpdatedDocumentaries(params: HttpParams) {
     params = params.append('sort', 'updatedAt-desc');
-    params = params.append('status', 'publish');
+    params = params.append('status', 'published');
 
     let options = {
       params: params
@@ -94,7 +94,7 @@ export class DocumentaryService extends DataService {
 
   getPopularDocumentaries(params: HttpParams) {
     params = params.append('sort', 'views-desc');
-    params = params.append('status', 'publish');
+    params = params.append('status', 'published');
 
     let options = {
       params: params
@@ -105,7 +105,7 @@ export class DocumentaryService extends DataService {
 
   getRecentlyAddedDocumentaries(params: HttpParams) {
     params = params.append('sort', 'createdAt-desc');
-    params = params.append('status', 'publish');
+    params = params.append('status', 'published');
 
     let options = {
       params: params
@@ -116,7 +116,7 @@ export class DocumentaryService extends DataService {
 
   getNewDocumentaries(params: HttpParams) {
     params = params.append('sort', 'yearFrom-desc');
-    params = params.append('status', 'publish');
+    params = params.append('status', 'published');
 
     let options = {
       params: params
@@ -127,7 +127,7 @@ export class DocumentaryService extends DataService {
 
   getTrendingDocumentaries(params: HttpParams) {
     params = params.append('sort', 'todayViews-desc');
-    params = params.append('status', 'publish');
+    params = params.append('status', 'published');
 
     let options = {
       params: params
@@ -137,8 +137,8 @@ export class DocumentaryService extends DataService {
   }
 
   getFeaturedDocumentary(params: HttpParams) {
-    params = params.append('status', 'publish');
-    params = params.append('featured', 'true');
+    params = params.append('status', 'published');
+    params = params.append('featured', 'yes');
 
     let options = {
       params: params
