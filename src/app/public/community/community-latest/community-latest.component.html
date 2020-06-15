@@ -85,7 +85,7 @@
                     <div class="data">
                         <span class="author">
                             <a href="">
-                                {{ activityItem.parent.name }}</a> added <a
+                                {{ activityItem.parent.user.name }}</a> added <a
                                 [routerLink]="['/', activityItem.parent.data.documentarySlug]">{{ activityItem.parent.data.documentaryTitle }}</a>
                             to their Watchlist
                             <span *ngIf="activityItem.child">
