@@ -53,6 +53,7 @@ export class AdminEmailsComponent implements OnInit {
       this.previousSubscribed = this.subscribed;
     }
 
+    params = params.append('sort', 'createdAt-desc');
     params = params.append('page', this.page.toString());
 
     this.location.go(this.router.url.split("?")[0], params.toString());
