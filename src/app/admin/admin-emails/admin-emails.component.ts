@@ -1,3 +1,5 @@
+import { Subscribed } from './../../models/subscribed.model';
+import { Source } from './../../models/source.model';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmailService } from './../../services/email.service';
@@ -16,12 +18,28 @@ export class AdminEmailsComponent implements OnInit {
 
   private page;
   private subscribed;
+  private source;
 
   private previousSubscribed;
+  private previousSource;
 
   private config;
 
   private emails: Array<Email>;
+
+  public sources: Array<Source> = [
+    { id: 'user', name: 'User' },
+    { id: 'comment', name: 'Comment' },
+    { id: 'wz-feedburner', name: 'WZ Feedburner' },
+    { id: 'tns_feedburner', name: 'TNS Feedburner' },
+    { id: 'dw-feedburner-pending', name: 'DW Feedburner Pending' },
+    { id: 'dw-feedburner-active', name: 'DW Feedburner Active' }
+  ];
+
+  public subscribedOptions: Array<Subscribed> = [
+    { id: 'yes', name: 'Yes' },
+    { id: 'no', name: 'No' }
+  ];
 
   constructor(
     private emailService: EmailService,
@@ -34,7 +52,8 @@ export class AdminEmailsComponent implements OnInit {
       .queryParams
       .subscribe(params => {
         this.page = +params['page'] || 1;
-        this.subscribed = +params['subscribed'] || 'all';
+        this.subscribed = params['subscribed'] || 'all';
+        this.source = params['source'] || 'all';
 
         this.fetchEmails();
       })
@@ -45,7 +64,7 @@ export class AdminEmailsComponent implements OnInit {
 
     if (this.subscribed) {
       if (this.subscribed != 'all') {
-        params.append('subscribed', this.subscribed);
+        params = params.append('subscribed', this.subscribed);
         if (this.subscribed != this.previousSubscribed) {
           this.page = 1;
         }
@@ -53,6 +72,16 @@ export class AdminEmailsComponent implements OnInit {
       this.previousSubscribed = this.subscribed;
     }
 
+    if (this.source) {
+      if (this.source != 'all') {
+        params = params.append('source', this.source);
+        if (this.source != this.previousSource) {
+          this.page = 1;
+        }
+      }
+      this.previousSource = this.source;
+    }
+    
     params = params.append('sort', 'createdAt-desc');
     params = params.append('page', this.page.toString());
 
@@ -69,6 +98,16 @@ export class AdminEmailsComponent implements OnInit {
           this.emails = result['items'];
         }
       )
+  }
+
+  onSubscribedSelected(value: string) {
+    this.subscribed = value;
+    this.fetchEmails();
+  }
+
+  onSourceSelected(value: string) {
+    this.source = value;
+    this.fetchEmails();
   }
   
   pageChanged(event) {

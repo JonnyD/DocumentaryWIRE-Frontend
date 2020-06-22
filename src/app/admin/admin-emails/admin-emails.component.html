@@ -1,4 +1,25 @@
 <br />
+Source:
+<select class='select-option' [(ngModel)]="source"
+    #sourceSelected
+    (change)='onSourceSelected(sourceSelected.value)'>
+    <option class="option" value="all">All</option>
+    <option class='option' 
+   *ngFor='let source of sources' 
+   [value]="source.id">{{source.name}}</option>
+</select>
+
+Subscribed:
+<select class='select-option' [(ngModel)]="subscribed"
+    #subscribedSelected
+    (change)='onSubscribedSelected(subscribedSelected.value)'>
+    <option class="option" value="all">All</option>
+    <option class='option' 
+   *ngFor='let subscribedOption of subscribedOptions' 
+   [value]="subscribedOption.id">{{subscribedOption.name}}</option>
+</select>
+
+<br />
 
 <span>
     <a [routerLink]="['/admin/emails/add']">
@@ -11,6 +32,7 @@
       <tr>
         <th scope="col">ID</th>
         <th scope="col">Email</th>
+        <th scope="col">Source</th>
         <th scope="col">Subscribed</th>
         <th scope="col">Subscription Key</th>
         <th scope="col">Created At</th>
@@ -25,6 +47,7 @@
             </a>
         </td>
         <td>{{ email.email }}</td>
+        <td>{{ email.source }}</td>
         <td>{{ email.subscribed }}</td>
         <td>{{ email.subscriptionKey }}</td>
         <td>

@@ -69,6 +69,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
         this.status = params['status'] || 'all';
         this.featured = params['featured'] || 'all';
         this.type = params['type'] || 'all';
+        
         this.fetchVideoSources();
         this.fetchCategories();
         this.fetchDocumentaries();
