@@ -10,12 +10,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let subscription of subscriptions | paginate: config">
-            <td>{{ subscription.id }}</td>
-            <td>{{ subscription.userFrom.username }}</td>
-            <td>{{ subscription.userTo.username }}</td>
-            <td>{{ subscription.updatedAt }}</td>
-            <td>{{ subscription.createdAt }}</td>
+          <tr *ngFor="let follow of follows | paginate: config">
+            <td>{{ follow.id }}</td>
+            <td>{{ follow.userFrom.username }}</td>
+            <td>{{ follow.userTo.username }}</td>
+            <td>{{ follow.updatedAt }}</td>
+            <td>{{ follow.createdAt }}</td>
           </tr>
         </tbody>
       </table>

@@ -66,7 +66,7 @@ import { UserActivityComponent } from './public/user/user-activity/user-activity
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserAddedComponent } from './public/user/user-added/user-added.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
-import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
+import { AdminFollowsComponent } from './admin/admin-follows/admin-follows.component';
 import { OMDBService } from './services/omdb.service';
 import { ChangeUsernameComponent } from './public/user/user-edit/change-username/change-username.component';
 import { ChangePasswordComponent } from './public/user/user-edit/change-password/change-password.component';
@@ -138,7 +138,7 @@ import { DocumentaryFeaturedComponent } from './public/documentary/documentary-f
     UserWatchlistComponent,
     UserAddedComponent,
     UserEditComponent,
-    AdminSubscriptionsComponent,
+    AdminFollowsComponent,
     ChangeNameComponent,
     ChangeUsernameComponent,
     ChangePasswordComponent,

@@ -24,7 +24,7 @@ import { ChangeUsernameComponent } from './public/user/user-edit/change-username
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { AuthneticatedUserResolverService } from './services/authenticated-user-resolver.service';
 import { AdminUserEditComponent } from './admin/admin-users/admin-user-edit/admin-user-edit.component';
-import { AdminSubscriptionsComponent } from './admin/admin-subscriptions/admin-subscriptions.component';
+import { AdminFollowsComponent } from './admin/admin-follows/admin-follows.component';
 import { UserEditComponent } from './public/user/user-edit/user-edit.component';
 import { UserWatchlistComponent } from './public/user/user-watchlist/user-watchlist.component';
 import { UserActivityComponent } from './public/user/user-activity/user-activity.component';
@@ -271,8 +271,8 @@ const routes: Routes = [
         resolve: [UserResolverService]
       },
       {
-        path: 'subscriptions',
-        component: AdminSubscriptionsComponent
+        path: 'follows',
+        component: AdminFollowsComponent
       },
       {
         path: 'activity',

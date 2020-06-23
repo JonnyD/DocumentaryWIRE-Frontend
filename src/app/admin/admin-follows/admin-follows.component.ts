@@ -5,18 +5,18 @@ import { SubscriptionService } from 'src/app/services/subscription.service';
 import { Location } from "@angular/common";
 
 @Component({
-  selector: 'app-admin-subscriptions',
-  templateUrl: './admin-subscriptions.component.html',
-  styleUrls: ['./admin-subscriptions.component.css']
+  selector: 'app-admin-follows',
+  templateUrl: './admin-follows.component.html',
+  styleUrls: ['./admin-follows.component.css']
 })
-export class AdminSubscriptionsComponent implements OnInit {
+export class AdminFollowsComponent implements OnInit {
   config: any;
   private page;
 
   private queryParamsSubscription;
   private subscriptionsSubscription;
 
-  private subscriptions;
+  private follows;
 
   constructor(
     private subscriptionService: SubscriptionService,
@@ -30,11 +30,11 @@ export class AdminSubscriptionsComponent implements OnInit {
     .queryParams
     .subscribe(params => {
       this.page = +params['page'] || 1;
-      this.fetchSubscriptions();
+      this.fetchFollows();
     })
   }
 
-  fetchSubscriptions() {
+  fetchFollows() {
     let params = new HttpParams();
 
     params = params.append('page', this.page.toString());
@@ -48,15 +48,14 @@ export class AdminSubscriptionsComponent implements OnInit {
           currentPage: this.page,
           totalItems: result['count_results']
         };
-        this.subscriptions = result['items'];
+        this.follows = result['items'];
       })
   }
 
   pageChanged(event) {
-    console.log(event);
     this.config.currentPage = event;
     this.page = event;
-    this.fetchSubscriptions();
+    this.fetchFollows();
   }
 
   ngOnDestroy() {
