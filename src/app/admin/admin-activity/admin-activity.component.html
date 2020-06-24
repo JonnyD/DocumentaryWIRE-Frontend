@@ -1,4 +1,23 @@
 <br />
+Type:
+<select class='select-option' [(ngModel)]="type"
+    #typeSelected
+    (change)='onTypeSelected(typeSelected.value)'>
+    <option class="option" value="all">All</option>
+    <option class='option' 
+   *ngFor='let type of types' 
+   [value]="type.id">{{type.name}}</option>
+</select>
+
+Component:
+<select class='select-option' [(ngModel)]="component"
+    #componentSelected
+    (change)='onComponentSelected(componentSelected.value)'>
+    <option class="option" value="all">All</option>
+    <option class='option' 
+   *ngFor='let component of components' 
+   [value]="component.id">{{component.name}}</option>
+</select>
 
 <table class="table table-striped">
     <thead>
