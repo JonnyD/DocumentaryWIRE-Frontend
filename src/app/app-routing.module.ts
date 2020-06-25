@@ -1,3 +1,6 @@
+import { AdminActivityEditComponent } from './admin/admin-activity/admin-activity-edit/admin-activity-edit.component';
+import { ActivityResolverService } from './services/activity-resolver.service';
+import { AdminActivityDetailComponent } from './admin/admin-activity/admin-activity-detail/admin-activity-detail.component';
 import { AdminDocumentaryDetailSeriesComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-series/admin-documentary-detail-series.component';
 import { AdminDocumentaryDetailStandaloneComponent } from './admin/admin-documentaries/admin-documentary-detail/admin-documentary-detail-standalone/admin-documentary-detail-standalone.component';
 import { DocumentaryShowStandaloneComponent } from './public/documentary/documentary-add/documentary-add-standalone/documentary-show-standalone/documentary-show-standalone.component';
@@ -277,6 +280,16 @@ const routes: Routes = [
       {
         path: 'activity',
         component: AdminActivityComponent
+      },
+      {
+        path: 'activity/:id',
+        component: AdminActivityDetailComponent,
+        resolve: [ActivityResolverService]
+      },
+      {
+        path: 'activity/:id/edit',
+        component: AdminActivityEditComponent,
+        resolve: [ActivityResolverService]
       },
       {
         path: 'emails',

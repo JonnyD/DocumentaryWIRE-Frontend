@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form [formGroup]="editActivityForm" (ngSubmit)="onSubmit()">
+
+                <div class="form-group">
+                    <label for="type">Type</label>
+                    <select formControlName="type" class="form-control" id="type">
+                        <option disabled>Choose Type</option>
+                        <option *ngFor="let type of types" [value]="type.id" [selected]="activity.type == type.id">
+                            {{ type.name }}
+                        </option>
+                    </select>
+                    <span *ngIf="!editActivityForm.get('type').valid && editActivityForm.get('type').touched"
+                        class="help-block">Please enter a valid type!</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="component">Component</label>
+                    <select formControlName="component" class="form-control" id="component">
+                        <option disabled>Choose Component</option>
+                        <option *ngFor="let component of components" [value]="component.id" [selected]="activity.component == component.id">
+                            {{ component.name }}
+                        </option>
+                    </select>
+                    <span *ngIf="!editActivityForm.get('component').valid && editActivityForm.get('component').touched"
+                        class="help-block">Please enter a valid component!</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="groupNumber">Group Number</label>
+                    <input type="text" id="groupNumber" formControlName="groupNumber" class="form-control">
+                    <span *ngIf="!editActivityForm.get('groupNumber').valid && editActivityForm.get('groupNumber').touched"
+                        class="help-block">
+                        <span *ngIf="editCategoryForm.get('groupNumber').errors['required']">This field is required!</span>
+                    </span>
+                </div>
+
+                <div class="form-group">
+                    <label for="objectId">Object ID</label>
+                    <input type="text" id="objectId" formControlName="objectId" class="form-control">
+                    <span *ngIf="!editActivityForm.get('objectId').valid && editActivityForm.get('objectId').touched"
+                        class="help-block">
+                        <span *ngIf="editCategoryForm.get('objectId').errors['required']">This field is required!</span>
+                    </span>
+                </div>
+
+                <span *ngIf="!editActivityForm.valid && editActivityForm.touched" class="help-block">Please enter valid
+                    data!</span>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>

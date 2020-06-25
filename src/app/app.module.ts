@@ -1,3 +1,4 @@
+import { ActivityResolverService } from './services/activity-resolver.service';
 import { UserActiveComponent } from './public/user/user-active/user-active.component';
 import { ChatComponent } from './public/chat/chat.component';
 import { FeaturedService } from './services/featured.service';
@@ -98,6 +99,8 @@ import { DocumentaryNewReleasesComponent } from './public/documentary/documentar
 import { DocumentaryPopularComponent } from './public/documentary/documentary-popular/documentary-popular.component';
 import { DocumentaryTrendingComponent } from './public/documentary/documentary-trending/documentary-trending.component';
 import { DocumentaryFeaturedComponent } from './public/documentary/documentary-featured/documentary-featured.component';
+import { AdminActivityDetailComponent } from './admin/admin-activity/admin-activity-detail/admin-activity-detail.component';
+import { AdminActivityEditComponent } from './admin/admin-activity/admin-activity-edit/admin-activity-edit.component';
 
 @NgModule({
   declarations: [
@@ -171,7 +174,9 @@ import { DocumentaryFeaturedComponent } from './public/documentary/documentary-f
     DocumentaryNewReleasesComponent,
     DocumentaryPopularComponent,
     DocumentaryTrendingComponent,
-    DocumentaryFeaturedComponent
+    DocumentaryFeaturedComponent,
+    AdminActivityDetailComponent,
+    AdminActivityEditComponent
   ],
   imports: [
     BrowserModule,
@@ -193,6 +198,7 @@ import { DocumentaryFeaturedComponent } from './public/documentary/documentary-f
     DocumentaryService,
     VideoSourceService,
     DocumentaryResolverService,
+    ActivityResolverService,
     AuthenticationService,
     YearService,
     DurationService,

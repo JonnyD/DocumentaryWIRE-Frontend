@@ -1,66 +1,78 @@
 <br />
 Type:
-<select class='select-option' [(ngModel)]="type"
-    #typeSelected
-    (change)='onTypeSelected(typeSelected.value)'>
-    <option class="option" value="all">All</option>
-    <option class='option' 
-   *ngFor='let type of types' 
-   [value]="type.id">{{type.name}}</option>
+<select class='select-option' [(ngModel)]="type" #typeSelected (change)='onTypeSelected(typeSelected.value)'>
+  <option class="option" value="all">All</option>
+  <option class='option' *ngFor='let type of types' [value]="type.id">{{type.name}}</option>
 </select>
 
 Component:
-<select class='select-option' [(ngModel)]="component"
-    #componentSelected
-    (change)='onComponentSelected(componentSelected.value)'>
-    <option class="option" value="all">All</option>
-    <option class='option' 
-   *ngFor='let component of components' 
-   [value]="component.id">{{component.name}}</option>
+<select class='select-option' [(ngModel)]="component" #componentSelected
+  (change)='onComponentSelected(componentSelected.value)'>
+  <option class="option" value="all">All</option>
+  <option class='option' *ngFor='let component of components' [value]="component.id">{{component.name}}</option>
 </select>
 
 <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Username</th>
-        <th scope="col">Type</th>
-        <th scope="col">Component</th>
-        <th scope="col">Object Id</th>
-        <th scope="col">Group Number</th>
-        <th scope="col">Author</th>
-        <th scope="col">Email</th>
-        <th scope="col">Created At</th>
-        <th scope="col">Updated At</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let activity of activities | paginate: config">
-        <td>
-            <a [routerLink]="['/admin/activity', activity.id]">
-              {{ activity.id }}
-          </a>
-        </td>
-        <td>{{ activity.user.username }}</td>
-        <td>{{ activity.type }}</td>
-        <td>{{ activity.component }}</td>
-        <td>{{ activity.objectId }}</td>
-        <td>{{ activity.groupNumber }}</td>
-        <td>{{ activity.auther }}</td>
-        <td>{{ activity.email }}</td>
-        <td>
-          <span *ngIf="activity.createdAt">
-              {{ activity.createdAt.date }}
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Username</th>
+      <th scope="col">Type</th>
+      <th scope="col">Component</th>
+      <th scope="col">Object Id</th>
+      <th scope="col">Group Number</th>
+      <th scope="col">Author</th>
+      <th scope="col">Email</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let activity of activities | paginate: config">
+      <td>
+        <a [routerLink]="['/admin/activity', activity.id]">
+          {{ activity.id }}
+        </a>
+      </td>
+      <td>{{ activity.user.username }}</td>
+      <td>{{ activity.type }}</td>
+      <td>{{ activity.component }}</td>
+      <td *ngIf="activity.type === 'comment'">
+        <a [routerLink]="['/admin/comment', activity.objectId]">
+          {{ activity.objectId }}
+        </a>
+      </td>
+      <td *ngIf="activity.type === 'watchlist'">
+        <a [routerLink]="['/admin/watchlist', activity.objectId]">
+          {{ activity.objectId }}
+        </a>
+      </td>
+      <td *ngIf="activity.type === 'joined'">
+        <a [routerLink]="['/admin/user', activity.user.username]">
+          {{ activity.objectId }}
+        </a>
+      </td>
+      <td *ngIf="activity.type === 'added'">
+        <a [routerLink]="['/admin/documentary', activity.objectId]">
+          {{ activity.objectId }}
+        </a>
+      </td>
+      <td>{{ activity.groupNumber }}</td>
+      <td>{{ activity.auther }}</td>
+      <td>{{ activity.email }}</td>
+      <td>
+        <span *ngIf="activity.createdAt">
+          {{ activity.createdAt.date }}
         </span>
       </td>
-        <td>
-          <span *ngIf="activity.updatedAt">
-              {{ activity.updatedAt.date }}
-          </span>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-    </div>
+      <td>
+        <span *ngIf="activity.updatedAt">
+          {{ activity.updatedAt.date }}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

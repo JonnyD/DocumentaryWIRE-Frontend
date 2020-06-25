@@ -1,0 +1,78 @@
+<a [routerLink]="['/admin/activity', activity.id, 'edit']">
+    <button class="btn btn-primary" type="submit">Edit</button>
+</a>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td>{{ activity.id }}</td>
+        </tr>
+        <tr>
+            <td>Object ID</td>
+            <td *ngIf="activity.type === 'comment'">
+                <a [routerLink]="['/admin/comment', activity.objectId]">
+                    {{ activity.objectId }}
+                </a>
+            </td>
+            <td *ngIf="activity.type === 'watchlist'">
+                <a [routerLink]="['/admin/watchlist', activity.objectId]">
+                    {{ activity.objectId }}
+                </a>
+            </td>
+            <td *ngIf="activity.type === 'joined'">
+                <a [routerLink]="['/admin/user', activity.user.username]">
+                    {{ activity.objectId }}
+                </a>
+            </td>
+            <td *ngIf="activity.type === 'added'">
+                <a [routerLink]="['/admin/documentary', activity.objectId]">
+                    {{ activity.objectId }}
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>{{ activity.type }}</td>
+        </tr>
+        <tr>
+            <td>Data</td>
+            <td *ngIf="activity.type === 'comment'">
+                Comment ID: {{ activity.data.commentId }} <br />
+                Comment Text: {{ activity.data.commentText }} <br />
+                Documentary ID: {{ activity.data.documentaryId }} <br />
+                Documentary Title: {{ activity.data.documentaryTitle }} <br />
+                Documentary Slug: {{ activity.data.documentarySlug }} <br />
+                Documentary Poster: {{ activity.data.documentaryPoster }} <br />
+            </td>
+            <td *ngIf="activity.type === 'watchlist'">
+                Documentary ID: {{ activity.data.documentaryId }} <br />
+                Documentary Title: {{ activity.data.documentaryTitle }} <br />
+                Documentary Slug: {{ activity.data.documentarySlug }} <br />
+                Documentary Poster: {{ activity.data.documentaryPoster }} <br />
+            </td>
+            <td *ngIf="activity.type === 'joined'">
+                null
+            </td>
+            <td *ngIf="activity.type === 'added'">
+                null
+            </td>
+        </tr>
+        <tr>
+            <td>Component</td>
+            <td>{{ activity.component }}</td>
+        </tr>
+        <tr>
+            <td>Group Number</td>
+            <td>{{ activity.groupNumber }}</td>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>{{ activity.user.username }}</td>
+        </tr>
+        <tr>
+            <td>Created At</td>
+            <td>{{ activity.createdAt.date }}</td>
+        </tr>
+    </tbody>
+</table>

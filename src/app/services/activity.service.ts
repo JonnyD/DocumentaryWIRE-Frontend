@@ -15,6 +15,35 @@ export class ActivityService extends DataService {
     super(`${environment.apiUrl}/api/v1/activity`, http);
     this.authenticationService = authenticationService;
    }
+
+   editActivity(id, resource) {
+    let params = new HttpParams();
+    
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        params = params.append('access_token', accessToken)
+    }
+
+    let options = {
+        params: params
+    }
+
+    return this.patch(id, resource, options);
+   }
+
+   getActivityById(id: number) {
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+        let accessToken = this.authenticationService.currentTokenValue.access_token;
+        options = {
+          params: new HttpParams()
+            .append('access_token', accessToken)
+        }
+    }
+    
+    return this.get(id, options);
+   }
    
    getAllActivities(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
