@@ -20,8 +20,8 @@ export class AdminCommentsComponent implements OnInit {
   private comments: Array<Comment>;
 
   private page;
-  @Input() documentary;
-  private user;
+  @Input() private documentary;
+  @Input() private user;
   private status;
 
   private previousDocumentary;
@@ -52,7 +52,9 @@ export class AdminCommentsComponent implements OnInit {
         if (this.documentary == null) {
           this.documentary = +params['documentary'] || 'all';
         }
-        this.user = +params['user'] || 'all';
+        if (this.user == null) {
+          this.user = +params['user'] || 'all';
+        }
         this.status = +params['status'] || 'all';
 
         this.fetchComments();
