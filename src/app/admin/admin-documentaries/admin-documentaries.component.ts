@@ -5,7 +5,7 @@ import { VideoSourceService } from './../../services/video-source.service';
 import { VideoSource } from './../../models/video-source.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DocumentaryService } from './../../services/documentary.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Documentary } from './../../models/documentary.model';
 import { Location } from "@angular/common";
@@ -31,8 +31,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     { id: 'rejected', name: 'Rejected' }
   ];
   public featuredOptions = [
-    { id: true },
-    { id: false }
+    { id: "yes" },
+    { id: "no" }
   ];
   public types: Array<Type> = [
     { id: 'movie', name: 'Movie' },
@@ -43,7 +43,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private videoSource;
   private previousVideoSource;
   private previousCategory;
-  private category;
+  @Input() private category;
   private status;
   private previousStatus;
   private featured;
@@ -65,10 +65,14 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
       .subscribe(params => {
         this.page = +params['page'] || 1;
         this.videoSource = +params['videoSource'] || 'all';
-        this.category = +params['category'] || 'all';
         this.status = params['status'] || 'all';
         this.featured = params['featured'] || 'all';
         this.type = params['type'] || 'all';
+        console.log("this.category");
+        console.log(this.category);
+        if (this.category == null) {
+          this.category = +params['category'] || 'all';
+        }
         
         this.fetchVideoSources();
         this.fetchCategories();
@@ -134,7 +138,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
     let authenticate = true;
     let isAdmin = true;
-    this.documentariesSubscription = this.service.getAllDocumentaries(params, authenticate, isAdmin)
+    this.documentariesSubscription = this.service.getAllDocumentaries(params)
       .subscribe(
           result => {
             this.config = {

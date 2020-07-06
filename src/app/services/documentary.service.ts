@@ -27,17 +27,27 @@ export class DocumentaryService extends DataService {
     return this.get(slug, options);
   }
 
-  getAllDocumentaries(params: HttpParams, authenticate: boolean = false, isAdmin: boolean = false) {
-    if (!isAdmin) {
-      params = params.append('sort', 'createdAt-desc');
-      params = params.append('status', 'published');
+  getAllDocumentaries(params: HttpParams) {
+    if (params.has('documentaryPage')) {
+      params = params.append('page', params.get('documentaryPage'));
+      params = params.delete('documentaryPage');
+    }
+    if (params.has('documentaryVideoSource')) {
+      params = params.append('videoSource', params.get('documentaryVideoSource'));
+      params = params.delete('documentaryVideoSource');
+    }
+    if (params.has('documentaryStatus')) {
+      params = params.append('status', params.get('documentaryStatus'));
+      params = params.delete('documentaryStatus');
+    }
+    if (params.has('documentaryFeatured')) {
+      params = params.append('featured', params.get('documentaryFeatured'));
+      params = params.delete('documentaryFeatured');
     }
 
-    if (authenticate) {
-      if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        params = params.append('access_token', accessToken)
-      }
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
 
     let options = {

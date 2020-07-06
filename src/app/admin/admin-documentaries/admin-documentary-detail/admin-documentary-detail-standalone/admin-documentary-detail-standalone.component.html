@@ -28,6 +28,10 @@
                     <td>{{ documentary.summary }}</td>
                 </tr>
                 <tr>
+                    <td>Comment Count</td>
+                    <td>{{ documentary.commentCount }}</td>
+                </tr>
+                <tr>
                     <td>Type</td>
                     <td>{{ documentary.type }}</td>
                 </tr>
@@ -105,6 +109,10 @@
                 </tr>
             </tbody>
         </table>
+    </div>
 
+    <div class="row">
+        <app-admin-comments
+            [documentary]="documentary.id"></app-admin-comments>
     </div>
 </div>

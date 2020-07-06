@@ -3,7 +3,7 @@ import { Comment } from './../../models/comment.model';
 import { DocumentaryService } from './../../services/documentary.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CommnentService } from 'src/app/services/comment.service';
 import { Location } from "@angular/common";
 
@@ -20,7 +20,7 @@ export class AdminCommentsComponent implements OnInit {
   private comments: Array<Comment>;
 
   private page;
-  private documentary;
+  @Input() documentary;
   private user;
   private status;
 
@@ -48,7 +48,10 @@ export class AdminCommentsComponent implements OnInit {
       .queryParams
       .subscribe(params => {
         this.page = +params['page'] || 1;
-        this.documentary = +params['documentary'] || 'all';
+
+        if (this.documentary == null) {
+          this.documentary = +params['documentary'] || 'all';
+        }
         this.user = +params['user'] || 'all';
         this.status = +params['status'] || 'all';
 

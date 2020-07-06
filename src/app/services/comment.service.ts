@@ -18,46 +18,62 @@ export class CommnentService extends DataService {
     authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/comment`, http);
     this.authenticationService = authenticationService;
-   }
+  }
 
-   getCommentById(id: number) {
+  getCommentById(id: number) {
     let options = {};
 
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      options = {
+        params: new HttpParams()
+          .append('access_token', accessToken)
+      }
     }
     return this.get(id, options);
-   }
+  }
 
-   getAllComments(params: HttpParams) {
+  getAllComments(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        params = params.append('access_token', accessToken)
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
 
     let options = {
-        params: params
+      params: params
     }
 
     return this.getAll(options);
-   }
+  }
 
-   editComment(id, resource) {
-    let params = new HttpParams();
+  getAllCommentsByDocumentary(documentaryId: number, params: HttpParams) {
+    params = params.append('documentary', documentaryId.toString());
+
+    if (params.has('commentPage')) {
+      params = params.append('page', params.get('commentPage'));
+      params = params.delete('commentPage');
+    }
     
+    if (params.has('commentStatus')) {
+      params = params.append('status', params.get('commentStatus'));
+      params = params.delete('commentStatus');
+    }
+
+    return this.getAllComments(params);
+  }
+
+  editComment(id, resource) {
+    let params = new HttpParams();
+
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        params = params.append('access_token', accessToken)
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
 
     let options = {
-        params: params
+      params: params
     }
 
     return this.patch(id, resource, options);
-   }
+  }
 }
