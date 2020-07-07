@@ -1,3 +1,7 @@
+import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watchlist-edit/admin-watchlist-edit.component';
+import { WatchlistResolverService } from './services/watchlist-resolver.service';
+import { AdminWatchlistDetailComponent } from './admin/admin-watchlists/admin-watchlist-detail/admin-watchlist-detail.component';
+import { AdminWatchlistsComponent } from './admin/admin-watchlists/admin-watchlists.component';
 import { AdminActivityEditComponent } from './admin/admin-activity/admin-activity-edit/admin-activity-edit.component';
 import { ActivityResolverService } from './services/activity-resolver.service';
 import { AdminActivityDetailComponent } from './admin/admin-activity/admin-activity-detail/admin-activity-detail.component';
@@ -276,6 +280,20 @@ const routes: Routes = [
       {
         path: 'follows',
         component: AdminFollowsComponent
+      },
+      {
+        path: 'watchlists',
+        component: AdminWatchlistsComponent
+      },
+      {
+        path: 'watchlists/:id',
+        component: AdminWatchlistDetailComponent,
+        resolve: [WatchlistResolverService]
+      },
+      {
+        path: 'watchlists/:id/edit',
+        component: AdminWatchlistEditComponent,
+        resolve: [WatchlistResolverService]
       },
       {
         path: 'activity',

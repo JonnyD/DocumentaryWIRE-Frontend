@@ -1,0 +1,38 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">User</th>
+            <th scope="col">Documentary</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let watchlist of watchlists | paginate: config">
+            <td>
+                <a [routerLink]="['/admin/watchlists', watchlist.id]">
+                    {{ watchlist.id }}
+                </a>
+            </td>
+            <td>
+                {{ watchlist.user.username }} <br />
+                {{ watchlist.user.name }}
+            </td>
+            <td>
+                {{ watchlist.documentary.title }}
+            </td>
+            <td>
+                {{ watchlist.createdAt.date }}
+            </td>
+            <td>
+                <span *ngIf="watchlist.updatedAt">
+                    {{ watchlist.updatedAt.date }}
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div>
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

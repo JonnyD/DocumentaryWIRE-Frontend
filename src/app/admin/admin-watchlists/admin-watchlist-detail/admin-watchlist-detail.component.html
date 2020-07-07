@@ -1,0 +1,38 @@
+<br />
+
+<a [routerLink]="['/admin/watchlists', watchlist.id, 'edit']">  
+<button class="btn btn-primary" type="submit">Edit</button>
+</a>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td>{{ watchlist.id }}</td>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>
+                {{ watchlist.user.username }}<br />
+                {{ watchlist.user.name }}
+            </td>
+        </tr>
+        <tr>
+            <td>Documentary</td>
+            <td>{{ watchlist.documentary.title }}</td>
+        </tr>
+        <tr>
+            <td>Created At</td>
+            <td>{{ watchlist.createdAt.date }}</td>
+        </tr>
+        <tr>
+            <td>Updated At</td>
+            <td>
+                <span *ngIf="watchlist.updatedAt">
+                    {{ watchlist.updatedAt.date }}
+                </span>
+            </td>
+        </tr>
+        <tr>
+    </tbody>
+</table>

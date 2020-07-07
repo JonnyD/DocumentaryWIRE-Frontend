@@ -14,9 +14,22 @@ export class WatchlistService extends DataService {
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/watchlist`, http);
     this.authenticationService = authenticationService;
-   }
+  }
 
-   getAllWatchlists(params: HttpParams) {
+  getWatchlistById(id: number) {
+    let options = {};
+
+    if (this.authenticationService.isAuthenticated()) {
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      options = {
+        params: new HttpParams()
+          .append('access_token', accessToken)
+      }
+    }
+    return this.get(id, options);
+  }
+
+  getAllWatchlists(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
       let accessToken = this.authenticationService.currentTokenValue.access_token;
       params = params.append('access_token', accessToken)
@@ -26,6 +39,6 @@ export class WatchlistService extends DataService {
       params: params
     }
 
-     return this.getAll(options);
-    }
+    return this.getAll(options);
+  }
 }

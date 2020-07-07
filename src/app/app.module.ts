@@ -101,6 +101,9 @@ import { DocumentaryTrendingComponent } from './public/documentary/documentary-t
 import { DocumentaryFeaturedComponent } from './public/documentary/documentary-featured/documentary-featured.component';
 import { AdminActivityDetailComponent } from './admin/admin-activity/admin-activity-detail/admin-activity-detail.component';
 import { AdminActivityEditComponent } from './admin/admin-activity/admin-activity-edit/admin-activity-edit.component';
+import { AdminWatchlistsComponent } from './admin/admin-watchlists/admin-watchlists.component';
+import { AdminWatchlistDetailComponent } from './admin/admin-watchlists/admin-watchlist-detail/admin-watchlist-detail.component';
+import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watchlist-edit/admin-watchlist-edit.component';
 
 @NgModule({
   declarations: [
@@ -176,7 +179,10 @@ import { AdminActivityEditComponent } from './admin/admin-activity/admin-activit
     DocumentaryTrendingComponent,
     DocumentaryFeaturedComponent,
     AdminActivityDetailComponent,
-    AdminActivityEditComponent
+    AdminActivityEditComponent,
+    AdminWatchlistsComponent,
+    AdminWatchlistDetailComponent,
+    AdminWatchlistEditComponent
   ],
   imports: [
     BrowserModule,
