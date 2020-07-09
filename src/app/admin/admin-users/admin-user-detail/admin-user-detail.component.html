@@ -2,6 +2,9 @@
     <a [routerLink]="['/admin/activity/']" [queryParams]="{ user: user.username }">
         <button class="btn btn-primary" type="submit">View activity</button>
     </a> |
+    <a [routerLink]="['/admin/comments/']" [queryParams]="{ user: user.id }">
+        <button class="btn btn-primary" type="submit">View comments</button>
+    </a> |
     <a [routerLink]="['/admin/watchlists/']" [queryParams]="{ user: user.username }">
         <button class="btn btn-primary" type="submit">View watchlists</button>
     </a> |

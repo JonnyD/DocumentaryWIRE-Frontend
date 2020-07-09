@@ -1,50 +1,48 @@
 <br />
 Status:
-<select class='select-option' [(ngModel)]="status"
-    #statusSelected
-    (change)='onStatusSelected(statusSelected.value)'>
-    <option class="option" value="all">All</option>
-    <option class='option' 
-   *ngFor='let status of statuses' 
-   [value]="status.id">{{status.name}}</option>
+<select class='select-option' [(ngModel)]="status" #statusSelected (change)='onStatusSelected(statusSelected.value)'>
+  <option class="option" value="all">All</option>
+  <option class='option' *ngFor='let status of statuses' [value]="status.id">{{status.name}}</option>
 </select>
 
 <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Comment</th>
-        <th scope="col">Documentary</th>
-        <th scope="col">User</th>
-        <th scope="col">Author</th>
-        <th scope="col">Email</th>
-        <th scope="col">Status</th>
-        <th scope="col">Created At</th>
-        <th scope="col">Updated At</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let comment of comments | paginate: config">
-        <td>
-            <a [routerLink]="['/admin/comments', comment.id]">
-              {{ comment.id }}
-          </a>
-        </td>
-        <td>{{ comment.commentText }}</td>
-        <td>{{ comment.documentary.title }}</td>
-        <td>
-          <span *ngIf="comment.user">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Comment</th>
+      <th scope="col">Documentary</th>
+      <th scope="col">User</th>
+      <th scope="col">Author</th>
+      <th scope="col">Email</th>
+      <th scope="col">Status</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let comment of comments | paginate: config">
+      <td>
+        <a [routerLink]="['/admin/comments', comment.id]">
+          {{ comment.id }}
+        </a>
+      </td>
+      <td>{{ comment.commentText }}</td>
+      <td>{{ comment.documentary.title }}</td>
+      <td>
+        <span *ngIf="comment.user">
+          <a [routerLink]="['/admin/users', comment.user.username]">
             {{ comment.user.username }}
-          </span>
-        </td>
-        <td>{{ comment.author }}</td>
-        <td>{{ comment.email }}</td>
-        <td>{{ comment.status }}</td>
-        <td>{{ comment.createdAt.date }}</td>
-        <td>{{ comment.updatedAt.date }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <div>
-      <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-    </div>
+          </a>
+        </span>
+      </td>
+      <td>{{ comment.author }}</td>
+      <td>{{ comment.email }}</td>
+      <td>{{ comment.status }}</td>
+      <td>{{ comment.createdAt.date }}</td>
+      <td>{{ comment.updatedAt.date }}</td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

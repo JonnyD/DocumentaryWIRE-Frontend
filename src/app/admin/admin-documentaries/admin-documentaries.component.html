@@ -61,6 +61,7 @@ Featured:
       <th scope="col">Length</th>
       <th scope="col">Status</th>
       <th scope="col">Comment Count</th>
+      <th scope="col">Watchlist Count</th>
       <th scope="col">Views</th>
       <th scope="col">Short Url</th>
       <th scope="col">Poster</th>
@@ -100,6 +101,11 @@ Featured:
       <td>
         <a [routerLink]="['/admin/comments/']" [queryParams]="{ documentary: documentary.id }">
           {{ documentary.commentCount }}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]="['/admin/watchlists/']" [queryParams]="{ documentary: documentary.id }">
+          {{ documentary.watchlistCount }}
         </a>
       </td>
       <td>{{ documentary.views }}</td>
