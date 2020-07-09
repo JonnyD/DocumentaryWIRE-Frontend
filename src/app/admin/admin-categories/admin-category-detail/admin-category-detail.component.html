@@ -1,31 +1,38 @@
-<a [routerLink]="['/admin/categories', category.slug, 'edit']">  
-    <button class="btn btn-primary" type="submit">Edit</button>
-</a>
+<div class="row">
+    <a [routerLink]="['/admin/documentaries/']" [queryParams]="{ category: category.slug }">
+        <button class="btn btn-primary" type="submit">View documentaries</button>
+    </a>
+</div>
 
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>ID</td>
-            <td>{{ category.id }}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>{{ category.name }}</td>
-        </tr>
-        <tr>
-            <td>Slug</td>
-            <td>{{ category.slug }}</td>
-        </tr>
-        <tr>
-            <td>Status</td>
-            <td>{{ category.status }}</td>
-        </tr>
-        <tr>
-            <td>Documentaries</td>
-            <td>{{ category.documentaryCount }}</td>
-        </tr>
-    </tbody>
-</table>
+<div class="row">
+    <a [routerLink]="['/admin/categories', category.slug, 'edit']">
+        <button class="btn btn-primary" type="submit">Edit</button>
+    </a>
+</div>
 
-<app-admin-documentaries
-  [category]="category.slug"></app-admin-documentaries>
+<div class="row">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>{{ category.id }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ category.name }}</td>
+            </tr>
+            <tr>
+                <td>Slug</td>
+                <td>{{ category.slug }}</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>{{ category.status }}</td>
+            </tr>
+            <tr>
+                <td>Documentaries</td>
+                <td>{{ category.documentaryCount }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

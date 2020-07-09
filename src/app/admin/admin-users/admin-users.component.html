@@ -1,70 +1,70 @@
 <table class="table table-striped">
     <thead>
         <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Name</th>
-        <th scope="col">Username</th>
-        <th scope="col">Username Canonical</th>
-        <th scope="col">Email</th>
-        <th scope="col">Email Canonical</th>
-        <th scope="col">Enabled</th>
-        <th scope="col">Password</th>
-        <th scope="col">Last Login</th>
-        <th scope="col">Confirmation Token</th>
-        <th scope="col">Password Requested At</th>
-        <th scope="col">roles</th>
-        <th scope="col">Avatar</th>
-        <th scope="col">Reset Key</th>
-        <th scope="col">Activated At</th>
-        <th scope="col">Created At</th>
-        <th scope="col">Updated At</th>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Username Canonical</th>
+            <th scope="col">Email</th>
+            <th scope="col">Email Canonical</th>
+            <th scope="col">Enabled</th>
+            <th scope="col">Password</th>
+            <th scope="col">Last Login</th>
+            <th scope="col">Confirmation Token</th>
+            <th scope="col">Password Requested At</th>
+            <th scope="col">roles</th>
+            <th scope="col">Avatar</th>
+            <th scope="col">Reset Key</th>
+            <th scope="col">Activated At</th>
+            <th scope="col">Created At</th>
+            <th scope="col">Updated At</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let user of users | paginate: config">
-        <td><a [routerLink]="['/admin/users', user.username]">
-            {{ user.id }}
-        </a>
-        </td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.username }}</td>
-        <td>{{ user.usernameCanonical }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.emailCanonical }}</td>
-        <td>{{ user.enabled }}</td>
-        <td>{{ user.password }}</td>
-        <td>
-            <span *ngIf="user.lastLogin">
-                {{ user.lastLogin.date }}
-            </span>
-        </td>
-        <td>{{ user.confirmationToken }}</td>
-        <td>
-            <span *ngIf="user.passwordRequestAt">
-                {{ user.passwordRequestAt }}
-            </span>
-        </td>
-        <td>{{ user.roles }}</td>
-        <td>{{ user.avatar }}</td>
-        <td>{{ user.resetKey }}</td>
-        <td>
-            <span *ngIf="user.activatedAt">
-                {{ user.activatedAt.date }}
-            </span>
-        </td>
-        <td>
-            <span *ngIf="user.createdAt">
-                {{ user.createdAt.date }}
-            </span>
-        </td>
-        <td>
-            <span *ngIf="user.updatedAt">
-                {{ user.updatedAt.date }}
-            </span>
-        </td>
+            <td><a [routerLink]="['/admin/users', user.username]">
+                    {{ user.id }}
+                </a>
+            </td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.usernameCanonical }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.emailCanonical }}</td>
+            <td>{{ user.enabled }}</td>
+            <td>{{ user.password }}</td>
+            <td>
+                <span *ngIf="user.lastLogin">
+                    {{ user.lastLogin.date }}
+                </span>
+            </td>
+            <td>{{ user.confirmationToken }}</td>
+            <td>
+                <span *ngIf="user.passwordRequestAt">
+                    {{ user.passwordRequestAt }}
+                </span>
+            </td>
+            <td>{{ user.roles }}</td>
+            <td>{{ user.avatar }}</td>
+            <td>{{ user.resetKey }}</td>
+            <td>
+                <span *ngIf="user.activatedAt">
+                    {{ user.activatedAt.date }}
+                </span>
+            </td>
+            <td>
+                <span *ngIf="user.createdAt">
+                    {{ user.createdAt.date }}
+                </span>
+            </td>
+            <td>
+                <span *ngIf="user.updatedAt">
+                    {{ user.updatedAt.date }}
+                </span>
+            </td>
         </tr>
     </tbody>
 </table>
 <div>
-        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-      </div>
+    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

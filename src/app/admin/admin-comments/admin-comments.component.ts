@@ -20,13 +20,13 @@ export class AdminCommentsComponent implements OnInit {
   private comments: Array<Comment>;
 
   private page;
+  private status;
   @Input() private documentary;
   @Input() private user;
-  private status;
 
-  private previousDocumentary;
-  private previousUser;
   private previousStatus;
+  private previousUser;
+  private previousDocumentary;
 
   private config;
 
@@ -48,14 +48,14 @@ export class AdminCommentsComponent implements OnInit {
       .queryParams
       .subscribe(params => {
         this.page = +params['page'] || 1;
+        this.status = params['status'] || 'all';
 
         if (this.documentary == null) {
           this.documentary = +params['documentary'] || 'all';
         }
         if (this.user == null) {
-          this.user = +params['user'] || 'all';
+          this.user = params['user'] || 'all';
         }
-        this.status = +params['status'] || 'all';
 
         this.fetchComments();
       })
@@ -63,16 +63,6 @@ export class AdminCommentsComponent implements OnInit {
 
   fetchComments() {
     let params = new HttpParams();
-
-    if (this.documentary) {
-      if (this.documentary != 'all') {
-        params = params.append('documentary', this.documentary);
-        if (this.documentary != this.previousDocumentary) {
-          this.page = 1;
-        }
-      }
-      this.previousDocumentary = this.documentary;
-    }
 
     if (this.user) {
       if (this.user != 'all') {
@@ -94,7 +84,17 @@ export class AdminCommentsComponent implements OnInit {
       this.previousStatus = this.status;
     }
 
-    params = params.append('page', this.page.toString());
+    if (this.documentary) {
+      if (this.documentary != 'all') {
+        params = params.append('documentary', this.documentary);
+        if (this.documentary != this.previousDocumentary) {
+          this.page = 1;
+        }
+      }
+      this.previousDocumentary = this.documentary;
+    }
+
+    params = params.append('page', this.page);
 
     this.location.go(this.router.url.split("?")[0], params.toString());
   

@@ -1,4 +1,8 @@
-<br />
+<div class="row">
+    <a [routerLink]="['/admin/documentaries/']" [queryParams]="{ videoSource: videoSource.id }">
+        <button class="btn btn-primary" type="submit">View documentaries</button>
+    </a>
+</div>
 
 <a [routerLink]="['/admin/video-sources', videoSource.id, 'edit']">  
 <button class="btn btn-primary" type="submit">Edit</button>

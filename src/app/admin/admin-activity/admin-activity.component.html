@@ -34,7 +34,11 @@ Component:
           {{ activity.id }}
         </a>
       </td>
-      <td>{{ activity.user.username }}</td>
+      <td>
+        <a [routerLink]="['/admin/users', activity.user.username]">
+          {{ activity.user.username }}
+        </a>
+      </td>
       <td>{{ activity.type }}</td>
       <td>{{ activity.component }}</td>
       <td *ngIf="activity.type === 'comment'">

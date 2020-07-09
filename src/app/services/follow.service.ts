@@ -9,16 +9,16 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class SubscriptionService extends DataService {
+export class FollowService extends DataService {
  
   private authenticationService: AuthenticationService;
 
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
-    super(`${environment.apiUrl}/api/v1/subscription`, http);
+    super(`${environment.apiUrl}/api/v1/follow`, http);
     this.authenticationService = authenticationService;
    }
 
-   getSubscriptionById(id: number) {
+   getFollowById(id: number) {
     let options = {};
 
     if (this.authenticationService.isAuthenticated()) {
@@ -32,7 +32,7 @@ export class SubscriptionService extends DataService {
     return this.get(id, options);
    }
 
-   getAllSubscriptions(params: HttpParams) {
+   getAllFollows(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
         let accessToken = this.authenticationService.currentTokenValue.access_token;
         params = params.append('access_token', accessToken)
@@ -45,9 +45,9 @@ export class SubscriptionService extends DataService {
      return this.getAll(options);
     }
 
-    createSubscription(subscription: any) {
+    createFollow(follow: any) {
         let options = {};
   
-        return this.create(subscription, options);
+        return this.create(follow, options);
      }
 }

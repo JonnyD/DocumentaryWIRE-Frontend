@@ -21,9 +21,11 @@ export class AdminActivityComponent implements OnInit {
   private page;
   private type;
   private component;
+  private user;
 
   private previousType;
   private previousComponent;
+  private previousUser;
 
   public types: Array<Type> = [
     { id: 'joined', name: 'Joined' },
@@ -49,6 +51,7 @@ export class AdminActivityComponent implements OnInit {
       .queryParams
       .subscribe(params => {
         this.page = +params['page'] || 1;
+        this.user = params['user'] || 'all';
         this.type = params['type'] || 'all';
         this.component = params['component'] || 'all';
 
@@ -58,6 +61,16 @@ export class AdminActivityComponent implements OnInit {
 
   fetchActivities() {
     let params = new HttpParams();
+
+    if (this.user) {
+      if (this.user != 'all') {
+        params = params.append('user', this.user);
+        if (this.user != this.previousUser) {
+          this.page = 1;
+        }
+      }
+      this.previousUser = this.user;
+    }
 
     if (this.type) {
       if (this.type != 'all') {

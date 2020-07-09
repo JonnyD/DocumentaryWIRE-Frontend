@@ -34,8 +34,4 @@ export class AdminDocumentaryDetailStandaloneComponent implements OnInit {
       this.documentary = <Documentary>result[0];
     });
   }
-
-  updateUrl(params: HttpParams) {
-    this.location.go(this.router.url.split("?")[0], params.toString());
-  }
 }

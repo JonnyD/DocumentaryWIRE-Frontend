@@ -1,24 +1,35 @@
-
 <table class="table table-striped">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">User From</th>
-            <th scope="col">User To</th>
-            <th scope="col">Updated At</th>
-            <th scope="col">Created At</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let follow of follows | paginate: config">
-            <td>{{ follow.id }}</td>
-            <td>{{ follow.userFrom.username }}</td>
-            <td>{{ follow.userTo.username }}</td>
-            <td>{{ follow.updatedAt }}</td>
-            <td>{{ follow.createdAt }}</td>
-          </tr>
-        </tbody>
-      </table>
-      <div>
-          <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-        </div>
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">User From</th>
+      <th scope="col">User To</th>
+      <th scope="col">Created At</th>
+      <th scope="col">Updated At</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let follow of follows | paginate: config">
+      <td>{{ follow.id }}</td>
+      <td>
+        <a [routerLink]="['/admin/users', follow.userFrom.username]">
+          {{ follow.userFrom.username }}
+        </a>
+      </td>
+      <td>
+        <a [routerLink]="['/admin/users', follow.userTo.username]">
+          {{ follow.userTo.username }}
+        </a>
+      </td>
+      <td>{{ follow.createdAt.date }}</td>
+      <td>
+        <span *ngIf="follow.updatedAt">
+          {{ follow.updatedAt.date }}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+</div>

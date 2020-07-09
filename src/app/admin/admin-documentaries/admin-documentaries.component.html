@@ -90,17 +90,26 @@ Featured:
       <td>{{ documentary.title }}</td>
       <td>{{ documentary.storyline }}</td>
       <td>{{ documentary.summary }}</td>
-      <td>{{ documentary.category.name }}</td>
+      <td>
+        <a [routerLink]="['/admin/categories', documentary.category.slug]">
+          {{ documentary.category.name }}</a>
+      </td>
       <td>{{ documentary.year }}</td>
       <td>{{ documentary.length }}</td>
       <td>{{ documentary.status }}</td>
-      <td>{{ documentary.commentCount }}</td>
+      <td>
+        <a [routerLink]="['/admin/comments/']" [queryParams]="{ documentary: documentary.id }">
+          {{ documentary.commentCount }}
+        </a>
+      </td>
       <td>{{ documentary.views }}</td>
       <td>{{ documentary.shortUrl }}</td>
       <td>{{ documentary.poster }}</td>
       <td>{{ documentary.wideImage }}</td>
       <td><span *ngIf="documentary.movie">
-          {{ documentary.movie.videoSource.name }}
+          <a [routerLink]="['/admin/video-sources', documentary.movie.videoSource.id]">
+            {{ documentary.movie.videoSource.name }}
+          </a>
         </span></td>
       <td><span *ngIf="documentary.movie">
           {{ documentary.movie.videoId }}

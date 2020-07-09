@@ -34,6 +34,16 @@ export class CommnentService extends DataService {
   }
 
   getAllComments(params: HttpParams) {
+    if (params.has('commentPage')) {
+      params = params.append('page', params.get('commentPage'));
+      params = params.delete('commentPage');
+    }
+    
+    if (params.has('commentStatus')) {
+      params = params.append('status', params.get('commentStatus'));
+      params = params.delete('commentStatus');
+    }
+
     if (this.authenticationService.isAuthenticated()) {
       let accessToken = this.authenticationService.currentTokenValue.access_token;
       params = params.append('access_token', accessToken)
@@ -48,16 +58,6 @@ export class CommnentService extends DataService {
 
   getAllCommentsByDocumentary(documentaryId: number, params: HttpParams) {
     params = params.append('documentary', documentaryId.toString());
-
-    if (params.has('commentPage')) {
-      params = params.append('page', params.get('commentPage'));
-      params = params.delete('commentPage');
-    }
-    
-    if (params.has('commentStatus')) {
-      params = params.append('status', params.get('commentStatus'));
-      params = params.delete('commentStatus');
-    }
 
     return this.getAllComments(params);
   }

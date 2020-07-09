@@ -1,5 +1,13 @@
 <div class="container">
     <div class="row">
+        <a [routerLink]="['/admin/watchlists/']" [queryParams]="{ documentary: documentary.id }">
+            <button class="btn btn-primary" type="submit">View watchlists</button>
+        </a>
+        <a [routerLink]="['/admin/comments/']" [queryParams]="{ documentary: documentary.id }">
+            <button class="btn btn-primary" type="submit">View comments</button>
+        </a>
+    </div>
+    <div class="row">
 
         <a [routerLink]="['/admin/documentaries/standalone', documentary.slug, 'edit']">
             <button class="btn btn-primary" type="submit">Edit</button>
@@ -109,10 +117,5 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
-    <div class="row">
-        <app-admin-comments
-            [documentary]="documentary.id"></app-admin-comments>
     </div>
 </div>

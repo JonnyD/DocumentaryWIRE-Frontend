@@ -16,11 +16,21 @@
                 </a>
             </td>
             <td>
-                {{ watchlist.user.username }} <br />
-                {{ watchlist.user.name }}
+                <a [routerLink]="['/admin/users', watchlist.user.username]">
+                    {{ watchlist.user.username }}
+                </a>
             </td>
             <td>
-                {{ watchlist.documentary.title }}
+                <span *ngIf="watchlist.documentary.type === 'movie'">
+                    <a [routerLink]="['/admin/documentaries/standalone', watchlist.documentary.slug]">
+                        {{ watchlist.documentary.title }}
+                    </a>
+                </span>
+                <span *ngIf="watchlist.documentary.type == 'series'">
+                    <a [routerLink]="['/admin/documentaries/series', watchlist.documentary.slug]">
+                        {{ watchlist.documentary.title }}
+                    </a>
+                </span>
             </td>
             <td>
                 {{ watchlist.createdAt.date }}

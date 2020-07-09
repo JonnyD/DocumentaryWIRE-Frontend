@@ -12,7 +12,7 @@ import { RecaptchaModule, RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY, RECAPTCHA_SE
 import { UserGuard } from './public/user-guard.service';
 import { ChangeNameComponent } from './public/user/user-edit/change-name/change-name.component';
 import { YoutubeService } from './services/youtube.service';
-import { SubscriptionService } from './services/subscription.service';
+import { FollowService } from './services/follow.service';
 import { WatchlistService } from './services/watchlist.service';
 import { UserService } from './services/user.service';
 import { DurationService } from './services/duration.service';
@@ -210,7 +210,7 @@ import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watc
     DurationService,
     UserService,
     WatchlistService,
-    SubscriptionService,
+    FollowService,
     OMDBService,
     YoutubeService,
     StatusService,

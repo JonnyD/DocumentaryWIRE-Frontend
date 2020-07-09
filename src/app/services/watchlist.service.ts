@@ -16,6 +16,12 @@ export class WatchlistService extends DataService {
     this.authenticationService = authenticationService;
   }
 
+  getWatchlistByDocumentary(documentaryId: number, params: HttpParams) {
+    params = params.append('documentary', documentaryId.toString());
+
+    return this.getAllWatchlists(params);
+  }
+
   getWatchlistById(id: number) {
     let options = {};
 

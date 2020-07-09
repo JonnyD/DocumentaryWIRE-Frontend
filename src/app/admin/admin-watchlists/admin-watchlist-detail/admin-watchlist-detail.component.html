@@ -1,7 +1,7 @@
 <br />
 
-<a [routerLink]="['/admin/watchlists', watchlist.id, 'edit']">  
-<button class="btn btn-primary" type="submit">Edit</button>
+<a [routerLink]="['/admin/watchlists', watchlist.id, 'edit']">
+    <button class="btn btn-primary" type="submit">Edit</button>
 </a>
 
 <table class="table table-striped">
@@ -13,8 +13,9 @@
         <tr>
             <td>User</td>
             <td>
-                {{ watchlist.user.username }}<br />
-                {{ watchlist.user.name }}
+                <a [routerLink]="['/admin/users/', watchlist.user.username]">
+                    {{ watchlist.user.username }}
+                </a>
             </td>
         </tr>
         <tr>

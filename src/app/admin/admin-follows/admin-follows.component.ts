@@ -1,7 +1,7 @@
+import { FollowService } from './../../services/follow.service';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { SubscriptionService } from 'src/app/services/subscription.service';
 import { Location } from "@angular/common";
 
 @Component({
@@ -12,14 +12,19 @@ import { Location } from "@angular/common";
 export class AdminFollowsComponent implements OnInit {
   config: any;
   private page;
+  private follower;
+  private following;
+
+  private previousFollower;
+  private previousFollowing;
 
   private queryParamsSubscription;
-  private subscriptionsSubscription;
+  private followsSubscription;
 
   private follows;
 
   constructor(
-    private subscriptionService: SubscriptionService,
+    private followService: FollowService,
     private route: ActivatedRoute,
     private location: Location,
     private router: Router
@@ -30,18 +35,40 @@ export class AdminFollowsComponent implements OnInit {
     .queryParams
     .subscribe(params => {
       this.page = +params['page'] || 1;
+      this.following = params['following'] || 'all';
+      this.follower = params['follower'] || 'all';
       this.fetchFollows();
     })
   }
 
   fetchFollows() {
     let params = new HttpParams();
+    
+    if (this.follower) {
+      if (this.follower != 'all') {
+        params = params.append('follower', this.follower);
+        if (this.follower != this.previousFollower) {
+          this.page = 1;
+        }
+      }
+      this.previousFollower = this.follower;
+    }
+
+    if (this.following) {
+      if (this.following != 'all') {
+        params = params.append('following', this.following);
+        if (this.following != this.previousFollowing) {
+          this.page = 1;
+        }
+      }
+      this.previousFollowing = this.following;
+    }
 
     params = params.append('page', this.page.toString());
     
     this.location.go(this.router.url.split("?")[0], params.toString());
 
-    this.subscriptionsSubscription = this.subscriptionService.getAllSubscriptions(params)
+    this.followsSubscription = this.followService.getAllFollows(params)
       .subscribe(result => {
         this.config = {
           itemsPerPage: 12,
@@ -60,7 +87,7 @@ export class AdminFollowsComponent implements OnInit {
 
   ngOnDestroy() {
     this.queryParamsSubscription.unsubscribe();
-    this.subscriptionsSubscription.unsubscribe();
+    this.followsSubscription.unsubscribe();
   }
 
 }

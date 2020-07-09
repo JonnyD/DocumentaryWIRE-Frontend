@@ -1,94 +1,107 @@
-<br />
+<div class="row">
+    <a [routerLink]="['/admin/activity/']" [queryParams]="{ user: user.username }">
+        <button class="btn btn-primary" type="submit">View activity</button>
+    </a> |
+    <a [routerLink]="['/admin/watchlists/']" [queryParams]="{ user: user.username }">
+        <button class="btn btn-primary" type="submit">View watchlists</button>
+    </a> |
+    <a [routerLink]="['/admin/follows/']" [queryParams]="{ follower: user.id }">
+        <button class="btn btn-primary" type="submit">View followers</button>
+    </a> |
+    <a [routerLink]="['/admin/follows/']" [queryParams]="{ following: user.id }">
+        <button class="btn btn-primary" type="submit">View following</button>
+    </a>
+</div>
 
-<a [routerLink]="['/admin/users', user.username, 'edit']">  
-<button class="btn btn-primary" type="submit">Edit</button>
-</a>
+<div class="row">
+    <a [routerLink]="['/admin/users', user.username, 'edit']">  
+        <button class="btn btn-primary" type="submit">Edit</button>
+        </a>
+</div>
 
-<table class="table table-striped">
-    <tbody>
-        <tr>
-            <td>ID</td>
-            <td>{{ user.id }}</td>
-        </tr>
-        <tr>
-            <td>Name</td>
-            <td>{{ user.name }}</td>
-        </tr>
-        <tr>
-            <td>Username</td>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <td>Username Canonical</td>
-            <td>{{ user.usernameCanonical }}</td>
-        </tr>
-        <tr>
-            <td>Email</td>
-            <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-            <td>Email Canonical</td>
-            <td>{{ user.emailCanonical }}</td>
-        </tr>
-        <tr>
-            <td>Enabled</td>
-            <td>{{ user.enabled }}</td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td>{{ user.password }}</td>
-        </tr>
-        <tr>
-            <td>Last Login</td>
-            <td>{{ user.lastLogin.date }}</td>
-        </tr>
-        <tr>
-            <td>Confirmation Token</td>
-            <td>{{ user.confirmationToken }}</td>
-        </tr>
-        <tr>
-            <td>Password Requested At</td>
-            <td>
-                <span *ngIf="user.passwordRequestedAt">
-                    {{ user.passwordRequestedAt.date }}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td>Roles</td>
-            <td>{{ user.roles }}</td>
-        </tr>
-        <tr>
-            <td>Avatar</td>
-            <td>{{ user.avatar }}</td>
-        </tr>
-        <tr>
-            <td>Reset Key</td>
-            <td>{{ user.resetKey }}</td>
-        </tr>
-        <tr>
-            <td>Activated At</td>
-            <td>
-                <span *ngIf="user.activatedAt">
-                    {{ user.activatedAt.date }}
-                </span>
-            </td>
-        </tr>
-        <tr>
-            <td>Created AT</td>
-            <td>{{ user.createdAt.date }}</td>
-        </tr>
-        <tr>
-            <td>Updated At</td>
-            <td>
-                <span *ngIf="user.updatedAt">
-                    {{ user.updatedAt.date }}
-                </span>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<app-admin-comments
-    [user]="user.id">
-</app-admin-comments>
+<div class="row">
+    <table class="table table-striped">
+        <tbody>
+            <tr>
+                <td>ID</td>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>{{ user.name }}</td>
+            </tr>
+            <tr>
+                <td>Username</td>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <td>Username Canonical</td>
+                <td>{{ user.usernameCanonical }}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <td>Email Canonical</td>
+                <td>{{ user.emailCanonical }}</td>
+            </tr>
+            <tr>
+                <td>Enabled</td>
+                <td>{{ user.enabled }}</td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td>{{ user.password }}</td>
+            </tr>
+            <tr>
+                <td>Last Login</td>
+                <td>{{ user.lastLogin.date }}</td>
+            </tr>
+            <tr>
+                <td>Confirmation Token</td>
+                <td>{{ user.confirmationToken }}</td>
+            </tr>
+            <tr>
+                <td>Password Requested At</td>
+                <td>
+                    <span *ngIf="user.passwordRequestedAt">
+                        {{ user.passwordRequestedAt.date }}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Roles</td>
+                <td>{{ user.roles }}</td>
+            </tr>
+            <tr>
+                <td>Avatar</td>
+                <td>{{ user.avatar }}</td>
+            </tr>
+            <tr>
+                <td>Reset Key</td>
+                <td>{{ user.resetKey }}</td>
+            </tr>
+            <tr>
+                <td>Activated At</td>
+                <td>
+                    <span *ngIf="user.activatedAt">
+                        {{ user.activatedAt.date }}
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>Created AT</td>
+                <td>{{ user.createdAt.date }}</td>
+            </tr>
+            <tr>
+                <td>Updated At</td>
+                <td>
+                    <span *ngIf="user.updatedAt">
+                        {{ user.updatedAt.date }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
