@@ -17,7 +17,7 @@ import { Category } from 'src/app/models/category.model';
   styleUrls: ['./admin-documentaries.component.css']
 })
 export class AdminDocumentariesComponent implements OnInit, OnDestroy {
-  
+
   private documentariesSubscription;
   private queryParamsSubscription;
   private videoSourcesSubscription;
@@ -43,7 +43,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private videoSource;
   private previousVideoSource;
   private previousCategory;
-  @Input() private category;
+  private category;
   private status;
   private previousStatus;
   private featured;
@@ -68,12 +68,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
         this.status = params['status'] || 'all';
         this.featured = params['featured'] || 'all';
         this.type = params['type'] || 'all';
-        console.log("this.category");
-        console.log(this.category);
-        if (this.category == null) {
-          this.category = +params['category'] || 'all';
-        }
-        
+        this.category = +params['category'] || 'all';
+
         this.fetchVideoSources();
         this.fetchCategories();
         this.fetchDocumentaries();
@@ -85,11 +81,11 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     if (this.videoSource) {
       if (this.videoSource != 'all') {
         params = params.append('videoSource', this.videoSource.toString());
-        if (this.videoSource != this.previousVideoSource 
+        if (this.videoSource != this.previousVideoSource
           && this.previousVideoSource != null) {
           this.page = 1;
         }
-     }
+      }
       this.previousVideoSource = this.videoSource;
     }
     if (this.category) {
@@ -133,30 +129,30 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     }
 
     params = params.append('page', this.page.toString());
-    
+
     this.location.go(this.router.url.split("?")[0], params.toString());
 
     let authenticate = true;
     let isAdmin = true;
     this.documentariesSubscription = this.service.getAllDocumentaries(params)
       .subscribe(
-          result => {
-            this.config = {
-              itemsPerPage: 20,
-              currentPage: this.page,
-              totalItems: result['count_results']
-            };
-            this.documentaries = result['items'];
-            console.log("this.documentaries");
-            console.log(this.documentaries);
-          }
+        result => {
+          this.config = {
+            itemsPerPage: 20,
+            currentPage: this.page,
+            totalItems: result['count_results']
+          };
+          this.documentaries = result['items'];
+          console.log("this.documentaries");
+          console.log(this.documentaries);
+        }
       );
   }
 
   fetchVideoSources() {
     this.videoSourcesSubscription = this.videoSourceService.getAllVideoSources()
       .subscribe(result => {
-        this.videoSources = <any> result;
+        this.videoSources = <any>result;
       });
   }
 
@@ -165,8 +161,8 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     let authenticate = true;
     let isAdmin = true;
     this.categoriesSubscription = this.categoryService.getAllCategories(params, authenticate, isAdmin)
-      .subscribe(result => { 
-        this.categories = <any> result;
+      .subscribe(result => {
+        this.categories = <any>result;
       });
   }
 
