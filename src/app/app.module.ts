@@ -1,6 +1,5 @@
 import { ActivityResolverService } from './services/activity-resolver.service';
 import { UserActiveComponent } from './public/user/user-active/user-active.component';
-import { ChatComponent } from './public/chat/chat.component';
 import { FeaturedService } from './services/featured.service';
 import { SEOService } from './services/seo.service';
 import { PopoverModule } from 'ngx-smart-popover';
@@ -104,12 +103,14 @@ import { AdminActivityEditComponent } from './admin/admin-activity/admin-activit
 import { AdminWatchlistsComponent } from './admin/admin-watchlists/admin-watchlists.component';
 import { AdminWatchlistDetailComponent } from './admin/admin-watchlists/admin-watchlist-detail/admin-watchlist-detail.component';
 import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watchlist-edit/admin-watchlist-edit.component';
+import { CategoryService } from './services/category.service';
+import { CommnentService } from './services/comment.service';
+import { ChatComponent } from './public/chat/chat.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    ChatComponent,
     AdminHomeComponent,
     AdminDocumentariesComponent,
     AdminCommentsComponent,
@@ -182,7 +183,8 @@ import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watc
     AdminActivityEditComponent,
     AdminWatchlistsComponent,
     AdminWatchlistDetailComponent,
-    AdminWatchlistEditComponent
+    AdminWatchlistEditComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -215,6 +217,8 @@ import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watc
     YoutubeService,
     StatusService,
     FeaturedService,
+    CategoryService,
+    CommnentService,
     AdminGuard,
     UserGuard,
     SEOService,

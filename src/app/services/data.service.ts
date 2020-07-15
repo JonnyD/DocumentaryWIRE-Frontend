@@ -16,8 +16,13 @@ export class DataService {
     this.url = url;
   }
 
-  get(idOrSlug, options) {
-    let url = this.url + '/' + idOrSlug;
+  get(idOrSlug, options, url?) {
+    if (!url) {
+      url = this.url + '/' + idOrSlug;
+    } else {
+      let url = this.url;
+    }
+    console.log("url");
     console.log(url);
     return this.http.get(url, options);
   }

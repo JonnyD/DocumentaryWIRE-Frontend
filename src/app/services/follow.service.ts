@@ -1,5 +1,5 @@
-import { User } from './../models/user.model';
-import { HeaderAccessTokenService } from './../helpers/header-access-token.service';
+import { User } from '../models/user.model';
+import { HeaderAccessTokenService } from '../helpers/header-access-token.service';
 import { AuthenticationService } from './authentication.service';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { DataService } from './data.service';
