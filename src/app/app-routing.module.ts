@@ -1,3 +1,8 @@
+import { ContactComponent } from './public/contact/contact.component';
+import { AdminContactEditComponent } from './admin/admin-contact/admin-contact-edit/admin-contact-edit.component';
+import { ContactResolverService } from './services/contact-resolver.service';
+import { AdminContactDetailComponent } from './admin/admin-contact/admin-contact-detail/admin-contact-detail.component';
+import { AdminContactComponent } from './admin/admin-contact/admin-contact.component';
 import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watchlist-edit/admin-watchlist-edit.component';
 import { WatchlistResolverService } from './services/watchlist-resolver.service';
 import { AdminWatchlistDetailComponent } from './admin/admin-watchlists/admin-watchlist-detail/admin-watchlist-detail.component';
@@ -325,6 +330,20 @@ const routes: Routes = [
         path: 'emails/:id/edit',
         component: AdminEmailAddComponent
       },
+      {
+        path: 'contacts',
+        component: AdminContactComponent
+      },
+      {
+        path: 'contacts/:id',
+        component: AdminContactDetailComponent,
+        resolve: [ContactResolverService]
+      },
+      {
+        path: 'contacts/:id/edit',
+        component: AdminContactEditComponent,
+        resolve: [ContactResolverService]
+      },
     ]
   },
   {
@@ -358,6 +377,10 @@ const routes: Routes = [
     path: 'add/episodic',
     canActivate: [UserGuard],
     component: DocumentaryAddEpisodicComponent,
+  },
+  {
+    path: 'contact',
+    component: ContactComponent,
   },
   {
     path: ':slug',

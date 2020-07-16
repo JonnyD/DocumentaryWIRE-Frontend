@@ -1,0 +1,36 @@
+<a [routerLink]="['/admin/contacts', contact.id, 'edit']">
+    <button class="btn btn-primary" type="submit">Edit</button>
+</a>
+
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <td>ID</td>
+            <td>{{ contact.id }}</td>
+        </tr>
+        <tr>
+            <td>Subject</td>
+            <td>{{ contact.subject }}</td>
+        </tr>
+        <tr>
+            <td>Email Address</td>
+            <td>{{ contact.emailAddress }}</td>
+        </tr>
+        <tr>
+            <td>Message</td>
+            <td>{{ contact.message }}</td>
+        </tr>
+        <tr>
+            <td>Created At</td>
+            <td>{{ contact.createdAt.date }}</td>
+        </tr>
+        <tr>
+            <td>Updated At</td>
+            <td>
+                <span *ngIf="contact.updatedAt">
+                    {{ contact.updatedAt.date }}
+                </span>
+            </td>
+        </tr>
+    </tbody>
+</table>

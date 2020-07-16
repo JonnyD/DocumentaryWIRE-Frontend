@@ -106,6 +106,10 @@ import { AdminWatchlistEditComponent } from './admin/admin-watchlists/admin-watc
 import { CategoryService } from './services/category.service';
 import { CommnentService } from './services/comment.service';
 import { ChatComponent } from './public/chat/chat.component';
+import { AdminContactComponent } from './admin/admin-contact/admin-contact.component';
+import { AdminContactDetailComponent } from './admin/admin-contact/admin-contact-detail/admin-contact-detail.component';
+import { AdminContactEditComponent } from './admin/admin-contact/admin-contact-edit/admin-contact-edit.component';
+import { ContactComponent } from './public/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -184,7 +188,11 @@ import { ChatComponent } from './public/chat/chat.component';
     AdminWatchlistsComponent,
     AdminWatchlistDetailComponent,
     AdminWatchlistEditComponent,
-    ChatComponent
+    ChatComponent,
+    AdminContactComponent,
+    AdminContactDetailComponent,
+    AdminContactEditComponent,
+    ContactComponent
   ],
   imports: [
     BrowserModule,

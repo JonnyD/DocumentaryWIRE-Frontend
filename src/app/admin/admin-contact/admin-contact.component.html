@@ -1,0 +1,33 @@
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Subject</th>
+                <th scope="col">Email Address</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let contact of contacts | paginate: config">
+                <td>
+                    <a [routerLink]="['/admin/contacts', contact.id]">
+                        {{ contact.id }}
+                    </a>
+                </td>
+                <td>{{ contact.subject }}</td>
+                <td>{{ contact.emailAddress }}</td>
+                <td>{{ contact.createdAt.date }}</td>
+                <td>
+                    <span *ngIf="contact.updatedAt">
+                        {{ contact.updatedAt.date }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div>
+        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+    </div>
+</div>
