@@ -20,6 +20,14 @@ export class CommnentService extends DataService {
     this.authenticationService = authenticationService;
   }
 
+  getStatuses() {
+    return [
+      { id: 'published', name: 'Published' },
+      { id: 'pending', name: 'Pending' },
+      { id: 'rejected', name: 'Rejected' }
+    ];
+  }
+  
   getCommentById(id: number) {
     let options = {};
 

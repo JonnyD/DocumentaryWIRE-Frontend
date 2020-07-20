@@ -27,17 +27,8 @@ export class AdminActivityComponent implements OnInit {
   private previousComponent;
   private previousUser;
 
-  public types: Array<Type> = [
-    { id: 'joined', name: 'Joined' },
-    { id: 'comment', name: 'Comment' },
-    { id: 'watchlist', name: 'Watchlist' },
-    { id: 'added', name: 'Added' }
-  ];
-
-  public components: Array<ComponentItem> = [
-    { id: 'user', name: 'User' },
-    { id: 'documentary', name: 'Documentary' }
-  ];
+  private types;
+  private components;
 
   constructor(
     private activityService: ActivityService,
@@ -47,6 +38,9 @@ export class AdminActivityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.types = this.activityService.getTypes();
+    this.components = this.activityService.getComponents();
+
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {

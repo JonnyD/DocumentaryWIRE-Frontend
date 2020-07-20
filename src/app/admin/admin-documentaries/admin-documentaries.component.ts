@@ -22,23 +22,17 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private queryParamsSubscription;
   private videoSourcesSubscription;
   private categoriesSubscription;
-  public documentaries: Array<Documentary>;
-  public videoSources: Array<VideoSource>;
-  public categories: Array<Category>;
-  public statuses: Array<Status> = [
-    { id: 'pending', name: 'Pending' },
-    { id: 'publish', name: 'Published' },
-    { id: 'rejected', name: 'Rejected' }
-  ];
-  public featuredOptions = [
-    { id: "yes" },
-    { id: "no" }
-  ];
-  public types: Array<Type> = [
-    { id: 'movie', name: 'Movie' },
-    { id: 'series', name: 'Series' }
-  ];
-  config: any;
+
+  private documentaries: Array<Documentary>;
+  private videoSources: Array<VideoSource>;
+  private categories: Array<Category>;
+
+  private statuses;
+  private featuredOptions;
+  private types;
+
+  private config: any;
+
   private page;
   private videoSource;
   private previousVideoSource;
@@ -52,7 +46,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
   private previousType;
 
   constructor(
-    private service: DocumentaryService,
+    private documentaryService: DocumentaryService,
     private videoSourceService: VideoSourceService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
@@ -60,9 +54,14 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit() {
+
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {
+        this.statuses = this.documentaryService.getStatuses();
+        this.featuredOptions = this.documentaryService.getFeaturedOptions();
+        this.types = this.documentaryService.getTypes();
+
         this.page = +params['page'] || 1;
         this.videoSource = +params['videoSource'] || 'all';
         this.status = params['status'] || 'all';
@@ -134,7 +133,7 @@ export class AdminDocumentariesComponent implements OnInit, OnDestroy {
 
     let authenticate = true;
     let isAdmin = true;
-    this.documentariesSubscription = this.service.getAllDocumentaries(params)
+    this.documentariesSubscription = this.documentaryService.getAllDocumentaries(params)
       .subscribe(
         result => {
           this.config = {

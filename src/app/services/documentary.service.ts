@@ -1,3 +1,4 @@
+import { Type } from './../models/type.model';
 import { HeaderAccessTokenService } from './../helpers/header-access-token.service';
 import { Documentary } from './../models/documentary.model';
 import { AuthenticationService } from './authentication.service';
@@ -19,6 +20,28 @@ export class DocumentaryService extends DataService {
     authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/documentary`, http);
     this.authenticationService = authenticationService;
+  }
+
+  getStatuses() {
+    return [
+      { id: 'pending', name: 'Pending' },
+      { id: 'publish', name: 'Published' },
+      { id: 'rejected', name: 'Rejected' }
+    ];
+  }
+
+  getFeaturedOptions() {
+    return [
+      { id: "yes" },
+      { id: "no" }
+    ];
+  }
+
+  getTypes() {
+    return [
+      { id: 'movie', name: 'Movie' },
+      { id: 'series', name: 'Series' }
+    ];
   }
 
   getDocumentaryBySlug(slug: string) {

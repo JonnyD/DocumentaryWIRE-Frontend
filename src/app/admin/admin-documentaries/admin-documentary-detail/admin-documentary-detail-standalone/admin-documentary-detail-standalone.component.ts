@@ -16,12 +16,7 @@ import { Location } from "@angular/common";
 export class AdminDocumentaryDetailStandaloneComponent implements OnInit {
   private documentary: Documentary;
   private slug: string;
-
-  public statuses: Array<Status> = [
-    { id: 'published', name: 'Published' },
-    { id: 'pending', name: 'Pending' },
-    { id: 'rejected', name: 'Rejected' }
-  ];
+  private statuses;
 
   constructor(
     private documentaryService: DocumentaryService,
@@ -32,6 +27,8 @@ export class AdminDocumentaryDetailStandaloneComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(result => {
       this.documentary = <Documentary>result[0];
+
+      this.statuses = this.documentaryService.getStatuses();
     });
   }
 }

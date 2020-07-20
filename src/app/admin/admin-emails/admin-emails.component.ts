@@ -27,19 +27,8 @@ export class AdminEmailsComponent implements OnInit {
 
   private emails: Array<Email>;
 
-  public sources: Array<Source> = [
-    { id: 'user', name: 'User' },
-    { id: 'comment', name: 'Comment' },
-    { id: 'wz-feedburner', name: 'WZ Feedburner' },
-    { id: 'tns_feedburner', name: 'TNS Feedburner' },
-    { id: 'dw-feedburner-pending', name: 'DW Feedburner Pending' },
-    { id: 'dw-feedburner-active', name: 'DW Feedburner Active' }
-  ];
-
-  public subscribedOptions: Array<Subscribed> = [
-    { id: 'yes', name: 'Yes' },
-    { id: 'no', name: 'No' }
-  ];
+  private sources;
+  private subscribedOptions;
 
   constructor(
     private emailService: EmailService,
@@ -51,6 +40,9 @@ export class AdminEmailsComponent implements OnInit {
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {
+        this.sources = this.emailService.getSources();
+        this.subscribedOptions = this.emailService.getSubscribedOptions();
+        
         this.page = +params['page'] || 1;
         this.subscribed = params['subscribed'] || 'all';
         this.source = params['source'] || 'all';

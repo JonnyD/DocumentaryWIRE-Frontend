@@ -23,19 +23,19 @@ import { Category } from 'src/app/models/category.model';
   styleUrls: ['./admin-series-edit.component.css']
 })
 export class AdminSeriesEditComponent implements OnInit {
-  episodicForm: FormGroup;
-  imdbForm: FormGroup;
-  youtubeForm: FormGroup;
-  documentary: Documentary;
-  posterImgURL: any;
-  wideImgURL: any;
-  statuses: any;
-  years: any;
-  videoSources: any;
-  categories: any;
-  submitted = false;
-  closeResult: string;
-  featuredOptions: any;
+  private episodicForm: FormGroup;
+  private imdbForm: FormGroup;
+  private youtubeForm: FormGroup;
+  private documentary: Documentary;
+  private posterImgURL: any;
+  private wideImgURL: any;
+  private years: any;
+  private videoSources: any;
+  private categories: any;
+  private submitted = false;
+  private closeResult: string;
+  private statuses: any;
+  private featuredOptions: any;
 
   private editMode = false;
 
@@ -124,11 +124,11 @@ export class AdminSeriesEditComponent implements OnInit {
   }
 
   initFeatured() {
-    this.featuredOptions = this.featuredService.getFeaturedOptions();
+    this.featuredOptions = this.documentaryService.getFeaturedOptions();
   }
 
   initStatuses() {
-    this.statuses = this.statusService.getAllStatuses();
+    this.statuses = this.documentaryService.getStatuses();
   }
 
   initYears() {

@@ -33,11 +33,11 @@ export class AdminVideoSourceEditComponent implements OnInit {
   }
 
   initEmbedAllowedOptions() {
-    this.embedAllowedOptions = ["yes", "no"];
+    this.embedAllowedOptions = this.videoSourceService.getEmbedAllowedOptions();
   }
 
   initStatusOptions() {
-    this.statusOptions = ["enabled", "disabled"];
+    this.statusOptions = this.videoSourceService.getStatuses();
   }
   
   initForm() {

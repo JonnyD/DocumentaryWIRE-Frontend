@@ -11,11 +11,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-category-edit.component.css']
 })
 export class AdminCategoryEditComponent implements OnInit {
-  editCategoryForm: FormGroup;
+  private editCategoryForm: FormGroup;
 
-  category: Category;
+  private category: Category;
 
-  statusOptions: any;
+  private statuses;
 
   constructor(
     private categoryService: CategoryService,
@@ -24,10 +24,11 @@ export class AdminCategoryEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.statuses = this.categoryService.getStatuses();
+    
     this.route.data.subscribe(result => {
       this.category = <Category>result[0];
 
-      this.initStatusOptions();
       this.initForm();
     })
   }
@@ -54,9 +55,5 @@ export class AdminCategoryEditComponent implements OnInit {
         console.log(result);
         this.router.navigate(["/admin/categories", categorySlug]);
       });
-  }
-
-  initStatusOptions() {
-    this.statusOptions = ["enabled", "disabled"];
   }
 }

@@ -17,6 +17,14 @@ export class VideoSourceService extends DataService {
     this.authenticationService = authenticationService;
    }
 
+   getEmbedAllowedOptions() {
+     return ["yes", "no"];
+   }
+
+   getStatuses() {
+     return ["enabled", "disabled"];
+   }
+   
    getVideoSourceById(id: number) {
     let options = {};
 

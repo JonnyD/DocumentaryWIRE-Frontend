@@ -18,17 +18,8 @@ export class AdminActivityEditComponent implements OnInit {
 
   private activity: Activity;
 
-  public types: Array<Type> = [
-    { id: 'joined', name: 'Joined' },
-    { id: 'comment', name: 'Comment' },
-    { id: 'watchlist', name: 'Watchlist' },
-    { id: 'added', name: 'Added' }
-  ];
-
-  public components: Array<ComponentItem> = [
-    { id: 'user', name: 'User' },
-    { id: 'documentary', name: 'Documentary' }
-  ];
+  private types;
+  private components;
 
   constructor(
     private activityService: ActivityService,
@@ -37,6 +28,9 @@ export class AdminActivityEditComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.types = this.activityService.getTypes();
+    this.components = this.activityService.getComponents();
+    
     this.route.data.subscribe(result => {
       this.activity = <Activity>result[0];
 

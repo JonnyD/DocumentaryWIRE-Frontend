@@ -11,15 +11,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin-comment-edit.component.css']
 })
 export class AdminCommentEditComponent implements OnInit {
-  editCommentForm: FormGroup;
+  private editCommentForm: FormGroup;
 
-  comment: Comment;
+  private comment: Comment;
 
-  public statuses = [
-    { id: 'published', name: 'Published' },
-    { id: 'pending', name: 'Pending' },
-    { id: 'rejected', name: 'Rejected' }
-  ];
+  private statuses;
 
   constructor(
     private commentService: CommnentService,
@@ -28,6 +24,8 @@ export class AdminCommentEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.statuses = this.commentService.getStatuses();
+    
     this.route.data.subscribe(result => {
       this.comment = <Comment> result[0];
 

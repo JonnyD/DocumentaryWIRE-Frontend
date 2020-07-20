@@ -19,10 +19,10 @@ export class BrowseComponent implements OnInit {
   private documentariesSubscription;
   private queryParamsSubscription;
 
-  config: any;
+  private config: any;
   private page;
 
-  isFetchingDocumentaries = false;
+  private isFetchingDocumentaries = false;
 
   constructor(
     private documentaryService: DocumentaryService,

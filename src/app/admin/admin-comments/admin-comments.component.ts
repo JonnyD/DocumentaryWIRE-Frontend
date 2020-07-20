@@ -30,11 +30,7 @@ export class AdminCommentsComponent implements OnInit {
 
   private config;
 
-  public statuses: Array<Status> = [
-    { id: 'published', name: 'Published' },
-    { id: 'pending', name: 'Pending' },
-    { id: 'rejected', name: 'Rejected' }
-  ];
+  private statuses;
 
   constructor(
     private commentsService: CommnentService,
@@ -44,6 +40,8 @@ export class AdminCommentsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+    this.statuses = this.commentsService.getStatuses();
+
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {

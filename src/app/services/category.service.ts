@@ -14,21 +14,21 @@ export class CategoryService extends DataService {
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/category`, http);
     this.authenticationService = authenticationService;
-   }
+  }
 
-   getCategoryById(id: number) {
+  getCategoryById(id: number) {
     let options = {};
 
-     return this.get(id, options);
-   }
+    return this.get(id, options);
+  }
 
-   getCategoryBySlug(slug: string) {
+  getCategoryBySlug(slug: string) {
     let options = {};
 
-     return this.get(slug, options);
-   }
+    return this.get(slug, options);
+  }
 
-   getAllCategories(params: HttpParams, authenticate: boolean = false, isAdmin: boolean = false) {
+  getAllCategories(params: HttpParams, authenticate: boolean = false, isAdmin: boolean = false) {
     if (!isAdmin) {
       params = params.append('sort', 'name-asc');
       params = params.append('status', 'enabled');
@@ -46,24 +46,24 @@ export class CategoryService extends DataService {
     }
 
     return this.getAll(options);
-   }
+  }
 
-   editCategory(id, resource) {
+  editCategory(id, resource) {
     let params = new HttpParams();
-    
+
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        params = params.append('access_token', accessToken)
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
 
     let options = {
-        params: params
+      params: params
     }
 
     return this.patch(id, resource, options);
-   }
+  }
 
-   getColumnsForCategories(categories) {
+  getColumnsForCategories(categories) {
     let categoriesCount = 0;
     for (var key in categories) {
       categoriesCount++;
@@ -90,5 +90,5 @@ export class CategoryService extends DataService {
     categoriesColumns.set('right', categoriesRighttColumn);
 
     return categoriesColumns;
-   }
+  }
 }

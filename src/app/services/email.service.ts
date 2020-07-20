@@ -19,30 +19,48 @@ export class EmailService extends DataService {
     authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/email`, http);
     this.authenticationService = authenticationService;
-   }
+  }
 
-   getAllEmails(params: HttpParams) {
+  getSubscribedOptions() {
+    return [
+      { id: 'yes', name: 'Yes' },
+      { id: 'no', name: 'No' }
+    ];
+  }
+
+  getSources() {
+    return [
+      { id: 'user', name: 'User' },
+      { id: 'comment', name: 'Comment' },
+      { id: 'wz-feedburner', name: 'WZ Feedburner' },
+      { id: 'tns_feedburner', name: 'TNS Feedburner' },
+      { id: 'dw-feedburner-pending', name: 'DW Feedburner Pending' },
+      { id: 'dw-feedburner-active', name: 'DW Feedburner Active' }
+    ];
+  }
+
+  getAllEmails(params: HttpParams) {
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        params = params.append('access_token', accessToken)
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      params = params.append('access_token', accessToken)
     }
 
     let options = {
-        params: params
+      params: params
     }
 
     return this.getAll(options);
-   }
+  }
 
-   getEmailById(id: number) {
+  getEmailById(id: number) {
     let options = {};
 
     if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
+      let accessToken = this.authenticationService.currentTokenValue.access_token;
+      options = {
+        params: new HttpParams()
+          .append('access_token', accessToken)
+      }
     }
     return this.get(id, options);
   }

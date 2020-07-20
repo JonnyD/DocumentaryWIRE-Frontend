@@ -25,19 +25,19 @@ import { Category } from 'src/app/models/category.model';
   styleUrls: ['./admin-standalone-edit.component.css']
 })
 export class AdminStandaloneEditComponent implements OnInit {
-  editDocumentaryForm: FormGroup;
-  imdbForm: FormGroup;
-  youtubeForm: FormGroup;
-  documentary: Documentary;
-  posterImgURL: any;
-  wideImgURL: any;
-  statuses: any;
-  years: any;
-  videoSources: any;
-  categories: any;
-  submitted = false;
-  closeResult: string;
-  featuredOptions: any;
+  private editDocumentaryForm: FormGroup;
+  private imdbForm: FormGroup;
+  private youtubeForm: FormGroup;
+  private documentary: Documentary;
+  private posterImgURL: any;
+  private wideImgURL: any;
+  private years: any;
+  private videoSources: any;
+  private categories: any;
+  private submitted = false;
+  private closeResult: string;
+  private featuredOptions: any;
+  private statuses: any;
 
   private editMode = false;
   
@@ -119,11 +119,11 @@ export class AdminStandaloneEditComponent implements OnInit {
   }
   
   initFeatured() {
-    this.featuredOptions = this.featuredService.getFeaturedOptions();
+    this.featuredOptions = this.documentaryService.getFeaturedOptions();
   }
 
   initStatuses() {
-    this.statuses = this.statusService.getAllStatuses();
+    this.statuses = this.documentaryService.getStatuses();
   }
 
   initYears() {

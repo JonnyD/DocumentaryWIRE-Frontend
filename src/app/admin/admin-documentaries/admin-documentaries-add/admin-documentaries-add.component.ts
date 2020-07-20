@@ -16,14 +16,14 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
   styleUrls: ['./admin-documentaries-add.component.css']
 })
 export class AdminDocumentariesAddComponent implements OnInit {
-  addDocumentaryForm: FormGroup;
-  documentary: Documentary;
-  posterImgURL: any;
-  wideImgURL: any;
-  statuses: any;
-  years: any;
-  videoSources: any;
-  categories: any;
+  private addDocumentaryForm: FormGroup;
+  private documentary: Documentary;
+  private posterImgURL: any;
+  private wideImgURL: any;
+  private statuses: any;
+  private years: any;
+  private videoSources: any;
+  private categories: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -55,16 +55,7 @@ export class AdminDocumentariesAddComponent implements OnInit {
   }
 
   initStatuses() {
-    this.statuses = [
-      {
-        value: 'pending',
-        name: 'Pending'
-      },
-      {
-        value: 'publish',
-        name: 'Published'
-      }
-    ];
+    this.statuses = this.documentaryService.getStatuses();
   }
 
   initYears() {
