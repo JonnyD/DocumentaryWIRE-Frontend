@@ -40,11 +40,11 @@ export class AdminCommentsComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-    this.statuses = this.commentsService.getStatuses();
-
     this.queryParamsSubscription = this.route
       .queryParams
       .subscribe(params => {
+        this.statuses = this.commentsService.getStatuses();
+        
         this.page = +params['page'] || 1;
         this.status = params['status'] || 'all';
 

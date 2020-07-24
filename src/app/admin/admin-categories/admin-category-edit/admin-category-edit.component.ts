@@ -24,9 +24,9 @@ export class AdminCategoryEditComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.statuses = this.categoryService.getStatuses();
-    
     this.route.data.subscribe(result => {
+      this.statuses = this.categoryService.getStatuses();
+      
       this.category = <Category>result[0];
 
       this.initForm();

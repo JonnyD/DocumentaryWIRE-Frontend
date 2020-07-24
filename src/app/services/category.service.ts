@@ -16,6 +16,10 @@ export class CategoryService extends DataService {
     this.authenticationService = authenticationService;
   }
 
+  getStatuses() {
+    return ["enabled", "disabled"];
+  }
+  
   getCategoryById(id: number) {
     let options = {};
 
