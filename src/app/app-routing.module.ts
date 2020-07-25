@@ -1,3 +1,4 @@
+import { AdminUserAddComponent } from './admin/admin-users/admin-user-add/admin-user-add.component';
 import { ContactComponent } from './public/contact/contact.component';
 import { AdminContactEditComponent } from './admin/admin-contact/admin-contact-edit/admin-contact-edit.component';
 import { ContactResolverService } from './services/contact-resolver.service';
@@ -271,6 +272,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: AdminUsersComponent
+      },
+      {
+        path: 'users/add',
+        component: AdminUserAddComponent
       },
       {
         path: 'users/:username',

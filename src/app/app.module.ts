@@ -1,3 +1,4 @@
+import { AdminUserAddComponent } from './admin/admin-users/admin-user-add/admin-user-add.component';
 import { ActivityResolverService } from './services/activity-resolver.service';
 import { UserActiveComponent } from './public/user/user-active/user-active.component';
 import { FeaturedService } from './services/featured.service';
@@ -192,7 +193,8 @@ import { ContactComponent } from './public/contact/contact.component';
     AdminContactComponent,
     AdminContactDetailComponent,
     AdminContactEditComponent,
-    ContactComponent
+    ContactComponent,
+    AdminUserAddComponent
   ],
   imports: [
     BrowserModule,

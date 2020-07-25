@@ -14,12 +14,11 @@ export class ChatService extends DataService {
   constructor(http: HttpClient, authenticationService: AuthenticationService) {
     super(`${environment.apiUrl}/api/v1/chat`, http);
     this.authenticationService = authenticationService;
-   }
+  }
 
-   getChat() {
+  getChat() {
     let options = {};
 
-    let url = `${environment.apiUrl}/api/v1/chat`;
-     return this.get(options, url);
-   }
+    return this.get('chat', options);
+  }
 }

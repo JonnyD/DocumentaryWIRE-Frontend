@@ -100,6 +100,14 @@ export class UserService extends DataService {
 
     createUser(user: User) {
         let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+            params: new HttpParams()
+                .append('access_token', accessToken)
+            }
+        }
   
         return this.create(user, options);
      }

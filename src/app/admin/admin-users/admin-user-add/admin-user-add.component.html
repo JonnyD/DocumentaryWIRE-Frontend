@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" formControlName="username" class="form-control">
+                    <span *ngIf="!addUserForm.get('username').valid && submitted" class="help-block">
+                        <span *ngIf="addUserForm.get('username').errors['required']">This field is
+                            required!</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="text" id="password" formControlName="password" class="form-control">
+                    <span *ngIf="!addUserForm.get('password').valid && submitted" class="help-block">
+                        <span *ngIf="addUserForm.get('password').errors['required']">This field is
+                            required!</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" formControlName="name" class="form-control">
+                    <span *ngIf="!addUserForm.get('name').valid && submitted" class="help-block">
+                        <span *ngIf="addUserForm.get('name').errors['required']">This field is
+                            required!</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" formControlName="email" class="form-control">
+                    <span *ngIf="!addUserForm.get('email').valid && submitted" class="help-block">
+                        <span *ngIf="addUserForm.get('email').errors['required']">This field is
+                            required!</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                  <label for="avatar-file">Avatar</label>
+                  <input id="avatar-file" type="file" (change)="onAvatarChange($event)" />
+                  <img [src]="posterImgURL" height="200" *ngIf="avatarImgURL">
+                  <span *ngIf="!addUserForm.get('avatar').valid && submitted" class="help-block">Please add a
+                    poster!</span>
+                </div>
+                <span *ngIf="!addUserForm.valid && addUserForm.touched" class="help-block">Please enter
+                    valid data!</span>
+                <button class="btn btn-primary" type="submit">Submit</button>
+
+                <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+            </form>
+        </div>
+    </div>
+</div>

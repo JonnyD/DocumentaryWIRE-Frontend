@@ -17,9 +17,9 @@
 </div>
 
 <div class="row">
-    <a [routerLink]="['/admin/users', user.username, 'edit']">  
+    <a [routerLink]="['/admin/users', user.username, 'edit']">
         <button class="btn btn-primary" type="submit">Edit</button>
-        </a>
+    </a>
 </div>
 
 <div class="row">
@@ -59,7 +59,11 @@
             </tr>
             <tr>
                 <td>Last Login</td>
-                <td>{{ user.lastLogin.date }}</td>
+                <td>
+                    <span *ngIf="user.lastLogin">
+                        {{ user.lastLogin.date }}
+                    </span>
+                </td>
             </tr>
             <tr>
                 <td>Confirmation Token</td>
