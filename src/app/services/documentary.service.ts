@@ -149,6 +149,7 @@ export class DocumentaryService extends DataService {
 
   getNewDocumentaries(params: HttpParams) {
     params = params.append('sort', 'yearFrom-desc');
+    params = params.append('sort', 'createdAt-desc');
     params = params.append('status', 'published');
 
     let options = {

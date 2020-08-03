@@ -15,20 +15,20 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class UserShowComponent implements OnInit {
 
-  public user;
-  public me;
-  public activity;
-  public documentaries;
-  public watchlists;
+  private user;
+  private me;
+  private activity;
+  private documentaries;
+  private watchlists;
 
-  config: any;
+  private config: any;
   private page;
 
-  public isFetchingUser = true;
-  public isFetchingActivity = true;
-  public isFetchingDocumentaries = true;
-  public isFetchingWatchlisted = true;
-  public isFetchingMe = true;
+  private isFetchingUser = true;
+  private isFetchingActivity = true;
+  private isFetchingDocumentaries = true;
+  private isFetchingWatchlisted = true;
+  private isFetchingMe = true;
 
   private activitySubscription;
   private queryParamsSubscription;
@@ -59,10 +59,11 @@ export class UserShowComponent implements OnInit {
         .queryParams
         .subscribe(params => {
           this.page = +params['page'] || 1;
+
           this.fetchMe();
           this.fetchActivity();
-          this.fetchDocumentaries();
-          this.fetchWatchlists();
+          //this.fetchDocumentaries();
+          //this.fetchWatchlists();
         });
     });
   }
@@ -76,6 +77,11 @@ export class UserShowComponent implements OnInit {
         this.me = result;
 
         this.isFetchingMe = false;
+      }, error => {
+        console.log("error");
+        console.log(error);
+
+        this.isFetchingMe = false;
       })
   }
 
@@ -84,12 +90,15 @@ export class UserShowComponent implements OnInit {
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
+    this.location.go(this.router.url.split("?")[0], params.toString());
     params = params.append('user', this.user.username);
+
+    let itemsPerPage = 12;
 
     this.activitySubscription = this.activityService.getAllActivities(params)
       .subscribe(result => {
         this.config = {
-          itemsPerPage: 6,
+          itemsPerPage: itemsPerPage,
           currentPage: this.page,
           totalItems: result['count_results']
         };
@@ -98,6 +107,13 @@ export class UserShowComponent implements OnInit {
 
         this.isFetchingActivity = false;
       })
+  }
+
+  pageChanged(event) {
+    console.log(event);
+    this.config.currentPage = event;
+    this.page = event;
+    this.fetchActivity();
   }
 
   fetchDocumentaries() {
@@ -137,6 +153,8 @@ export class UserShowComponent implements OnInit {
 
     this.watchlistSubscription = this.watchlistService.getAllWatchlists(params)
       .subscribe(result => {
+        console.log("watchlist result");
+        console.log(result);
         this.config = {
           itemsPerPage: pageSize,
           currentPage: this.page,
@@ -145,16 +163,23 @@ export class UserShowComponent implements OnInit {
         this.watchlists = result['items'];
 
         this.isFetchingWatchlisted = false;
-      })
+      }, error => {
+        console.log("watchlist error");
+        console.log(error);
+      });
   }
 
   ngOnDestroy() {
-    this.documentarySubscription.unsubscribe();
+    if (this.documentarySubscription != null) {
+      this.documentarySubscription.unsubscribe();
+    }
     this.queryParamsSubscription.unsubscribe();
     if (this.activitySubscription != null) {
       this.activitySubscription.unsubscribe();
     }
-    this.watchlistSubscription.unsubscribe();
+    if (this.watchlistSubscription != null) {
+      this.watchlistSubscription.unsubscribe();
+    }
     this.meSubscription.unsubscribe();
   }
 

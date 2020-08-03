@@ -57,7 +57,6 @@ export class DocumentaryRecentComponent implements OnInit {
     this.recentlyAddedSubscription = this.documentaryService.getRecentlyAddedDocumentaries(params)
       .subscribe(result => {
         this.recentlyAdded = result['items'];
-        console.log(result);
 
         this.isFetchingRecentlyAddedDocumentaries = false;
       });

@@ -40,7 +40,7 @@ export class AdminStandaloneEditComponent implements OnInit {
   private statuses: any;
 
   private editMode = false;
-  
+
   public isFetchingDocumentariesFromIMDB = false;
   public showSearchedDocumentaryFromIMDB = false;
   public showSearchedDocumentariesFromIMDB = false;
@@ -68,7 +68,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     private featuredService: FeaturedService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private modalService: NgbModal) {}
+    private modalService: NgbModal) { }
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -88,26 +88,26 @@ export class AdminStandaloneEditComponent implements OnInit {
     this.initVideoSources();
     this.initCategories();
     this.initFeatured();
-    
+
     this.initForm();
 
     this.routeParamsSubscription = this.route.paramMap.subscribe(params => {
-        let slug = params['params']['slug'];
-        console.log("slug");
-        console.log(slug);
-        this.editMode = slug != null;
-        console.log("this.editMode");
-        console.log(this.editMode);
+      let slug = params['params']['slug'];
+      console.log("slug");
+      console.log(slug);
+      this.editMode = slug != null;
+      console.log("this.editMode");
+      console.log(this.editMode);
 
-        if (this.editMode) {
-          this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(slug)
-            .subscribe((result:any) => {
-              this.documentary = result;
-              console.log("this.documentary");
-              console.log(this.documentary);
-              this.initForm();
-            });
-        }
+      if (this.editMode) {
+        this.documentaryBySlugSubscription = this.documentaryService.getDocumentaryBySlug(slug)
+          .subscribe((result: any) => {
+            this.documentary = result;
+            console.log("this.documentary");
+            console.log(this.documentary);
+            this.initForm();
+          });
+      }
 
     });
   }
@@ -117,7 +117,7 @@ export class AdminStandaloneEditComponent implements OnInit {
     let movie = new Movie();
     this.documentary.movie = movie;
   }
-  
+
   initFeatured() {
     this.featuredOptions = this.documentaryService.getFeaturedOptions();
   }
@@ -139,7 +139,7 @@ export class AdminStandaloneEditComponent implements OnInit {
         console.log(this.videoSources);
       });
   }
-  
+
   initCategories() {
     let params: HttpParams;
     this.categoryService.getAll(params)
@@ -148,7 +148,7 @@ export class AdminStandaloneEditComponent implements OnInit {
         console.log(result);
       });
   }
-  
+
   initForm() {
     let title = this.documentary.title;
     let slug = this.documentary.slug;
@@ -197,48 +197,48 @@ export class AdminStandaloneEditComponent implements OnInit {
 
   onPosterChange(event) {
     let reader = new FileReader();
- 
-  if(event.target.files && event.target.files.length) {
-    const [file] = event.target.files;
-    reader.readAsDataURL(file);
-  
-    reader.onload = () => {
-      this.editDocumentaryForm.patchValue({
-        poster: reader.result
-      });
-      
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
 
-      this.posterImgURL = reader.result; 
-    };
-  }
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.editDocumentaryForm.patchValue({
+          poster: reader.result
+        });
+
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+
+        this.posterImgURL = reader.result;
+      };
+    }
   }
 
   onWideImageChange(event) {
     let reader = new FileReader();
- 
-  if(event.target.files && event.target.files.length) {
-    const [file] = event.target.files;
-    reader.readAsDataURL(file);
-  
-    reader.onload = () => {
-      this.editDocumentaryForm.patchValue({
-        wideImage: reader.result
-      });
-      
-      // need to run CD since file load runs outside of zone
-      this.cd.markForCheck();
 
-      this.wideImgURL = reader.result; 
-    };
-  }
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.editDocumentaryForm.patchValue({
+          wideImage: reader.result
+        });
+
+        // need to run CD since file load runs outside of zone
+        this.cd.markForCheck();
+
+        this.wideImgURL = reader.result;
+      };
+    }
   }
 
   openIMDBModal(content) {
     this.initIMDBFrom();
-    
-    this.modalService.open(content, {ariaLabelledBy: 'modal-omdb'}).result.then((result) => {
+
+    this.modalService.open(content, { ariaLabelledBy: 'modal-omdb' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${reason}`;
@@ -264,7 +264,7 @@ export class AdminStandaloneEditComponent implements OnInit {
 
     let title = this.imdbForm.value.title;
     let imdbType = 'movie';
-    
+
     this.omdbService.getSearchedDocumentaries(title, imdbType)
       .subscribe((result: any) => {
         console.log(result);
@@ -272,7 +272,7 @@ export class AdminStandaloneEditComponent implements OnInit {
         this.isFetchingDocumentariesFromIMDB = false;
       });
   }
-  
+
   imdbView(imdbId) {
     console.log("imdbId");
     console.log(imdbId);
@@ -313,14 +313,14 @@ export class AdminStandaloneEditComponent implements OnInit {
       }
     }
 
-      this.initForm();
-      this.modalService.dismissAll();  
+    this.initForm();
+    this.modalService.dismissAll();
   }
 
   openYoutubeModal(content) {
     this.initYoutubeForm();
 
-    this.modalService.open(content, {ariaLabelledBy: 'modal-youtube'}).result.then((result) => {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-youtube' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${reason}`;
@@ -377,20 +377,20 @@ export class AdminStandaloneEditComponent implements OnInit {
 
     let documentaryId = this.documentary.id;
     let formValue = this.editDocumentaryForm.value;
-    
+
     console.log("formValue");
     console.log(formValue);
 
 
     if (this.editDocumentaryForm.valid) {
       if (this.editMode) {
-          this.documentaryService.editStandaloneDocumentary(documentaryId, formValue)
+        this.documentaryService.editStandaloneDocumentary(documentaryId, formValue)
           .subscribe((result: any) => {
             console.log(result);
             this.router.navigate(["/admin/documentaries/standalone", result.slug]);
-        }, error => {
+          }, error => {
             console.log(error);
-        });
+          });
       } else {
         this.documentaryService.createStandaloneDocumentary(formValue)
           .subscribe((result: any) => {

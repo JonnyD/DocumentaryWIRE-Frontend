@@ -3,12 +3,12 @@
         <div class="col-md-8" style="margin-top: 20px">
             <div *ngIf="!isFetchingCommunityItems">
                 <h2>Community - Page {{ page }}</h2>
-                <div class="card mb-1" style="margin-top: 20px"
+                <div class="card mb-1" style="padding: 10px;"
                     *ngFor="let communityItem of communityItems | paginate: config">
                     <div class="row no-gutters">
                         <div class="col-md-1">
                             <a [routerLink]="['/user', communityItem.username]">
-                                <img src="{{ communityItem.avatar }}" class="rounded-circle"
+                                <img src="{{ communityItem.user.avatar }}" class="rounded-circle"
                                     style="float:left; margin:3px" width="60" height="60"
                                     alt="Profile picture of {{ communityItem.name }}" />
                             </a>
@@ -16,30 +16,38 @@
                         <div class="col-md-11">
                             <div class="card-body">
                                 <div *ngIf="communityItem.type == 'joined'">
-                                    <a [routerLink]="['/user', communityItem.username]" routerLinkActive="active">
-                                        {{ communityItem.name }}</a> has joined
+                                    <a [routerLink]="['/user', communityItem.user.username]" routerLinkActive="active">
+                                        {{ communityItem.user.name }}</a> has joined
                                 </div>
                                 <div *ngIf="communityItem.type == 'added'">
-                                    <a [routerLink]="['/user', communityItem.username]">{{ communityItem.name }}</a> has
-                                    added a documentary
+                                    <a
+                                        [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
+                                    has added a documentary
                                     <a [routerLink]="['/', communityItem.data.documentarySlug]">
                                         {{ communityItem.data.documentaryTitle }}
                                     </a>
                                 </div>
                                 <div *ngIf="communityItem.type == 'watchlist'">
-                                    <a [routerLink]="['/user', communityItem.username]">{{ communityItem.name }}</a> has
-                                    added a documentary
+                                    <a
+                                        [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
+                                    has added a documentary
 
                                     <a [routerLink]="['/', communityItem.data.documentarySlug]">
                                         {{ communityItem.data.documentaryTitle }}
                                     </a> to their watch list
+                                    <br />
+                                    <br />
+                                    <img src="{{ communityItem.data.documentaryPoster }}" width="100" height="120"
+                                        style="padding-right: 10px; float: left" />
+                                    {{ communityItem.data.documentarySummary }}
                                 </div>
                                 <div *ngIf="communityItem.type == 'comment'">
-                                    <a [routerLink]="['/user', communityItem.username]">{{ communityItem.name }}</a> has
-                                    added a comment to
+                                    <a
+                                        [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
+                                    has added a comment to
                                     <a
                                         [routerLink]="['/', communityItem.data.documentarySlug]">{{ communityItem.data.documentaryTitle }}</a>
-                                    saying: {{ communityItem.data.commentText }}
+                                    saying: <br /> <br />"{{ communityItem.data.commentText }}"
                                 </div>
                             </div>
                         </div>

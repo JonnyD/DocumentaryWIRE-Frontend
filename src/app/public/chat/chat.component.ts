@@ -1,6 +1,7 @@
 import { DomSanitizer } from '@angular/platform-browser';
 import { ChatService } from './../../services/chat.service';
 import { Component, OnInit } from '@angular/core';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-chat',
@@ -10,6 +11,7 @@ import { Component, OnInit } from '@angular/core';
 export class ChatComponent implements OnInit {
 
   private chat;
+  private chatResult;
 
   private chatSubscription;
 
@@ -20,13 +22,16 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.chat = "Chat";
-    this.fetchChat();
+    //this.fetchChat();
   }
 
   fetchChat() {
     this.chatSubscription = this.chatService.getChat()
       .subscribe(result => {
-        //this.chat = this.sanitizer.bypassSecurityTrustScript(result);
+        console.log("chat result");
+        this.chat = result;
+        this.sanitizer.bypassSecurityTrustScript(this.chat);
+        eval(this.chat);
       });
   }
 

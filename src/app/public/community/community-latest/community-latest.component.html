@@ -4,15 +4,14 @@
             <span class="card-text" *ngIf="activityItem.type == 'joined'">
                 <span class="acitvity-item">
                     <span class="activity-image">
-                        <a href="">
-
+                        <a [routerLink]="['/user', activityItem.parent.user.username]">
                             <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
                                 class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
-                                width='60' /></a>
+                                width='60' style="padding: 2px"/></a>
                     </span>
                     <div class="data">
                         <span class="author">
-                            <a href="">
+                            <a [routerLink]="['/user', activityItem.parent.user.username]">
                                 {{ activityItem.parent.user.name }}</a>
                             <span *ngIf="activityItem.child">
                                 and {{ activityItem.child.length }} more people
@@ -20,8 +19,9 @@
                             joined
                         </span>
                         <span class="excerpt" *ngIf="activityItem.child">
+                            <br />
                             <img *ngFor="let child of activityItem.child" class="tiny-image rounded-circle"
-                                alt='{{ child.user.name }}' src='{{ child.user.avatar }}' height='30' width='30' />
+                                alt='{{ child.user.name }}' src='{{ child.user.avatar }}' height='35' width='35' style="padding: 2px"/>
                         </span>
                     </div>
                 </span>
@@ -50,15 +50,14 @@
             <span class="card-text" *ngIf="activityItem.type == 'added'">
                 <span class="acitvity-item">
                     <span class="activity-image">
-                        <a href="">
-
+                        <a [routerLink]="['/user', activityItem.parent.user.username]">
                             <img alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
                                 class='avatar avatar-48 photo avatar-default rounded-circle' height='60'
                                 width='60' /></a>
                     </span>
                     <div class="data">
                         <span class="author">
-                            <a href="">
+                            <a [routerLink]="['/user', activityItem.parent.user.username]">
                                 {{ activityItem.parent.user.name }}</a> added a new documentary
                             <span *ngIf="activityItem.child">
                                 plus {{ activityItem.child.length }} more
@@ -77,14 +76,14 @@
             <span class="card-text" *ngIf="activityItem.type == 'watchlist'">
                 <span class="acitvity-item">
                     <span class="activity-image">
-                        <a href=""> <img alt='{{ activityItem.parent.user.name }}'
-                                src='{{ activityItem.parent.user.avatar }}'
+                        <a [routerLink]="['/user', activityItem.parent.user.username]"> <img
+                                alt='{{ activityItem.parent.user.name }}' src='{{ activityItem.parent.user.avatar }}'
                                 class='avatar avatar-48 photo avatar-default rounded-circle' height='60' width='60' />
                         </a>
                     </span>
                     <div class="data">
                         <span class="author">
-                            <a href="">
+                            <a [routerLink]="['/user', activityItem.parent.user.username]">
                                 {{ activityItem.parent.user.name }}</a> added <a
                                 [routerLink]="['/', activityItem.parent.data.documentarySlug]">{{ activityItem.parent.data.documentaryTitle }}</a>
                             to their Watchlist
@@ -92,12 +91,13 @@
                                 and {{ activityItem.child.length }} more documentaries
                             </span>
                         </span>
-                        <img class="image" width="50" height="70"
-                            src="{{ activityItem.parent.data.documentaryPoster }}" />
+                        <br />
+                        <img class="image" width="60" height="70"
+                            src="{{ activityItem.parent.data.documentaryPoster }}" style="padding: 2px"/>
                         <span class="excerpt" *ngIf="activityItem.child">
                             <img *ngFor="let child of activityItem.child" class="tiny-image"
                                 alt='{{ child.data.documentaryTitle }}' src='{{ child.data.documentaryPoster }}'
-                                height='60' width='60' />
+                                height='70' width='60' style="padding: 2px"/>
                         </span>
                     </div>
                 </span>

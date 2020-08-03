@@ -29,7 +29,8 @@
               "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css"
             ],
             "scripts": [
-              "src/assets/jquery.min.js"
+              "src/assets/jquery.min.js",
+              "node_modules/jquery/dist/jquery.js"
             ]
           },
           "configurations": {
