@@ -1,3 +1,5 @@
+import { UserShowFollowingComponent } from './public/user/user-show/user-show-following/user-show-following.component';
+import { UserShowDocumentariesComponent } from './public/user/user-show/user-show-documentaries/user-show-documentaries.component';
 import { AdminUserAddComponent } from './admin/admin-users/admin-user-add/admin-user-add.component';
 import { ContactComponent } from './public/contact/contact.component';
 import { AdminContactEditComponent } from './admin/admin-contact/admin-contact-edit/admin-contact-edit.component';
@@ -80,6 +82,7 @@ import { DurationShowComponent } from './public/duration/duration-show/duration-
 import { UserResolverService } from './services/user-resolver.service';
 import { DocumentaryShowComponent } from './public/documentary/documentary-show/documentary-show.component';
 import { UserAddedComponent } from './public/user/user-added/user-added.component';
+import { UserShowFollowersComponent } from './public/user/user-show/user-show-followers/user-show-followers.component';
 
 const routes: Routes = [
   {
@@ -167,8 +170,23 @@ const routes: Routes = [
     resolve: [UserResolverService]
   },
   {
-    path: 'user/:username/activity',
+    path: 'user/:username',
     component: UserActivityComponent,
+    resolve: [UserResolverService]
+  },
+  {
+    path: 'user/:username/documentaries',
+    component: UserShowDocumentariesComponent,
+    resolve: [UserResolverService]
+  },
+  {
+    path: 'user/:username/following',
+    component: UserShowFollowingComponent,
+    resolve: [UserResolverService]
+  },
+  {
+    path: 'user/:username/followers',
+    component: UserShowFollowersComponent,
     resolve: [UserResolverService]
   },
   {

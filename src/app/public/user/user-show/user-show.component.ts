@@ -116,31 +116,6 @@ export class UserShowComponent implements OnInit {
     this.fetchActivity();
   }
 
-  fetchDocumentaries() {
-    this.isFetchingDocumentaries = true;
-
-    let params = new HttpParams();
-    params = params.append('page', this.page.toString());
-
-    let pageSize = 5;
-    params = params.append('amountPerPage', pageSize.toString());
-    params = params.append('addedBy', this.user.username);
-
-    this.documentarySubscription = this.documentaryService.getAllDocumentaries(params)
-      .subscribe(result => {
-        this.config = {
-          itemsPerPage: pageSize,
-          currentPage: this.page,
-          totalItems: result['count_results']
-        };
-        this.documentaries = result['items'];
-
-        console.log(this.documentaries);
-
-        this.isFetchingDocumentaries = false;
-      })
-  }
-
   fetchWatchlists() {
     this.isFetchingWatchlisted = true;
 

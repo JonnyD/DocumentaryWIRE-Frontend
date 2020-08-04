@@ -111,6 +111,9 @@ import { AdminContactComponent } from './admin/admin-contact/admin-contact.compo
 import { AdminContactDetailComponent } from './admin/admin-contact/admin-contact-detail/admin-contact-detail.component';
 import { AdminContactEditComponent } from './admin/admin-contact/admin-contact-edit/admin-contact-edit.component';
 import { ContactComponent } from './public/contact/contact.component';
+import { UserShowDocumentariesComponent } from './public/user/user-show/user-show-documentaries/user-show-documentaries.component';
+import { UserShowFollowingComponent } from './public/user/user-show/user-show-following/user-show-following.component';
+import { UserShowFollowersComponent } from './public/user/user-show/user-show-followers/user-show-followers.component';
 
 @NgModule({
   declarations: [
@@ -194,7 +197,10 @@ import { ContactComponent } from './public/contact/contact.component';
     AdminContactDetailComponent,
     AdminContactEditComponent,
     ContactComponent,
-    AdminUserAddComponent
+    AdminUserAddComponent,
+    UserShowDocumentariesComponent,
+    UserShowFollowingComponent,
+    UserShowFollowersComponent
   ],
   imports: [
     BrowserModule,

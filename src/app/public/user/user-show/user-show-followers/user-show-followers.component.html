@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 offset-md-3 mt-5" style="margin-top: 20px">
+            <p *ngIf="isFetchingUser">Loading...</p>
+            <div *ngIf="!isFetchingUser" style="margin-bottom: 20px">
+                <a [routerLink]="['/user', user.username]">
+                    <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin-right: 10px"
+                        width="100" height="100" alt="Profile picture of {{ user.name }}" />
+                </a>
+
+                <div style="float: left">
+                    <h1>{{ user.name }}</h1>
+                    <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
+                </div>
+
+                <div style="float: right" *ngIf="me != null && user.username === me.username">
+                    <a [routerLink]="['/user', user.username, 'edit']">
+                        <button class="btn btn-info">
+                            Edit Profile
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div style="clear:both"></div>
+
+            <ul class="nav nav-tabs" style="margin-top: 20px">
+                <li class="nav-item">
+                    <a class="nav-link" [routerLink]="['/user', user.username]">Activity</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active"
+                        [routerLink]="['/user', user.username, 'documentaries']">Documentaries</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active"
+                        [routerLink]="['/user', user.username, 'following']">Following {{ user.followingCount }}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" routerLinkActive="active"
+                        [routerLink]="['/user', user.username, 'followers']">Followers {{ user.followerCount }}</a>
+                </li>
+            </ul>
+
+            <p *ngIf="isFetchingFollowers">Loading...</p>
+            <div *ngIf="!isFetchingFollowers" style="margin-top: 20px">
+                <div class="card" style="margin-bottom: 20px"
+                    *ngFor="let followerItem of followers | paginate: config">
+                    <div class="row no-gutters">
+                        {{ followerItem.userFrom.username }}
+                    </div>
+                </div>
+                <div style="margin-top: 20px; margin-bottom: 20px">
+                    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
