@@ -123,7 +123,7 @@ export class UserService extends DataService {
             }
         }
 
-         return this.update(user, options);
+         return this.patch(user.id, user, options);
      }
 
      forgotPassword(username: string) {
