@@ -89,10 +89,6 @@ const routes: Routes = [
     path: '',
     component: HomeComponent
   },
-  { 
-    path: 'browse',
-    component: BrowseComponent 
-  },
   { path: 'browse', component: BrowseComponent },
   {
     path: 'category/:slug',
@@ -100,16 +96,6 @@ const routes: Routes = [
     resolve: [CategoryResolverService]
   },
   {
-    path: 'category/:slug',
-    component: CategoryShowComponent,
-    resolve: [CategoryResolverService]
-  },
-  {
-    path: 'year/:id',
-    component: YearShowComponent,
-    resolve: [YearResolverService]
-  },
-  {
     path: 'year/:id',
     component: YearShowComponent,
     resolve: [YearResolverService]
@@ -120,84 +106,65 @@ const routes: Routes = [
     resolve: [DurationResolverService]
   },
   {
-    path: 'duration/:slug',
-    component: DurationShowComponent,
-    resolve: [DurationResolverService]
-  },
-  {
     path: 'community',
+    canActivate: [UserGuard],
     component: CommunityComponent
   },
   {
-    path: 'community',
-    component: CommunityComponent
-  },
-  {
-    path: 'user/edit',
-    component: UserEditComponent,
-    resolve: [AuthneticatedUserResolverService]
-  },
-  {
-    path: 'user/edit/change-name',
-    component: ChangeNameComponent,
-    resolve: [AuthneticatedUserResolverService]
-  },
-  {
-    path: 'user/edit/change-username',
-    component: ChangeUsernameComponent,
-    resolve: [AuthneticatedUserResolverService]
-  },
-  {
-    path: 'user/edit/change-password',
-    component: ChangePasswordComponent,
-    resolve: [AuthneticatedUserResolverService]
-  },
-  {
-    path: 'user/edit/forgot-password',
-    component: ForgotPasswordComponent
-  },
-  {
-    path: 'user/edit/reset-password',
-    component: ResetPasswordComponent
-  },
-  {
-    path: 'user/edit/forgot-username',
-    component: ForgotUsernameComponent
-  },
-  {
-    path: 'user/:username',
-    component: UserShowComponent,
-    resolve: [UserResolverService]
-  },
-  {
-    path: 'user/:username',
-    component: UserActivityComponent,
-    resolve: [UserResolverService]
-  },
-  {
-    path: 'user/:username/documentaries',
-    component: UserShowDocumentariesComponent,
-    resolve: [UserResolverService]
-  },
-  {
-    path: 'user/:username/following',
-    component: UserShowFollowingComponent,
-    resolve: [UserResolverService]
-  },
-  {
-    path: 'user/:username/followers',
-    component: UserShowFollowersComponent,
-    resolve: [UserResolverService]
-  },
-  {
-    path: 'user/:username/added',
-    component: UserAddedComponent,
-    resolve: [UserResolverService]
-  },
-  {
-    path: 'user/:username/watchlist',
-    component: UserWatchlistComponent,
-    resolve: [UserResolverService]
+    path: 'user',
+    canActivate: [UserGuard],
+    children: [
+      {
+        path: 'edit',
+        component: UserEditComponent,
+        resolve: [AuthneticatedUserResolverService]
+      },
+      {
+        path: 'edit/change-name',
+        component: ChangeNameComponent,
+        resolve: [AuthneticatedUserResolverService]
+      },
+      {
+        path: 'edit/change-username',
+        component: ChangeUsernameComponent,
+        resolve: [AuthneticatedUserResolverService]
+      },
+      {
+        path: 'edit/change-password',
+        component: ChangePasswordComponent,
+        resolve: [AuthneticatedUserResolverService]
+      },
+      {
+        path: ':username',
+        component: UserShowComponent,
+        resolve: [UserResolverService]
+      },
+      {
+        path: ':username/documentaries',
+        component: UserShowDocumentariesComponent,
+        resolve: [UserResolverService]
+      },
+      {
+        path: ':username/following',
+        component: UserShowFollowingComponent,
+        resolve: [UserResolverService]
+      },
+      {
+        path: ':username/followers',
+        component: UserShowFollowersComponent,
+        resolve: [UserResolverService]
+      },
+      {
+        path: ':username/added',
+        component: UserAddedComponent,
+        resolve: [UserResolverService]
+      },
+      {
+        path: ':username/watchlist',
+        component: UserWatchlistComponent,
+        resolve: [UserResolverService]
+      },
+    ]
   },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent },
@@ -206,6 +173,9 @@ const routes: Routes = [
   { path: 'confirm', component: ConfirmComponent },
   { path: 'email-not-confirmed/:email', component: EmailNotConfirmedComponent },
   { path: 'resend/:email', component: ResendComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'forgot-username', component: ForgotUsernameComponent },
   {
     path: 'admin',
     canActivate: [AdminGuard],
@@ -370,46 +340,45 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'add/standalone',
+    path: 'add',
     canActivate: [UserGuard],
-    component: DocumentaryAddStandaloneComponent,
+    children: [
+      {
+        path: 'standalone',
+        component: DocumentaryAddStandaloneComponent,
+      },
+      {
+        path: 'standalone/show/:slug',
+        component: DocumentaryShowStandaloneComponent,
+        resolve: [DocumentaryResolverService]
+      },
+      {
+        path: 'standalone/edit/:slug',
+        component: DocumentaryAddStandaloneComponent,
+      },
+      {
+        path: 'episodic/show/:slug',
+        component: DocumentaryShowEpisodicComponent,
+        resolve: [DocumentaryResolverService]
+      },
+      {
+        path: 'episodic/edit/:slug',
+        component: DocumentaryAddEpisodicComponent,
+      },
+      {
+        path: 'episodic',
+        component: DocumentaryAddEpisodicComponent,
+      }
+    ]
   },
   {
-    path: 'add/standalone/show/:slug',
-    canActivate: [UserGuard],
-    component: DocumentaryShowStandaloneComponent,
-    resolve: [DocumentaryResolverService]
-  },
-  {
-    path: 'add/standalone/edit/:slug',
-    canActivate: [UserGuard],
-    component: DocumentaryAddStandaloneComponent,
-  },
-  {
-    path: 'add/episodic/show/:slug',
-    canActivate: [UserGuard],
-    component: DocumentaryShowEpisodicComponent,
-    resolve: [DocumentaryResolverService]
-  },
-  {
-    path: 'add/episodic/edit/:slug',
-    canActivate: [UserGuard],
-    component: DocumentaryAddEpisodicComponent,
-  },
-  {
-    path: 'add/episodic',
-    canActivate: [UserGuard],
-    component: DocumentaryAddEpisodicComponent,
+    path: ':slug',
+    component: DocumentaryShowComponent,
   },
   {
     path: 'contact',
     component: ContactComponent,
   },
-  {
-    path: ':slug',
-    component: DocumentaryShowComponent,
-    resolve: [DocumentaryResolverService]
-  }
 ];
 
 @NgModule({
