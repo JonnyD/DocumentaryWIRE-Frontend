@@ -20,6 +20,7 @@ export class ChangeUsernameComponent implements OnInit {
   private existingUsername;
   private isExistingUsername;
   private isFetchingUsername;
+  private loadingUsernameCheck = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +45,11 @@ export class ChangeUsernameComponent implements OnInit {
       'username': new FormControl(username, [Validators.required])
     });
 
+    let count = 0;
+    
     this.changeUsernameForm.valueChanges.subscribe(data => {
+      this.loadingUsernameCheck = true;
+
       if (data.username != this.existingUsername) {
         this.userService.checkUsernameExists(data.username)
         .subscribe(result => {
@@ -52,15 +57,18 @@ export class ChangeUsernameComponent implements OnInit {
           console.log(result);
           this.usernameExists = true;
           this.isExistingUsername = false;
+          this.loadingUsernameCheck = false;
         }, 
         error => {
           console.log("error");
           console.log(error);
           this.usernameExists = false;
           this.isExistingUsername = false;
+          this.loadingUsernameCheck = false;
         });
       } else {
         this.isExistingUsername = true;
+        this.loadingUsernameCheck = false;
       }
     })
   }
