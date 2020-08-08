@@ -114,6 +114,7 @@ import { ContactComponent } from './public/contact/contact.component';
 import { UserShowDocumentariesComponent } from './public/user/user-show/user-show-documentaries/user-show-documentaries.component';
 import { UserShowFollowingComponent } from './public/user/user-show/user-show-following/user-show-following.component';
 import { UserShowFollowersComponent } from './public/user/user-show/user-show-followers/user-show-followers.component';
+import { ChangeEmailComponent } from './public/user/user-edit/change-email/change-email.component';
 
 @NgModule({
   declarations: [
@@ -200,7 +201,8 @@ import { UserShowFollowersComponent } from './public/user/user-show/user-show-fo
     AdminUserAddComponent,
     UserShowDocumentariesComponent,
     UserShowFollowingComponent,
-    UserShowFollowersComponent
+    UserShowFollowersComponent,
+    ChangeEmailComponent
   ],
   imports: [
     BrowserModule,

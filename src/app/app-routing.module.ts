@@ -1,3 +1,4 @@
+import { ChangeEmailComponent } from './public/user/user-edit/change-email/change-email.component';
 import { UserShowFollowingComponent } from './public/user/user-show/user-show-following/user-show-following.component';
 import { UserShowDocumentariesComponent } from './public/user/user-show/user-show-documentaries/user-show-documentaries.component';
 import { AdminUserAddComponent } from './admin/admin-users/admin-user-add/admin-user-add.component';
@@ -127,6 +128,11 @@ const routes: Routes = [
       {
         path: 'edit/change-username',
         component: ChangeUsernameComponent,
+        resolve: [AuthneticatedUserResolverService]
+      },
+      {
+        path: 'edit/change-email',
+        component: ChangeEmailComponent,
         resolve: [AuthneticatedUserResolverService]
       },
       {

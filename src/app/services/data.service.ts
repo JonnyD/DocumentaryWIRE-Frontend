@@ -79,6 +79,7 @@ export class DataService {
 
   post(urlSlug, resource, options) {
     let url = this.url + urlSlug;
+    console.log("resource");
     console.log(url);
     console.log("resource");
     console.log(resource);

@@ -44,8 +44,6 @@ export class ChangeUsernameComponent implements OnInit {
     this.changeUsernameForm = new FormGroup({
       'username': new FormControl(username, [Validators.required])
     });
-
-    let count = 0;
     
     this.changeUsernameForm.valueChanges.subscribe(data => {
       this.loadingUsernameCheck = true;

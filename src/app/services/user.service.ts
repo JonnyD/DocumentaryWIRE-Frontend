@@ -7,63 +7,63 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class UserService extends DataService {
- 
-  private authenticationService: AuthenticationService;
 
-  constructor(http: HttpClient, authenticationService: AuthenticationService) {
-    super(`${environment.apiUrl}/api/v1/user`, http);
-    this.authenticationService = authenticationService;
-   }
+    private authenticationService: AuthenticationService;
+
+    constructor(http: HttpClient, authenticationService: AuthenticationService) {
+        super(`${environment.apiUrl}/api/v1/user`, http);
+        this.authenticationService = authenticationService;
+    }
 
     checkUsernameExists(username: string) {
         return this.getUserByUsername(username);
     }
 
-   getMe() {
-    let options = {};
+    getMe() {
+        let options = {};
 
-    if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
         }
-    }
-    
-    return this.get('me', options);
-   }
 
-   getUserById(id: number) {
-    let options = {};
-
-    if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
-    }
-    return this.get(id, options);
-   }
-
-   getUserByUsername(username: string) {
-    let options = {};
-
-    if (this.authenticationService.isAuthenticated()) {
-        let accessToken = this.authenticationService.currentTokenValue.access_token;
-        options = {
-          params: new HttpParams()
-            .append('access_token', accessToken)
-        }
+        return this.get('me', options);
     }
 
-    return this.get(username, options);
-   }
+    getUserById(id: number) {
+        let options = {};
 
-   getAllUsers(params: HttpParams) {
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+        return this.get(id, options);
+    }
+
+    getUserByUsername(username: string) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+
+        return this.get(username, options);
+    }
+
+    getAllUsers(params: HttpParams) {
         if (this.authenticationService.isAuthenticated()) {
             let accessToken = this.authenticationService.currentTokenValue.access_token;
             params = params.append('access_token', accessToken)
@@ -72,10 +72,10 @@ export class UserService extends DataService {
         let options = {
             params: params
         }
-        
+
         return this.getAll(options);
     }
-    
+
     getNewestUsers(params: HttpParams) {
         params = params.append('sort', 'createdAt-desc');
         params = params.append('enabled', 'true');
@@ -83,10 +83,10 @@ export class UserService extends DataService {
         let options = {
             params: params
         }
-        
+
         return this.getAll(options);
     }
-    
+
     getActiveUsers(params: HttpParams) {
         params = params.append('sort', 'lastLogin-desc');
         params = params.append('enabled', 'true');
@@ -94,7 +94,7 @@ export class UserService extends DataService {
         let options = {
             params: params
         }
-        
+
         return this.getAll(options);
     }
 
@@ -104,29 +104,29 @@ export class UserService extends DataService {
         if (this.authenticationService.isAuthenticated()) {
             let accessToken = this.authenticationService.currentTokenValue.access_token;
             options = {
-            params: new HttpParams()
-                .append('access_token', accessToken)
+                params: new HttpParams()
+                    .append('access_token', accessToken)
             }
         }
-  
-        return this.create(user, options);
-     }
 
-     updateUser(user: User) {
+        return this.create(user, options);
+    }
+
+    updateUser(user: User) {
         let options = {};
 
         if (this.authenticationService.isAuthenticated()) {
             let accessToken = this.authenticationService.currentTokenValue.access_token;
             options = {
-            params: new HttpParams()
-                .append('access_token', accessToken)
+                params: new HttpParams()
+                    .append('access_token', accessToken)
             }
         }
 
-         return this.patch(user.id, user, options);
-     }
+        return this.patch(user.id, user, options);
+    }
 
-     forgotPassword(username: string) {
+    forgotPassword(username: string) {
         let options = {};
 
         let resource = {
@@ -134,9 +134,28 @@ export class UserService extends DataService {
         };
 
         return this.post('/forgot-password', resource, options);
-     }
+    }
 
-     resetPassword(username: string, resetKey: string, password: string) {
+    changeEmail(id: string, email: string) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+
+        let resource = {
+            "email": email
+        };
+
+        let url = '/change-email/' + id;
+        return this.post(url, resource, options);
+    }
+
+    resetPassword(username: string, resetKey: string, password: string) {
         let options = {};
 
         let resource = {
@@ -146,9 +165,9 @@ export class UserService extends DataService {
         };
 
         return this.post('/reset-password', resource, options);
-     }
+    }
 
-     forgotUsername(email: string) {
+    forgotUsername(email: string) {
         let options = {};
 
         let resource = {
@@ -156,9 +175,9 @@ export class UserService extends DataService {
         };
 
         return this.post('/forgot-username', resource, options);
-     }
+    }
 
-     confirm(username: string, confirmationToken: string) {
+    confirm(username: string, confirmationToken: string) {
         let params = new HttpParams();
         params = params.append('username', username);
         params = params.append('confirmation_token', confirmationToken);
@@ -168,9 +187,9 @@ export class UserService extends DataService {
         }
 
         return this.get('confirm', options);
-       }
+    }
 
-       resend(email: string) {
+    resend(email: string) {
         let params = new HttpParams();
         params = params.append('email', email);
 
@@ -179,5 +198,5 @@ export class UserService extends DataService {
         }
 
         return this.get('resend', options);
-       }
+    }
 }
