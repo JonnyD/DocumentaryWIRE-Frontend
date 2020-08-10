@@ -155,6 +155,21 @@ export class UserService extends DataService {
         return this.post(url, resource, options);
     }
 
+    changePassword(id: string, resource) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+
+        let url = '/' + id + '/change-password';
+        return this.post(url, resource, options);
+    }
+
     resetPassword(username: string, resetKey: string, password: string) {
         let options = {};
 
