@@ -22,10 +22,21 @@ export class UserShowFollowersComponent implements OnInit {
   private isFetchingUser = false;
   private isFetchingMe = false;
   private isFetchingFollowers = false;
+  private isFetchingFollower = false;
+
+  private isFollowing = false;
+
+  private followingCount;
+  private followerCount;
 
   private queryParamsSubscription;
   private meSubscription;
   private followersSubscription;
+  private getFollowByUserFromIdAndUserToId1Subscription;
+  private getFollowByUserFromIdAndUserToId2Subscription;
+  private createFollowSubscription;
+  private deleteFollowSubscription;
+  private followerSubscription;
 
   constructor(
     private followService: FollowService,
@@ -63,16 +74,49 @@ export class UserShowFollowersComponent implements OnInit {
         this.me = result;
 
         this.isFetchingMe = false;
+        this.fetchFollower();
+        this.fetchCount();
       }, error => {
         console.log("error");
         console.log(error);
 
         this.isFetchingMe = false;
+        this.fetchFollower();
+        this.fetchCount();
       })
   }
 
-  fetchFollowers() {
-    this.isFetchingFollowers = true;
+  fetchFollower(refresh: boolean = true) {
+    if (refresh) {
+      this.isFetchingFollower = true;
+    }
+
+    console.log("MEE");
+    console.log(this.me);
+    let userFromId = this.me.id;
+    let userToId = this.user.id;
+
+    this.followerSubscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        console.log("result follow");
+        console.log(result);
+
+        this.isFollowing = true;
+        this.isFetchingFollower = false;
+      }, error => {
+        console.log("error");
+        console.log(error);
+
+        this.isFollowing = false;
+        this.isFetchingFollower = false;
+      });
+  }
+
+  fetchFollowers(refresh: boolean = true) {
+    if (refresh) {
+      this.isFetchingFollowers = true;
+    }
 
     let params = new HttpParams();
     params = params.append('page', this.page.toString());
@@ -84,7 +128,7 @@ export class UserShowFollowersComponent implements OnInit {
 
     this.followersSubscription = this.followService.getAllFollows(params)
       .subscribe(result => {
-        console.log("watchlist result");
+        console.log("follower result");
         console.log(result);
         this.config = {
           itemsPerPage: pageSize,
@@ -92,10 +136,10 @@ export class UserShowFollowersComponent implements OnInit {
           totalItems: result['count_results']
         };
         this.followers = result['items'];
-
+        
         this.isFetchingFollowers = false;
       }, error => {
-        console.log("watchlist error");
+        console.log("follower error");
         console.log(error);
       });
   }
@@ -107,9 +151,126 @@ export class UserShowFollowersComponent implements OnInit {
     this.fetchFollowers();
   }
 
+  followTop(userToId: number) {
+    console.log("userToId");
+    console.log(userToId);
+    let userFromId = this.me.id;
+
+    this.getFollowByUserFromIdAndUserToId1Subscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        console.log("follow result");
+        console.log(result);
+      }, error => {
+        console.log(error);
+        let follow = {
+          'userFrom': userFromId,
+          'userTo': userToId
+        };
+        this.createFollowSubscription = this.followService
+          .createFollow(follow)
+          .subscribe(result => {
+            let refresh = false;
+            this.fetchFollower(refresh);
+            this.fetchFollowers(refresh);
+            this.increaseFollowerCount();
+          })
+      });
+  }
+
+  unfollowTop(userToId: number) {
+    let userFromId = this.me.id;
+
+    this.getFollowByUserFromIdAndUserToId2Subscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        this.deleteFollowSubscription = this.followService.deleteFollow(result.id)
+          .subscribe(result => {
+            let refresh = false;
+            this.fetchFollower(refresh);
+            this.fetchFollowers(refresh);
+            this.decraseFollowerCount();
+          }, error => {
+
+          });
+      }, error => {
+
+      });
+  }
+
+  followFromSnippet(userToId: number) {
+    console.log("userToId");
+    console.log(userToId);
+    let userFromId = this.me.id;
+
+    this.getFollowByUserFromIdAndUserToId1Subscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        console.log("follow result");
+        console.log(result);
+      }, error => {
+        console.log(error);
+        let follow = {
+          'userFrom': userFromId,
+          'userTo': userToId
+        };
+        this.createFollowSubscription = this.followService
+          .createFollow(follow)
+          .subscribe(result => {
+            let refresh = false;
+            this.fetchFollowers(refresh);
+            this.increaseFollowerCount();
+          })
+      });
+  }
+  
+  unfollowFromSnippet(userToId: number) {
+    let userFromId = this.me.id;
+
+    this.getFollowByUserFromIdAndUserToId2Subscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        this.deleteFollowSubscription = this.followService.deleteFollow(result.id)
+          .subscribe(result => {
+            let refresh = false;
+            this.fetchFollowers(refresh);
+            this.decraseFollowerCount();
+          }, error => {
+
+          });
+      }, error => {
+
+      });
+  }
+
+  fetchCount() {
+    this.followingCount = this.user.followingCount;
+    this.followerCount = this.user.followerCount;
+  }
+
+  decraseFollowerCount() {
+    this.followerCount = this.followerCount - 1;
+  }
+
+  increaseFollowerCount() {
+    this.followerCount = this.followerCount + 1;
+  }
+
   ngOnDestroy() {
     this.meSubscription.unsubscribe();
     this.queryParamsSubscription.unsubscribe();
     this.followersSubscription.unsubscribe();
+    if (this.getFollowByUserFromIdAndUserToId1Subscription != null) {
+      this.getFollowByUserFromIdAndUserToId1Subscription.unsubscribe();
+    }
+    if (this.getFollowByUserFromIdAndUserToId2Subscription != null) {
+      this.getFollowByUserFromIdAndUserToId2Subscription.unsubscribe();
+    }
+    if (this.createFollowSubscription != null) {
+      this.createFollowSubscription.unsubscribe();
+    }
+    if (this.deleteFollowSubscription != null) {
+      this.deleteFollowSubscription.unsubscribe();
+    }
   }
 }

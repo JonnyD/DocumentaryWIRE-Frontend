@@ -73,8 +73,9 @@ export class DataService {
     ));
   }
 
-  delete(id: number) {
-    return this.http.delete(this.url + '/' + id);
+  delete(id: number, options) {
+    console.log("delete " + id);
+    return this.http.delete(this.url + '/' + id, options);
   }
 
   post(urlSlug, resource, options) {

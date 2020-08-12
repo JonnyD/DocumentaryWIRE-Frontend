@@ -13,12 +13,13 @@
                     <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
                 </div>
 
-                <div style="float: right" *ngIf="me != null && user.username === me.username">
-                    <a [routerLink]="['/user', user.username, 'edit']">
-                        <button class="btn btn-info">
-                            Edit Profile
-                        </button>
-                    </a>
+                <div style="float: right" *ngIf="me != null && user.username !== me.username && !isFetchingFollower">
+                    <button (click)="followTop(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
+                        Follow
+                    </button>
+                    <button (click)="unfollowTop(user.id)" class="btn btn-info" *ngIf="isFollowing">
+                        Following
+                    </button>
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -33,11 +34,11 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'following']">Following {{ user.followingCount }}</a>
+                        [routerLink]="['/user', user.username, 'following']">Following ({{ followingCount }})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'followers']">Followers {{ user.followerCount }}</a>
+                        [routerLink]="['/user', user.username, 'followers']">Followers ({{ followerCount }})</a>
                 </li>
             </ul>
 
@@ -47,6 +48,18 @@
                     *ngFor="let followingItem of following | paginate: config">
                     <div class="row no-gutters">
                         {{ followingItem.userTo.username }}
+                        {{ followingItem | json }}
+
+                        <span *ngIf="followingItem.userFrom.username !== me.username">
+                            <button (click)="unfollowFromSnippet(followingItem.userTo.id)" class="btn btn-info"
+                                *ngIf="followingItem.isFollowing">
+                                Following
+                            </button>
+                            <button (click)="followFromSnippet(followingItem.userTo.id)" class="btn btn-outline-info"
+                                *ngIf="!followingItem.isFollowing">
+                                Follow
+                            </button>
+                        </span>
                     </div>
                 </div>
                 <div style="margin-top: 20px; margin-bottom: 20px">

@@ -13,12 +13,13 @@
                     <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
                 </div>
 
-                <div style="float: right" *ngIf="me != null && user.username === me.username">
-                    <a [routerLink]="['/user', user.username, 'edit']">
-                        <button class="btn btn-info">
-                            Edit Profile
-                        </button>
-                    </a>
+                <div style="float: right" *ngIf="me !== null && user.username !== me.username && !isFetchingFollower">
+                    <button (click)="followTop(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
+                        Follow
+                    </button>
+                    <button (click)="unfollowTop(user.id)" class="btn btn-info" *ngIf="isFollowing">
+                        Following
+                    </button>
                 </div>
             </div>
             <div style="clear:both"></div>
@@ -33,20 +34,31 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'following']">Following {{ user.followingCount }}</a>
+                        [routerLink]="['/user', user.username, 'following']">Following ({{ followingCount }})</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'followers']">Followers {{ user.followerCount }}</a>
+                        [routerLink]="['/user', user.username, 'followers']">Followers ({{ followerCount }})</a>
                 </li>
             </ul>
 
             <p *ngIf="isFetchingFollowers">Loading...</p>
             <div *ngIf="!isFetchingFollowers" style="margin-top: 20px">
-                <div class="card" style="margin-bottom: 20px"
-                    *ngFor="let followerItem of followers | paginate: config">
+                <div class="card" style="margin-bottom: 20px" *ngFor="let followerItem of followers | paginate: config">
                     <div class="row no-gutters">
                         {{ followerItem.userFrom.username }}
+                        {{ followerItem | json }}
+
+                        <span *ngIf="followerItem.userFrom.username !== me.username">
+                            <button (click)="unfollowFromSnippet(followerItem.userFrom.id)" class="btn btn-info"
+                                *ngIf="followerItem.isFollowing">
+                                Following
+                            </button>
+                            <button (click)="followFromSnippet(followerItem.userFrom.id)" class="btn btn-outline-info"
+                                *ngIf="!followerItem.isFollowing">
+                                Follow
+                            </button>
+                        </span>
                     </div>
                 </div>
                 <div style="margin-top: 20px; margin-bottom: 20px">

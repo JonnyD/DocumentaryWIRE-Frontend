@@ -1,3 +1,4 @@
+import { FollowService } from './../../../services/follow.service';
 import { WatchlistService } from './../../../services/watchlist.service';
 import { DocumentaryService } from './../../../services/documentary.service';
 import { HttpParams } from '@angular/common/http';
@@ -24,23 +25,35 @@ export class UserShowComponent implements OnInit {
   private config: any;
   private page;
 
+  private followingCount;
+  private followerCount;
+
   private isFetchingUser = true;
   private isFetchingActivity = true;
   private isFetchingDocumentaries = true;
   private isFetchingWatchlisted = true;
   private isFetchingMe = true;
+  private isFetchingFollower = true;
+
+  private isFollowing = false;
 
   private activitySubscription;
   private queryParamsSubscription;
   private documentarySubscription;
   private watchlistSubscription;
   private meSubscription;
+  private followerSubscription;
+  private getFollowByUserFromIdAndUserToId1Subscription;
+  private getFollowByUserFromIdAndUserToId2Subscription;
+  private createFollowSubscription;
+  private deleteFollowSubscription;
 
   constructor(
     private userService: UserService,
     private activityService: ActivityService,
     private documentaryService: DocumentaryService,
     private watchlistService: WatchlistService,
+    private followService: FollowService,
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
@@ -73,16 +86,23 @@ export class UserShowComponent implements OnInit {
 
     this.meSubscription = this.userService.getMe()
       .subscribe(result => {
+        console.log("me result");
         console.log(result);
         this.me = result;
 
         this.isFetchingMe = false;
+
+        this.fetchFollower();
+        this.fetchCount();
       }, error => {
         console.log("error");
         console.log(error);
 
         this.isFetchingMe = false;
-      })
+
+        this.fetchFollower();
+        this.fetchCount();
+      });
   }
 
   fetchActivity() {
@@ -109,39 +129,95 @@ export class UserShowComponent implements OnInit {
       })
   }
 
+  fetchFollower(refresh: boolean = true) {
+    if (refresh) {
+      this.isFetchingFollower = true;
+    }
+
+    console.log("MEE");
+    console.log(this.me);
+    let userFromId = this.me.id;
+    let userToId = this.user.id;
+
+    this.followerSubscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        console.log("result follow");
+        console.log(result);
+        this.isFollowing = true;
+        this.isFetchingFollower = false;
+      }, error => {
+        console.log("error");
+        console.log(error);
+
+        this.isFollowing = false;
+        this.isFetchingFollower = false;
+      });
+  }
+
+  follow(userToId: number) {
+    console.log("userToId");
+    console.log(userToId);
+    let userFromId = this.me.id;
+
+    this.getFollowByUserFromIdAndUserToId1Subscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        console.log("follow result");
+        console.log(result);
+      }, error => {
+        console.log(error);
+        let follow = {
+          'userFrom': userFromId,
+          'userTo': userToId
+        };
+        this.createFollowSubscription = this.followService
+          .createFollow(follow)
+          .subscribe(result => {
+            let refresh = false;
+            this.fetchFollower(refresh);
+            this.increaseFollowerCount();
+          })
+      });
+  }
+
+  unfollow(userToId: number) {
+    let userFromId = this.me.id;
+
+    this.getFollowByUserFromIdAndUserToId2Subscription = this.followService
+      .getFollowByUserFromIdAndUserToId(userFromId, userToId)
+      .subscribe(result => {
+        this.deleteFollowSubscription = this.followService.deleteFollow(result.id)
+          .subscribe(result => {
+            let refresh = false;
+            this.fetchFollower(refresh);
+            this.decraseFollowerCount();
+          }, error => {
+
+          });
+      }, error => {
+
+      });
+  }
+
+  fetchCount() {
+    this.followingCount = this.user.followingCount;
+    this.followerCount = this.user.followerCount;
+  }
+
+  decraseFollowerCount() {
+    this.followerCount = this.followerCount - 1;
+  }
+
+  increaseFollowerCount() {
+    this.followerCount = this.followerCount + 1;
+  }
+
   pageChanged(event) {
     console.log(event);
     this.config.currentPage = event;
     this.page = event;
     this.fetchActivity();
-  }
-
-  fetchWatchlists() {
-    this.isFetchingWatchlisted = true;
-
-    let params = new HttpParams();
-    params = params.append('page', this.page.toString());
-
-    let pageSize = 5;
-    params = params.append('amountPerPage', pageSize.toString());
-    params = params.append('user', this.user.username);
-
-    this.watchlistSubscription = this.watchlistService.getAllWatchlists(params)
-      .subscribe(result => {
-        console.log("watchlist result");
-        console.log(result);
-        this.config = {
-          itemsPerPage: pageSize,
-          currentPage: this.page,
-          totalItems: result['count_results']
-        };
-        this.watchlists = result['items'];
-
-        this.isFetchingWatchlisted = false;
-      }, error => {
-        console.log("watchlist error");
-        console.log(error);
-      });
   }
 
   ngOnDestroy() {
@@ -155,9 +231,21 @@ export class UserShowComponent implements OnInit {
     if (this.watchlistSubscription != null) {
       this.watchlistSubscription.unsubscribe();
     }
+    if (this.getFollowByUserFromIdAndUserToId1Subscription != null) {
+      this.getFollowByUserFromIdAndUserToId1Subscription.unsubscribe();
+    }
+    if (this.getFollowByUserFromIdAndUserToId2Subscription != null) {
+      this.getFollowByUserFromIdAndUserToId2Subscription.unsubscribe();
+    }
+    if (this.createFollowSubscription != null) {
+      this.createFollowSubscription.unsubscribe();
+    }
+    if (this.deleteFollowSubscription != null) {
+      this.deleteFollowSubscription.unsubscribe();
+    }
     this.meSubscription.unsubscribe();
+    this.followerSubscription.unsubscribe();
   }
-
   public getSantizeUrl(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
