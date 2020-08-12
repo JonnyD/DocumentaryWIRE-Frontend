@@ -29,6 +29,18 @@
                 <div class="row no-gutters">
                     <span class="card-text">
                         <div class="card-body">
+                            <b>About Me</b> <a style="margin-left: 10px" 
+                            [routerLink]="['/user/edit/change-about-me']">change</a><br/>
+                            {{ user.aboutMe }}
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card mb-1">
+                <div class="row no-gutters">
+                    <span class="card-text">
+                        <div class="card-body">
                             <b>Email</b> <a style="margin-left: 10px"
                             [routerLink]="['/user/edit/change-email']" href="">change</a><br/>
                             {{ user.email }}

@@ -1,3 +1,4 @@
+import { ChangeAboutMeComponent } from './public/user/user-edit/change-about-me/change-about-me.component';
 import { ChangeEmailComponent } from './public/user/user-edit/change-email/change-email.component';
 import { UserShowFollowingComponent } from './public/user/user-show/user-show-following/user-show-following.component';
 import { UserShowDocumentariesComponent } from './public/user/user-show/user-show-documentaries/user-show-documentaries.component';
@@ -138,6 +139,11 @@ const routes: Routes = [
       {
         path: 'edit/change-password',
         component: ChangePasswordComponent,
+        resolve: [AuthneticatedUserResolverService]
+      },
+      {
+        path: 'edit/change-about-me',
+        component: ChangeAboutMeComponent,
         resolve: [AuthneticatedUserResolverService]
       },
       {

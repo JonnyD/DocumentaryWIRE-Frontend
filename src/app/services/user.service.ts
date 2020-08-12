@@ -154,6 +154,25 @@ export class UserService extends DataService {
         let url = '/change-email/' + id;
         return this.post(url, resource, options);
     }
+    
+    changeAboutMe(id: string, aboutMe: string) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+
+        let resource = {
+            "aboutMe": aboutMe
+        };
+
+        let url = '/' + id + '/change-about-me';
+        return this.post(url, resource, options);
+    }
 
     changePassword(id: string, resource) {
         let options = {};

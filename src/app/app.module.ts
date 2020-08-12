@@ -1,3 +1,4 @@
+import { ChangeAboutMeComponent } from './public/user/user-edit/change-about-me/change-about-me.component';
 import { AdminUserAddComponent } from './admin/admin-users/admin-user-add/admin-user-add.component';
 import { ActivityResolverService } from './services/activity-resolver.service';
 import { UserActiveComponent } from './public/user/user-active/user-active.component';
@@ -115,6 +116,7 @@ import { UserShowDocumentariesComponent } from './public/user/user-show/user-sho
 import { UserShowFollowingComponent } from './public/user/user-show/user-show-following/user-show-following.component';
 import { UserShowFollowersComponent } from './public/user/user-show/user-show-followers/user-show-followers.component';
 import { ChangeEmailComponent } from './public/user/user-edit/change-email/change-email.component';
+import { ChangeAboutmeComponent } from './public/user/user-edit/change-aboutme/change-aboutme.component';
 
 @NgModule({
   declarations: [
@@ -202,7 +204,8 @@ import { ChangeEmailComponent } from './public/user/user-edit/change-email/chang
     UserShowDocumentariesComponent,
     UserShowFollowingComponent,
     UserShowFollowersComponent,
-    ChangeEmailComponent
+    ChangeEmailComponent,
+    ChangeAboutMeComponent
   ],
   imports: [
     BrowserModule,

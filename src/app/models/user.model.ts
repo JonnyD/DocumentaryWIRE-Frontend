@@ -5,6 +5,7 @@ export class User {
     username: string;
     password: string;
     name: string;
+    aboutMe: string;
     email: string;
     avatar: string;
     lastLogin: moment.Moment;
