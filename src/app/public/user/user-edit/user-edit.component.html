@@ -1,12 +1,25 @@
-<div class="container" >
+<div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
             <div class="card mb-1">
                 <div class="row no-gutters">
                     <span class="card-text">
                         <div class="card-body">
-                            <b>Name</b> <a style="margin-left: 10px" 
-                                [routerLink]="['/user/edit/change-name']">change</a><br/>
+                            <b>Avatar</b> <a style="margin-left: 10px"
+                                [routerLink]="['/user/edit/change-avatar']">change</a><br />
+                            <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin-right: 10px"
+                                width="100" height="100" alt="Profile picture of {{ user.name }}" />
+                        </div>
+                    </span>
+                </div>
+            </div>
+
+            <div class="card mb-1">
+                <div class="row no-gutters">
+                    <span class="card-text">
+                        <div class="card-body">
+                            <b>Name</b> <a style="margin-left: 10px"
+                                [routerLink]="['/user/edit/change-name']">change</a><br />
                             {{ user.name }}
                         </div>
                     </span>
@@ -17,8 +30,8 @@
                 <div class="row no-gutters">
                     <span class="card-text">
                         <div class="card-body">
-                            <b>Username</b> <a style="margin-left: 10px" 
-                            [routerLink]="['/user/edit/change-username']">change</a><br/>
+                            <b>Username</b> <a style="margin-left: 10px"
+                                [routerLink]="['/user/edit/change-username']">change</a><br />
                             @{{ user.username }}
                         </div>
                     </span>
@@ -29,8 +42,8 @@
                 <div class="row no-gutters">
                     <span class="card-text">
                         <div class="card-body">
-                            <b>About Me</b> <a style="margin-left: 10px" 
-                            [routerLink]="['/user/edit/change-about-me']">change</a><br/>
+                            <b>About Me</b> <a style="margin-left: 10px"
+                                [routerLink]="['/user/edit/change-about-me']">change</a><br />
                             {{ user.aboutMe }}
                         </div>
                     </span>
@@ -41,8 +54,8 @@
                 <div class="row no-gutters">
                     <span class="card-text">
                         <div class="card-body">
-                            <b>Email</b> <a style="margin-left: 10px"
-                            [routerLink]="['/user/edit/change-email']" href="">change</a><br/>
+                            <b>Email</b> <a style="margin-left: 10px" [routerLink]="['/user/edit/change-email']"
+                                href="">change</a><br />
                             {{ user.email }}
                         </div>
                     </span>
@@ -53,8 +66,8 @@
                 <div class="row no-gutters">
                     <span class="card-text">
                         <div class="card-body">
-                            <b>Password</b> <a style="margin-left: 10px"
-                            [routerLink]="['/user/edit/change-password']" href="">change</a><br/>
+                            <b>Password</b> <a style="margin-left: 10px" [routerLink]="['/user/edit/change-password']"
+                                href="">change</a><br />
                         </div>
                     </span>
                 </div>

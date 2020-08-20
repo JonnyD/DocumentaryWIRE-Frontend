@@ -173,6 +173,42 @@ export class UserService extends DataService {
         let url = '/' + id + '/change-about-me';
         return this.post(url, resource, options);
     }
+    
+    changeAvatar(id: string, avatar: string) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+
+        let resource = {
+            "avatar": avatar
+        };
+
+        let url = '/' + id + '/change-avatar';
+        return this.post(url, resource, options);
+    }
+    
+    removeAvatar(id: string) {
+        let options = {};
+
+        if (this.authenticationService.isAuthenticated()) {
+            let accessToken = this.authenticationService.currentTokenValue.access_token;
+            options = {
+                params: new HttpParams()
+                    .append('access_token', accessToken)
+            }
+        }
+
+        let resource = {};
+
+        let url = '/' + id + '/remove-avatar';
+        return this.post(url, resource, options);
+    }
 
     changePassword(id: string, resource) {
         let options = {};
