@@ -117,6 +117,7 @@ import { UserShowFollowingComponent } from './public/user/user-show/user-show-fo
 import { UserShowFollowersComponent } from './public/user/user-show/user-show-followers/user-show-followers.component';
 import { ChangeEmailComponent } from './public/user/user-edit/change-email/change-email.component';
 import { ChangeAboutmeComponent } from './public/user/user-edit/change-aboutme/change-aboutme.component';
+import { ChangeAvatarComponent } from './public/user/user-edit/change-avatar/change-avatar.component';
 
 @NgModule({
   declarations: [
@@ -205,7 +206,8 @@ import { ChangeAboutmeComponent } from './public/user/user-edit/change-aboutme/c
     UserShowFollowingComponent,
     UserShowFollowersComponent,
     ChangeEmailComponent,
-    ChangeAboutMeComponent
+    ChangeAboutMeComponent,
+    ChangeAvatarComponent
   ],
   imports: [
     BrowserModule,
