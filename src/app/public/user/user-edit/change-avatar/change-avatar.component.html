@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
+            <span *ngFor="let flashMessage of flashMessages">
+                <div class="alert alert-{{ flashMessage.class }}" role="alert">
+                    {{ flashMessage.message }}
+                </div>
+            </span>
+            <button (click)="removeAvatar()" class="btn btn-secondary">Remove Avatar</button>
+            <form [formGroup]="changeAvatarForm" (ngSubmit)="onChangeAvatarSubmit()">
+                <div class="form-group">
+                    <label for="avatar">Avatar</label>
+                    <input id="avatar" type="file" (change)="onAvatarChange($event)"
+                        [ngClass]="{ 'is-invalid': submitted && f.avatar.errors }" />
+                    <img [src]="avatarImgURL" height="200" *ngIf="avatarImgURL">
+                    <div *ngIf="submitted && f.avatar.errors">
+                        <div *ngIf="f.avatar.errors.required" style="font-size: 80%; color: #dc3545;">Avatar is
+                            required</div>
+                    </div>
+                </div>
+                <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+                <button [disabled]="loading" class="btn btn-primary">
+                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                    Save
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
