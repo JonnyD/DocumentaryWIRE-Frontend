@@ -15,6 +15,11 @@
                             <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
                         </div>
 
+                        <br />
+                        <div style="clear: both; float: left">
+                            {{ user.aboutMe }}
+                        </div>
+
                         <div style="float: right"
                             *ngIf="me != null && user.username !== me.username && !isFetchingFollower">
                             <button (click)="followTop(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
