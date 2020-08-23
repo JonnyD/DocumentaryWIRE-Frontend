@@ -1,15 +1,19 @@
-<div class="container" >
-        <div class="row">
-            <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
-                <span *ngFor="let flashMessage of flashMessages">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
+            <h2>Forgot Username</h2>
+            <div class="card">
+                <div class="card-body">
+                    <span *ngFor="let flashMessage of flashMessages">
                         <div class="alert alert-{{ flashMessage.class }}" role="alert">
                             {{ flashMessage.message }}
                         </div>
-                </span>
-                <form [formGroup]="forgotUsernameForm" (ngSubmit)="onForgotUsernameSubmit()">
+                    </span>
+                    <form [formGroup]="forgotUsernameForm" (ngSubmit)="onForgotUsernameSubmit()">
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && fForgotUsername.email.errors }" />
+                            <input type="text" formControlName="email" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && fForgotUsername.email.errors }" />
                             <div *ngIf="submitted && fForgotUsername.email.errors" class="invalid-feedback">
                                 <div *ngIf="fForgotUsername.email.errors.required">Email is required</div>
                             </div>
@@ -20,6 +24,8 @@
                             Save
                         </button>
                     </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

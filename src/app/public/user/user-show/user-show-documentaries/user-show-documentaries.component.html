@@ -1,74 +1,79 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7 offset-md-3 mt-5" style="margin-top: 20px">
-            <p *ngIf="isFetchingUser">Loading...</p>
-            <div *ngIf="!isFetchingUser" style="margin-bottom: 20px">
-                <a [routerLink]="['/user', user.username]">
-                    <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin-right: 10px"
-                        width="100" height="100" alt="Profile picture of {{ user.name }}" />
-                </a>
+            <div class="card">
+                <div class="card-body">
+                    <p *ngIf="isFetchingUser">Loading...</p>
+                    <div *ngIf="!isFetchingUser" style="margin-bottom: 20px">
+                        <a [routerLink]="['/user', user.username]">
+                            <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin-right: 10px"
+                                width="100" height="100" alt="Profile picture of {{ user.name }}" />
+                        </a>
 
-                <div style="float: left">
-                    <h1>{{ user.name }}</h1>
-                    <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
-                </div>
-
-                <div style="float: right" *ngIf="me !== null && user.username !== me.username && !isFetchingFollower">
-                    <button (click)="follow(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
-                        Follow
-                    </button>
-                    <button (click)="unfollow(user.id)" class="btn btn-info" *ngIf="isFollowing">
-                        Following
-                    </button>
-                </div>
-            </div>
-            <div style="clear:both"></div>
-
-            <ul class="nav nav-tabs" style="margin-top: 20px">
-                <li class="nav-item">
-                    <a class="nav-link" [routerLink]="['/user', user.username]">Activity</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'documentaries']">Documentaries</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'following']">Following ({{ followingCount }})</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'followers']">Followers ({{ followerCount }})</a>
-                </li>
-            </ul>
-
-            <p *ngIf="isFetchingDocumentaries">Loading...</p>
-            <div *ngIf="!isFetchingDocumentaries" style="margin-top: 20px">
-                <div class="card" style="margin-bottom: 20px"
-                    *ngFor="let documentary of documentaries | paginate: config">
-                    <div class="row no-gutters">
-                        <div class="col-md-3">
-                            <img src="{{ documentary.poster }}" class="card-img" style="width: 160px; height: 200px"
-                                alt="{{ documentary.title }}">
+                        <div style="float: left">
+                            <h1>{{ user.name }}</h1>
+                            <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
                         </div>
-                        <div class="col-md-9">
-                            <div class="card-body">
 
-                                <a [routerLink]="['/', documentary.slug]">
-                                    <h5 class="card-title">{{ documentary.title }}</h5>
-                                </a>
-                                <p class="card-text">{{ documentary.summary }}.</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                            </div>
+                        <div style="float: right"
+                            *ngIf="me !== null && user.username !== me.username && !isFetchingFollower">
+                            <button (click)="follow(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
+                                Follow
+                            </button>
+                            <button (click)="unfollow(user.id)" class="btn btn-info" *ngIf="isFollowing">
+                                Following
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div style="margin-top: 20px; margin-bottom: 20px">
-                    <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-                </div>
-            </div>
+                    <div style="clear:both"></div>
 
-            <!--
+                    <ul class="nav nav-tabs" style="margin-top: 20px">
+                        <li class="nav-item">
+                            <a class="nav-link" [routerLink]="['/user', user.username]">Activity</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username, 'documentaries']">Documentaries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username, 'following']">Following
+                                ({{ followingCount }})</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username, 'followers']">Followers ({{ followerCount }})</a>
+                        </li>
+                    </ul>
+
+                    <p *ngIf="isFetchingDocumentaries">Loading...</p>
+                    <div *ngIf="!isFetchingDocumentaries" style="margin-top: 20px">
+                        <div class="card" style="margin-bottom: 20px"
+                            *ngFor="let documentary of documentaries | paginate: config">
+                            <div class="row no-gutters">
+                                <div class="col-md-3">
+                                    <img src="{{ documentary.poster }}" class="card-img"
+                                        style="width: 160px; height: 200px" alt="{{ documentary.title }}">
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="card-body">
+
+                                        <a [routerLink]="['/', documentary.slug]">
+                                            <h5 class="card-title">{{ documentary.title }}</h5>
+                                        </a>
+                                        <p class="card-text">{{ documentary.summary }}.</p>
+                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 20px; margin-bottom: 20px">
+                            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+                        </div>
+                    </div>
+
+                    <!--
             <p *ngIf="isFetchingWatchlisted">Loading...</p>
             <div *ngIf="!isFetchingWatchlisted">
                 <h5 style="margin-top: 20px">Watchlisted <a [routerLink]="['/user', user.username, 'watchlist']">(View
@@ -94,6 +99,8 @@
                 </div>
             </div>
             -->
+                </div>
+            </div>
         </div>
     </div>
 </div>

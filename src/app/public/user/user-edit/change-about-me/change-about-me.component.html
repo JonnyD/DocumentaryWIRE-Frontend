@@ -1,24 +1,29 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
-            <span *ngFor="let flashMessage of flashMessages">
-                <div class="alert alert-{{ flashMessage.class }}" role="alert">
-                    {{ flashMessage.message }}
-                </div>
-            </span>
-            <form [formGroup]="changeAboutMeForm" (ngSubmit)="onChangeAboutMeSubmit()">
-                <div class="form-group">
-                    <label for="aboutMe">About Me</label>
-                    <textarea type="text"  formControlName="aboutMe" class="form-control"
-                    [ngClass]="{ 'is-invalid': submitted && fChangeAboutMe.aboutMe.errors }">
+            <h2>Change About Me</h2>
+            <div class="card">
+                <div class="card-body">
+                    <span *ngFor="let flashMessage of flashMessages">
+                        <div class="alert alert-{{ flashMessage.class }}" role="alert">
+                            {{ flashMessage.message }}
+                        </div>
+                    </span>
+                    <form [formGroup]="changeAboutMeForm" (ngSubmit)="onChangeAboutMeSubmit()">
+                        <div class="form-group">
+                            <label for="aboutMe">About Me</label>
+                            <textarea type="text" formControlName="aboutMe" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && fChangeAboutMe.aboutMe.errors }">
                     </textarea>
+                        </div>
+                        <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+                        <button [disabled]="loading" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Save
+                        </button>
+                    </form>
                 </div>
-                <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
-                <button [disabled]="loading" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Save
-                </button>
-            </form>
+            </div>
         </div>
     </div>
 </div>

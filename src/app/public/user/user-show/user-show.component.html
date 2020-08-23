@@ -1,104 +1,110 @@
 <div class="container">
     <div class="row">
         <div class="col-md-7 offset-md-3 mt-5" style="margin-top: 20px">
-            <p *ngIf="isFetchingUser">Loading...</p>
-            <div *ngIf="!isFetchingUser" style="margin-bottom: 20px">
-                <a [routerLink]="['/user', user.username]">
-                    <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin-right: 10px"
-                        width="100" height="100" alt="Profile picture of {{ user.name }}" />
-                </a>
+            <div class="card">
+                <div class="card-body">
+                    <p *ngIf="isFetchingUser">Loading...</p>
+                    <div *ngIf="!isFetchingUser" style="margin-bottom: 20px">
+                        <a [routerLink]="['/user', user.username]">
+                            <img src="{{ user.avatar }}" class="rounded-circle" style="float:left; margin-right: 10px"
+                                width="100" height="100" alt="Profile picture of {{ user.name }}" />
+                        </a>
 
-                <div style="float: left">
-                    <h1>{{ user.name }}</h1>
-                    <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
-                </div>
-
-                <div style="float: right" *ngIf="me !== null && user.username !== me.username && !isFetchingFollower">
-                    <button (click)="follow(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
-                        Follow
-                    </button>
-                    <button (click)="unfollow(user.id)" class="btn btn-info" *ngIf="isFollowing">
-                        Following
-                    </button>
-                </div>
-            </div>
-            <div style="clear:both"></div>
-
-            <ul class="nav nav-tabs" style="margin-top: 20px">
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active" [routerLink]="['/user', user.username]">Activity</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'documentaries']">Documentaries</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'following']">Following ({{ followingCount }})</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLinkActive="active"
-                        [routerLink]="['/user', user.username, 'followers']">Followers ({{ followerCount }})</a>
-                </li>
-            </ul>
-
-            <p *ngIf="isFetchingActivity">Loading...</p>
-            <div *ngIf="!isFetchingActivity">
-                <!--<h5>Activity <a [routerLink]="['/user', user.username, 'activity']">(View All)</a></h5>-->
-                <div class="card mb-1" style="padding: 10px; margin-top: 20px;"
-                    *ngFor="let communityItem of activity | paginate: config">
-                    <div class="row no-gutters">
-                        <div class="col-md-1">
-                            <a [routerLink]="['/user', communityItem.user.username]">
-                                <img src="{{ communityItem.user.avatar }}" class="rounded-circle"
-                                    style="float:left; margin:3px" width="60" height="60"
-                                    alt="Profile picture of {{ communityItem.user.name }}" />
-                            </a>
+                        <div style="float: left">
+                            <h1>{{ user.name }}</h1>
+                            <a [routerLink]="['/user', user.username]">@{{ user.username }}</a>
                         </div>
-                        <div class="col-md-10" style="margin-left: 20px">
-                            <div class="card-body">
-                                <div *ngIf="communityItem.type == 'joined'">
-                                    <a [routerLink]="['/user', communityItem.user.username]" routerLinkActive="active">
-                                        {{ communityItem.user.name }}</a> has joined
-                                </div>
-                                <div *ngIf="communityItem.type == 'added'">
-                                    <a
-                                        [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
-                                    has added a documentary
-                                    <a [routerLink]="['/', communityItem.data.documentarySlug]">
-                                        {{ communityItem.data.documentaryTitle }}
+
+                        <div style="float: right"
+                            *ngIf="me !== null && user.username !== me.username && !isFetchingFollower">
+                            <button (click)="follow(user.id)" class="btn btn-outline-info" *ngIf="!isFollowing">
+                                Follow
+                            </button>
+                            <button (click)="unfollow(user.id)" class="btn btn-info" *ngIf="isFollowing">
+                                Following
+                            </button>
+                        </div>
+                    </div>
+                    <div style="clear:both"></div>
+
+                    <ul class="nav nav-tabs" style="margin-top: 20px">
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username]">Activity</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username, 'documentaries']">Documentaries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username, 'following']">Following
+                                ({{ followingCount }})</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" routerLinkActive="active"
+                                [routerLink]="['/user', user.username, 'followers']">Followers ({{ followerCount }})</a>
+                        </li>
+                    </ul>
+
+                    <p *ngIf="isFetchingActivity">Loading...</p>
+                    <div *ngIf="!isFetchingActivity">
+                        <!--<h5>Activity <a [routerLink]="['/user', user.username, 'activity']">(View All)</a></h5>-->
+                        <div class="card mb-1" style="padding: 10px; margin-top: 20px;"
+                            *ngFor="let communityItem of activity | paginate: config">
+                            <div class="row no-gutters">
+                                <div class="col-md-1">
+                                    <a [routerLink]="['/user', communityItem.user.username]">
+                                        <img src="{{ communityItem.user.avatar }}" class="rounded-circle"
+                                            style="float:left; margin:3px" width="60" height="60"
+                                            alt="Profile picture of {{ communityItem.user.name }}" />
                                     </a>
                                 </div>
-                                <div *ngIf="communityItem.type == 'watchlist'">
-                                    <a
-                                        [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
-                                    has added a documentary
+                                <div class="col-md-10" style="margin-left: 20px">
+                                    <div class="card-body">
+                                        <div *ngIf="communityItem.type == 'joined'">
+                                            <a [routerLink]="['/user', communityItem.user.username]"
+                                                routerLinkActive="active">
+                                                {{ communityItem.user.name }}</a> has joined
+                                        </div>
+                                        <div *ngIf="communityItem.type == 'added'">
+                                            <a
+                                                [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
+                                            has added a documentary
+                                            <a [routerLink]="['/', communityItem.data.documentarySlug]">
+                                                {{ communityItem.data.documentaryTitle }}
+                                            </a>
+                                        </div>
+                                        <div *ngIf="communityItem.type == 'watchlist'">
+                                            <a
+                                                [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
+                                            has added a documentary
 
-                                    <a [routerLink]="['/', communityItem.data.documentarySlug]">
-                                        {{ communityItem.data.documentaryTitle }}
-                                    </a> to their watch list
-                                    <br />
-                                    <br />
-                                    <img src="{{ communityItem.data.documentaryPoster }}" width="100" height="120"
-                                        style="margin-right: 10px; float: left" />
-                                    {{ communityItem.data.documentarySummary }}
-                                </div>
-                                <div *ngIf="communityItem.type == 'comment'">
-                                    <a
-                                        [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
-                                    has added a comment to
-                                    <a
-                                        [routerLink]="['/', communityItem.data.documentarySlug]">{{ communityItem.data.documentaryTitle }}</a>
-                                    saying: <br /> <br />"{{ communityItem.data.commentText }}"
+                                            <a [routerLink]="['/', communityItem.data.documentarySlug]">
+                                                {{ communityItem.data.documentaryTitle }}
+                                            </a> to their watch list
+                                            <br />
+                                            <br />
+                                            <img src="{{ communityItem.data.documentaryPoster }}" width="100"
+                                                height="120" style="margin-right: 10px; float: left" />
+                                            {{ communityItem.data.documentarySummary }}
+                                        </div>
+                                        <div *ngIf="communityItem.type == 'comment'">
+                                            <a
+                                                [routerLink]="['/user', communityItem.user.username]">{{ communityItem.user.name }}</a>
+                                            has added a comment to
+                                            <a
+                                                [routerLink]="['/', communityItem.data.documentarySlug]">{{ communityItem.data.documentaryTitle }}</a>
+                                            saying: <br /> <br />"{{ communityItem.data.commentText }}"
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
                     </div>
-                </div>
-                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-            </div>
 
-            <!--
+                    <!--
            <p *ngIf="isFetchingDocumentaries">Loading...</p>
            <div *ngIf="!isFetchingDocumentaries">
               <h5 style="margin-top: 20px">Documentaries Added <a [routerLink]="['/user', user.username, 'added']">(View All)</a></h5>
@@ -122,7 +128,7 @@
               </div>
             -->
 
-            <!--
+                    <!--
             <p *ngIf="isFetchingWatchlisted">Loading...</p>
             <div *ngIf="!isFetchingWatchlisted">
                 <h5 style="margin-top: 20px">Watchlisted <a [routerLink]="['/user', user.username, 'watchlist']">(View
@@ -148,6 +154,8 @@
                 </div>
             </div>
             -->
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -1,26 +1,31 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6 offset-md-3 mt-5" style="margin-top: 20px">
-            <span *ngFor="let flashMessage of flashMessages">
-                <div class="alert alert-{{ flashMessage.class }}" role="alert">
-                    {{ flashMessage.message }}
+            <h2>Change Name</h2>
+            <div class="card">
+                <div class="card-body">
+                    <span *ngFor="let flashMessage of flashMessages">
+                        <div class="alert alert-{{ flashMessage.class }}" role="alert">
+                            {{ flashMessage.message }}
+                        </div>
+                    </span>
+                    <form [formGroup]="changeNameForm" (ngSubmit)="onChangeNameSubmit()">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" formControlName="name" class="form-control"
+                                [ngClass]="{ 'is-invalid': submitted && fChangeName.name.errors }" />
+                            <div *ngIf="submitted && fChangeName.name.errors" class="invalid-feedback">
+                                <div *ngIf="fChangeName.name.errors.required">Name is required</div>
+                            </div>
+                        </div>
+                        <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
+                        <button [disabled]="loading || !changeNameForm.valid" class="btn btn-primary">
+                            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                            Save
+                        </button>
+                    </form>
                 </div>
-            </span>
-            <form [formGroup]="changeNameForm" (ngSubmit)="onChangeNameSubmit()">
-                <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" formControlName="name" class="form-control"
-                        [ngClass]="{ 'is-invalid': submitted && fChangeName.name.errors }" />
-                    <div *ngIf="submitted && fChangeName.name.errors" class="invalid-feedback">
-                        <div *ngIf="fChangeName.name.errors.required">Name is required</div>
-                    </div>
-                </div>
-                <div *ngIf="errors" class="alert alert-danger mt-3 mb-0">{{errors}}</div>
-                <button [disabled]="loading || !changeNameForm.valid" class="btn btn-primary">
-                    <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-                    Save
-                </button>
-            </form>
+            </div>
         </div>
     </div>
 </div>
