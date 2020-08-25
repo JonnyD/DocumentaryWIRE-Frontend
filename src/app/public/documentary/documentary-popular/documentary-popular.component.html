@@ -1,10 +1,12 @@
 <h3>Popular</h3>
 <owl-carousel-o [options]="popularOptions">
     <ng-template *ngFor="let documentary of popularDocumentaries" carouselSlide [width]="230" [id]="documentary.id">
-        <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
-        <span class="slideshow-title">
+        <a [owlRouterLink]="['/', documentary.slug]" [stopLink]="isDragging">
+            <img height="280" [src]="documentary.poster" [alt]="documentary.title" [title]="documentary.title">
+        </a>
+        <a class="outer-link" [routerLink]="['/', documentary.slug]">
             {{ documentary.title }}
-        </span>
+        </a>
     </ng-template>
 </owl-carousel-o>
 

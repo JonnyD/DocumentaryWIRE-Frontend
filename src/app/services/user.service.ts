@@ -77,7 +77,7 @@ export class UserService extends DataService {
     }
 
     getNewestUsers(params: HttpParams) {
-        params = params.append('sort', 'createdAt-desc');
+        params = params.append('sort', 'activatedAt-desc');
         params = params.append('enabled', 'true');
 
         let options = {
